@@ -36,8 +36,7 @@ class Institucion extends Base {
 			"label" => "nombre",
 			"rules" => array(
 				"required",
-				"min_length[1]",
-				"is_unique[institucion.nombre_institucion]"
+				"min_length[1]"
 			)
 		),
 		"sigla" => array(
@@ -45,8 +44,7 @@ class Institucion extends Base {
 			"label" => "sigla",
 			"rules" => array(
 				"required",
-				"min_length[1]",
-				"is_unique[institucion.sigla_institucion]"
+				"min_length[1]"
 			)
 		)
 	);

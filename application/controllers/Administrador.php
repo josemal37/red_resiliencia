@@ -232,4 +232,39 @@ class Administrador extends CI_Controller {
 		}
 	}
 
+	public function modificar_institucion($id = FALSE) {
+		if ($id) {
+			if (isset($_POST["submit"]) && isset($_POST["id"]) && isset($_POST["nombre"]) && isset($_POST["sigla"])) {
+				$this->modificar_institucion_bd();
+			} else {
+				$datos = array();
+				$datos["titulo"] = "Modificar institución";
+				$datos["accion"] = "modificar";
+				$datos["institucion"] = $this->Modelo_institucion->select_institucion_por_id($id);
+
+				$this->load->view("administrador/formulario_institucion", $datos);
+			}
+		} else {
+			redirect(base_url("administrador/instituciones"));
+		}
+	}
+
+	public function modificar_institucion_bd() {
+		$id = $this->input->post("id");
+		$nombre = $this->input->post("nombre");
+		$sigla = $this->input->post("sigla");
+
+		if ($this->institucion->validar(array("id", "nombre", "sigla"))) {
+			if ($this->Modelo_institucion->update_institucion($id, $nombre, $sigla)) {
+				redirect(base_url("administrador/instituciones"));
+			} else {
+				unset($_POST["submit"]);
+				$this->modificar_institucion($id);
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_institucion($id);
+		}
+	}
+
 }
