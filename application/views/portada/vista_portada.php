@@ -22,10 +22,10 @@
         <link href="<?= base_url('assets/bootstrap-3.3.7/css/bootstrap.css') ?>" rel="stylesheet">
 
         <!--[if lt IE 9]>
-        
+		
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script
-        
+		
         <![endif]-->
 
     </head>
@@ -38,69 +38,83 @@
 
         </header>
 
-        <?php if (isset($articulos)): ?>
+		<?php if (isset($articulos)): ?>
 
-            <!-- Articulos -->
-            <section id="articulos" class="container">
+			<!-- Articulos -->
+			<section id="articulos" class="container">
 
-                <h2>Artículos</h2>
+				<h2>Artículos</h2>
 
-                <?php if ($articulos): ?>
+				<?php if ($articulos): ?>
 
-                    <div class="row">
+					<div class="row">
 
-                        <?php foreach ($articulos as $articulo): ?>
+						<?php foreach ($articulos as $articulo): ?>
 
-                            <h3><?= $articulo->nombre ?></h3>
+							<h3><?= $articulo->nombre ?></h3>
 
-                        <?php endforeach; ?>
+						<?php endforeach; ?>
 
-                    </div>
+					</div>
 
-                <?php else: ?>
+				<?php else: ?>
 
-                    <p>Sin artículos.</p>
+					<p>Sin artículos.</p>
 
-                <?php endif; ?>
+				<?php endif; ?>
 
-            </section>
+			</section>
 
-        <?php endif; ?>
+		<?php endif; ?>
 
-        <?php if (isset($publicaciones)): ?>
+		<?php if (isset($publicaciones)): ?>
 
-            <!-- Publicaciones -->
-            <section id="publicaciones" class="container">
+			<!-- Publicaciones -->
+			<section id="publicaciones" class="container">
 
-                <h2>Publicaciones</h2>
+				<h2>Publicaciones</h2>
 
-                <?php if ($publicaciones): ?>
+				<?php if ($publicaciones): ?>
 
-                    <div class="row">
+					<div class="row">
 
-                        <?php foreach ($publicaciones as $publicacion): ?>
+						<?php foreach ($publicaciones as $publicacion): ?>
 
-                            <div class="col-md-3">
+							<div class="col-md-3">
 
-                                <img src="<?= base_url($publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
-                                <h3><?= $publicacion->nombre ?></h3>
-                                <p><?= $publicacion->descripcion ?></p>
+								<img src="<?= base_url($publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+								<h3><?= $publicacion->nombre ?></h3>
+								<p><?= $publicacion->descripcion ?></p>
 
-                            </div>
+								<?php if ($publicacion->categorias): ?>
 
-                        <?php endforeach; ?>
+									<ul>
 
-                    </div>
+										<?php foreach ($publicacion->categorias as $categoria): ?>
 
-                <?php else: ?>
+											<li id="<?= $categoria->id ?>"><?= $categoria->nombre ?></li>
 
-                    <p>Sin publicaciones.</p>
+										<?php endforeach; ?>
 
-                <?php endif; ?>
+									</ul>
 
-            </section>
+								<?php endif; ?>
 
-        <?php endif; ?>
+							</div>
+
+						<?php endforeach; ?>
+
+					</div>
+
+				<?php else: ?>
+
+					<p>Sin publicaciones.</p>
+
+				<?php endif; ?>
+
+			</section>
+
+		<?php endif; ?>
 
     </body>
 

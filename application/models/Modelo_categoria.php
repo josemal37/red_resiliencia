@@ -19,8 +19,9 @@ class Modelo_categoria extends My_model {
 
 	const ID_COL = "id_categoria";
 	const NOMBRE_COL = "nombre_categoria";
-	const COLUMNAS_SELECT = "id_categoria as id, nombre_categoria as nombre";
+	const COLUMNAS_SELECT = "categoria.id_categoria as id, categoria.nombre_categoria as nombre";
 	const NOMBRE_TABLA = "categoria";
+	const NOMBRE_TABLA_JOIN_PUBLICACION = "categoria_publicacion";
 
 	public function __construct() {
 		parent::__construct();
@@ -35,15 +36,29 @@ class Modelo_categoria extends My_model {
 		return $this->return_result($query);
 	}
 
-	public function select_categoria_por_id($id = FALSE) {
+	public function select_categoria_por_id($id = FALSE, $nombre_tabla = "") {
 		if ($id) {
-			$this->db->select(self::COLUMNAS_SELECT);
-			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->where(self::ID_COL, $id);
+			switch ($nombre_tabla) {
+				case "":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->where(self::ID_COL, $id);
 
-			$query = $this->db->get();
+					$query = $this->db->get();
 
-			return $this->return_row($query);
+					return $this->return_row($query);
+					break;
+				case "publicacion":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
+					
+					$query = $this->db->get();
+					
+					return $this->return_result($query);
+					break;
+			}
 		} else {
 			return FALSE;
 		}

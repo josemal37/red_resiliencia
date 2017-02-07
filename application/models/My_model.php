@@ -36,5 +36,22 @@ class My_model extends CI_Model {
 			return $query->row();
 		}
 	}
+	
+	protected function is_id_array($array) {
+		$valido = TRUE;
+		
+		if(is_array($array)) {
+			foreach ($array as $id) {
+				if(!is_numeric($id)) {
+					$valido = FALSE;
+					break;
+				}
+			}
+		} else {
+			$valido = FALSE;
+		}
+		
+		return $valido;
+	}
 
 }
