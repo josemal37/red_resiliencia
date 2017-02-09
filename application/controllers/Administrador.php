@@ -17,9 +17,10 @@ class Administrador extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array("Modelo_categoria", "Modelo_autor", "Modelo_institucion"));
-		$this->load->library(array("Session", "Form_validation"));
-		$this->load->library(array("Categoria", "Autor", "Institucion"));
+		$this->load->model(array("Modelo_categoria", "Modelo_autor", "Modelo_institucion", "Modelo_publicacion"));
+		$this->load->library(array("Session", "Form_validation", "Upload"));
+		$this->load->library(array("Categoria", "Autor", "Institucion", "Publicacion"));
+		$this->load->library(array("Imagen", "Documento"));
 		$this->load->helper(array("Url", "Form"));
 		$this->load->database("default");
 	}
@@ -265,6 +266,82 @@ class Administrador extends CI_Controller {
 			unset($_POST["submit"]);
 			$this->modificar_institucion($id);
 		}
+	}
+
+	public function publicaciones() {
+		$datos = array();
+		$datos["titulo"] = "Publicaciones";
+		$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones();
+
+		$this->load->view("administrador/publicaciones", $datos);
+	}
+
+	public function registrar_publicacion() {
+
+		if (isset($_POST["submit"]) && isset($_POST["nombre"]) && isset($_POST["descripcion"]) && isset($_FILES["imagen"])) {
+			$this->registrar_publicacion_bd();
+		} else {
+			$datos = array();
+			$datos["titulo"] = "Registrar publicación";
+			$datos["accion"] = "registrar";
+
+			$this->load->view("administrador/formulario_publicacion", $datos);
+		}
+	}
+
+	private function registrar_publicacion_bd() {
+		$nombre = $this->input->post("nombre");
+		$descripcion = $this->input->post("descripcion");
+
+		if ($this->publicacion->validar(array("nombre", "descripcion"))) {
+			$path = FALSE;
+
+			//si se subio una imagen o documento obtenemos un path para subir los archivos
+			if (isset($_FILES["imagen"]) || isset($_FILES["url"])) {
+				$path = $this->imagen->get_path_valido("publicacion");
+			}
+
+			//si no hay errores al obtener el path
+			if ($path) {
+				//subimos los archivos
+				$imagen = $this->imagen->subir_archivo("imagen", $path);
+				$documento = $this->documento->subir_archivo("url", $path);
+
+				//si no hubo problemas al subir los archivos
+				if (!$imagen["error"] && !$documento["error"]) {
+					//recuperamos la direccion de los archivos
+					$direccion_imagen = "";
+					$direccion_documento = "";
+					if ($imagen["datos"]) {
+						$direccion_imagen = base_url($path . $imagen["datos"]["file_name"]);
+					}
+					if ($documento["datos"]) {
+						$direccion_documento = base_url($path . $documento["datos"]["file_name"]);
+					}
+
+					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $direccion_documento, $direccion_imagen)) {
+						redirect(base_url("administrador/publicaciones"));
+					} else {
+						//error al insertar publicacion
+						unset($_POST["submit"]);
+						$this->registrar_publicacion();
+					}
+				} else {
+					//error al subir archivos
+					unset($_POST["submit"]);
+					$this->registrar_publicacion();
+				}
+			} else {
+				//error de path
+				unset($_POST["submit"]);
+				$this->registrar_publicacion();
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->registrar_publicacion();
+		}
+
+		//$path = $this->imagen->get_path_valido("publicacion");
 	}
 
 }

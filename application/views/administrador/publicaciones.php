@@ -39,51 +39,43 @@
         </div>
 
         <div>
-			
-			<?php if($instituciones): ?>
-			
-			<table>
-				
-				<thead>
-					
-					<tr>
-						
-						<th>Sigla</th>
-						<th>Nombre</th>
-						<th>Acciones</th>
-						
-					</tr>
-					
-				</thead>
-				
-				<tbody>
-					
-					<?php foreach($instituciones as $institucion): ?>
-					
-					<tr id="<?= $institucion->id?>">
-						
-						<td><?= $institucion->sigla ?></td>
-						<td><?= $institucion->nombre ?></td>
-						<td><a href="<?= base_url("administrador/modificar_institucion/" . $institucion->id)?>">Modificar</a></td>
-						
-					</tr>
-					
+
+			<?php if ($publicaciones): ?>
+
+				<div>
+
+					<?php foreach ($publicaciones as $publicacion): ?>
+
+						<div>
+
+							<h2><?= $publicacion->nombre ?></h2>
+
+							<?php if ($publicacion->imagen != ""): ?>
+								<img src="<?= $publicacion->imagen ?>">
+							<?php endif; ?>
+
+							<p><?= $publicacion->descripcion ?></p>
+
+							<?php if ($publicacion->url != ""): ?>
+								<a href="<?= $publicacion->url ?>">Descargar</a>
+							<?php endif; ?>
+
+						</div>
+
 					<?php endforeach; ?>
-					
-				</tbody>
-				
-			</table>
-			
+
+				</div>
+
 			<?php else: ?>
-			
-			<p>No se registraron instituciones.</p>
-			
+
+				<p>No se registraron publicaciones.</p>
+
 			<?php endif; ?>
-			
-			<a href="<?= base_url("administrador/registrar_institucion")?>">Registrar institución</a>
-			
+
+			<a href="<?= base_url("administrador/registrar_publicacion") ?>">Registrar publicación</a>
+
 		</div>
-		
+
 	</body>
-	
+
 </html>

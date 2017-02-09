@@ -42,18 +42,39 @@
 
 			<?php if ($autores): ?>
 
-				<ul>
+				<table>
 
-					<?php foreach ($autores as $autor): ?>
+					<thead>
 
-						<li>
-							<label><?= $autor->nombre ?><?php if (isset($autor->apellido_paterno)): ?> <?= $autor->apellido_paterno ?><?php endif; ?><?php if (isset($autor->apellido_materno)): ?> <?= $autor->apellido_materno ?><?php endif; ?></label>
-							<a href="<?= base_url("administrador/modificar_autor/" . $autor->id) ?>">Modificar autor</a>
-						</li>
+						<tr>
 
-					<?php endforeach; ?>
+							<th>Nombre</th>
+							<th>Apellido paterno</th>
+							<th>Apellido materno</th>
+							<th>Acciones</th>
 
-				</ul>
+						</tr>
+
+					</thead>
+
+					<tbody>
+
+						<?php foreach ($autores as $autor): ?>
+
+							<tr id="<?= $autor->id ?>">
+
+								<td><?= $autor->nombre ?></td>
+								<td><?= $autor->apellido_paterno ?></td>
+								<td><?= $autor->apellido_materno ?></td>
+								<td><a href="<?= base_url("administrador/modificar_autor/" . $autor->id) ?>">Modificar autor</a></td>
+
+							</tr>
+
+						<?php endforeach; ?>
+
+					</tbody>
+
+				</table>
 
 			<?php else: ?>
 

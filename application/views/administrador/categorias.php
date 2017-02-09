@@ -22,10 +22,10 @@
         <link href="<?= base_url('assets/bootstrap-3.3.7/css/bootstrap.css') ?>" rel="stylesheet">
 
         <!--[if lt IE 9]>
-        
+		
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script
-        
+		
         <![endif]-->
 
     </head>
@@ -40,28 +40,43 @@
 
         <div>
 
-            <?php if ($categorias): ?>
+			<?php if ($categorias): ?>
 
-                <ul>
+				<table>
 
-                    <?php foreach ($categorias as $categoria): ?>
+					<thead>
 
-                        <li id="<?= $categoria->id ?>">
+						<tr>
 
-                            <?= $categoria->nombre ?>
-                            <a href="<?= base_url("administrador/modificar_categoria/" . $categoria->id) ?>">Modificar categoria</a>
+							<th>Nombre</th>
+							<th>Acciones</th>
 
-                        </li>
+						</tr>
 
-                    <?php endforeach; ?>
+					</thead>
 
-                </ul>
+					<tbody>
 
-            <?php else: ?>
+						<?php foreach ($categorias as $categoria): ?>
 
-                <p>No se regisstraron categorias.</p>
+							<tr id="<?= $categoria->id ?>">
 
-            <?php endif; ?>
+								<td><?= $categoria->nombre ?></td>
+								<td><a href="<?= base_url("administrador/modificar_categoria/" . $categoria->id) ?>">Modificar</a></td>
+
+							</tr>
+
+						<?php endforeach; ?>
+
+					</tbody>
+
+				</table>
+
+			<?php else: ?>
+
+				<p>No se regisstraron categorias.</p>
+
+			<?php endif; ?>
 
             <a href="<?= base_url("administrador/registrar_categoria") ?>">Registrar categoria</a>
 

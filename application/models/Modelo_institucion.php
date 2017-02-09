@@ -20,8 +20,11 @@ class Modelo_institucion extends My_model {
 	const ID_COL = "id_institucion";
 	const NOMBRE_COL = "nombre_institucion";
 	const SIGLA_COL = "sigla_institucion";
-	const COLUMNAS_SELECT = "id_institucion as id, nombre_institucion as nombre, sigla_institucion as sigla";
+	
+	const COLUMNAS_SELECT = "institucion.id_institucion as id, institucion.nombre_institucion as nombre, institucion.sigla_institucion as sigla";
+	
 	const NOMBRE_TABLA = "institucion";
+	const NOMBRE_TABLA_JOIN_PUBLICACION = "institucion_publicacion";
 
 	public function __construct() {
 		parent::__construct();
@@ -36,14 +39,34 @@ class Modelo_institucion extends My_model {
 		return $this->return_result($query);
 	}
 
-	public function select_institucion_por_id($id = FALSE) {
-		$this->db->select(self::COLUMNAS_SELECT);
-		$this->db->from(self::NOMBRE_TABLA);
-		$this->db->where(self::ID_COL, $id);
+	public function select_institucion_por_id($id = FALSE, $nombre_tabla = "") {
+		if ($id) {
+			$datos  = FALSE;
+			switch ($nombre_tabla) {
+				case "":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->where(self::ID_COL, $id);
 
-		$query = $this->db->get();
+					$query = $this->db->get();
 
-		return $this->return_row($query);
+					$datos = $this->return_row($query);
+					break;
+				case "publicacion":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
+
+					$query = $this->db->get();
+
+					$datos = $this->return_result($query);
+					break;
+			}
+			return $datos;
+		} else {
+			return FALSE;
+		}
 	}
 
 	public function select_institucion_por_nombre($nombre = "") {
@@ -104,24 +127,24 @@ class Modelo_institucion extends My_model {
 	public function update_institucion($id = FALSE, $nombre = "", $sigla = "") {
 		if ($id && $nombre != "") {
 			$actualizado = FALSE;
-			
+
 			$this->db->trans_start();
-			
+
 			$existe = $this->existe($nombre, $sigla);
-			
-			if(!$existe) {
+
+			if (!$existe) {
 				$datos = array();
 				$datos[self::NOMBRE_COL] = $nombre;
 				$datos[self::SIGLA_COL] = $sigla;
-				
+
 				$this->db->set($datos);
 				$this->db->where(self::ID_COL, $id);
 
 				$actualizado = $this->db->update(self::NOMBRE_TABLA);
 			}
-			
+
 			$this->db->trans_complete();
-			
+
 			return $actualizado;
 		} else {
 			return FALSE;

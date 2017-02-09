@@ -7,21 +7,23 @@
  */
 
 /**
- * Description of Autor
+ * Description of Subir_documento
  *
  * @author Jose
  */
-abstract class Autor extends CI_Controller {
-	
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+require_once 'Base_subir_archivo.php';
+
+class Documento extends Base_subir_archivo {
+
 	public function __construct() {
 		parent::__construct();
 	}
-	
-	public function index() {
-		
-	}
-	
-	public function registrar_autor() {
-		
-	}
+
+	protected $config = array(
+		"allowed_types" => "pdf",
+		"max_size" => "5120",
+	);
+
 }

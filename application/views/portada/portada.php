@@ -82,9 +82,10 @@
 
 							<div class="col-md-3">
 
-								<img src="<?= base_url($publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
 								<h3><?= $publicacion->nombre ?></h3>
+								<img src="<?= $publicacion->imagen ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
 								<p><?= $publicacion->descripcion ?></p>
+								<a href="<?= $publicacion->url ?>">Descargar</a>
 
 								<?php if ($publicacion->categorias): ?>
 

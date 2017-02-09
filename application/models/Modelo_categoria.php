@@ -19,7 +19,9 @@ class Modelo_categoria extends My_model {
 
 	const ID_COL = "id_categoria";
 	const NOMBRE_COL = "nombre_categoria";
+	
 	const COLUMNAS_SELECT = "categoria.id_categoria as id, categoria.nombre_categoria as nombre";
+	
 	const NOMBRE_TABLA = "categoria";
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "categoria_publicacion";
 
@@ -38,6 +40,7 @@ class Modelo_categoria extends My_model {
 
 	public function select_categoria_por_id($id = FALSE, $nombre_tabla = "") {
 		if ($id) {
+			$datos = FALSE;
 			switch ($nombre_tabla) {
 				case "":
 					$this->db->select(self::COLUMNAS_SELECT);
@@ -46,19 +49,20 @@ class Modelo_categoria extends My_model {
 
 					$query = $this->db->get();
 
-					return $this->return_row($query);
+					$datos = $this->return_row($query);
 					break;
 				case "publicacion":
 					$this->db->select(self::COLUMNAS_SELECT);
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
 					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
-					
+
 					$query = $this->db->get();
-					
-					return $this->return_result($query);
+
+					$datos = $this->return_result($query);
 					break;
 			}
+			return $datos;
 		} else {
 			return FALSE;
 		}

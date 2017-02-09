@@ -17,8 +17,9 @@ class Modelo_autor extends My_model {
 	const NOMBRE_COL = "nombre_autor";
 	const APELLIDO_PATERNO_COL = "apellido_paterno_autor";
 	const APELLIDO_MATERNO_COL = "apellido_materno_autor";
-	const COLUMNAS_SELECT = "id_autor as id, nombre_autor as nombre, apellido_paterno_autor as apellido_paterno, apellido_materno_autor as apellido_materno";
+	const COLUMNAS_SELECT = "autor.id_autor as id, autor.nombre_autor as nombre, autor.apellido_paterno_autor as apellido_paterno, autor.apellido_materno_autor as apellido_materno";
 	const NOMBRE_TABLA = "autor";
+	const NOMBRE_TABLA_JOIN_PUBLICACION = "autor_publicacion";
 
 	public function __construct() {
 		parent::__construct();
@@ -33,15 +34,33 @@ class Modelo_autor extends My_model {
 		return $this->return_result($query);
 	}
 
-	public function select_autor_por_id($id = FALSE) {
+	public function select_autor_por_id($id = FALSE, $nombre_tabla = "") {
 		if ($id) {
-			$this->db->select(self::COLUMNAS_SELECT);
-			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->where(self::ID_COL, $id);
+			$datos = FALSE;
+			
+			switch ($nombre_tabla) {
+				case "":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->where(self::ID_COL, $id);
 
-			$query = $this->db->get();
+					$query = $this->db->get();
 
-			return $this->return_row($query);
+					$datos = $this->return_row($query);
+					break;
+				case "publicacion":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
+					
+					$query = $this->db->get();
+					
+					$datos = $this->return_result($query);
+					break;
+			}
+
+			return $datos;
 		} else {
 			return FALSE;
 		}
