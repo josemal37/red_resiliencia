@@ -19,7 +19,9 @@ class Modelo_autor extends My_model {
 	const APELLIDO_MATERNO_COL = "apellido_materno_autor";
 	const COLUMNAS_SELECT = "autor.id_autor as id, autor.nombre_autor as nombre, autor.apellido_paterno_autor as apellido_paterno, autor.apellido_materno_autor as apellido_materno";
 	const NOMBRE_TABLA = "autor";
+	
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "autor_publicacion";
+	const ID_PUBLICACION_COL = "id_publicacion";
 
 	public function __construct() {
 		parent::__construct();
@@ -52,7 +54,7 @@ class Modelo_autor extends My_model {
 					$this->db->select(self::COLUMNAS_SELECT);
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
-					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
+					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_PUBLICACION_COL, $id);
 					
 					$query = $this->db->get();
 					

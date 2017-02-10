@@ -24,7 +24,9 @@ class Modelo_institucion extends My_model {
 	const COLUMNAS_SELECT = "institucion.id_institucion as id, institucion.nombre_institucion as nombre, institucion.sigla_institucion as sigla";
 	
 	const NOMBRE_TABLA = "institucion";
+	
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "institucion_publicacion";
+	const ID_PUBLICACION_COL = "id_publicacion";
 
 	public function __construct() {
 		parent::__construct();
@@ -56,7 +58,7 @@ class Modelo_institucion extends My_model {
 					$this->db->select(self::COLUMNAS_SELECT);
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
-					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
+					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_PUBLICACION_COL, $id);
 
 					$query = $this->db->get();
 

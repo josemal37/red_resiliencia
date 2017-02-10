@@ -284,6 +284,9 @@ class Administrador extends CI_Controller {
 			$datos = array();
 			$datos["titulo"] = "Registrar publicación";
 			$datos["accion"] = "registrar";
+			$datos["autores"] = $this->Modelo_autor->select_autores();
+			$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+			$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 
 			$this->load->view("administrador/formulario_publicacion", $datos);
 		}
@@ -292,8 +295,11 @@ class Administrador extends CI_Controller {
 	private function registrar_publicacion_bd() {
 		$nombre = $this->input->post("nombre");
 		$descripcion = $this->input->post("descripcion");
+		$id_autor = $this->input->post("id_autor");
+		$id_categoria = $this->input->post("id_categoria");
+		$id_institucion = $this->input->post("id_institucion");
 
-		if ($this->publicacion->validar(array("nombre", "descripcion"))) {
+		if ($this->publicacion->validar(array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion"))) {
 			$path = FALSE;
 
 			//si se subio una imagen o documento obtenemos un path para subir los archivos
@@ -319,7 +325,7 @@ class Administrador extends CI_Controller {
 						$direccion_documento = base_url($path . $documento["datos"]["file_name"]);
 					}
 
-					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $direccion_documento, $direccion_imagen)) {
+					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {
 						redirect(base_url("administrador/publicaciones"));
 					} else {
 						//error al insertar publicacion

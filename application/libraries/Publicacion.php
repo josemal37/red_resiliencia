@@ -45,6 +45,14 @@ class Publicacion extends Base {
 			"rules" => array(
 				"min_length[1]"
 			)
+		),
+		"id_categoria" => array(
+			"field" => "id_categoria",
+			"label" => "categorias",
+			"rules" => array(
+				"numeric",
+				"is_natural"
+			)
 		)
 	);
 }

@@ -38,43 +38,107 @@
 
         </div>
 
-        <div>
+        <div class="container">
 
 			<?php if ($publicaciones): ?>
 
-				<div>
+				<div class="row">
+					
+					<?php $col = 3; $col_acumulado = 0; ?>
 
 					<?php foreach ($publicaciones as $publicacion): ?>
 
-						<div>
+						<div class="col-md-<?= $col ?>">
 
 							<h2><?= $publicacion->nombre ?></h2>
 
 							<?php if ($publicacion->imagen != ""): ?>
-								<img src="<?= $publicacion->imagen ?>">
+
+								<img src="<?= $publicacion->imagen ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+
 							<?php endif; ?>
 
 							<p><?= $publicacion->descripcion ?></p>
 
 							<?php if ($publicacion->url != ""): ?>
+
 								<a href="<?= $publicacion->url ?>">Descargar</a>
+
+							<?php endif; ?>
+								
+							<?php if ($publicacion->autores): ?>
+
+								<h3>Autores</h3>
+
+								<ul>
+
+									<?php foreach ($publicacion->autores as $autor): ?>
+
+										<li><?= $autor->nombre ?></li>
+
+									<?php endforeach; ?>
+
+								</ul>
+
+							<?php endif; ?>
+
+							<?php if ($publicacion->categorias): ?>
+
+								<h3>Categorias</h3>
+
+								<ul>
+
+									<?php foreach ($publicacion->categorias as $categoria): ?>
+
+										<li><?= $categoria->nombre ?></li>
+
+									<?php endforeach; ?>
+
+								</ul>
+
+							<?php endif; ?>
+								
+							<?php if ($publicacion->instituciones): ?>
+
+								<h3>Intituciones</h3>
+
+								<ul>
+
+									<?php foreach ($publicacion->instituciones as $institucion): ?>
+
+										<li><?= $institucion->nombre ?></li>
+
+									<?php endforeach; ?>
+
+								</ul>
+
 							<?php endif; ?>
 
 						</div>
 
-					<?php endforeach; ?>
+						<?php $col_acumulado += $col; ?>
+					
+							<?php if($col_acumulado == 12): ?>
+					
+								<div class="clearfix visible-md-block visible-lg-block"></div>
+								
+								<?php $col_acumulado = 0; ?>
+							
+							<?php endif;?>
 
-				</div>
+						<?php endforeach; ?>
 
-			<?php else: ?>
+					</div>
 
-				<p>No se registraron publicaciones.</p>
+				<?php else: ?>
 
-			<?php endif; ?>
+					<p>No se registraron publicaciones.</p>
 
-			<a href="<?= base_url("administrador/registrar_publicacion") ?>">Registrar publicación</a>
+				<?php endif; ?>
 
-		</div>
+				<a href="<?= base_url("administrador/registrar_publicacion") ?>">Registrar publicación</a>
+
+			</div>
 
 	</body>
 

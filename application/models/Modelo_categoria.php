@@ -23,7 +23,9 @@ class Modelo_categoria extends My_model {
 	const COLUMNAS_SELECT = "categoria.id_categoria as id, categoria.nombre_categoria as nombre";
 	
 	const NOMBRE_TABLA = "categoria";
+	
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "categoria_publicacion";
+	const ID_PUBLICACION_COL = "id_publicacion";
 
 	public function __construct() {
 		parent::__construct();
@@ -55,7 +57,7 @@ class Modelo_categoria extends My_model {
 					$this->db->select(self::COLUMNAS_SELECT);
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
-					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, $id);
+					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_PUBLICACION_COL, $id);
 
 					$query = $this->db->get();
 
