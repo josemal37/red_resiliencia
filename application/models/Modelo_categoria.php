@@ -118,7 +118,7 @@ class Modelo_categoria extends My_model {
 			$this->db->trans_start();
 
 			//verificamos si la categoria existe
-			$existe = $this->existe($nombre);
+			$existe = $this->existe_diferente_id($id, $nombre);
 
 			//si no existe
 			if (!$existe) {
@@ -153,6 +153,27 @@ class Modelo_categoria extends My_model {
 			$existe = TRUE;
 		}
 
+		return $existe;
+	}
+	
+	public function existe_diferente_id($id = FALSE, $nombre = "") {
+		$existe = FALSE;
+		
+		$datos = array();
+		$datos[self::ID_COL . "!="] = $id;
+		$datos[self::NOMBRE_COL] = $nombre;
+		
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->where($datos);
+		
+		$query = $this->db->get();
+		$autor = $this->return_row($query);
+		
+		if($autor) {
+			$existe = TRUE;
+		}
+		
 		return $existe;
 	}
 

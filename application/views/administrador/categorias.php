@@ -32,17 +32,17 @@
 
     <body>
 
-        <div>
+        <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
         </div>
 
-        <div>
+        <div class="container">
 
 			<?php if ($categorias): ?>
 
-				<table>
+				<table class="table">
 
 					<thead>
 

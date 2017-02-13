@@ -32,13 +32,13 @@
 
     <body>
 
-        <div>
+        <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
         </div>
 
-        <div>
+        <div class="container">
 
 			<?php
 			//definimos la url del formulario
@@ -54,10 +54,10 @@
 
 			<form action="<?= $url ?>" method="post" autocomplete="off">
 
-				<div>
+				<div class="form-group">
 
 					<label>Nombre</label>
-					<input type="text" id="nombre" name="nombre" <?php if ($accion == "modificar"): ?>value="<?= $categoria->nombre ?>"<?php endif; ?>>
+					<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $categoria->nombre ?>"<?php endif; ?>>
 					<?= form_error("nombre") ?>
 
 				</div>
@@ -68,7 +68,7 @@
 
 				<?php endif; ?>
 
-				<input type="submit" id="submit" name="submit" value="Aceptar">
+				<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
 			</form>
 

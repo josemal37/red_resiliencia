@@ -36,8 +36,7 @@ class Categoria extends Base {
 			"label" => "nombre",
 			"rules" => array(
 				"required",
-				"min_length[1]",
-				"is_unique[categoria.nombre_categoria]"
+				"min_length[1]"
 			)
 		)
 	);
