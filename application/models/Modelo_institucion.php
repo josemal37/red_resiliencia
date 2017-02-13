@@ -145,7 +145,7 @@ class Modelo_institucion extends My_model {
 
 			$this->db->trans_start();
 
-			$existe = $this->existe($nombre, $sigla);
+			$existe = $this->existe_diferente_id($id, $nombre, $sigla);
 
 			if (!$existe) {
 				$datos = array();
@@ -175,6 +175,28 @@ class Modelo_institucion extends My_model {
 			$existe = TRUE;
 		}
 
+		return $existe;
+	}
+	
+	public function existe_diferente_id($id = FALSE, $nombre = "", $sigla = "") {
+		$existe = FALSE;
+		
+		$datos = array();
+		$datos[self::ID_COL . "!="] = $id;
+		$datos[self::NOMBRE_COL] = $nombre;
+		$datos[self::SIGLA_COL] = $sigla;
+		
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->where($datos);
+		
+		$query = $this->db->get();
+		$autor = $this->return_row($query);
+		
+		if($autor) {
+			$existe = TRUE;
+		}
+		
 		return $existe;
 	}
 
