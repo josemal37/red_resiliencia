@@ -32,17 +32,17 @@
 
     <body>
 
-        <div>
+        <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
         </div>
 
-        <div>
+        <div class="container">
 			
 			<?php if($instituciones): ?>
 			
-			<table>
+			<table class="table">
 				
 				<thead>
 					

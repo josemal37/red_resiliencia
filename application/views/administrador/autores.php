@@ -32,17 +32,17 @@
 
     <body>
 
-        <div>
+        <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
         </div>
 
-        <div>
+        <div class="container">
 
 			<?php if ($autores): ?>
 
-				<table>
+				<table class="table">
 
 					<thead>
 
@@ -51,6 +51,7 @@
 							<th>Nombre</th>
 							<th>Apellido paterno</th>
 							<th>Apellido materno</th>
+							<th>Instituciones</th>
 							<th>Acciones</th>
 
 						</tr>
@@ -66,6 +67,23 @@
 								<td><?= $autor->nombre ?></td>
 								<td><?= $autor->apellido_paterno ?></td>
 								<td><?= $autor->apellido_materno ?></td>
+								<td>
+
+									<?php if ($autor->instituciones): ?>
+
+										<ul>
+
+											<?php foreach ($autor->instituciones as $institucion): ?>
+
+												<li><?= $institucion->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									<?php endif; ?>
+
+								</td>
 								<td><a href="<?= base_url("administrador/modificar_autor/" . $autor->id) ?>">Modificar autor</a></td>
 
 							</tr>

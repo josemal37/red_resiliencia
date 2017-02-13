@@ -27,6 +27,9 @@ class Modelo_institucion extends My_model {
 	
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "institucion_publicacion";
 	const ID_PUBLICACION_COL = "id_publicacion";
+	
+	const NOMBRE_TABLA_JOIN_AUTOR = "institucion_autor";
+	const ID_AUTOR_COL = "id_autor";
 
 	public function __construct() {
 		parent::__construct();
@@ -59,6 +62,16 @@ class Modelo_institucion extends My_model {
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
 					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_PUBLICACION_COL, $id);
+
+					$query = $this->db->get();
+
+					$datos = $this->return_result($query);
+					break;
+				case "autor":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_AUTOR . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_AUTOR . "." . self::ID_AUTOR_COL, $id);
 
 					$query = $this->db->get();
 

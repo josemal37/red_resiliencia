@@ -38,7 +38,7 @@
 
         </div>
 
-        <div>
+        <div class="container">
 
 			<?php
 			switch ($accion) {
@@ -90,12 +90,14 @@
 
 				<?php if ($autores): ?>
 
-					<div>
+					<label>Autor(es)</label>
 
-						<label>Autor(es)</label>
+					<div class="row">
 
-						<div>
+						<div class="col-md-5">
 
+							<label>Autores disponibles</label>
+							
 							<select id="autores" multiple>
 
 								<?php foreach ($autores as $autor): ?>
@@ -120,14 +122,16 @@
 
 						</div>
 
-						<div>
+						<div class="col-md-2">
 
 							<button id="agregar_autor" class="agregar">Agregar ></button>
 							<button id="quitar_autor" class="quitar">< Quitar</button>
 
 						</div>
 
-						<div>
+						<div class="col-md-5">
+
+							<label>Autores seleccionados</label>
 
 							<select id="id_autor" name="id_autor[]" multiple="">
 
@@ -143,11 +147,13 @@
 
 				<?php if ($categorias): ?>
 
-					<div>
+					<label>Categoria(s)</label>
 
-						<label>Categoria(s)</label>
+					<div class="row">
 
-						<div>
+						<div class="col-md-5">
+
+							<label>Categorias disponibles</label>
 
 							<select id="categorias" multiple>
 
@@ -161,14 +167,16 @@
 
 						</div>
 
-						<div>
+						<div class="col-md-2">
 
 							<button id="agregar_categoria" class="agregar">Agregar ></button>
 							<button id="quitar_categoria" class="quitar">< Quitar</button>
 
 						</div>
 
-						<div>
+						<div class="col-md-5">
+
+							<label>Categorias seleccionadas</label>
 
 							<select id="id_categoria" name="id_categoria[]" multiple>
 
@@ -184,11 +192,13 @@
 
 				<?php if ($instituciones): ?>
 
-					<div>
+					<label>Institución(es)</label>
 
-						<label>Institución(es)</label>
+					<div class="row">
 
-						<div>
+						<div class="col-md-5">
+
+							<label>Instituciones disponibles</label>
 
 							<select id="instituciones" multiple>
 
@@ -202,14 +212,16 @@
 
 						</div>
 
-						<div>
+						<div class="col-md-2">
 
 							<button id="agregar_institucion" class="agregar">Agregar ></button>
 							<button id="quitar_institucion" class="quitar">< Quitar</button>
 
 						</div>
 
-						<div>
+						<div class="col-md-5">
+
+							<label>Instituciones seleccionadas</label>
 
 							<select id="id_institucion" name="id_institucion[]" multiple>
 

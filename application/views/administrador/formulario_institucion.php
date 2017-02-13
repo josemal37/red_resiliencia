@@ -32,13 +32,13 @@
 
     <body>
 
-        <div>
+        <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
         </div>
 
-        <div>
+        <div class="container">
 
 			<?php
 			switch ($accion) {
@@ -53,18 +53,18 @@
 
             <form action="<?= $url ?>" method="post" autocomplete="off">
 
-                <div>
+                <div class="form-group">
 
                     <label>Nombre</label>
-                    <input type="text" id="nombre" name="nombre" <?php if ($accion == "modificar"): ?>value="<?= $institucion->nombre ?>"<?php endif; ?>>
+                    <input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $institucion->nombre ?>"<?php endif; ?>>
 					<?= form_error("nombre") ?>
 
                 </div>
 				
-				<div>
+				<div class="form-group">
 
                     <label>Sigla</label>
-                    <input type="text" id="sigla" name="sigla" <?php if ($accion == "modificar"): ?>value="<?= $institucion->sigla ?>"<?php endif; ?>>
+                    <input type="text" id="sigla" name="sigla" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $institucion->sigla ?>"<?php endif; ?>>
 					<?= form_error("sigla") ?>
 
                 </div>
@@ -75,7 +75,7 @@
 
 				<?php endif; ?>
 
-                <input type="submit" id="submit" name="submit" value="Aceptar">
+					<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
             </form>
 

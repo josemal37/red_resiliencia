@@ -22,6 +22,7 @@ class Administrador extends CI_Controller {
 		$this->load->library(array("Categoria", "Autor", "Institucion", "Publicacion"));
 		$this->load->library(array("Imagen", "Documento"));
 		$this->load->helper(array("Url", "Form"));
+		$this->load->helper(array("array_helper"));
 		$this->load->database("default");
 	}
 
@@ -133,6 +134,7 @@ class Administrador extends CI_Controller {
 			$datos = array();
 			$datos["titulo"] = "Registrar autor";
 			$datos["accion"] = "registrar";
+			$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 
 			//cargamos la vista
 			$this->load->view("administrador/formulario_autor", $datos);
@@ -144,11 +146,12 @@ class Administrador extends CI_Controller {
 		$nombre = $this->input->post("nombre");
 		$apellido_paterno = $this->input->post("apellido_paterno");
 		$apellido_materno = $this->input->post("apellido_materno");
+		$id_institucion = $this->input->post("id_institucion");
 
 		//si los datos son validos
-		if ($this->autor->validar(array("nombre", "apellido_paterno", "apellido_materno"))) {
+		if ($this->autor->validar(array("nombre", "apellido_paterno", "apellido_materno", "id_institucion"))) {
 			//si se inserta el autor
-			if ($this->Modelo_autor->insert_autor($nombre, $apellido_paterno, $apellido_materno)) {
+			if ($this->Modelo_autor->insert_autor($nombre, $apellido_paterno, $apellido_materno, $id_institucion)) {
 				redirect(base_url("administrador/autores"));
 			} else {
 				unset($_POST["submit"]);
@@ -169,6 +172,16 @@ class Administrador extends CI_Controller {
 				$datos["titulo"] = "Modificar autor";
 				$datos["accion"] = "modificar";
 				$datos["autor"] = $this->Modelo_autor->select_autor_por_id($id);
+				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+				
+				if ($datos["autor"]->instituciones && $datos["instituciones"]) {
+					foreach ($datos["autor"]->instituciones as $institucion) {
+						$i = search_object_in_array_by_key($institucion, $datos["instituciones"], "id");
+						if ($i !== FALSE) {
+							unset($datos["instituciones"][$i]);
+						}
+					}
+				}
 
 				$this->load->view("administrador/formulario_autor", $datos);
 			}
@@ -182,9 +195,10 @@ class Administrador extends CI_Controller {
 		$nombre = $this->input->post("nombre");
 		$apellido_paterno = $this->input->post("apellido_paterno");
 		$apellido_materno = $this->input->post("apellido_materno");
+		$id_institucion = $this->input->post("id_institucion");
 
-		if ($this->autor->validar(array("id", "nombre", "apellido_paterno", "apellido_materno"))) {
-			if ($this->Modelo_autor->update_autor($id, $nombre, $apellido_paterno, $apellido_materno)) {
+		if ($this->autor->validar(array("id", "nombre", "apellido_paterno", "apellido_materno", "id_institucion"))) {
+			if ($this->Modelo_autor->update_autor($id, $nombre, $apellido_paterno, $apellido_materno, $id_institucion)) {
 				redirect(base_url("administrador/autores"));
 			} else {
 				unset($_POST["submit"]);

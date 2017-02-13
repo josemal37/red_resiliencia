@@ -52,6 +52,14 @@ class Autor extends Base {
 			"rules" => array(
 				"min_length[1]"
 			)
+		),
+		"id_institucion" => array(
+			"field" => "id_institucion",
+			"label" => "instituciones",
+			"rules" => array(
+				"numeric",
+				"is_natural"
+			)
 		)
 	);
 }

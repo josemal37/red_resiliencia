@@ -1,0 +1,26 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+function search_object_in_array_by_key($object = FALSE, $array = FALSE, $key = FALSE) {
+	if ($object && $array && $key && is_array($array) && property_exists($object, $key)) {
+		$exist = FALSE;
+
+		foreach ($array as $i => $current) {
+			if (property_exists($current, $key)) {
+				if ($object->$key == $current->$key) {
+					$exist = $i;
+					break;
+				}
+			}
+		}
+
+		return $exist;
+	} else {
+		return FALSE;
+	}
+}
