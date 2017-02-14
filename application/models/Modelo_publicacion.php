@@ -23,8 +23,12 @@ class Modelo_publicacion extends My_model {
 	const URL_COL = "url_publicacion";
 	const IMAGEN_COL = "imagen_publicacion";
 	const DESTACADA_COL = "destacada_publicacion";
-	const COLUMNAS_SELECT = "publicacion.id_publicacion as id, publicacion.nombre_publicacion as nombre, publicacion.descripcion_publicacion as descripcion, publicacion.url_publicacion as url, publicacion.imagen_publicacion as imagen, publicacion.destacada_publicacion as destacada";
+	const FECHA_COL = "fecha_publicacion";
+	
+	const COLUMNAS_SELECT = "publicacion.id_publicacion as id, publicacion.nombre_publicacion as nombre, publicacion.descripcion_publicacion as descripcion, publicacion.url_publicacion as url, publicacion.imagen_publicacion as imagen, publicacion.destacada_publicacion as destacada, publicacion.fecha_publicacion as publicacion";
+	
 	const NOMBRE_TABLA = "publicacion";
+	
 	const NOMBRE_TABLA_ASOC_AUTOR = "autor_publicacion";
 	const ID_TABLA_ASOC_AUTOR = "id_autor";
 	const NOMBRE_TABLA_ASOC_CATEGORIA = "categoria_publicacion";
@@ -33,24 +37,14 @@ class Modelo_publicacion extends My_model {
 	const ID_TABLA_ASOC_INSTITUCION = "id_institucion";
 
 	public function __construct() {
-		$this->load->model(array("Modelo_categoria", "Modelo_institucion"));
+		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_modulo"));
 		parent::__construct();
 	}
 
 	public function select_publicaciones($categorias = FALSE, $autores = FALSE, $instituciones = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
-		/*
-		  if ($categorias) {
-		  $this->db->where_in("c.id_categoria", $categorias);
-		  }
-		  if ($autores) {
-		  $this->db->where_in("a.id_autor", $autores);
-		  }
-		  if ($instituciones) {
-		  $this->db->where_in("i.id_institucion", $instituciones);
-		  }
-		 */
+		
 		$query = $this->db->get();
 
 		$publicaciones = $this->return_result($query);
@@ -70,6 +64,10 @@ class Modelo_publicacion extends My_model {
 				//cargamos los autores
 				$autores = $this->Modelo_autor->select_autor_por_id($publicacion->id, self::NOMBRE_TABLA);
 				$publicaciones[$i]->autores = $autores;
+				
+				//cargamos los modulos
+				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
+				$publicaciones[$i]->modulos = $modulos;
 
 				$i += 1;
 			}
@@ -78,7 +76,7 @@ class Modelo_publicacion extends My_model {
 		return $publicaciones;
 	}
 
-	public function insert_publicacion($nombre = "", $descripcion = "", $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
 
 		if ($nombre != "") {
 			$insertado = FALSE;
@@ -97,6 +95,7 @@ class Modelo_publicacion extends My_model {
 			if ($insertado) {
 				$id_publicacion = $this->db->insert_id();
 
+				$this->Modelo_modulo->insert_modulo($id_publicacion, $modulos);
 				$this->insert_categoria_a_publicacion($id_publicacion, $id_categoria);
 				$this->insert_autor_a_publicacion($id_publicacion, $id_autor);
 				$this->insert_institucion_a_publicacion($id_publicacion, $id_institucion);

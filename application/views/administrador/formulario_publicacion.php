@@ -32,7 +32,7 @@
 
     <body>
 
-        <div>
+        <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
@@ -51,25 +51,58 @@
 			}
 			?>
 
-			<form action="<?= $url ?>" method="post" enctype="multipart/form-data" autocomplete="off">
+			<form action="<?= $url ?>" id="form_publicacion" method="post" enctype="multipart/form-data" autocomplete="off">
 
-				<div>
+				<div class="form-group">
 
 					<label>Nombre</label>
-					<input type="text" id="nombre" name="nombre" <?php if ($accion == "modificar"): ?>value="<?= $publicacion->nombre ?>"<?php endif; ?>>
+					<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $publicacion->nombre ?>"<?php endif; ?>>
 					<?= form_error("nombre") ?>
 
 				</div>
 
-				<div>
+				<div class="form-group">
 
 					<label>Descripción</label>
-					<textarea id="descripcion" name="descripcion"><?php if ($accion == "modificar"): ?><?= $publicacion->descripcion ?><?php endif; ?></textarea>
+					<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $publicacion->descripcion ?><?php endif; ?></textarea>
 					<?= form_error("descripcion") ?>
 
 				</div>
 
-				<div>
+				<div class="form-group">
+
+					<label>Modulos</label>
+
+					<div class="checkbox">
+
+						<label><input type="checkbox" id="con_modulos" name="con_modulos">Agregar modulos</label>
+
+					</div>
+
+					<div id="div_modulos" style="display: none">
+
+						<ol id="lista_modulos">
+
+							<li>
+								<span class="input-group">
+									<input type="text" id="modulos" name="modulos[]" class="form-control">
+									<span class="input-group-btn">
+										<button class="eliminar_modulo btn btn-default">Eliminar</button>
+									</span>
+								</span>
+							</li>
+
+						</ol>
+
+						<?= form_error("modulos") ?>
+
+						<button id="agregar_modulo" name="agregar_modulo" class="btn btn-default">Agregar modulo</button>
+
+					</div>
+
+				</div>
+
+				<div class="form-group">
 
 					<label>Imagen</label>
 					<input type="file" id="imagen" name="imagen">
@@ -77,7 +110,7 @@
 
 				</div>
 
-				<div>
+				<div class="form-group">
 
 					<label>Documento</label>
 					<input type="file" id="url" name="url">
@@ -90,54 +123,58 @@
 
 				<?php if ($autores): ?>
 
-					<label>Autor(es)</label>
+					<div class="form-group">
 
-					<div class="row">
+						<label>Autor(es)</label>
 
-						<div class="col-md-5">
+						<div class="row">
 
-							<label>Autores disponibles</label>
-							
-							<select id="autores" multiple>
+							<div class="col-md-5">
 
-								<?php foreach ($autores as $autor): ?>
+								<label>Autores disponibles</label>
 
-									<?php
-									$autor->nombre_completo = $autor->nombre;
+								<select id="autores" class="form-control" multiple>
 
-									if ($autor->apellido_paterno != "") {
-										$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
-									}
+									<?php foreach ($autores as $autor): ?>
 
-									if ($autor->apellido_materno != "") {
-										$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
-									}
-									?>
+										<?php
+										$autor->nombre_completo = $autor->nombre;
 
-									<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
+										if ($autor->apellido_paterno != "") {
+											$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
+										}
 
-								<?php endforeach; ?>
+										if ($autor->apellido_materno != "") {
+											$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
+										}
+										?>
 
-							</select>
+										<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
 
-						</div>
+									<?php endforeach; ?>
 
-						<div class="col-md-2">
+								</select>
 
-							<button id="agregar_autor" class="agregar">Agregar ></button>
-							<button id="quitar_autor" class="quitar">< Quitar</button>
+							</div>
 
-						</div>
+							<div class="col-md-2 btn-group">
 
-						<div class="col-md-5">
+								<button id="agregar_autor" class="agregar btn btn-default">Agregar ></button>
+								<button id="quitar_autor" class="quitar btn btn-default">< Quitar</button>
 
-							<label>Autores seleccionados</label>
+							</div>
 
-							<select id="id_autor" name="id_autor[]" multiple="">
+							<div class="col-md-5">
+
+								<label>Autores seleccionados</label>
+
+								<select id="id_autor" name="id_autor[]" class="form-control" multiple="">
 
 
 
-							</select>
+								</select>
+
+							</div>
 
 						</div>
 
@@ -147,42 +184,46 @@
 
 				<?php if ($categorias): ?>
 
-					<label>Categoria(s)</label>
+					<div class="form-group">
 
-					<div class="row">
+						<label>Categoria(s)</label>
 
-						<div class="col-md-5">
+						<div class="row">
 
-							<label>Categorias disponibles</label>
+							<div class="col-md-5">
 
-							<select id="categorias" multiple>
+								<label>Categorias disponibles</label>
 
-								<?php foreach ($categorias as $categoria): ?>
+								<select id="categorias" class="form-control" multiple>
 
-									<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+									<?php foreach ($categorias as $categoria): ?>
 
-								<?php endforeach; ?>
+										<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
 
-							</select>
+									<?php endforeach; ?>
 
-						</div>
+								</select>
 
-						<div class="col-md-2">
+							</div>
 
-							<button id="agregar_categoria" class="agregar">Agregar ></button>
-							<button id="quitar_categoria" class="quitar">< Quitar</button>
+							<div class="col-md-2 btn-group">
 
-						</div>
+								<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
+								<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
 
-						<div class="col-md-5">
+							</div>
 
-							<label>Categorias seleccionadas</label>
+							<div class="col-md-5">
 
-							<select id="id_categoria" name="id_categoria[]" multiple>
+								<label>Categorias seleccionadas</label>
+
+								<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
 
 
 
-							</select>
+								</select>
+
+							</div>
 
 						</div>
 
@@ -192,42 +233,46 @@
 
 				<?php if ($instituciones): ?>
 
-					<label>Institución(es)</label>
+					<div class="form-group">
 
-					<div class="row">
+						<label>Institución(es)</label>
 
-						<div class="col-md-5">
+						<div class="row">
 
-							<label>Instituciones disponibles</label>
+							<div class="col-md-5">
 
-							<select id="instituciones" multiple>
+								<label>Instituciones disponibles</label>
 
-								<?php foreach ($instituciones as $institucion): ?>
+								<select id="instituciones" class="form-control" multiple>
 
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+									<?php foreach ($instituciones as $institucion): ?>
 
-								<?php endforeach; ?>
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
 
-							</select>
+									<?php endforeach; ?>
 
-						</div>
+								</select>
 
-						<div class="col-md-2">
+							</div>
 
-							<button id="agregar_institucion" class="agregar">Agregar ></button>
-							<button id="quitar_institucion" class="quitar">< Quitar</button>
+							<div class="col-md-2 btn-group">
 
-						</div>
+								<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
+								<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
 
-						<div class="col-md-5">
+							</div>
 
-							<label>Instituciones seleccionadas</label>
+							<div class="col-md-5">
 
-							<select id="id_institucion" name="id_institucion[]" multiple>
+								<label>Instituciones seleccionadas</label>
+
+								<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
 
 
 
-							</select>
+								</select>
+
+							</div>
 
 						</div>
 
@@ -235,7 +280,7 @@
 
 				<?php endif; ?>
 
-				<input type="submit" id="submit" name="submit" value="Aceptar">
+				<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
 			</form>
 
@@ -244,6 +289,8 @@
 		<script type="text/javascript">
 
 			$(document).ready(function() {
+
+				/** scripts de los selects multiples **/
 
 				$('.agregar').click(function(event) {
 					event.preventDefault();
@@ -287,6 +334,7 @@
 
 					return id_select;
 				}
+				;
 
 				function get_select_destino(id) {
 
@@ -315,6 +363,65 @@
 
 					return id_select;
 				}
+				;
+
+				$("#form_publicacion").submit(function() {
+					$("option").each(function() {
+						$(this).prop("selected", "selected");
+					});
+				});
+
+				/** scripts de los modulos **/
+
+				$("#con_modulos").click(function() {
+					if ($(this).prop("checked") == true) {
+						$("#div_modulos").show();
+					} else {
+						$("#div_modulos").hide();
+					}
+				});
+
+				/* agregar un modulo */
+				$("#agregar_modulo").click(function(event) {
+					event.preventDefault();
+
+					var input = $("<input/>", {
+						type: "text",
+						id: "modulos",
+						name: "modulos[]"
+					});
+					input.addClass("form-control");
+
+					var button_eliminar = $("<button/>");
+					button_eliminar.html("Eliminar");
+					button_eliminar.addClass("eliminar_modulo btn btn-default");
+
+					var span_button = $("<span/>");
+					span_button.addClass("input-group-btn");
+
+					span_button.append(button_eliminar);
+
+					var span_conjunto = $("<span/>");
+					span_conjunto.addClass("input-group");
+
+					span_conjunto.append(input);
+					span_conjunto.append(span_button);
+
+					var li = $("<li/>");
+
+					li.append(span_conjunto);
+
+					li.appendTo("#lista_modulos");
+				});
+
+				/* eliminar un modulo */
+				$(document).on("click", ".eliminar_modulo", function(event) {
+					event.preventDefault();
+
+					var li = $(this).parents("li");
+
+					li.remove();
+				});
 			});
 
 		</script>

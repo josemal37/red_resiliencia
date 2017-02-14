@@ -53,6 +53,13 @@ class Publicacion extends Base {
 				"numeric",
 				"is_natural"
 			)
+		),
+		"modulos" => array(
+			"field" => "modulos",
+			"label" => "modulos",
+			"rules" => array(
+				"min_length[1]"
+			)
 		)
 	);
 }
