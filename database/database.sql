@@ -1,12 +1,12 @@
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0 modificado                         */
-/* Created on:     07/02/2017 14:46:04                          */
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     14/02/2017 09:46:25                          */
 /*==============================================================*/
 
 /*==============================================================*/
 /* Table: ARTICULO                                              */
 /*==============================================================*/
-create table `ARTICULO`
+create table ARTICULO
 (
    ID_ARTICULO          int not null auto_increment,
    NOMBRE_ARTICULO      varchar(1024) not null,
@@ -14,13 +14,14 @@ create table `ARTICULO`
    URL_ARTICULO         varchar(1024) not null,
    IMAGEN_ARTICULO      varchar(1024),
    DESTACADO_ARTICULO   bool,
+   FECHA_ARTICULO       date,
    primary key (ID_ARTICULO)
 );
 
 /*==============================================================*/
 /* Table: AUTOR                                                 */
 /*==============================================================*/
-create table `AUTOR`
+create table AUTOR
 (
    ID_AUTOR             int not null auto_increment,
    NOMBRE_AUTOR         varchar(1024) not null,
@@ -32,7 +33,7 @@ create table `AUTOR`
 /*==============================================================*/
 /* Table: AUTOR_ARTICULO                                        */
 /*==============================================================*/
-create table `AUTOR_ARTICULO`
+create table AUTOR_ARTICULO
 (
    ID_ARTICULO          int not null,
    ID_AUTOR             int not null,
@@ -42,7 +43,7 @@ create table `AUTOR_ARTICULO`
 /*==============================================================*/
 /* Table: AUTOR_PUBLICACION                                     */
 /*==============================================================*/
-create table `AUTOR_PUBLICACION`
+create table AUTOR_PUBLICACION
 (
    ID_PUBLICACION       int not null,
    ID_AUTOR             int not null,
@@ -52,7 +53,7 @@ create table `AUTOR_PUBLICACION`
 /*==============================================================*/
 /* Table: CATEGORIA                                             */
 /*==============================================================*/
-create table `CATEGORIA`
+create table CATEGORIA
 (
    ID_CATEGORIA         int not null auto_increment,
    NOMBRE_CATEGORIA     varchar(1024) not null,
@@ -62,7 +63,7 @@ create table `CATEGORIA`
 /*==============================================================*/
 /* Table: CATEGORIA_ARTICULO                                    */
 /*==============================================================*/
-create table `CATEGORIA_ARTICULO`
+create table CATEGORIA_ARTICULO
 (
    ID_ARTICULO          int not null,
    ID_CATEGORIA         int not null,
@@ -72,7 +73,7 @@ create table `CATEGORIA_ARTICULO`
 /*==============================================================*/
 /* Table: CATEGORIA_EVENTO                                      */
 /*==============================================================*/
-create table `CATEGORIA_EVENTO`
+create table CATEGORIA_EVENTO
 (
    ID_EVENTO            int not null,
    ID_CATEGORIA         int not null,
@@ -82,7 +83,7 @@ create table `CATEGORIA_EVENTO`
 /*==============================================================*/
 /* Table: CATEGORIA_PUBLICACION                                 */
 /*==============================================================*/
-create table `CATEGORIA_PUBLICACION`
+create table CATEGORIA_PUBLICACION
 (
    ID_PUBLICACION       int not null,
    ID_CATEGORIA         int not null,
@@ -92,7 +93,7 @@ create table `CATEGORIA_PUBLICACION`
 /*==============================================================*/
 /* Table: CIUDAD                                                */
 /*==============================================================*/
-create table `CIUDAD`
+create table CIUDAD
 (
    ID_CIUDAD            int not null auto_increment,
    ID_PAIS              int,
@@ -103,7 +104,7 @@ create table `CIUDAD`
 /*==============================================================*/
 /* Table: EVENTO                                                */
 /*==============================================================*/
-create table `EVENTO`
+create table EVENTO
 (
    ID_EVENTO            int not null auto_increment,
    ID_CIUDAD            int,
@@ -120,7 +121,7 @@ create table `EVENTO`
 /*==============================================================*/
 /* Table: INSTITUCION                                           */
 /*==============================================================*/
-create table `INSTITUCION`
+create table INSTITUCION
 (
    ID_INSTITUCION       int not null auto_increment,
    NOMBRE_INSTITUCION   varchar(1024) not null,
@@ -131,7 +132,7 @@ create table `INSTITUCION`
 /*==============================================================*/
 /* Table: INSTITUCION_ARTICULO                                  */
 /*==============================================================*/
-create table `INSTITUCION_ARTICULO`
+create table INSTITUCION_ARTICULO
 (
    ID_ARTICULO          int not null,
    ID_INSTITUCION       int not null,
@@ -141,7 +142,7 @@ create table `INSTITUCION_ARTICULO`
 /*==============================================================*/
 /* Table: INSTITUCION_AUTOR                                     */
 /*==============================================================*/
-create table `INSTITUCION_AUTOR`
+create table INSTITUCION_AUTOR
 (
    ID_AUTOR             int not null,
    ID_INSTITUCION       int not null,
@@ -151,7 +152,7 @@ create table `INSTITUCION_AUTOR`
 /*==============================================================*/
 /* Table: INSTITUCION_EVENTO                                    */
 /*==============================================================*/
-create table `INSTITUCION_EVENTO`
+create table INSTITUCION_EVENTO
 (
    ID_EVENTO            int not null,
    ID_INSTITUCION       int not null,
@@ -161,7 +162,7 @@ create table `INSTITUCION_EVENTO`
 /*==============================================================*/
 /* Table: INSTITUCION_PUBLICACION                               */
 /*==============================================================*/
-create table `INSTITUCION_PUBLICACION`
+create table INSTITUCION_PUBLICACION
 (
    ID_PUBLICACION       int not null,
    ID_INSTITUCION       int not null,
@@ -169,9 +170,20 @@ create table `INSTITUCION_PUBLICACION`
 );
 
 /*==============================================================*/
+/* Table: MODULO                                                */
+/*==============================================================*/
+create table MODULO
+(
+   ID_MODULO            int not null auto_increment,
+   ID_PUBLICACION       int not null,
+   NOMBRE_MODULO        varchar(1024),
+   primary key (ID_MODULO)
+);
+
+/*==============================================================*/
 /* Table: PAIS                                                  */
 /*==============================================================*/
-create table `PAIS`
+create table PAIS
 (
    ID_PAIS              int not null auto_increment,
    NOMBRE_PAIS          varchar(1024) not null,
@@ -181,7 +193,7 @@ create table `PAIS`
 /*==============================================================*/
 /* Table: PUBLICACION                                           */
 /*==============================================================*/
-create table `PUBLICACION`
+create table PUBLICACION
 (
    ID_PUBLICACION       int not null auto_increment,
    NOMBRE_PUBLICACION   varchar(1024) not null,
@@ -189,7 +201,34 @@ create table `PUBLICACION`
    URL_PUBLICACION      varchar(1024),
    IMAGEN_PUBLICACION   varchar(1024),
    DESTACADA_PUBLICACION bool,
+   FECHA_PUBLICACION    date,
    primary key (ID_PUBLICACION)
+);
+
+/*==============================================================*/
+/* Table: ROL                                                   */
+/*==============================================================*/
+create table ROL
+(
+   ID_ROL               int not null auto_increment,
+   NOMBRE_ROL           varchar(1024),
+   primary key (ID_ROL)
+);
+
+/*==============================================================*/
+/* Table: USUARIO                                               */
+/*==============================================================*/
+create table USUARIO
+(
+   ID_USUARIO           int not null auto_increment,
+   ID_INSTITUCION       int,
+   ID_ROL               int not null,
+   NOMBRE_USUARIO       varchar(1024),
+   APELLIDO_PATERNO_USUARIO varchar(1024),
+   APELLIDO_MATERNO_USUARIO varchar(1024),
+   LOGIN_USUARIO        varchar(1024),
+   PASSWORD_USUARIO     varchar(1024),
+   primary key (ID_USUARIO)
 );
 
 alter table AUTOR_ARTICULO add constraint FK_AUTOR_ARTICULO foreign key (ID_ARTICULO)
@@ -250,5 +289,14 @@ alter table INSTITUCION_PUBLICACION add constraint FK_INSTITUCION_PUBLICACION fo
       references PUBLICACION (ID_PUBLICACION) on delete restrict on update restrict;
 
 alter table INSTITUCION_PUBLICACION add constraint FK_INSTITUCION_PUBLICACION2 foreign key (ID_INSTITUCION)
+      references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
+
+alter table MODULO add constraint FK_MODULO_PUBLICACION foreign key (ID_PUBLICACION)
+      references PUBLICACION (ID_PUBLICACION) on delete restrict on update restrict;
+
+alter table USUARIO add constraint FK_ROL_USUARIO foreign key (ID_ROL)
+      references ROL (ID_ROL) on delete restrict on update restrict;
+
+alter table USUARIO add constraint FK_USUARIO_INSTITUCION foreign key (ID_INSTITUCION)
       references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
 
