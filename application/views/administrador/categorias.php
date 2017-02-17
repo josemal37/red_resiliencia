@@ -62,7 +62,10 @@
 							<tr id="<?= $categoria->id ?>">
 
 								<td><?= $categoria->nombre ?></td>
-								<td><a href="<?= base_url("administrador/modificar_categoria/" . $categoria->id) ?>">Modificar</a></td>
+								<td>
+									<a href="<?= base_url("administrador/modificar_categoria/" . $categoria->id) ?>">Modificar</a>
+									<a href="<?= base_url("administrador/eliminar_categoria/" . $categoria->id) ?>">Eliminar</a>
+								</td>
 
 							</tr>
 
@@ -74,7 +77,7 @@
 
 			<?php else: ?>
 
-				<p>No se regisstraron categorias.</p>
+				<p>No se registraron categorias.</p>
 
 			<?php endif; ?>
 

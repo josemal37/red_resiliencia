@@ -161,23 +161,23 @@
 
 					<?php if ($accion == "modificar"): ?>
 
-						<div>
+						<?php if (isset($publicacion->imagen)): ?>
 
-							<label>Imagen actual</label>
+							<div>
 
-							<br><img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>">
+								<label>Imagen actual</label>
 
-							<p><?= $publicacion->imagen ?><p>
+								<br><img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" class="img-responsive">
 
-								<?php if (isset($publicacion->imagen)): ?>
+								<p><?= $publicacion->imagen ?><p>
 
 									<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $publicacion->imagen ?>">
 
-								<?php endif; ?>
+							</div>
 
-						</div>
+							<label>Subir imagen nueva</label>
 
-						<label>Subir imagen nueva</label>
+						<?php endif; ?>
 
 					<?php endif; ?>
 
@@ -202,398 +202,398 @@
 
 								<p><a href="<?= base_url($path_publicaciones . $publicacion->url) ?>"><?= $publicacion->url ?></a></p>
 
-									<input type="hidden" id="url_antiguo" name="url_antiguo" value="<?= $publicacion->url ?>">
-
-									</div>
-
-									<label>Subir nuevo documento</label>
-
-								<?php endif; ?>
-
-							<?php endif; ?>
-
-							<input type="file" id="url" name="url">
-
-							<?= form_error("url") ?>
+								<input type="hidden" id="url_antiguo" name="url_antiguo" value="<?= $publicacion->url ?>">
 
 							</div>
 
-							<!-- Autores -->
-							<?php if (isset($autores) || isset($publicacion->autores)): ?>
+							<label>Subir nuevo documento</label>
 
-								<div class="form-group">
+						<?php endif; ?>
 
-									<label>Autor(es)</label>
+					<?php endif; ?>
 
-									<div class="row">
+					<input type="file" id="url" name="url">
 
-										<div class="col-md-5">
+					<?= form_error("url") ?>
 
-											<label>Autores disponibles</label>
+				</div>
 
-											<select id="autores" class="form-control" multiple>
+				<!-- Autores -->
+				<?php if (isset($autores) || isset($publicacion->autores)): ?>
 
-												<?php if ($autores): ?>
+					<div class="form-group">
 
-													<?php foreach ($autores as $autor): ?>
+						<label>Autor(es)</label>
 
-														<?php
-														$autor->nombre_completo = $autor->nombre;
+						<div class="row">
 
-														if ($autor->apellido_paterno != "") {
-															$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
-														}
+							<div class="col-md-5">
 
-														if ($autor->apellido_materno != "") {
-															$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
-														}
-														?>
+								<label>Autores disponibles</label>
 
-														<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
+								<select id="autores" class="form-control" multiple>
 
-													<?php endforeach; ?>
+									<?php if ($autores): ?>
 
-												<?php endif; ?>
+										<?php foreach ($autores as $autor): ?>
 
-											</select>
+											<?php
+											$autor->nombre_completo = $autor->nombre;
 
-										</div>
+											if ($autor->apellido_paterno != "") {
+												$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
+											}
 
-										<div class="col-md-2 btn-group">
+											if ($autor->apellido_materno != "") {
+												$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
+											}
+											?>
 
-											<button id="agregar_autor" class="agregar btn btn-default">Agregar ></button>
-											<button id="quitar_autor" class="quitar btn btn-default">< Quitar</button>
+											<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
 
-										</div>
+										<?php endforeach; ?>
 
-										<div class="col-md-5">
+									<?php endif; ?>
 
-											<label>Autores seleccionados</label>
-
-											<select id="id_autor" name="id_autor[]" class="form-control" multiple="">
-
-												<?php if ($publicacion->autores): ?>
-
-													<?php foreach ($publicacion->autores as $autor): ?>
-
-														<?php
-														$autor->nombre_completo = $autor->nombre;
-
-														if ($autor->apellido_paterno != "") {
-															$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
-														}
-
-														if ($autor->apellido_materno != "") {
-															$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
-														}
-														?>
-
-														<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
-
-													<?php endforeach; ?>
-
-												<?php endif; ?>
-
-											</select>
-
-										</div>
-
-									</div>
-
-								</div>
-
-							<?php else: ?>
-
-								<p>No se registraron autores.</p>
-
-							<?php endif; ?>
-
-							<!-- Categorias -->
-							<?php if (isset($categorias) || isset($publicacion->categorias)): ?>
-
-								<div class="form-group">
-
-									<label>Categoria(s)</label>
-
-									<div class="row">
-
-										<div class="col-md-5">
-
-											<label>Categorias disponibles</label>
-
-											<select id="categorias" class="form-control" multiple>
-
-												<?php if ($categorias): ?>
-
-													<?php foreach ($categorias as $categoria): ?>
-
-														<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-													<?php endforeach; ?>
-
-												<?php endif; ?>
-
-											</select>
-
-										</div>
-
-										<div class="col-md-2 btn-group">
-
-											<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
-
-											<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
-
-										</div>
-
-										<div class="col-md-5">
-
-											<label>Categorias seleccionadas</label>
-
-											<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
-
-												<?php if ($publicacion->categorias): ?>
-
-													<?php foreach ($publicacion->categorias as $categoria): ?>
-
-														<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-													<?php endforeach; ?>
-
-												<?php endif; ?>
-
-											</select>
-
-										</div>
-
-									</div>
-
-								</div>
-
-							<?php else: ?>
-
-								<p>No se registraron categorias.</p>
-
-							<?php endif; ?>
-
-							<!-- Instituciones -->
-							<?php if (isset($instituciones) || isset($publicacion->instituciones)): ?>
-
-								<div class="form-group">
-
-									<label>Institución(es)</label>
-
-									<div class="row">
-
-										<div class="col-md-5">
-
-											<label>Instituciones disponibles</label>
-
-											<select id="instituciones" class="form-control" multiple>
-
-												<?php if ($instituciones): ?>
-
-													<?php foreach ($instituciones as $institucion): ?>
-
-														<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-													<?php endforeach; ?>
-
-												<?php endif; ?>
-
-											</select>
-
-										</div>
-
-										<div class="col-md-2 btn-group">
-
-											<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
-
-											<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
-
-										</div>
-
-										<div class="col-md-5">
-
-											<label>Instituciones seleccionadas</label>
-
-											<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
-
-												<?php if ($publicacion->instituciones): ?>
-
-													<?php foreach ($publicacion->instituciones as $institucion): ?>
-
-														<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-													<?php endforeach; ?>
-
-												<?php endif; ?>
-
-											</select>
-
-										</div>
-
-									</div>
-
-								</div>
-
-							<?php else: ?>
-
-								<p>No se registraron instituciones.</p>
-
-							<?php endif; ?>
-
-							<?php if ($accion == "modificar"): ?>
-
-								<input type="hidden" id="id" name="id" value="<?= $publicacion->id ?>">
-
-							<?php endif; ?>
-
-							<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
-
-							</form>
+								</select>
 
 							</div>
 
-							<script type="text/javascript">
+							<div class="col-md-2 btn-group">
 
-								$(document).ready(function() {
+								<button id="agregar_autor" class="agregar btn btn-default">Agregar ></button>
+								<button id="quitar_autor" class="quitar btn btn-default">< Quitar</button>
 
-									/** scripts de los selects multiples **/
+							</div>
 
-									$('.agregar').click(function(event) {
-										event.preventDefault();
-										var id = $(this).attr("id");
-										var id_origen = get_select_origen(id);
-										var id_destino = get_select_destino(id);
-										$("#" + id_origen + " option:selected").remove().appendTo("#" + id_destino);
-									});
-									$('.quitar').click(function(e) {
-										event.preventDefault();
-										var id = $(this).attr("id");
-										var id_origen = get_select_origen(id);
-										var id_destino = get_select_destino(id);
-										$("#" + id_origen + " option:selected").remove().appendTo("#" + id_destino);
-									});
+							<div class="col-md-5">
 
-									function get_select_origen(id) {
+								<label>Autores seleccionados</label>
 
-										var id_select = "";
+								<select id="id_autor" name="id_autor[]" class="form-control" multiple="">
 
-										switch (id) {
-											case "agregar_autor":
-												id_select = "autores";
-												break;
-											case "agregar_categoria":
-												id_select = "categorias";
-												break;
-											case "agregar_institucion":
-												id_select = "instituciones";
-												break;
-											case "quitar_autor":
-												id_select = "id_autor";
-												break;
-											case "quitar_categoria":
-												id_select = "id_categoria";
-												break;
-											case "quitar_institucion":
-												id_select = "id_institucion";
-												break;
-										}
+									<?php if ($publicacion->autores): ?>
 
-										return id_select;
-									}
-									;
+										<?php foreach ($publicacion->autores as $autor): ?>
 
-									function get_select_destino(id) {
+											<?php
+											$autor->nombre_completo = $autor->nombre;
 
-										var id_select = "";
+											if ($autor->apellido_paterno != "") {
+												$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
+											}
 
-										switch (id) {
-											case "agregar_autor":
-												id_select = "id_autor";
-												break;
-											case "agregar_categoria":
-												id_select = "id_categoria";
-												break;
-											case "agregar_institucion":
-												id_select = "id_institucion";
-												break;
-											case "quitar_autor":
-												id_select = "autores";
-												break;
-											case "quitar_categoria":
-												id_select = "categorias";
-												break;
-											case "quitar_institucion":
-												id_select = "instituciones";
-												break;
-										}
+											if ($autor->apellido_materno != "") {
+												$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
+											}
+											?>
 
-										return id_select;
-									}
-									;
+											<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
 
-									$("#form_publicacion").submit(function() {
-										$("option").each(function() {
-											$(this).prop("selected", "selected");
-										});
-									});
+										<?php endforeach; ?>
 
-									/** scripts de los modulos **/
+									<?php endif; ?>
 
-									$("#con_modulos").click(function() {
-										if ($(this).prop("checked") == true) {
-											$("#div_modulos").show();
-										} else {
-											$("#div_modulos").hide();
-										}
-									});
+								</select>
 
-									/* agregar un modulo */
-									$("#agregar_modulo").click(function(event) {
-										event.preventDefault();
+							</div>
 
-										var input = $("<input/>", {
-											type: "text",
-											id: "modulos",
-											name: "modulos[]"
-										});
-										input.addClass("form-control");
+						</div>
 
-										var button_eliminar = $("<button/>");
-										button_eliminar.html("Eliminar");
-										button_eliminar.addClass("eliminar_modulo btn btn-default");
+					</div>
 
-										var span_button = $("<span/>");
-										span_button.addClass("input-group-btn");
+				<?php else: ?>
 
-										span_button.append(button_eliminar);
+					<p>No se registraron autores.</p>
 
-										var span_conjunto = $("<span/>");
-										span_conjunto.addClass("input-group");
+				<?php endif; ?>
 
-										span_conjunto.append(input);
-										span_conjunto.append(span_button);
+				<!-- Categorias -->
+				<?php if (isset($categorias) || isset($publicacion->categorias)): ?>
 
-										var li = $("<li/>");
+					<div class="form-group">
 
-										li.append(span_conjunto);
+						<label>Categoria(s)</label>
 
-										li.appendTo("#lista_modulos");
-									});
+						<div class="row">
 
-									/* eliminar un modulo */
-									$(document).on("click", ".eliminar_modulo", function(event) {
-										event.preventDefault();
+							<div class="col-md-5">
 
-										var li = $(this).parents("li");
+								<label>Categorias disponibles</label>
 
-										li.remove();
-									});
-								});
+								<select id="categorias" class="form-control" multiple>
 
-							</script>
+									<?php if ($categorias): ?>
 
-							</body>
+										<?php foreach ($categorias as $categoria): ?>
 
-							</html>
+											<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+							<div class="col-md-2 btn-group">
+
+								<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
+
+								<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
+
+							</div>
+
+							<div class="col-md-5">
+
+								<label>Categorias seleccionadas</label>
+
+								<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
+
+									<?php if ($publicacion->categorias): ?>
+
+										<?php foreach ($publicacion->categorias as $categoria): ?>
+
+											<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				<?php else: ?>
+
+					<p>No se registraron categorias.</p>
+
+				<?php endif; ?>
+
+				<!-- Instituciones -->
+				<?php if (isset($instituciones) || isset($publicacion->instituciones)): ?>
+
+					<div class="form-group">
+
+						<label>Institución(es)</label>
+
+						<div class="row">
+
+							<div class="col-md-5">
+
+								<label>Instituciones disponibles</label>
+
+								<select id="instituciones" class="form-control" multiple>
+
+									<?php if ($instituciones): ?>
+
+										<?php foreach ($instituciones as $institucion): ?>
+
+											<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+							<div class="col-md-2 btn-group">
+
+								<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
+
+								<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
+
+							</div>
+
+							<div class="col-md-5">
+
+								<label>Instituciones seleccionadas</label>
+
+								<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
+
+									<?php if ($publicacion->instituciones): ?>
+
+										<?php foreach ($publicacion->instituciones as $institucion): ?>
+
+											<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				<?php else: ?>
+
+					<p>No se registraron instituciones.</p>
+
+				<?php endif; ?>
+
+				<?php if ($accion == "modificar"): ?>
+
+					<input type="hidden" id="id" name="id" value="<?= $publicacion->id ?>">
+
+				<?php endif; ?>
+
+				<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
+
+			</form>
+
+		</div>
+
+		<script type="text/javascript">
+
+			$(document).ready(function() {
+
+				/** scripts de los selects multiples **/
+
+				$('.agregar').click(function(event) {
+					event.preventDefault();
+					var id = $(this).attr("id");
+					var id_origen = get_select_origen(id);
+					var id_destino = get_select_destino(id);
+					$("#" + id_origen + " option:selected").remove().appendTo("#" + id_destino);
+				});
+				$('.quitar').click(function(e) {
+					event.preventDefault();
+					var id = $(this).attr("id");
+					var id_origen = get_select_origen(id);
+					var id_destino = get_select_destino(id);
+					$("#" + id_origen + " option:selected").remove().appendTo("#" + id_destino);
+				});
+
+				function get_select_origen(id) {
+
+					var id_select = "";
+
+					switch (id) {
+						case "agregar_autor":
+							id_select = "autores";
+							break;
+						case "agregar_categoria":
+							id_select = "categorias";
+							break;
+						case "agregar_institucion":
+							id_select = "instituciones";
+							break;
+						case "quitar_autor":
+							id_select = "id_autor";
+							break;
+						case "quitar_categoria":
+							id_select = "id_categoria";
+							break;
+						case "quitar_institucion":
+							id_select = "id_institucion";
+							break;
+					}
+
+					return id_select;
+				}
+				;
+
+				function get_select_destino(id) {
+
+					var id_select = "";
+
+					switch (id) {
+						case "agregar_autor":
+							id_select = "id_autor";
+							break;
+						case "agregar_categoria":
+							id_select = "id_categoria";
+							break;
+						case "agregar_institucion":
+							id_select = "id_institucion";
+							break;
+						case "quitar_autor":
+							id_select = "autores";
+							break;
+						case "quitar_categoria":
+							id_select = "categorias";
+							break;
+						case "quitar_institucion":
+							id_select = "instituciones";
+							break;
+					}
+
+					return id_select;
+				}
+				;
+
+				$("#form_publicacion").submit(function() {
+					$("option").each(function() {
+						$(this).prop("selected", "selected");
+					});
+				});
+
+				/** scripts de los modulos **/
+
+				$("#con_modulos").click(function() {
+					if ($(this).prop("checked") == true) {
+						$("#div_modulos").show();
+					} else {
+						$("#div_modulos").hide();
+					}
+				});
+
+				/* agregar un modulo */
+				$("#agregar_modulo").click(function(event) {
+					event.preventDefault();
+
+					var input = $("<input/>", {
+						type: "text",
+						id: "modulos",
+						name: "modulos[]"
+					});
+					input.addClass("form-control");
+
+					var button_eliminar = $("<button/>");
+					button_eliminar.html("Eliminar");
+					button_eliminar.addClass("eliminar_modulo btn btn-default");
+
+					var span_button = $("<span/>");
+					span_button.addClass("input-group-btn");
+
+					span_button.append(button_eliminar);
+
+					var span_conjunto = $("<span/>");
+					span_conjunto.addClass("input-group");
+
+					span_conjunto.append(input);
+					span_conjunto.append(span_button);
+
+					var li = $("<li/>");
+
+					li.append(span_conjunto);
+
+					li.appendTo("#lista_modulos");
+				});
+
+				/* eliminar un modulo */
+				$(document).on("click", ".eliminar_modulo", function(event) {
+					event.preventDefault();
+
+					var li = $(this).parents("li");
+
+					li.remove();
+				});
+			});
+
+		</script>
+
+	</body>
+
+</html>

@@ -93,6 +93,18 @@ class Administrador extends CI_Controller {
 			redirect(base_url("administrador/categorias"));
 		}
 	}
+	
+	public function eliminar_categoria($id = FALSE) {
+		if ($id) {
+			if ($this->Modelo_categoria->delete_categoria($id)) {
+				redirect(base_url("administrador/categorias"));
+			} else {
+				redirect(base_url("administrador/categorias"));
+			}
+		} else {
+			redirect(base_url("administrador/categorias"));
+		}
+	}
 
 	private function modificar_categoria_bd() {
 		//recuperamos los datos

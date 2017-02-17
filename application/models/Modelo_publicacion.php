@@ -251,16 +251,8 @@ class Modelo_publicacion extends My_model {
 
 			$this->db->trans_start();
 
-			$this->db->query("SET foreign_key_checks = 0");
-
-			$this->delete_autores_de_publicacion($id);
-			$this->delete_categorias_de_publicacion($id);
-			$this->delete_instituciones_de_publicacion($id);
-
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
-
-			$this->db->query("SET foreign_key_checks = 1");
 
 			$this->db->trans_complete();
 
