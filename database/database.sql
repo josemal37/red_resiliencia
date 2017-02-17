@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     14/02/2017 09:46:25                          */
+/* Created on:     17/02/2017 10:16:04                          */
 /*==============================================================*/
 
 /*==============================================================*/
@@ -238,7 +238,7 @@ alter table AUTOR_ARTICULO add constraint FK_AUTOR_ARTICULO2 foreign key (ID_AUT
       references AUTOR (ID_AUTOR) on delete restrict on update restrict;
 
 alter table AUTOR_PUBLICACION add constraint FK_AUTOR_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete restrict on update restrict;
+      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
 
 alter table AUTOR_PUBLICACION add constraint FK_AUTOR_PUBLICACION2 foreign key (ID_AUTOR)
       references AUTOR (ID_AUTOR) on delete restrict on update restrict;
@@ -247,19 +247,19 @@ alter table CATEGORIA_ARTICULO add constraint FK_CATEGORIA_ARTICULO foreign key 
       references ARTICULO (ID_ARTICULO) on delete restrict on update restrict;
 
 alter table CATEGORIA_ARTICULO add constraint FK_CATEGORIA_ARTICULO2 foreign key (ID_CATEGORIA)
-      references CATEGORIA (ID_CATEGORIA) on delete restrict on update restrict;
+      references CATEGORIA (ID_CATEGORIA) on delete cascade on update cascade;
 
 alter table CATEGORIA_EVENTO add constraint FK_CATEGORIA_EVENTO foreign key (ID_EVENTO)
-      references EVENTO (ID_EVENTO) on delete restrict on update restrict;
+      references EVENTO (ID_EVENTO) on delete cascade on update cascade;
 
 alter table CATEGORIA_EVENTO add constraint FK_CATEGORIA_EVENTO2 foreign key (ID_CATEGORIA)
-      references CATEGORIA (ID_CATEGORIA) on delete restrict on update restrict;
+      references CATEGORIA (ID_CATEGORIA) on delete cascade on update cascade;
 
 alter table CATEGORIA_PUBLICACION add constraint FK_CATEGORIA_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete restrict on update restrict;
+      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
 
 alter table CATEGORIA_PUBLICACION add constraint FK_CATEGORIA_PUBLICACION2 foreign key (ID_CATEGORIA)
-      references CATEGORIA (ID_CATEGORIA) on delete restrict on update restrict;
+      references CATEGORIA (ID_CATEGORIA) on delete cascade on update cascade;
 
 alter table CIUDAD add constraint FK_PAIS_CIUDAD foreign key (ID_PAIS)
       references PAIS (ID_PAIS) on delete restrict on update restrict;
@@ -271,28 +271,28 @@ alter table INSTITUCION_ARTICULO add constraint FK_INSTITUCION_ARTICULO foreign 
       references ARTICULO (ID_ARTICULO) on delete restrict on update restrict;
 
 alter table INSTITUCION_ARTICULO add constraint FK_INSTITUCION_ARTICULO2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
+      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
 
 alter table INSTITUCION_AUTOR add constraint FK_INSTITUCION_AUTOR foreign key (ID_AUTOR)
       references AUTOR (ID_AUTOR) on delete restrict on update restrict;
 
 alter table INSTITUCION_AUTOR add constraint FK_INSTITUCION_AUTOR2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
+      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
 
 alter table INSTITUCION_EVENTO add constraint FK_INSTITUCION_EVENTO foreign key (ID_EVENTO)
-      references EVENTO (ID_EVENTO) on delete restrict on update restrict;
+      references EVENTO (ID_EVENTO) on delete cascade on update cascade;
 
 alter table INSTITUCION_EVENTO add constraint FK_INSTITUCION_EVENTO2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
+      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
 
 alter table INSTITUCION_PUBLICACION add constraint FK_INSTITUCION_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete restrict on update restrict;
+      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
 
 alter table INSTITUCION_PUBLICACION add constraint FK_INSTITUCION_PUBLICACION2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
+      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
 
 alter table MODULO add constraint FK_MODULO_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete restrict on update restrict;
+      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
 
 alter table USUARIO add constraint FK_ROL_USUARIO foreign key (ID_ROL)
       references ROL (ID_ROL) on delete restrict on update restrict;
