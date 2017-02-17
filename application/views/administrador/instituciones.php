@@ -39,51 +39,58 @@
         </div>
 
         <div class="container">
-			
-			<?php if($instituciones): ?>
-			
-			<table class="table">
-				
-				<thead>
-					
-					<tr>
-						
-						<th>Sigla</th>
-						<th>Nombre</th>
-						<th>Acciones</th>
-						
-					</tr>
-					
-				</thead>
-				
-				<tbody>
-					
-					<?php foreach($instituciones as $institucion): ?>
-					
-					<tr id="<?= $institucion->id?>">
-						
-						<td><?= $institucion->sigla ?></td>
-						<td><?= $institucion->nombre ?></td>
-						<td><a href="<?= base_url("administrador/modificar_institucion/" . $institucion->id)?>">Modificar</a></td>
-						
-					</tr>
-					
-					<?php endforeach; ?>
-					
-				</tbody>
-				
-			</table>
-			
+
+			<?php if ($instituciones): ?>
+
+				<table class="table">
+
+					<thead>
+
+						<tr>
+
+							<th>Sigla</th>
+							<th>Nombre</th>
+							<th>Acciones</th>
+
+						</tr>
+
+					</thead>
+
+					<tbody>
+
+						<?php foreach ($instituciones as $institucion): ?>
+
+							<tr id="<?= $institucion->id ?>">
+
+								<td><?= $institucion->sigla ?></td>
+								<td><?= $institucion->nombre ?></td>
+
+								<td>
+
+									<a href="<?= base_url("administrador/modificar_institucion/" . $institucion->id) ?>">Modificar</a>
+
+									<a href="<?= base_url("administrador/eliminar_institucion/" . $institucion->id) ?>">Eliminar</a>
+
+								</td>
+
+							</tr>
+
+						<?php endforeach; ?>
+
+					</tbody>
+
+				</table>
+
 			<?php else: ?>
-			
-			<p>No se registraron instituciones.</p>
-			
+
+				<p>No se registraron instituciones.</p>
+
 			<?php endif; ?>
-			
-			<a href="<?= base_url("administrador/registrar_institucion")?>">Registrar institución</a>
-			
+
+			<a href="<?= base_url("administrador/registrar_institucion") ?>">Registrar institución</a>
+
 		</div>
-		
+
 	</body>
-	
+
 </html>

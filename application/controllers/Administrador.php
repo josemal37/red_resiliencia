@@ -297,6 +297,18 @@ class Administrador extends CI_Controller {
 			$this->modificar_institucion($id);
 		}
 	}
+	
+	public function eliminar_institucion($id = FALSE) {
+		if ($id) {
+			if ($this->Modelo_institucion->delete_institucion($id)) {
+				redirect(base_url("administrador/instituciones"));
+			} else {
+				redirect(base_url("administrador/instituciones"));
+			}
+		} else {
+			redirect(base_url("administrador/instituciones"));
+		}
+	}
 
 	public function publicaciones() {
 		$datos = array();

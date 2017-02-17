@@ -165,6 +165,23 @@ class Modelo_institucion extends My_model {
 			return FALSE;
 		}
 	}
+	
+	public function delete_institucion($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+			
+			$this->db->trans_start();
+			
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+			
+			$this->db->trans_complete();
+			
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
 
 	public function existe($nombre = "", $sigla = "") {
 		$existe = FALSE;
