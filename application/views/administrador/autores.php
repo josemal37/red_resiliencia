@@ -67,6 +67,7 @@
 								<td><?= $autor->nombre ?></td>
 								<td><?= $autor->apellido_paterno ?></td>
 								<td><?= $autor->apellido_materno ?></td>
+								
 								<td>
 
 									<?php if ($autor->instituciones): ?>
@@ -84,7 +85,14 @@
 									<?php endif; ?>
 
 								</td>
-								<td><a href="<?= base_url("administrador/modificar_autor/" . $autor->id) ?>">Modificar autor</a></td>
+								
+								<td>
+									
+									<a href="<?= base_url("administrador/modificar_autor/" . $autor->id) ?>">Modificar</a>
+									
+									<a href="<?= base_url("administrador/eliminar_autor/" . $autor->id) ?>">Eliminar</a>
+									
+								</td>
 
 							</tr>
 

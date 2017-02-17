@@ -93,18 +93,6 @@ class Administrador extends CI_Controller {
 			redirect(base_url("administrador/categorias"));
 		}
 	}
-	
-	public function eliminar_categoria($id = FALSE) {
-		if ($id) {
-			if ($this->Modelo_categoria->delete_categoria($id)) {
-				redirect(base_url("administrador/categorias"));
-			} else {
-				redirect(base_url("administrador/categorias"));
-			}
-		} else {
-			redirect(base_url("administrador/categorias"));
-		}
-	}
 
 	private function modificar_categoria_bd() {
 		//recuperamos los datos
@@ -124,6 +112,18 @@ class Administrador extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_categoria($id);
+		}
+	}
+
+	public function eliminar_categoria($id = FALSE) {
+		if ($id) {
+			if ($this->Modelo_categoria->delete_categoria($id)) {
+				redirect(base_url("administrador/categorias"));
+			} else {
+				redirect(base_url("administrador/categorias"));
+			}
+		} else {
+			redirect(base_url("administrador/categorias"));
 		}
 	}
 
@@ -211,6 +211,18 @@ class Administrador extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_autor($id);
+		}
+	}
+	
+	public function eliminar_autor($id = FALSE) {
+		if ($id) {
+			if ($this->Modelo_autor->delete_autor($id)) {
+				redirect(base_url("administrador/autores"));
+			} else {
+				redirect(base_url("administrador/autores"));
+			}
+		} else {
+			redirect(base_url("administrador/autores"));
 		}
 	}
 
@@ -495,7 +507,7 @@ class Administrador extends CI_Controller {
 					} if (isset($publicacion->url) && $publicacion->url != "") {
 						$this->documento->eliminar_archivo($path . $publicacion->url);
 					}
-					
+
 					redirect(base_url("administrador/publicaciones"));
 				} else {
 					//error al borrar
