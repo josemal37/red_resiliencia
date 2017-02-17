@@ -21,6 +21,7 @@ class Portada extends CI_Controller {
 
 		$this->load->model(array("Modelo_Publicacion", "Modelo_autor", "Modelo_categoria"));
 		$this->load->library(array("Session", "Form_Validation"));
+		$this->load->library(array("Imagen"));
 		$this->load->helper(array("Url", "Form"));
 		$this->load->database("default");
 	}
@@ -28,6 +29,7 @@ class Portada extends CI_Controller {
 	public function index() {
 		$datos = array();
 		$datos["titulo"] = "Red universitaria para una cultura de resiliencia";
+		$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
 		$datos["publicaciones"] = $this->Modelo_Publicacion->select_publicaciones();
 		$this->load->view("portada/portada", $datos);
 	}
