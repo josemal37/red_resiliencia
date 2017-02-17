@@ -24,11 +24,8 @@ class Modelo_publicacion extends My_model {
 	const IMAGEN_COL = "imagen_publicacion";
 	const DESTACADA_COL = "destacada_publicacion";
 	const FECHA_COL = "fecha_publicacion";
-	
 	const COLUMNAS_SELECT = "publicacion.id_publicacion as id, publicacion.nombre_publicacion as nombre, publicacion.descripcion_publicacion as descripcion, publicacion.url_publicacion as url, publicacion.imagen_publicacion as imagen, publicacion.destacada_publicacion as destacada, publicacion.fecha_publicacion as publicacion";
-	
 	const NOMBRE_TABLA = "publicacion";
-	
 	const NOMBRE_TABLA_ASOC_AUTOR = "autor_publicacion";
 	const ID_TABLA_ASOC_AUTOR = "id_autor";
 	const NOMBRE_TABLA_ASOC_CATEGORIA = "categoria_publicacion";
@@ -44,7 +41,7 @@ class Modelo_publicacion extends My_model {
 	public function select_publicaciones($categorias = FALSE, $autores = FALSE, $instituciones = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
-		
+
 		$query = $this->db->get();
 
 		$publicaciones = $this->return_result($query);
@@ -64,7 +61,7 @@ class Modelo_publicacion extends My_model {
 				//cargamos los autores
 				$autores = $this->Modelo_autor->select_autor_por_id($publicacion->id, self::NOMBRE_TABLA);
 				$publicaciones[$i]->autores = $autores;
-				
+
 				//cargamos los modulos
 				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
 				$publicaciones[$i]->modulos = $modulos;
@@ -76,8 +73,40 @@ class Modelo_publicacion extends My_model {
 		return $publicaciones;
 	}
 
-	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function select_publicacion_por_id($id = FALSE) {
+		if ($id) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::ID_COL, $id);
 
+			$query = $this->db->get();
+
+			$publicacion = $this->return_row($query);
+
+			if ($publicacion) {
+				$categorias = $this->Modelo_categoria->select_categoria_por_id($publicacion->id, self::NOMBRE_TABLA);
+				$publicacion->categorias = $categorias;
+
+				//cargamos las instituciones
+				$instituciones = $this->Modelo_institucion->select_institucion_por_id($publicacion->id, self::NOMBRE_TABLA);
+				$publicacion->instituciones = $instituciones;
+
+				//cargamos los autores
+				$autores = $this->Modelo_autor->select_autor_por_id($publicacion->id, self::NOMBRE_TABLA);
+				$publicacion->autores = $autores;
+
+				//cargamos los modulos
+				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
+				$publicacion->modulos = $modulos;
+			}
+
+			return $publicacion;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $fecha = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
 		if ($nombre != "") {
 			$insertado = FALSE;
 
@@ -89,6 +118,7 @@ class Modelo_publicacion extends My_model {
 			$datos[self::URL_COL] = $url;
 			$datos[self::IMAGEN_COL] = $imagen;
 			$datos[self::DESTACADA_COL] = $destacada;
+			$this->db->set(self::FECHA_COL, $fecha);
 
 			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
 
@@ -114,7 +144,7 @@ class Modelo_publicacion extends My_model {
 			$asociado = FALSE;
 
 			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_AUTOR, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_AUTOR, $id_autor);
-			
+
 			return $asociado;
 		} else {
 			return FALSE;
@@ -126,7 +156,7 @@ class Modelo_publicacion extends My_model {
 			$asociado = FALSE;
 
 			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_CATEGORIA, $id_categoria);
-			
+
 			return $asociado;
 		} else {
 			return FALSE;
@@ -138,8 +168,142 @@ class Modelo_publicacion extends My_model {
 			$asociado = FALSE;
 
 			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
-			
+
 			return $asociado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function update_publicacion($id = FALSE, $nombre = "", $descripcion = "", $modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+		if ($id && $nombre != "") {
+			$actualizado = FALSE;
+
+			$this->db->trans_start();
+
+			$this->db->set(self::NOMBRE_COL, $nombre);
+			$this->db->set(self::DESCRIPCION_COL, $descripcion);
+			$this->db->set(self::URL_COL, $url);
+			$this->db->set(self::IMAGEN_COL, $imagen);
+			$this->db->set(self::DESTACADA_COL, $destacada);
+
+			$this->db->where(self::ID_COL, $id);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->update_autores_de_publicacion($id, $id_autor);
+			$this->update_categorias_de_publicacion($id, $id_categoria);
+			$this->update_instituciones_de_publicacion($id, $id_institucion);
+			$this->Modelo_modulo->update_modulos_publicacion($id, $modulos);
+
+			$this->db->trans_complete();
+
+			return $actualizado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function update_autores_de_publicacion($id_publicacion = FALSE, $id_autores = FALSE) {
+		$this->delete_autores_de_publicacion($id_publicacion);
+
+		if ($id_publicacion && $id_autores) {
+			$actualizado = FALSE;
+
+			$actualizado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_AUTOR, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_AUTOR, $id_autores);
+
+			return $actualizado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function update_categorias_de_publicacion($id_publicacion = FALSE, $id_categoria = FALSE) {
+		$this->delete_categorias_de_publicacion($id_publicacion);
+
+		if ($id_publicacion && $id_categoria) {
+			$asociado = FALSE;
+			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_CATEGORIA, $id_categoria);
+
+			return $asociado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function update_instituciones_de_publicacion($id_publicacion = FALSE, $id_institucion = FALSE) {
+		$this->delete_instituciones_de_publicacion($id_publicacion);
+
+		if ($id_publicacion && $id_institucion) {
+			$asociado = FALSE;
+
+			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+
+			return $asociado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function delete_publicacion($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->trans_start();
+
+			$this->db->query("SET foreign_key_checks = 0");
+
+			$this->delete_autores_de_publicacion($id);
+			$this->delete_categorias_de_publicacion($id);
+			$this->delete_instituciones_de_publicacion($id);
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->query("SET foreign_key_checks = 1");
+
+			$this->db->trans_complete();
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_autores_de_publicacion($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_AUTOR);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_categorias_de_publicacion($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_CATEGORIA);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_instituciones_de_publicacion($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_INSTITUCION);
+
+			return $eliminado;
 		} else {
 			return FALSE;
 		}

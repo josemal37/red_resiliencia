@@ -59,4 +59,9 @@ abstract class Base {
 		
 		return $reglas;
 	}
+	
+	public function eliminar_elementos_array() {
+		
+	}
+	
 }

@@ -43,6 +43,8 @@ class Modelo_autor extends My_model {
 				$instituciones = $this->Modelo_institucion->select_institucion_por_id($autor->id, "autor");
 				$autores[$i]->instituciones = $instituciones;
 
+				$autores[$i]->nombre_completo = $this->get_nombre_completo($autor);
+
 				$i += 1;
 			}
 		}
@@ -62,12 +64,16 @@ class Modelo_autor extends My_model {
 
 					$query = $this->db->get();
 
-					$datos = $this->return_row($query);
+					$autor = $this->return_row($query);
 
-					if ($datos) {
-						$instituciones = $this->Modelo_institucion->select_institucion_por_id($datos->id, "autor");
-						$datos->instituciones = $instituciones;
+					if ($autor) {
+						$instituciones = $this->Modelo_institucion->select_institucion_por_id($autor->id, "autor");
+						$autor->instituciones = $instituciones;
+
+						$autor->nombre_completo = $this->get_nombre_completo($autor);
 					}
+
+					$datos = $autor;
 					break;
 				case "publicacion":
 					$this->db->select(self::COLUMNAS_SELECT);
@@ -77,7 +83,17 @@ class Modelo_autor extends My_model {
 
 					$query = $this->db->get();
 
-					$datos = $this->return_result($query);
+					$autores = $this->return_result($query);
+					
+					if ($autores) {
+						$i = 0;
+						
+						foreach ($autores as $autor) {
+							$autores[$i]->nombre_completo = $this->get_nombre_completo($autor);
+						}
+					}
+					
+					$datos = $autores;
 					break;
 			}
 
@@ -147,14 +163,14 @@ class Modelo_autor extends My_model {
 			return FALSE;
 		}
 	}
-	
+
 	private function delete_instituciones_de_autor($id = FALSE) {
 		if ($id) {
 			$eliminado = FALSE;
-			
+
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_INSTITUCION);
-			
+
 			return $eliminado;
 		} else {
 			return FALSE;
@@ -179,7 +195,7 @@ class Modelo_autor extends My_model {
 				$this->db->where(self::ID_COL, $id);
 
 				$actualizado = $this->db->update(self::NOMBRE_TABLA);
-				
+
 				if ($actualizado) {
 					$this->delete_instituciones_de_autor($id);
 					$this->insert_autor_a_institucion($id, $id_institucion);
@@ -207,28 +223,50 @@ class Modelo_autor extends My_model {
 
 		return $existe;
 	}
-	
+
 	public function existe_diferente_id($id = FALSE, $nombre = "", $apellido_paterno = "", $apellido_materno = "") {
 		$existe = FALSE;
-		
+
 		$datos = array();
 		$datos[self::ID_COL . "!="] = $id;
 		$datos[self::NOMBRE_COL] = $nombre;
 		$datos[self::APELLIDO_PATERNO_COL] = $apellido_paterno;
 		$datos[self::APELLIDO_MATERNO_COL] = $apellido_materno;
-		
+
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->where($datos);
-		
+
 		$query = $this->db->get();
 		$autor = $this->return_row($query);
-		
-		if($autor) {
+
+		if ($autor) {
 			$existe = TRUE;
 		}
-		
+
 		return $existe;
+	}
+
+	private function get_nombre_completo($autor = FALSE) {
+		if ($autor) {
+			$nombre_completo = FALSE;
+
+			if (isset($autor->nombre)) {
+				$nombre_completo = $autor->nombre;
+			}
+
+			if ($autor->apellido_paterno) {
+				$nombre_completo .= " " . $autor->apellido_paterno;
+			}
+
+			if ($autor->apellido_paterno) {
+				$nombre_completo .= " " . $autor->apellido_materno;
+			}
+
+			return $nombre_completo;
+		} else {
+			return FALSE;
+		}
 	}
 
 }

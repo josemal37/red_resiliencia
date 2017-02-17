@@ -13,9 +13,9 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once 'Base_subir_archivo.php';
+require_once 'Base_archivo.php';
 
-class Imagen extends Base_subir_archivo {
+class Imagen extends Base_archivo {
 
 	public function __construct() {
 		parent::__construct();

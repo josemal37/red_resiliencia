@@ -15,9 +15,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require_once 'Base.php';
 
-abstract class Base_subir_archivo {
+abstract class Base_archivo {
 
-	const PATH_PUBLICACIONES = "./publicaciones/";
+	const PATH_PUBLICACIONES = "publicaciones/";
 
 	protected $ci;
 	protected $config = array();
@@ -49,6 +49,20 @@ abstract class Base_subir_archivo {
 		}
 
 		return $res;
+	}
+	
+	public function eliminar_archivo($archivo = FALSE) {
+		if ($archivo) {
+			$eliminado = FALSE;
+			
+			if (file_exists($archivo)) {
+				$eliminado = unlink($archivo);
+			}
+			
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
 	}
 
 	public function get_path_valido($nombre) {

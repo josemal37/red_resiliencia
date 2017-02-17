@@ -81,7 +81,7 @@
 
 					<label>Institución(es)</label>
 
-					<?php if ($instituciones || $autor->instituciones): ?>
+					<?php if (isset($instituciones) || isset($autor->instituciones)): ?>
 
 						<div class="row">
 
@@ -91,20 +91,24 @@
 
 								<select id="instituciones" multiple class="form-control">
 
-									<?php foreach ($instituciones as $institucion): ?>
+									<?php if ($instituciones): ?>
 
-										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+										<?php foreach ($instituciones as $institucion): ?>
 
-									<?php endforeach; ?>
+											<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
 
 								</select>
 
 							</div>
 
-							<div class="col-md-2">
+							<div class="col-md-2 btn-group">
 
-								<button id="agregar_institucion" class="agregar">Agregar ></button>
-								<button id="quitar_institucion" class="quitar">< Quitar</button>
+								<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
+								<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
 
 							</div>
 
@@ -226,7 +230,7 @@
 				}
 
 				$("#form_autor").submit(function() {
-					$("option").each(function(){
+					$("option").each(function() {
 						$(this).prop("selected", "selected");
 					});
 				});

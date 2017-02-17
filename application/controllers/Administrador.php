@@ -173,15 +173,7 @@ class Administrador extends CI_Controller {
 				$datos["accion"] = "modificar";
 				$datos["autor"] = $this->Modelo_autor->select_autor_por_id($id);
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
-				
-				if ($datos["autor"]->instituciones && $datos["instituciones"]) {
-					foreach ($datos["autor"]->instituciones as $institucion) {
-						$i = search_object_in_array_by_key($institucion, $datos["instituciones"], "id");
-						if ($i !== FALSE) {
-							unset($datos["instituciones"][$i]);
-						}
-					}
-				}
+				eliminar_elementos_array($datos["instituciones"], $datos["autor"]->instituciones, "id");
 
 				$this->load->view("administrador/formulario_autor", $datos);
 			}
@@ -285,6 +277,7 @@ class Administrador extends CI_Controller {
 	public function publicaciones() {
 		$datos = array();
 		$datos["titulo"] = "Publicaciones";
+		$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
 		$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones();
 
 		$this->load->view("administrador/publicaciones", $datos);
@@ -314,9 +307,9 @@ class Administrador extends CI_Controller {
 		$id_autor = $this->input->post("id_autor");
 		$id_categoria = $this->input->post("id_categoria");
 		$id_institucion = $this->input->post("id_institucion");
-		
+
 		$array_validacion = array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion");
-		
+
 		if ($con_modulos) {
 			$array_validacion[] = "modulos";
 		}
@@ -341,13 +334,13 @@ class Administrador extends CI_Controller {
 					$direccion_imagen = "";
 					$direccion_documento = "";
 					if ($imagen["datos"]) {
-						$direccion_imagen = base_url($path . $imagen["datos"]["file_name"]);
+						$direccion_imagen = $imagen["datos"]["file_name"];
 					}
 					if ($documento["datos"]) {
-						$direccion_documento = base_url($path . $documento["datos"]["file_name"]);
+						$direccion_documento = $documento["datos"]["file_name"];
 					}
 
-					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {
+					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $modulos, $direccion_documento, $direccion_imagen, NULL, date('Y-m-d'), $id_autor, $id_categoria, $id_institucion)) {
 						redirect(base_url("administrador/publicaciones"));
 					} else {
 						//error al insertar publicacion
@@ -368,8 +361,142 @@ class Administrador extends CI_Controller {
 			unset($_POST["submit"]);
 			$this->registrar_publicacion();
 		}
+	}
 
-		//$path = $this->imagen->get_path_valido("publicacion");
+	public function modificar_publicacion($id) {
+		if ($id) {
+			if (isset($_POST["submit"]) && isset($_POST["nombre"])) {
+				$this->modificar_publicacion_bd();
+			} else {
+				$datos = array();
+
+				$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+
+				if ($datos["publicacion"]) {
+					$datos["titulo"] = "Modificar publicación";
+					$datos["accion"] = "modificar";
+					$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
+					$datos["autores"] = $this->Modelo_autor->select_autores();
+					$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+					$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+					eliminar_elementos_array($datos["autores"], $datos["publicacion"]->autores, "id");
+					eliminar_elementos_array($datos["categorias"], $datos["publicacion"]->categorias, "id");
+					eliminar_elementos_array($datos["instituciones"], $datos["publicacion"]->instituciones, "id");
+
+					$this->load->view("administrador/formulario_publicacion", $datos);
+				} else {
+					redirect(base_url("administrador/publicaciones"));
+				}
+			}
+		} else {
+			redirect(base_url("administrador/publicaciones"));
+		}
+	}
+
+	private function modificar_publicacion_bd() {
+		$id = $this->input->post("id");
+		$nombre = $this->input->post("nombre");
+		$descripcion = $this->input->post("descripcion");
+		$con_modulos = $this->input->post("con_modulos") == "on" ? TRUE : FALSE;
+		$modulos = $con_modulos === TRUE ? $this->input->post("modulos") : FALSE;
+		$id_autor = $this->input->post("id_autor");
+		$id_categoria = $this->input->post("id_categoria");
+		$id_institucion = $this->input->post("id_institucion");
+		$imagen_antiguo = $this->input->post("imagen_antiguo");
+		$documento_antiguo = $this->input->post("url_antiguo");
+
+		$array_validacion = array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion");
+
+		if ($con_modulos) {
+			$array_validacion[] = "modulos";
+		}
+
+		if ($this->publicacion->validar($array_validacion)) {
+			$path = FALSE;
+
+			//si se subio una imagen o documento obtenemos un path para subir los archivos
+			if (isset($_FILES["imagen"]) || isset($_FILES["url"])) {
+				$path = $this->imagen->get_path_valido("publicacion");
+			}
+
+			//si no hay errores al obtener el path
+			if ($path) {
+				//subimos los archivos
+				if (isset($_FILES["imagen"]) && $_FILES["imagen"]["name"] != "") {
+					$this->imagen->eliminar_archivo($path . $imagen_antiguo);
+				}
+				$imagen = $this->imagen->subir_archivo("imagen", $path);
+				if (isset($_FILES["url"]) && $_FILES["url"]["name"] != "") {
+					$this->documento->eliminar_archivo($path . $documento_antiguo);
+				}
+				$documento = $this->documento->subir_archivo("url", $path);
+
+				//si no hubo problemas al subir los archivos
+				if (!$imagen["error"] && !$documento["error"]) {
+					//recuperamos la direccion de los archivos
+					$direccion_imagen = "";
+					$direccion_documento = "";
+					if ($imagen["datos"]) {
+						$direccion_imagen = $imagen["datos"]["file_name"];
+					} else {
+						$direccion_imagen = $imagen_antiguo;
+					}
+					if ($documento["datos"]) {
+						$direccion_documento = $documento["datos"]["file_name"];
+					} else {
+						$direccion_documento = $documento_antiguo;
+					}
+
+					if ($this->Modelo_publicacion->update_publicacion($id, $nombre, $descripcion, $modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {
+						redirect(base_url("administrador/publicaciones"));
+					} else {
+						//error al insertar publicacion
+						unset($_POST["submit"]);
+						$this->registrar_publicacion();
+					}
+				} else {
+					//error al subir archivos
+					unset($_POST["submit"]);
+					$this->registrar_publicacion();
+				}
+			} else {
+				//error de path
+				unset($_POST["submit"]);
+				$this->registrar_publicacion();
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->registrar_publicacion();
+		}
+	}
+
+	public function eliminar_publicacion($id = FALSE) {
+		if ($id) {
+			$publicacion = $this->Modelo_publicacion->select_publicacion_por_id($id);
+
+			if ($publicacion) {
+				if ($this->Modelo_publicacion->delete_publicacion($id)) {
+					$path = $this->documento->get_path_valido("publicacion");
+					if (isset($publicacion->imagen) && $publicacion->imagen != "") {
+						$this->imagen->eliminar_archivo($path . $publicacion->imagen);
+					} if (isset($publicacion->url) && $publicacion->url != "") {
+						$this->documento->eliminar_archivo($path . $publicacion->url);
+					}
+					
+					redirect(base_url("administrador/publicaciones"));
+				} else {
+					//error al borrar
+					redirect(base_url("administrador/publicaciones"));
+				}
+			} else {
+				//error no existe publicacion
+				redirect(base_url("administrador/publicaciones"));
+			}
+		} else {
+			//error de id
+			redirect(base_url("administrador/publicaciones"));
+		}
 	}
 
 }

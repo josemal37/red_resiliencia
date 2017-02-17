@@ -50,7 +50,7 @@
 
 							<?php if ($publicacion->imagen != ""): ?>
 
-								<img src="<?= $publicacion->imagen ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
 
 							<?php endif; ?>
 
@@ -60,7 +60,7 @@
 
 							<h4><?= $publicacion->nombre ?></h4>
 
-							<p><?= $publicacion->descripcion ?></p>
+							<p class="text-justify"><?= $publicacion->descripcion ?></p>
 
 							<?php if ($publicacion->modulos): ?>
 
@@ -80,57 +80,81 @@
 
 							<?php if ($publicacion->url != ""): ?>
 
-								<a href="<?= $publicacion->url ?>">Descargar</a>
+								<h4>Documento</h4>
+
+								<a href="<?= base_url($path_publicaciones . $publicacion->url) ?>">Descargar documento</a>
 
 							<?php endif; ?>
 
-							<?php if ($publicacion->autores): ?>
+							<div class="row">
 
-								<h4>Autores</h4>
+								<?php if ($publicacion->autores): ?>
 
-								<ul>
+									<div class="col-md-4">
 
-									<?php foreach ($publicacion->autores as $autor): ?>
+										<h4>Autores</h4>
 
-										<li><?= $autor->nombre ?></li>
+										<ul>
 
-									<?php endforeach; ?>
+											<?php foreach ($publicacion->autores as $autor): ?>
 
-								</ul>
+												<li><?= $autor->nombre_completo ?></li>
 
-							<?php endif; ?>
+											<?php endforeach; ?>
 
-							<?php if ($publicacion->categorias): ?>
+										</ul>
 
-								<h4>Categorias</h4>
+									</div>
 
-								<ul>
+								<?php endif; ?>
 
-									<?php foreach ($publicacion->categorias as $categoria): ?>
+								<?php if ($publicacion->categorias): ?>
 
-										<li><?= $categoria->nombre ?></li>
+									<div class="col-md-4">
 
-									<?php endforeach; ?>
+										<h4>Categorias</h4>
 
-								</ul>
+										<ul>
 
-							<?php endif; ?>
+											<?php foreach ($publicacion->categorias as $categoria): ?>
 
-							<?php if ($publicacion->instituciones): ?>
+												<li><?= $categoria->nombre ?></li>
 
-								<h4>Intituciones</h4>
+											<?php endforeach; ?>
 
-								<ul>
+										</ul>
 
-									<?php foreach ($publicacion->instituciones as $institucion): ?>
+									</div>
 
-										<li><?= $institucion->nombre ?></li>
+								<?php endif; ?>
 
-									<?php endforeach; ?>
+								<?php if ($publicacion->instituciones): ?>
 
-								</ul>
+									<div class="col-md-4">
 
-							<?php endif; ?>
+										<h4>Instituciones</h4>
+
+										<ul>
+
+											<?php foreach ($publicacion->instituciones as $institucion): ?>
+
+												<li><?= $institucion->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									</div>
+
+								<?php endif; ?>
+
+								<div class="clearfix visible-md-block visible-lg-block"></div>
+
+							</div>
+
+							<a href="<?= base_url("administrador/modificar_publicacion/" . $publicacion->id) ?>">Modificar</a>
+
+							<a href="<?= base_url("administrador/eliminar_publicacion/" . $publicacion->id) ?>">Eliminar</a>
 
 						</div>
 
