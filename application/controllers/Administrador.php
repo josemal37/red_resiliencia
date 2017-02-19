@@ -17,9 +17,9 @@ class Administrador extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array("Modelo_categoria", "Modelo_autor", "Modelo_institucion", "Modelo_publicacion"));
+		$this->load->model(array("Modelo_categoria", "Modelo_autor", "Modelo_institucion", "Modelo_publicacion", "Modelo_usuario", "Modelo_rol"));
 		$this->load->library(array("Session", "Form_validation", "Upload"));
-		$this->load->library(array("Categoria", "Autor", "Institucion", "Publicacion"));
+		$this->load->library(array("Categoria", "Autor", "Institucion", "Publicacion", "Usuario"));
 		$this->load->library(array("Imagen", "Documento"));
 		$this->load->helper(array("Url", "Form"));
 		$this->load->helper(array("array_helper"));
@@ -28,6 +28,49 @@ class Administrador extends CI_Controller {
 
 	public function index() {
 		$this->categorias();
+	}
+
+	public function usuarios() {
+		$datos = array();
+		$datos["titulo"] = "Usuarios";
+		$datos["usuarios"] = $this->Modelo_usuario->select_usuarios();
+
+		$this->load->view("administrador/usuarios", $datos);
+	}
+
+	public function registrar_usuario() {
+		if (isset($_POST["submit"])) {
+			$this->registrar_usuario_bd();
+		} else {
+			$datos = array();
+			$datos["titulo"] = "Registrar usuario";
+			$datos["accion"] = "registrar";
+			$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+			$datos["roles"] = $this->Modelo_rol->select_roles();
+
+			$this->load->view("administrador/formulario_usuario", $datos);
+		}
+	}
+
+	private function registrar_usuario_bd() {
+		$nombre = $this->input->post("nombre");
+		$apellido_paterno = $this->input->post("apellido_paterno");
+		$apellido_materno = $this->input->post("apellido_materno");
+		$institucion = $this->input->post("institucion");
+		$rol = $this->input->post("rol");
+		$login = $this->input->post("login");
+		$password = $this->input->post("password");
+		if ($this->usuario->validar(array("nombre", "apellido_paterno", "apellido_materno", "institucion", "rol", "login", "password", "confirmacion"))) {
+			if ($this->Modelo_usuario->insert_usuario($nombre, $apellido_paterno, $apellido_materno, $institucion, $rol, $login, $password)) {
+				redirect(base_url("administrador/usuarios"));
+			} else {
+				unset($_POST["submit"]);
+				$this->registrar_usuario();
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->registrar_usuario();
+		}
 	}
 
 	public function categorias() {
@@ -213,7 +256,7 @@ class Administrador extends CI_Controller {
 			$this->modificar_autor($id);
 		}
 	}
-	
+
 	public function eliminar_autor($id = FALSE) {
 		if ($id) {
 			if ($this->Modelo_autor->delete_autor($id)) {
@@ -297,7 +340,7 @@ class Administrador extends CI_Controller {
 			$this->modificar_institucion($id);
 		}
 	}
-	
+
 	public function eliminar_institucion($id = FALSE) {
 		if ($id) {
 			if ($this->Modelo_institucion->delete_institucion($id)) {

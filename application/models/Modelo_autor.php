@@ -11,6 +11,10 @@
  *
  * @author Jose
  */
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+require_once 'My_model.php';
+
 class Modelo_autor extends My_model {
 
 	const ID_COL = "id_autor";
