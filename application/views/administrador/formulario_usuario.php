@@ -102,7 +102,7 @@
 
 								<?php foreach ($instituciones as $institucion): ?>
 
-									<option value="<?= $institucion->id ?>" <?php if ($usuario->id_institucion == $institucion->id): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+									<option value="<?= $institucion->id ?>" <?php if ($accion == "modificar" && $usuario->id_institucion == $institucion->id): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
 
 								<?php endforeach; ?>
 
@@ -124,7 +124,7 @@
 
 								<?php foreach ($roles as $rol): ?>
 
-									<option value="<?= $rol->id ?>" <?php if ($usuario->id_rol == $rol->id): ?>selected<?php endif; ?>><?= $rol->nombre_rol ?></option>
+									<option value="<?= $rol->id ?>" <?php if ($accion == "modificar" && $usuario->id_rol == $rol->id): ?>selected<?php endif; ?>><?= $rol->nombre_rol ?></option>
 
 								<?php endforeach; ?>
 
