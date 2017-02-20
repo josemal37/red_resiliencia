@@ -129,6 +129,8 @@ class Modelo_institucion extends My_model {
 				$datos[self::SIGLA_COL] = $sigla;
 
 				$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
+			} else {
+				$this->session->set_flashdata("existe", "La institución ya se encuentra registrada.");
 			}
 
 			$this->db->trans_complete();
@@ -156,6 +158,8 @@ class Modelo_institucion extends My_model {
 				$this->db->where(self::ID_COL, $id);
 
 				$actualizado = $this->db->update(self::NOMBRE_TABLA);
+			} else {
+				$this->session->set_flashdata("existe", "La institución ya se encuentra registrada.");
 			}
 
 			$this->db->trans_complete();

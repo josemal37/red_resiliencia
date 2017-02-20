@@ -34,13 +34,13 @@
 
 					<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
-						<li><a href="Inicio">Inicio</a></li>
-						<li><a href="Publicaciones">Publicación</a></li>
-						<li><a href="Articulos">Articulo</a></li>
-						<li><a href="Eventos">Evento</a></li>
+						<li><a href="<?= base_url("administrador")?>">Inicio</a></li>
+						<li><a href="<?= base_url("publicacion")?>">Publicación</a></li>
+						<li><a href="<?= base_url("articulo")?>">Articulo</a></li>
+						<li><a href="<?= base_url("evento")?>">Evento</a></li>
 						<li><a href="<?= base_url("categoria")?>">Categoria</a></li>
-						<li><a href="Instituciones">Institución</a></li>
-						<li><a href="Usuarios">Usuario</a></li>
+						<li><a href="<?= base_url("institucion")?>">Institución</a></li>
+						<li><a href="<?= base_url("usuario")?>">Usuario</a></li>
 
 					<?php endif; ?>
 
