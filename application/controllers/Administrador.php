@@ -73,6 +73,91 @@ class Administrador extends CI_Controller {
 		}
 	}
 
+	public function modificar_usuario($id = FALSE) {
+		if ($id) {
+			if (isset($_POST["submit"])) {
+				$this->modificar_usuario_bd();
+			} else {
+				$datos = array();
+				$datos["titulo"] = "Modificar usuario";
+				$datos["accion"] = "modificar";
+				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+				$datos["roles"] = $this->Modelo_rol->select_roles();
+				$datos["usuario"] = $this->Modelo_usuario->select_usuario($id);
+
+				$this->load->view("administrador/formulario_usuario", $datos);
+			}
+		} else {
+			redirect(base_url("administrador/usuarios"));
+		}
+	}
+
+	public function modificar_usuario_bd() {
+		$id = $this->input->post("id");
+		$nombre = $this->input->post("nombre");
+		$apellido_paterno = $this->input->post("apellido_paterno");
+		$apellido_materno = $this->input->post("apellido_materno");
+		$institucion = $this->input->post("institucion");
+		$rol = $this->input->post("rol");
+		$login = $this->input->post("login");
+		if ($this->usuario->validar(array("id", "nombre", "apellido_paterno", "apellido_materno", "institucion", "rol", "login"))) {
+			if ($this->Modelo_usuario->update_usuario($id, $nombre, $apellido_paterno, $apellido_materno, $institucion, $rol, $login)) {
+				redirect(base_url("administrador/usuarios"));
+			} else {
+				unset($_POST["submit"]);
+				$this->modificar_usuario($id);
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_usuario($id);
+		}
+	}
+
+	public function modificar_password_usuario($id = FALSE) {
+		if ($id) {
+			if (isset($_POST["submit"])) {
+				$this->modificar_password_usuario_bd();
+			} else {
+				$datos = array();
+				$datos["titulo"] = "Modificar usuario";
+				$datos["accion"] = "modificar_password";
+				$datos["usuario"] = $this->Modelo_usuario->select_usuario($id);
+
+				$this->load->view("administrador/formulario_usuario", $datos);
+			}
+		} else {
+			redirect(base_url("administrador/usuarios"));
+		}
+	}
+
+	public function modificar_password_usuario_bd() {
+		$id = $this->input->post("id");
+		$password = $this->input->post("password");
+		if ($this->usuario->validar(array("id", "password", "confirmacion"))) {
+			if ($this->Modelo_usuario->update_password_usuario($id, $password)) {
+				redirect(base_url("administrador/usuarios"));
+			} else {
+				unset($_POST["submit"]);
+				$this->modificar_password_usuario($id);
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_password_usuario($id);
+		}
+	}
+
+	public function eliminar_usuario($id = FALSE) {
+		if ($id) {
+			if ($this->Modelo_usuario->delete_usuario($id)) {
+				redirect(base_url("administrador/usuarios"));
+			} else {
+				redirect(base_url("administrador/usuarios"));
+			}
+		} else {
+			redirect(base_url("administrador/usuarios"));
+		}
+	}
+
 	public function categorias() {
 		//datos
 		$datos = array();

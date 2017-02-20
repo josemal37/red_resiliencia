@@ -48,114 +48,141 @@
 				case "modificar":
 					$url = base_url("administrador/" . $accion . "_usuario/" . $usuario->id);
 					break;
+				case "modificar_password":
+					$url = base_url("administrador/" . $accion . "_usuario/" . $usuario->id);
+					break;
 			}
 			?>
 
             <form action="<?= $url ?>" id="form_usuario" method="post" autocomplete="off">
 
-                <div class="form-group">
+				<?php if ($accion == "registrar" || $accion == "modificar"): ?>
 
-                    <label>Nombre</label>
+					<div class="form-group">
 
-					<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?> required>
+						<label>Nombre</label>
 
-					<?= form_error("nombre") ?>
+						<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->nombre ?>"<?php endif; ?> required>
 
-                </div>
+						<?= form_error("nombre") ?>
 
-				<div class="form-group">
+					</div>
 
-                    <label>Apellido paterno</label>
+					<div class="form-group">
 
-					<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
+						<label>Apellido paterno</label>
 
-					<?= form_error("nombre") ?>
+						<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->apellido_paterno ?>"<?php endif; ?>>
 
-                </div>
+						<?= form_error("nombre") ?>
 
-				<div class="form-group">
+					</div>
 
-                    <label>Apellido materno</label>
+					<div class="form-group">
 
-					<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
+						<label>Apellido materno</label>
 
-					<?= form_error("nombre") ?>
+						<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->apellido_materno ?>"<?php endif; ?>>
 
-                </div>
+						<?= form_error("nombre") ?>
 
-				<div class="form-group">
+					</div>
 
-					<label>Institución</label>
+					<div class="form-group">
 
-					<select id="institucion" name="institucion" class="form-control" required>
+						<label>Institución</label>
 
-						<?php if ($instituciones): ?>
+						<select id="institucion" name="institucion" class="form-control" required>
 
-							<?php foreach ($instituciones as $institucion): ?>
+							<?php if ($instituciones): ?>
 
-								<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+								<?php foreach ($instituciones as $institucion): ?>
 
-							<?php endforeach; ?>
+									<option value="<?= $institucion->id ?>" <?php if ($usuario->id_institucion == $institucion->id): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
 
-						<?php endif; ?>
+								<?php endforeach; ?>
 
-					</select>
+							<?php endif; ?>
 
-					<?= form_error("institucion") ?>
+						</select>
 
-				</div>
+						<?= form_error("institucion") ?>
 
-				<div class="form-group">
+					</div>
 
-					<label>Rol</label>
+					<div class="form-group">
 
-					<select id="rol" name="rol" class="form-control" required>
+						<label>Rol</label>
 
-						<?php if ($roles): ?>
+						<select id="rol" name="rol" class="form-control" required>
 
-							<?php foreach ($roles as $rol): ?>
+							<?php if ($roles): ?>
 
-								<option value="<?= $rol->id ?>"><?= $rol->nombre_rol ?></option>
+								<?php foreach ($roles as $rol): ?>
 
-							<?php endforeach; ?>
+									<option value="<?= $rol->id ?>" <?php if ($usuario->id_rol == $rol->id): ?>selected<?php endif; ?>><?= $rol->nombre_rol ?></option>
 
-						<?php endif; ?>
+								<?php endforeach; ?>
 
-					</select>
+							<?php endif; ?>
 
-					<?= form_error("rol") ?>
+						</select>
 
-				</div>
+						<?= form_error("rol") ?>
 
-				<div class="form-group">
+					</div>
 
-					<label>Login</label>
+					<div class="form-group">
 
-					<input type="text" id="login" name="login" class="form-control" required>
+						<label>Login</label>
 
-					<?= form_error("login") ?>
+						<input type="text" id="login" name="login" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $usuario->login ?>"<?php endif; ?> required>
 
-				</div>
+						<?= form_error("login") ?>
 
-				<div class="form-group">
+					</div>
 
-					<label>Password</label>
+				<?php endif; ?>
 
-					<input type="password" id="password" name="password" class="form-control" required>
+				<?php if ($accion == "modificar_password"): ?>
 
-					<?= form_error("password") ?>
+					<div>
 
-				</div>
+						<p><label>Nombre:</label> <?= $usuario->nombre_completo ?></p>
 
-				<div class="form-group">
+					</div>
 
-					<label>Confirmación</label>
+				<?php endif; ?>
 
-					<input type="password" id="confirmacion" name="confirmacion" class="form-control" required>
+				<?php if ($accion == "registrar" || $accion == "modificar_password"): ?>
 
-					<?= form_error("confirmacion") ?>
+					<div class="form-group">
 
-				</div>
+						<label>Password</label>
+
+						<input type="password" id="password" name="password" class="form-control" required>
+
+						<?= form_error("password") ?>
+
+					</div>
+
+					<div class="form-group">
+
+						<label>Confirmación</label>
+
+						<input type="password" id="confirmacion" name="confirmacion" class="form-control" required>
+
+						<?= form_error("confirmacion") ?>
+
+					</div>
+
+				<?php endif; ?>
+
+				<?php if ($accion == "modificar" || $accion == "modificar_password"): ?>
+
+					<input type="hidden" id="id" name="id" value="<?= $usuario->id ?>">
+
+				<?php endif; ?>
 
 				<input type="submit" id="submit" name="submit" class="btn btn-primary" value="aceptar">
 
