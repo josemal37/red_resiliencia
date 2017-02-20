@@ -101,6 +101,8 @@ class Modelo_categoria extends My_model {
 
 				//insertamos la nueva categoria
 				$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
+			} else {
+				$this->session->set_flashdata("existe", "La categoria ya se encuentra registrada.");
 			}
 
 			$this->db->trans_complete();
@@ -132,6 +134,8 @@ class Modelo_categoria extends My_model {
 				$this->db->where($cond);
 				//actualizamos los datos
 				$actualizado = $this->db->update(self::NOMBRE_TABLA);
+			} else {
+				$this->session->set_flashdata("existe", "La categoria ya se encuentra registrada.");
 			}
 
 			$this->db->trans_complete();

@@ -38,6 +38,10 @@
 
         </div>
 
+		<?php
+		$this->load->view("base/menu");
+		?>
+
         <div class="container">
 
 			<?php if ($usuarios): ?>
@@ -71,9 +75,9 @@
 									<td><?= $usuario->apellido_materno ?></td>
 									<td><?= $usuario->nombre_rol ?></td>
 									<td>
-										<a href="<?= base_url("administrador/modificar_usuario/" . $usuario->id)?>">Modificar</a>
-										<a href="<?= base_url("administrador/modificar_password_usuario/" . $usuario->id)?>">Modificar password</a>
-										<a href="<?= base_url("administrador/eliminar_usuario/" . $usuario->id)?>">Eliminar</a>
+										<a href="<?= base_url("administrador/modificar_usuario/" . $usuario->id) ?>">Modificar</a>
+										<a href="<?= base_url("administrador/modificar_password_usuario/" . $usuario->id) ?>">Modificar password</a>
+										<a href="<?= base_url("administrador/eliminar_usuario/" . $usuario->id) ?>">Eliminar</a>
 									</td>
 
 								</tr>

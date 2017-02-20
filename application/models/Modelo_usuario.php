@@ -55,12 +55,34 @@ class Modelo_usuario extends My_model {
 		return $usuarios;
 	}
 
-	public function select_usuario($id = FALSE) {
+	public function select_usuario_por_id($id = FALSE) {
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
 			$this->db->where(self::ID_COL, $id);
+
+			$query = $this->db->get();
+
+			$usuario = $this->return_row($query);
+
+			if ($usuario) {
+				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+			}
+
+			return $usuario;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function select_usuario_por_login_password($login = "", $password = "") {
+		if ($login != "" && $password != "") {
+			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			$this->db->where(self::LOGIN_COL, $login);
+			$this->db->where(self::PASSWORD_COL, $password);
 
 			$query = $this->db->get();
 

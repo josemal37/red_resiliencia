@@ -37,6 +37,10 @@
             <h1><?= $titulo ?></h1>
 
         </div>
+		
+		<?php
+		$this->load->view("base/menu");
+		?>
 
         <div class="container">
 

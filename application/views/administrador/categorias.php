@@ -38,6 +38,10 @@
 
         </div>
 
+		<?php
+		$this->load->view("base/menu");
+		?>
+
         <div class="container">
 
 			<?php if ($categorias): ?>

@@ -83,7 +83,7 @@ class Administrador extends CI_Controller {
 				$datos["accion"] = "modificar";
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 				$datos["roles"] = $this->Modelo_rol->select_roles();
-				$datos["usuario"] = $this->Modelo_usuario->select_usuario($id);
+				$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 
 				$this->load->view("administrador/formulario_usuario", $datos);
 			}
@@ -121,7 +121,7 @@ class Administrador extends CI_Controller {
 				$datos = array();
 				$datos["titulo"] = "Modificar usuario";
 				$datos["accion"] = "modificar_password";
-				$datos["usuario"] = $this->Modelo_usuario->select_usuario($id);
+				$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 
 				$this->load->view("administrador/formulario_usuario", $datos);
 			}

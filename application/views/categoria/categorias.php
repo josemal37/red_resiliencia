@@ -32,19 +32,19 @@
 
     <body>
 
+		<?php
+		$this->load->view("base/menu");
+		?>
+
         <div class="text-center">
 
             <h1><?= $titulo ?></h1>
 
         </div>
-		
-		<?php
-		$this->load->view("base/menu");
-		?>
 
         <div class="container">
 
-			<?php if ($autores): ?>
+			<?php if ($categorias): ?>
 
 				<table class="table">
 
@@ -53,9 +53,6 @@
 						<tr>
 
 							<th>Nombre</th>
-							<th>Apellido paterno</th>
-							<th>Apellido materno</th>
-							<th>Instituciones</th>
 							<th>Acciones</th>
 
 						</tr>
@@ -64,38 +61,14 @@
 
 					<tbody>
 
-						<?php foreach ($autores as $autor): ?>
+						<?php foreach ($categorias as $categoria): ?>
 
-							<tr id="<?= $autor->id ?>">
+							<tr id="<?= $categoria->id ?>">
 
-								<td><?= $autor->nombre ?></td>
-								<td><?= $autor->apellido_paterno ?></td>
-								<td><?= $autor->apellido_materno ?></td>
-								
+								<td><?= $categoria->nombre ?></td>
 								<td>
-
-									<?php if ($autor->instituciones): ?>
-
-										<ul>
-
-											<?php foreach ($autor->instituciones as $institucion): ?>
-
-												<li><?= $institucion->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									<?php endif; ?>
-
-								</td>
-								
-								<td>
-									
-									<a href="<?= base_url("administrador/modificar_autor/" . $autor->id) ?>">Modificar</a>
-									
-									<a href="<?= base_url("administrador/eliminar_autor/" . $autor->id) ?>">Eliminar</a>
-									
+									<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>">Modificar</a>
+									<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>">Eliminar</a>
 								</td>
 
 							</tr>
@@ -108,11 +81,13 @@
 
 			<?php else: ?>
 
-				<p>No se registraron autores.</p>
+				<p>No se registraron categorias.</p>
 
 			<?php endif; ?>
 
-            <a href="<?= base_url("administrador/registrar_autor") ?>">Registrar autor</a>
+			<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
+
+            <a href="<?= base_url("categoria/registrar_categoria") ?>">Registrar categoria</a>
 
         </div>
 
