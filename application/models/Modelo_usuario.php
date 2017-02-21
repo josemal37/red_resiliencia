@@ -76,6 +76,30 @@ class Modelo_usuario extends My_model {
 		}
 	}
 
+	public function select_usuario_por_login($login = "", $no_id = FALSE) {
+		if ($login != "") {
+			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			$this->db->where(self::LOGIN_COL, $login);
+			if ($no_id) {
+				$this->db->where(self::ID_COL . " != ", $no_id);
+			}
+
+			$query = $this->db->get();
+
+			$usuario = $this->return_row($query);
+
+			if ($usuario) {
+				$usuario->nombre_completo = $this->get_nombre_completo($usuario);
+			}
+
+			return $usuario;
+		} else {
+			return FALSE;
+		}
+	}
+
 	public function select_usuario_por_login_password($login = "", $password = "") {
 		if ($login != "" && $password != "") {
 			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
@@ -104,17 +128,21 @@ class Modelo_usuario extends My_model {
 
 			$this->db->trans_start();
 
-			$datos = array(
-				self::NOMBRE_COL => $nombre,
-				self::APELLIDO_PATERNO_COL => $apellido_paterno,
-				self::APELLIDO_MATERNO_COL => $apellido_materno,
-				self::ID_INSTITUCION_COL => $institucion,
-				self::ID_ROL_COL => $rol,
-				self::LOGIN_COL => $login,
-				self::PASSWORD_COL => sha1($password)
-			);
+			if (!$this->existe_login($login)) {
+				$datos = array(
+					self::NOMBRE_COL => $nombre,
+					self::APELLIDO_PATERNO_COL => $apellido_paterno,
+					self::APELLIDO_MATERNO_COL => $apellido_materno,
+					self::ID_INSTITUCION_COL => $institucion,
+					self::ID_ROL_COL => $rol,
+					self::LOGIN_COL => $login,
+					self::PASSWORD_COL => sha1($password)
+				);
 
-			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
+				$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
+			} else {
+				$this->session->set_flashdata("existe", "El login ya se encuentra registrado.");
+			}
 
 			$this->db->trans_complete();
 
@@ -130,19 +158,22 @@ class Modelo_usuario extends My_model {
 
 			$this->db->trans_start();
 
-			$datos = array(
-				self::NOMBRE_COL => $nombre,
-				self::APELLIDO_PATERNO_COL => $apellido_paterno,
-				self::APELLIDO_MATERNO_COL => $apellido_materno,
-				self::ID_INSTITUCION_COL => $institucion,
-				self::ID_ROL_COL => $rol,
-				self::LOGIN_COL => $login
-			);
+			if (!$this->existe_login($login, $id)) {
+				$datos = array(
+					self::NOMBRE_COL => $nombre,
+					self::APELLIDO_PATERNO_COL => $apellido_paterno,
+					self::APELLIDO_MATERNO_COL => $apellido_materno,
+					self::ID_INSTITUCION_COL => $institucion,
+					self::ID_ROL_COL => $rol,
+					self::LOGIN_COL => $login
+				);
 
-			$this->db->set($datos);
-			$this->db->where(self::ID_COL, $id);
-			$actualizado = $this->db->update(self::NOMBRE_TABLA);
-
+				$this->db->set($datos);
+				$this->db->where(self::ID_COL, $id);
+				$actualizado = $this->db->update(self::NOMBRE_TABLA);
+			} else {
+				$this->session->set_flashdata("existe", "El login ya se encuentra registrado.");
+			}
 			$this->db->trans_complete();
 
 			return $actualizado;
@@ -207,6 +238,16 @@ class Modelo_usuario extends My_model {
 			}
 
 			return $nombre_completo;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function existe_login($login = "", $no_id = FALSE) {
+		$usuario = $this->select_usuario_por_login($login, $no_id);
+
+		if ($usuario) {
+			return TRUE;
 		} else {
 			return FALSE;
 		}
