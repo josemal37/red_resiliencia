@@ -39,11 +39,12 @@
 						<li><a href="<?= base_url("articulo") ?>">Articulo</a></li>
 						<li><a href="<?= base_url("evento") ?>">Evento</a></li>
 						<li><a href="<?= base_url("categoria") ?>">Categoria</a></li>
+						<li><a href="<?= base_url("autor") ?>">Autor</a></li>
 						<li><a href="<?= base_url("institucion") ?>">Institución</a></li>
 						<li><a href="<?= base_url("usuario") ?>">Usuario</a></li>
 
 					<?php elseif ($this->session->userdata("rol") == "usuario"): ?>
-						
+
 						<li><a href="<?= base_url("usuario") ?>">Inicio</a></li>
 						<li><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
 						<li><a href="<?= base_url("articulo") ?>">Articulo</a></li>

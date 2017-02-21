@@ -126,14 +126,20 @@ class Institucion extends CI_Controller {
 	}
 
 	public function eliminar_institucion($id = FALSE) {
-		if ($id) {
-			if ($this->Modelo_institucion->delete_institucion($id)) {
-				redirect(base_url("institucion/instituciones"));
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador") {
+			if ($id) {
+				if ($this->Modelo_institucion->delete_institucion($id)) {
+					redirect(base_url("institucion/instituciones"));
+				} else {
+					redirect(base_url("institucion/instituciones"));
+				}
 			} else {
 				redirect(base_url("institucion/instituciones"));
 			}
 		} else {
-			redirect(base_url("institucion/instituciones"));
+			redirect(base_url());
 		}
 	}
 

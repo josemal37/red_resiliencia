@@ -115,7 +115,7 @@ class Usuario extends CI_Controller {
 		}
 	}
 
-	public function modificar_usuario_bd() {
+	private function modificar_usuario_bd() {
 		$id = $this->input->post("id");
 		$nombre = $this->input->post("nombre");
 		$apellido_paterno = $this->input->post("apellido_paterno");
@@ -163,7 +163,7 @@ class Usuario extends CI_Controller {
 		}
 	}
 
-	public function modificar_password_usuario_bd() {
+	private function modificar_password_usuario_bd() {
 		$id = $this->input->post("id");
 		$password = $this->input->post("password");
 		if ($this->usuario_validacion->validar(array("id", "password", "confirmacion"))) {
