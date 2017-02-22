@@ -1,209 +1,198 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<!DOCTYPE html>
+<?php $this->load->view("base/header"); ?>
 
-<html lang="en">
+<header class=" header text-center">
 
-    <head>
+	<h1><?= $titulo ?></h1>
 
-        <!-- Metadatos -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+</header>
 
-        <!-- Titulo -->
-        <title><?= $titulo ?></title>
+<?php
+$datos = array();
+if (isset($articulos)) {
+	$datos["articulos"] = TRUE;
+} else {
+	$datos["articulos"] = FALSE;
+}
+if (isset($publicaciones)) {
+	$datos["publicaciones"] = TRUE;
+} else {
+	$datos["publicaciones"] = FALSE;
+}
+if (isset($eventos)) {
+	$datos["eventos"] = TRUE;
+} else {
+	$datos["eventos"] = FALSE;
+}
+?>
 
-        <!-- jQuery -->
-        <script src="<?= base_url('assets/jquery-2.0.3/jquery.js') ?>"></script>
+<?php $this->load->view("base/menu", $datos); ?>
 
-        <!-- Bootstrap -->
-        <script src="<?= base_url('assets/bootstrap-3.3.7/js/bootstrap.js') ?>"></script>
-        <link href="<?= base_url('assets/bootstrap-3.3.7/css/bootstrap.css') ?>" rel="stylesheet">
+<?php if (isset($articulos)): ?>
 
-        <!--[if lt IE 9]>
-		
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script
-		
-        <![endif]-->
+	<!-- Articulos -->
+	<section id="articulos" class="container">
 
-    </head>
+		<h2>Artículos</h2>
 
-    <body>
+		<?php if ($articulos): ?>
 
-        <header class=" header text-center">
+			<div class="row">
 
-            <h1><?= $titulo ?></h1>
+				<?php foreach ($articulos as $articulo): ?>
 
-        </header>
+					<h3><?= $articulo->nombre ?></h3>
 
-		<?php if (isset($articulos)): ?>
+				<?php endforeach; ?>
 
-			<!-- Articulos -->
-			<section id="articulos" class="container">
+			</div>
 
-				<h2>Artículos</h2>
+		<?php else: ?>
 
-				<?php if ($articulos): ?>
-
-					<div class="row">
-
-						<?php foreach ($articulos as $articulo): ?>
-
-							<h3><?= $articulo->nombre ?></h3>
-
-						<?php endforeach; ?>
-
-					</div>
-
-				<?php else: ?>
-
-					<p>Sin artículos.</p>
-
-				<?php endif; ?>
-
-			</section>
+			<p>Sin artículos.</p>
 
 		<?php endif; ?>
 
-		<?php if (isset($publicaciones)): ?>
+	</section>
 
-			<!-- Publicaciones -->
-			<section id="publicaciones" class="container">
+<?php endif; ?>
 
-				<h2>Publicaciones</h2>
+<?php if (isset($publicaciones)): ?>
 
-				<?php if ($publicaciones): ?>
+	<!-- Publicaciones -->
+	<section id="publicaciones" class="container">
 
-					<?php foreach ($publicaciones as $publicacion): ?>
+		<h2>Publicaciones</h2>
+
+		<?php if ($publicaciones): ?>
+
+			<?php foreach ($publicaciones as $publicacion): ?>
+
+				<div class="row">
+
+					<div class="col-md-3">
+
+						<?php if ($publicacion->imagen != ""): ?>
+
+							<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+
+						<?php endif; ?>
+
+					</div>
+
+					<div class="col-md-9">
+
+						<h4><?= $publicacion->nombre ?></h4>
+
+						<p class="text-justify"><?= $publicacion->descripcion ?></p>
+
+						<?php if ($publicacion->modulos): ?>
+
+							<h4>Modulos</h4>
+
+							<ol>
+
+								<?php foreach ($publicacion->modulos as $modulo): ?>
+
+									<li><?= $modulo->nombre ?></li>
+
+								<?php endforeach; ?>
+
+							</ol>
+
+						<?php endif; ?>
+
+						<?php if ($publicacion->url != ""): ?>
+
+							<h4>Documento</h4>
+
+							<a href="<?= base_url($path_publicaciones . $publicacion->url) ?>">Descargar documento</a>
+
+						<?php endif; ?>
 
 						<div class="row">
 
-							<div class="col-md-3">
+							<?php if ($publicacion->autores): ?>
 
-								<?php if ($publicacion->imagen != ""): ?>
+								<div class="col-md-4">
 
-									<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+									<h4>Autores</h4>
 
-								<?php endif; ?>
+									<ul>
 
-							</div>
+										<?php foreach ($publicacion->autores as $autor): ?>
 
-							<div class="col-md-9">
-
-								<h4><?= $publicacion->nombre ?></h4>
-
-								<p class="text-justify"><?= $publicacion->descripcion ?></p>
-
-								<?php if ($publicacion->modulos): ?>
-
-									<h4>Modulos</h4>
-
-									<ol>
-
-										<?php foreach ($publicacion->modulos as $modulo): ?>
-
-											<li><?= $modulo->nombre ?></li>
+											<li><?= $autor->nombre_completo ?></li>
 
 										<?php endforeach; ?>
 
-									</ol>
-
-								<?php endif; ?>
-
-								<?php if ($publicacion->url != ""): ?>
-
-									<h4>Documento</h4>
-
-									<a href="<?= base_url($path_publicaciones . $publicacion->url) ?>">Descargar documento</a>
-
-								<?php endif; ?>
-
-								<div class="row">
-
-									<?php if ($publicacion->autores): ?>
-
-										<div class="col-md-4">
-
-											<h4>Autores</h4>
-
-											<ul>
-
-												<?php foreach ($publicacion->autores as $autor): ?>
-
-													<li><?= $autor->nombre_completo ?></li>
-
-												<?php endforeach; ?>
-
-											</ul>
-
-										</div>
-
-									<?php endif; ?>
-
-									<?php if ($publicacion->categorias): ?>
-
-										<div class="col-md-4">
-
-											<h4>Categorias</h4>
-
-											<ul>
-
-												<?php foreach ($publicacion->categorias as $categoria): ?>
-
-													<li><?= $categoria->nombre ?></li>
-
-												<?php endforeach; ?>
-
-											</ul>
-
-										</div>
-
-									<?php endif; ?>
-
-									<?php if ($publicacion->instituciones): ?>
-
-										<div class="col-md-4">
-
-											<h4>Instituciones</h4>
-
-											<ul>
-
-												<?php foreach ($publicacion->instituciones as $institucion): ?>
-
-													<li><?= $institucion->nombre ?></li>
-
-												<?php endforeach; ?>
-
-											</ul>
-
-										</div>
-
-									<?php endif; ?>
-
-									<div class="clearfix visible-md-block visible-lg-block"></div>
+									</ul>
 
 								</div>
 
-							</div>
+							<?php endif; ?>
+
+							<?php if ($publicacion->categorias): ?>
+
+								<div class="col-md-4">
+
+									<h4>Categorias</h4>
+
+									<ul>
+
+										<?php foreach ($publicacion->categorias as $categoria): ?>
+
+											<li><?= $categoria->nombre ?></li>
+
+										<?php endforeach; ?>
+
+									</ul>
+
+								</div>
+
+							<?php endif; ?>
+
+							<?php if ($publicacion->instituciones): ?>
+
+								<div class="col-md-4">
+
+									<h4>Instituciones</h4>
+
+									<ul>
+
+										<?php foreach ($publicacion->instituciones as $institucion): ?>
+
+											<li><?= $institucion->nombre ?></li>
+
+										<?php endforeach; ?>
+
+									</ul>
+
+								</div>
+
+							<?php endif; ?>
 
 							<div class="clearfix visible-md-block visible-lg-block"></div>
 
 						</div>
 
-					<?php endforeach; ?>
+					</div>
 
-				<?php else: ?>
+					<div class="clearfix visible-md-block visible-lg-block"></div>
 
-					<p>Sin publicaciones.</p>
+				</div>
 
-				<?php endif; ?>
+			<?php endforeach; ?>
 
-			</section>
+		<?php else: ?>
+
+			<p>Sin publicaciones.</p>
 
 		<?php endif; ?>
 
-    </body>
+	</section>
 
-</html>
+<?php endif; ?>
+
+<?php $this->load->view("base/footer"); ?>

@@ -11,7 +11,9 @@
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
 
 					<span class="icon-bar"></span>
+
 					<span class="icon-bar"></span>
+
 					<span class="icon-bar"></span>
 
 				</button>
@@ -26,28 +28,52 @@
 
 					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
 
-						<li class="active"><a href="#">Home</a></li>
+						<li class="active"><a href="#">Inicio</a></li>
 
-						<li><a href="#">Page 1</a></li>
-						<li><a href="#">Page 2</a></li> 
-						<li><a href="#">Page 3</a></li>
+						<?php if ($articulos): ?>
+
+							<li><a href="#articulos">Articulos</a></li>
+
+						<?php endif; ?>
+
+						<?php if ($publicaciones): ?>
+
+							<li><a href="#publicaciones">Publicaciones</a></li>
+
+						<?php endif; ?>
+
+						<?php if ($eventos): ?>
+
+							<li><a href="eventos">Eventos</a></li>
+
+						<?php endif; ?>
 
 					<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
 						<li><a href="<?= base_url("administrador") ?>">Inicio</a></li>
+
 						<li><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
+
 						<li><a href="<?= base_url("articulo") ?>">Articulo</a></li>
+
 						<li><a href="<?= base_url("evento") ?>">Evento</a></li>
+
 						<li><a href="<?= base_url("categoria") ?>">Categoria</a></li>
+
 						<li><a href="<?= base_url("autor") ?>">Autor</a></li>
+
 						<li><a href="<?= base_url("institucion") ?>">Institución</a></li>
+
 						<li><a href="<?= base_url("usuario") ?>">Usuario</a></li>
 
 					<?php elseif ($this->session->userdata("rol") == "usuario"): ?>
 
 						<li><a href="<?= base_url("usuario") ?>">Inicio</a></li>
+
 						<li><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
+
 						<li><a href="<?= base_url("articulo") ?>">Articulo</a></li>
+
 						<li><a href="<?= base_url("evento") ?>">Evento</a></li>
 
 					<?php endif; ?>
@@ -58,7 +84,7 @@
 
 					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
 
-						<li><a href="<?= base_url("login") ?>"><span class="glyphicon glyphicon-log-in"></span> Ingresar</a></li>
+						<li><a href="<?= base_url("login") ?>">Ingresar</a></li>
 
 					<?php elseif ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
