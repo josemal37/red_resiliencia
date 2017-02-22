@@ -38,15 +38,20 @@ class Modelo_publicacion extends My_model {
 		parent::__construct();
 	}
 
-	public function select_publicaciones($nro_pagina = FALSE, $cantidad_publicaciones = FALSE) {
+	public function select_publicaciones($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
 
 		if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
 			$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
 		}
 
-		$this->db->order_by(self::ID_COL . " DESC, " . self::FECHA_COL . " DESC");
+		$this->db->order_by(self::NOMBRE_TABLA . "." . self::ID_COL . " DESC, " . self::NOMBRE_TABLA . "." . self::FECHA_COL . " DESC");
 
 		$query = $this->db->get();
 
@@ -307,22 +312,34 @@ class Modelo_publicacion extends My_model {
 		}
 	}
 
-	public function select_count_publicaciones() {
-		return $this->db->count_all(self::NOMBRE_TABLA);
+	public function select_count_publicaciones($id_institucion = FALSE) {
+		if ($id_institucion) {
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			return $this->db->count_all_results();
+			
+		} else {
+			return $this->db->count_all(self::NOMBRE_TABLA);
+		}
 	}
 
-	public function select_count_nro_paginas($cantidad_publicaciones_por_pagina) {
-		$nro_paginas = 0;
+	public function select_count_nro_paginas($cantidad_publicaciones_por_pagina = FALSE, $id_institucion = FALSE) {
+		if ($cantidad_publicaciones_por_pagina) {
+			$nro_paginas = 0;
 
-		$nro_publicaciones = $this->select_count_publicaciones();
+			$nro_publicaciones = $this->select_count_publicaciones($id_institucion);
 
-		if ($nro_publicaciones % $cantidad_publicaciones_por_pagina == 0) {
-			$nro_paginas = (integer) ($nro_publicaciones / $cantidad_publicaciones_por_pagina);
+			if ($nro_publicaciones % $cantidad_publicaciones_por_pagina == 0) {
+				$nro_paginas = (integer) ($nro_publicaciones / $cantidad_publicaciones_por_pagina);
+			} else {
+				$nro_paginas = (integer) ($nro_publicaciones / $cantidad_publicaciones_por_pagina) + 1;
+			}
+
+			return $nro_paginas;
 		} else {
-			$nro_paginas = (integer) ($nro_publicaciones / $cantidad_publicaciones_por_pagina) + 1;
+			return 0;
 		}
-
-		return $nro_paginas;
 	}
 
 }
