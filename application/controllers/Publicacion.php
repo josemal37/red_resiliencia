@@ -34,14 +34,20 @@ class Publicacion extends CI_Controller {
 		$this->publicaciones();
 	}
 
-	public function publicaciones() {
+	public function publicaciones($nro_pagina = FALSE) {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "administrador" || $rol == "usuario") {
+			$cantidad_publicaciones = 3;
 			$datos = array();
 			$datos["titulo"] = "Publicaciones";
 			$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
-			$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones();
+			if (!$nro_pagina) {
+				$nro_pagina = 1;
+			}
+			$datos["nro_pagina"] = $nro_pagina;
+			$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones);
+			$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones);
 
 			$this->load->view("publicacion/publicaciones", $datos);
 		} else {

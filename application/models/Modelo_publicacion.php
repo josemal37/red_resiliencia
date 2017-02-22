@@ -38,9 +38,15 @@ class Modelo_publicacion extends My_model {
 		parent::__construct();
 	}
 
-	public function select_publicaciones($categorias = FALSE, $autores = FALSE, $instituciones = FALSE) {
+	public function select_publicaciones($nro_pagina = FALSE, $cantidad_publicaciones = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+
+		if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
+			$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
+		}
+
+		$this->db->order_by(self::ID_COL . " DESC, " . self::FECHA_COL . " DESC");
 
 		$query = $this->db->get();
 
@@ -299,6 +305,24 @@ class Modelo_publicacion extends My_model {
 		} else {
 			return FALSE;
 		}
+	}
+
+	public function select_count_publicaciones() {
+		return $this->db->count_all(self::NOMBRE_TABLA);
+	}
+
+	public function select_count_nro_paginas($cantidad_publicaciones_por_pagina) {
+		$nro_paginas = 0;
+
+		$nro_publicaciones = $this->select_count_publicaciones();
+
+		if ($nro_publicaciones % $cantidad_publicaciones_por_pagina == 0) {
+			$nro_paginas = (integer) ($nro_publicaciones / $cantidad_publicaciones_por_pagina);
+		} else {
+			$nro_paginas = (integer) ($nro_publicaciones / $cantidad_publicaciones_por_pagina) + 1;
+		}
+
+		return $nro_paginas;
 	}
 
 }
