@@ -23,9 +23,7 @@ class Imagen extends Base_archivo {
 
 	protected $config = array(
 		"allowed_types" => "gif|jpg|png",
-		"max_size" => "2048",
-		"max_width" => "2048",
-		"max_height" => "2048"
+		"max_size" => "2048"
 	);
 
 }
