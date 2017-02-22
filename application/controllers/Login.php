@@ -36,7 +36,7 @@ class Login extends CI_Controller {
 				redirect(base_url("administrador"));
 				break;
 			case "usuario":
-				redirect(base_url("usuario"));
+				redirect(base_url("usuario_administrador"));
 				break;
 			default:
 				$data["token"] = $this->token();

@@ -68,7 +68,7 @@
 
 					<?php elseif ($this->session->userdata("rol") == "usuario"): ?>
 
-						<li><a href="<?= base_url("usuario") ?>">Inicio</a></li>
+						<li><a href="<?= base_url("usuario_administrador") ?>">Inicio</a></li>
 
 						<li><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
 
