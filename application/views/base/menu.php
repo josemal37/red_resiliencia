@@ -30,19 +30,19 @@
 
 						<li class="active"><a href="#">Inicio</a></li>
 
-						<?php if ($articulos): ?>
+						<?php if (isset($articulos) && $articulos): ?>
 
 							<li><a href="#articulos">Articulos</a></li>
 
 						<?php endif; ?>
 
-						<?php if ($publicaciones): ?>
+						<?php if (isset($publicaciones) && $publicaciones): ?>
 
 							<li><a href="#publicaciones">Publicaciones</a></li>
 
 						<?php endif; ?>
 
-						<?php if ($eventos): ?>
+						<?php if (isset($eventos) && $eventos): ?>
 
 							<li><a href="eventos">Eventos</a></li>
 
