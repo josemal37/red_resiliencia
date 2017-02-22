@@ -57,7 +57,8 @@ class Login extends CI_Controller {
 				if ($usuario) {
 					$datos = array(
 						"nombre_completo" => $usuario->nombre_completo,
-						"rol" => $usuario->nombre_rol
+						"rol" => $usuario->nombre_rol,
+						"nombre_institucion" => $usuario->nombre_institucion
 					);
 					$this->session->set_userdata($datos);
 				}

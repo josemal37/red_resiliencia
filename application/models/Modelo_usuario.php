@@ -19,6 +19,7 @@ class Modelo_usuario extends My_model {
 
 	const ID_COL = "id_usuario";
 	const ID_INSTITUCION_COL = "id_institucion";
+	const NOMBRE_INSTITUCION_COL = "nombre_institucion";
 	const ID_ROL_COL = "id_rol";
 	const NOMBRE_COL = "nombre_usuario";
 	const APELLIDO_PATERNO_COL = "apellido_paterno_usuario";
@@ -28,17 +29,20 @@ class Modelo_usuario extends My_model {
 	const NOMBRE_ROL_COL = "nombre_rol";
 	const COLUMNAS_SELECT = "usuario.id_usuario as id, usuario.id_institucion as id_institucion, usuario.id_rol as id_rol, usuario.nombre_usuario as nombre, usuario.apellido_paterno_usuario as apellido_paterno, usuario.apellido_materno_usuario as apellido_materno, usuario.login_usuario as login, usuario.password_usuario as password";
 	const COLUMNAS_SELECT_ROL = "rol.nombre_rol as nombre_rol";
+	const COLUMNAS_SELECT_INSTITUCION = "institucion.nombre_institucion as nombre_institucion";
 	const NOMBRE_TABLA = "usuario";
 	const NOMBRE_TABLA_ROL = "rol";
+	const NOMBRE_TABLA_INSTITUCION = "institucion";
 
 	public function __construct() {
 		parent::__construct();
 	}
 
 	public function select_usuarios() {
-		$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
+		$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL, "left");
+		$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
 
 		$query = $this->db->get();
 
@@ -57,9 +61,10 @@ class Modelo_usuario extends My_model {
 
 	public function select_usuario_por_id($id = FALSE) {
 		if ($id) {
-			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
+			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
 			$this->db->where(self::ID_COL, $id);
 
 			$query = $this->db->get();
@@ -78,9 +83,10 @@ class Modelo_usuario extends My_model {
 
 	public function select_usuario_por_login($login = "", $no_id = FALSE) {
 		if ($login != "") {
-			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
+			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
 			$this->db->where(self::LOGIN_COL, $login);
 			if ($no_id) {
 				$this->db->where(self::ID_COL . " != ", $no_id);
@@ -102,9 +108,10 @@ class Modelo_usuario extends My_model {
 
 	public function select_usuario_por_login_password($login = "", $password = "") {
 		if ($login != "" && $password != "") {
-			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL);
+			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
 			$this->db->from(self::NOMBRE_TABLA);
 			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
 			$this->db->where(self::LOGIN_COL, $login);
 			$this->db->where(self::PASSWORD_COL, $password);
 

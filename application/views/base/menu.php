@@ -88,7 +88,19 @@
 
 					<?php elseif ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-						<li><a href="<?= base_url("login/cerrar_sesion") ?>">Cerrar sesión</a></li>
+						<li class="dropdown">
+
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?= $this->session->userdata("nombre_completo") ?><span class="caret"></span></a>
+
+							<ul class="dropdown-menu">
+
+								<li class="navbar-text"><p><?= $this->session->userdata("nombre_institucion") ?></p></li>
+
+								<li><a href="<?= base_url("login/cerrar_sesion") ?>">Cerrar sesión</a></li>
+
+							</ul>
+
+						</li>
 
 					<?php endif; ?>
 
