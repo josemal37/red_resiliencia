@@ -293,7 +293,15 @@ class Publicacion extends CI_Controller {
 
 		if ($rol == "administrador" || $rol == "usuario") {
 			if ($id) {
-				$publicacion = $this->Modelo_publicacion->select_publicacion_por_id($id);
+				switch ($rol) {
+					case "administrador":
+						$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+						break;
+					case "usuario":
+						$id_institucion = $this->session->userdata("id_institucion");
+						$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id, $id_institucion);
+						break;
+				}
 
 				if ($publicacion) {
 					if ($this->Modelo_publicacion->delete_publicacion($id)) {
