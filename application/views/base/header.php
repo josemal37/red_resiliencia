@@ -15,11 +15,14 @@
         <title><?= $titulo ?></title>
 
         <!-- jQuery -->
-        <script src="<?= base_url('assets/jquery-2.0.3/jquery.js') ?>"></script>
+        <script src="<?= base_url("assets/jquery-2.0.3/jquery.js") ?>"></script>
 
         <!-- Bootstrap -->
-        <script src="<?= base_url('assets/bootstrap-3.3.7/js/bootstrap.js') ?>"></script>
-        <link href="<?= base_url('assets/bootstrap-3.3.7/css/bootstrap.css') ?>" rel="stylesheet">
+        <script src="<?= base_url("assets/bootstrap-3.3.7/js/bootstrap.js") ?>"></script>
+        <link href="<?= base_url("assets/bootstrap-3.3.7/css/bootstrap.css") ?>" rel="stylesheet">
+		
+		<!-- Estilos de la pagina -->
+		<link href="<?= base_url("assets/red_resiliencia/css/red_resiliencia.css")?>" rel="stylesheet">
 
         <!--[if lt IE 9]>
 		
