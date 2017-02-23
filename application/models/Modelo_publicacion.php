@@ -84,11 +84,16 @@ class Modelo_publicacion extends My_model {
 		return $publicaciones;
 	}
 
-	public function select_publicacion_por_id($id = FALSE) {
+	public function select_publicacion_por_id($id = FALSE, $id_institucion = FALSE) {
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->where(self::ID_COL, $id);
+			$this->db->where(self::NOMBRE_TABLA. "." . self::ID_COL, $id);
+
+			if ($id_institucion) {
+				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+				$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			}
 
 			$query = $this->db->get();
 
@@ -318,7 +323,6 @@ class Modelo_publicacion extends My_model {
 			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
 			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
 			return $this->db->count_all_results();
-			
 		} else {
 			return $this->db->count_all(self::NOMBRE_TABLA);
 		}

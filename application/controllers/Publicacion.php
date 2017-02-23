@@ -78,7 +78,7 @@ class Publicacion extends CI_Controller {
 				$datos["autores"] = $this->Modelo_autor->select_autores();
 				$datos["categorias"] = $this->Modelo_categoria->select_categorias();
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
-				
+
 				if ($rol == "usuario") {
 					$datos["institucion_usuario"] = new stdClass();
 					$datos["institucion_usuario"]->id = $this->session->userdata("id_institucion");
@@ -172,7 +172,15 @@ class Publicacion extends CI_Controller {
 				} else {
 					$datos = array();
 
-					$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+					switch ($rol) {
+						case "administrador":
+							$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+							break;
+						case "usuario":
+							$id_institucion = $this->session->userdata("id_institucion");
+							$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id, $id_institucion);
+							break;
+					}
 
 					if ($datos["publicacion"]) {
 						$datos["titulo"] = "Modificar publicación";
