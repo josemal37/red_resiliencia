@@ -86,12 +86,12 @@ if (isset($eventos)) {
 				<?php endforeach; ?>
 
 				<div class="clearfix visible-md-block visible-lg-block"></div>
-				
-				<div>
-					
-					<a href="<?= base_url("publicacion/publicaciones")?>" class="btn btn-primary pull-right">Ver todas las publicaciones</a>
-					
-				</div>
+
+			</div>
+
+			<div>
+
+				<a href="<?= base_url("publicacion/publicaciones") ?>" class="btn btn-primary pull-right">Ver todas las publicaciones</a>
 
 			</div>
 
