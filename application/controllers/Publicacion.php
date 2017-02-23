@@ -37,31 +37,31 @@ class Publicacion extends CI_Controller {
 	public function publicaciones($nro_pagina = FALSE) {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "administrador" || $rol == "usuario") {
-			$cantidad_publicaciones = 3;
-			$datos = array();
-			$datos["titulo"] = "Publicaciones";
-			$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
-			if (!$nro_pagina) {
-				$nro_pagina = 1;
-			}
-			$datos["nro_pagina"] = $nro_pagina;
-			switch ($rol) {
-				case "administrador":
-					$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones);
-					$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones);
-					break;
-				case "usuario":
-					$id_institucion = $this->session->userdata("id_institucion");
-					$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones, $id_institucion);
-					$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones, $id_institucion);
-					break;
-			}
-
-			$this->load->view("publicacion/publicaciones", $datos);
-		} else {
-			redirect(base_url());
+		$cantidad_publicaciones = 3;
+		$datos = array();
+		$datos["titulo"] = "Publicaciones";
+		$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
+		if (!$nro_pagina) {
+			$nro_pagina = 1;
 		}
+		$datos["nro_pagina"] = $nro_pagina;
+		switch ($rol) {
+			case "administrador":
+				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones);
+				$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones);
+				break;
+			case "usuario":
+				$id_institucion = $this->session->userdata("id_institucion");
+				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones, $id_institucion);
+				$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones, $id_institucion);
+				break;
+			default:
+				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones);
+				$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones);
+				break;
+		}
+
+		$this->load->view("publicacion/publicaciones", $datos);
 	}
 
 	public function registrar_publicacion() {

@@ -124,9 +124,17 @@
 
 					</div>
 
-					<a href="<?= base_url("publicacion/modificar_publicacion/" . $publicacion->id) ?>">Modificar</a>
+					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-					<a href="<?= base_url("publicacion/eliminar_publicacion/" . $publicacion->id) ?>">Eliminar</a>
+						<a href="<?= base_url("publicacion/modificar_publicacion/" . $publicacion->id) ?>">Modificar</a>
+
+					<?php endif; ?>
+
+					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+						<a href="<?= base_url("publicacion/eliminar_publicacion/" . $publicacion->id) ?>">Eliminar</a>
+
+					<?php endif; ?>
 
 				</div>
 
@@ -158,7 +166,11 @@
 
 	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
-	<a href="<?= base_url("publicacion/registrar_publicacion") ?>">Registrar publicación</a>
+	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+		<a href="<?= base_url("publicacion/registrar_publicacion") ?>">Registrar publicación</a>
+
+	<?php endif; ?>
 
 </div>
 

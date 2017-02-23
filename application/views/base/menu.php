@@ -18,7 +18,7 @@
 
 				</button>
 
-				<a class="navbar-brand" href="#">Red resiliencia</a>
+				<a class="navbar-brand" href="<?= base_url() ?>">Red resiliencia</a>
 
 			</div>
 
