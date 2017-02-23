@@ -139,7 +139,7 @@
 			var id_destino = get_select_destino(id);
 			$("#" + id_origen + " option:selected").remove().appendTo("#" + id_destino);
 		});
-		$('.quitar').click(function(e) {
+		$('.quitar').click(function(event) {
 			event.preventDefault();
 			var id = $(this).attr("id");
 			var id_origen = get_select_origen(id);

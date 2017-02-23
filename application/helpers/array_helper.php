@@ -25,7 +25,7 @@ function search_object_in_array_by_key($object = FALSE, $array = FALSE, $key = F
 	}
 }
 
-function eliminar_elementos_array(&$array, &$elementos, $key) {
+function eliminar_elementos_array(&$array, $elementos, $key) {
 	if ($array && $elementos) {
 		foreach ($elementos as $elemento) {
 			$i = search_object_in_array_by_key($elemento, $array, "id");
