@@ -18,7 +18,7 @@
 
 				</button>
 
-				<a class="navbar-brand" href="<?= base_url() ?>">Red resiliencia</a>
+				<a class="navbar-brand" href="<?= base_url() ?>">Inicio</a>
 
 			</div>
 
@@ -27,8 +27,6 @@
 				<ul class="nav navbar-nav">
 
 					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
-
-						<li class="active"><a href="#">Inicio</a></li>
 
 						<?php if (isset($articulos) && $articulos): ?>
 
