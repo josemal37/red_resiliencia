@@ -10,7 +10,7 @@
 
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container">
+<div id="publicaciones" class="container">
 
 	<?php if ($publicaciones): ?>
 

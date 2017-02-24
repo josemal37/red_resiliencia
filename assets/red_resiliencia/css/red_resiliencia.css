@@ -1,5 +1,64 @@
 /* 
     Author     : Jose
 */
+html, body {
+  font-family: "Lato", sans-serif; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Sansita", sans-serif; }
+
+.header {
+  background-color: #FFF;
+  color: #111;
+  margin: 0;
+  padding-top: 40px;
+  padding-bottom: 20px; }
+
+.navbar-default {
+  background-color: #FFF;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color: #111; }
+  .navbar-default .navbar-brand {
+    color: #111; }
+    .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+      color: #FFF;
+      background-color: #111; }
+  .navbar-default .navbar-nav > li > a {
+    color: #111; }
+    .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+      color: #FFF;
+      background-color: #111; }
+  .navbar-default .navbar-nav .active > a, .navbar-default .navbar-nav .active > a:hover, .navbar-default .navbar-nav .active > a:focus {
+    color: #FFF;
+    background-color: #111; }
+  .navbar-default .navbar-nav .open > a, .navbar-default .navbar-nav .open > a:hover, .navbar-default .navbar-nav .open > a:focus {
+    color: #FFF;
+    background-color: #111; }
+    .navbar-default .navbar-nav .open > a .caret, .navbar-default .navbar-nav .open > a:hover .caret, .navbar-default .navbar-nav .open > a:focus .caret {
+      border-top-color: #FFF;
+      border-bottom-color: #FFF; }
+  .navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #111;
+    border-bottom-color: #111; }
+  .navbar-default .navbar-nav > .dropdown > a:hover .caret, .navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #FFF;
+    border-bottom-color: #FFF; }
+  .navbar-default .navbar-toggle {
+    border-color: #111; }
+    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+      background-color: #FFF; }
+    .navbar-default .navbar-toggle .icon-bar {
+      background-color: #111; }
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #111; }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+      color: #FFF;
+      background-color: #111; } }
+body {
+  background-color: #FFF; }
 
 /*# sourceMappingURL=red_resiliencia.css.map */

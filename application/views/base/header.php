@@ -23,6 +23,10 @@
 		
 		<!-- Estilos de la pagina -->
 		<link href="<?= base_url("assets/red_resiliencia/css/red_resiliencia.css")?>" rel="stylesheet">
+		
+		<!-- Fuentes -->
+		<link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
         <!--[if lt IE 9]>
 		

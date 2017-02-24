@@ -1,0 +1,22 @@
+// VARIABLES
+$blanco: #FFF;
+$negro: #111;
+
+$fondo-titulo: $blanco;
+$texto-titulo: $negro;
+
+$fondo-cuerpo: $blanco;
+
+$fondo-menu: $blanco;
+$texto-menu: $negro;
+
+$fuente-titulo: "Sansita", sans-serif;
+$fuente-texto: "Lato", sans-serif;
+
+html, body {
+    font-family: $fuente-texto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $fuente-titulo;
+}

@@ -73,13 +73,21 @@ if (isset($eventos)) {
 
 					<div class="col-md-4">
 
-						<?php if ($publicacion->imagen != ""): ?>
+						<div class="text-center">
 
-							<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+							<?php if ($publicacion->imagen != ""): ?>
 
-						<?php endif; ?>
+								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive img-thumbnail">
 
-						<label><?= $publicacion->nombre ?></label>
+							<?php endif; ?>
+
+						</div>
+
+						<div class="text-center">
+
+							<label><?= $publicacion->nombre ?></label>
+
+						</div>
 
 					</div>
 

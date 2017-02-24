@@ -3,7 +3,7 @@
 <div class="container text-center">
 
 	<hr class="small">
-	
+
 	<p class="text-muted">Copyright &copy; Fundación ATICA 2017</p>
 
 </div>

@@ -1,0 +1,77 @@
+$fondo-menu: $blanco;
+$fondo-menu-resaltado: $negro;
+$texto-menu: $negro;
+$texto-menu-resaltado: $blanco;
+
+.navbar-default {
+    background-color: $fondo-menu;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-color: $fondo-menu-resaltado;
+    .navbar-brand {
+        color: $texto-menu;
+        &:hover, &:focus {
+            color: $texto-menu-resaltado;
+            background-color: $fondo-menu-resaltado;
+        }
+    }
+    .navbar-nav {
+        > li {
+            > a {
+                color: $texto-menu;
+                &:hover, &:focus {
+                    color: $texto-menu-resaltado;
+                    background-color: $fondo-menu-resaltado;
+                }
+            }
+        }
+        .active {
+            > a, > a:hover, > a:focus {
+                color: $texto-menu-resaltado;
+                background-color: $fondo-menu-resaltado; 
+            }
+        }
+        .open {
+            > a, > a:hover, > a:focus {
+                color: $texto-menu-resaltado;
+                background-color: $fondo-menu-resaltado;
+                .caret {
+                    border-top-color: $texto-menu-resaltado;
+                    border-bottom-color: $texto-menu-resaltado; 
+                }
+            }
+        }
+        > .dropdown {
+            > a {
+                .caret {
+                    border-top-color: $texto-menu;
+                    border-bottom-color: $texto-menu; }
+                &:hover, &:focus {
+                    .caret {
+                        border-top-color: $texto-menu-resaltado;
+                        border-bottom-color: $texto-menu-resaltado; 
+                    }
+                }
+            }
+        }
+    }
+    .navbar-toggle {
+        border-color: $fondo-menu-resaltado;
+        &:hover, &:focus {
+            background-color: $fondo-menu;
+        }
+        .icon-bar {
+            background-color: $texto-menu;
+        }
+    }
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: $texto-menu;
+        &:hover, &:focus {
+            color: $texto-menu-resaltado;
+            background-color: $fondo-menu-resaltado; 
+        }
+    }
+}
