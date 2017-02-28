@@ -14,7 +14,7 @@
 
 	<div class="container">
 
-		<?php $this->load->view("base/busqueda", array("fuente" => "publicacion")); ?>
+		<?php $this->load->view("base/busqueda", array("fuente" => "publicacion", "criterio" => $criterio)); ?>
 
 	</div>
 

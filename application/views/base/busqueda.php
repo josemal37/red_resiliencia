@@ -22,7 +22,7 @@ foreach ($categorias as $categoria) {
 
 			<div class="form-group">
 
-				<input type="text" id="criterio" name="criterio" class="form-control">
+				<input type="text" id="criterio" name="criterio" class="form-control" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
 
 			</div>
 
@@ -37,3 +37,13 @@ foreach ($categorias as $categoria) {
 	</div>
 
 </form>
+
+<?php if ($criterio): ?>
+
+	<div>
+
+		<h4>Publicaciones relacionadas con la palabra <strong>"<?= $criterio ?>"</strong></h4>
+
+	</div>
+
+<?php endif; ?>
