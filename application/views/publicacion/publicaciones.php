@@ -12,6 +12,12 @@
 
 <div id="publicaciones" class="container">
 
+	<div class="container">
+
+		<?php $this->load->view("base/busqueda", array("fuente" => "publicacion")); ?>
+
+	</div>
+
 	<?php if ($publicaciones): ?>
 
 		<?php foreach ($publicaciones as $publicacion): ?>
@@ -144,19 +150,23 @@
 
 		<?php endforeach; ?>
 
-		<div class="text-center">
+		<?php if (!$criterio): ?>
 
-			<ul class="pagination">
+			<div class="text-center">
 
-				<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
+				<ul class="pagination">
 
-					<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?>"><?= $i ?></a></li>
+					<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-				<?php endfor; ?>
+						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?>"><?= $i ?></a></li>
 
-			</ul>
+					<?php endfor; ?>
 
-		</div>
+				</ul>
+
+			</div>
+
+		<?php endif; ?>
 
 	<?php else: ?>
 

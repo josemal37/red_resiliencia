@@ -14,16 +14,25 @@
         <!-- Titulo -->
         <title><?= $titulo ?></title>
 
-        <!-- jQuery -->
+        <!-- JQuery -->
         <script src="<?= base_url("assets/jquery-2.0.3/jquery.js") ?>"></script>
 
+		<!-- JQuery UI -->
+		<link href="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.css") ?>" rel="stylesheet">
+		<link href="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.structure.css") ?>" rel="stylesheet">
+		<script src="<?= base_url("assets/jquery-ui-1.12.1/jquery-ui.js") ?>"></script>
+
         <!-- Bootstrap -->
-        <script src="<?= base_url("assets/bootstrap-3.3.7/js/bootstrap.js") ?>"></script>
         <link href="<?= base_url("assets/bootstrap-3.3.7/css/bootstrap.css") ?>" rel="stylesheet">
-		
+        <script src="<?= base_url("assets/bootstrap-3.3.7/js/bootstrap.js") ?>"></script>
+
+		<!-- Bootstrap tokenfield -->
+		<link href="<?= base_url("assets/bootstrap-tokenfield/css/bootstrap-tokenfield.min.css") ?>" rel="stylesheet">
+		<script src="<?= base_url("assets/bootstrap-tokenfield/bootstrap-tokenfield.min.js") ?>"></script>
+
 		<!-- Estilos de la pagina -->
-		<link href="<?= base_url("assets/red_resiliencia/css/red_resiliencia.css")?>" rel="stylesheet">
-		
+		<link href="<?= base_url("assets/red_resiliencia/css/red_resiliencia.css") ?>" rel="stylesheet">
+
 		<!-- Fuentes -->
 		<link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">

@@ -44,19 +44,26 @@ class Publicacion extends CI_Controller {
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
 		}
+		if (isset($_GET["criterio"])) {
+			$criterio = $this->input->get("criterio");
+		} else {
+			$criterio = FALSE;
+		}
+		$datos["criterio"] = $criterio;
+		
 		$datos["nro_pagina"] = $nro_pagina;
 		switch ($rol) {
 			case "administrador":
-				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones);
+				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones, NULL, $criterio);
 				$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones);
 				break;
 			case "usuario":
 				$id_institucion = $this->session->userdata("id_institucion");
-				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones, $id_institucion);
+				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones, $id_institucion, $criterio);
 				$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones, $id_institucion);
 				break;
 			default:
-				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones);
+				$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones($nro_pagina, $cantidad_publicaciones, NULL, $criterio);
 				$datos["nro_paginas"] = $this->Modelo_publicacion->select_count_nro_paginas($cantidad_publicaciones);
 				break;
 		}
