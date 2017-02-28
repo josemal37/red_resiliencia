@@ -1,96 +1,64 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
-<!DOCTYPE html>
+<?php $this->load->view("base/header"); ?>
 
-<html lang="en">
+<div class="text-center">
 
-    <head>
+	<h1><?= $titulo ?></h1>
 
-        <!-- Metadatos -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+</div>
 
-        <!-- Titulo -->
-        <title><?= $titulo ?></title>
+<?php
+$this->load->view("base/menu");
+?>
 
-        <!-- jQuery -->
-        <script src="<?= base_url('assets/jquery-2.0.3/jquery.js') ?>"></script>
+<div class="container">
 
-        <!-- Bootstrap -->
-        <script src="<?= base_url('assets/bootstrap-3.3.7/js/bootstrap.js') ?>"></script>
-        <link href="<?= base_url('assets/bootstrap-3.3.7/css/bootstrap.css') ?>" rel="stylesheet">
+	<?php if ($categorias): ?>
 
-        <!--[if lt IE 9]>
-		
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script
-		
-        <![endif]-->
+		<table class="table">
 
-    </head>
+			<thead>
 
-    <body>
+				<tr>
 
-        <div class="text-center">
+					<th>Nombre</th>
+					<th>Acciones</th>
 
-            <h1><?= $titulo ?></h1>
+				</tr>
 
-        </div>
+			</thead>
 
-		<?php
-		$this->load->view("base/menu");
-		?>
+			<tbody>
 
-        <div class="container">
+				<?php foreach ($categorias as $categoria): ?>
 
-			<?php if ($categorias): ?>
+					<tr id="<?= $categoria->id ?>">
 
-				<table class="table">
+						<td><?= $categoria->nombre ?></td>
+						<td>
+							<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>">Modificar</a>
+							<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>">Eliminar</a>
+						</td>
 
-					<thead>
+					</tr>
 
-						<tr>
+				<?php endforeach; ?>
 
-							<th>Nombre</th>
-							<th>Acciones</th>
+			</tbody>
 
-						</tr>
+		</table>
 
-					</thead>
+	<?php else: ?>
 
-					<tbody>
+		<p>No se registraron categorias.</p>
 
-						<?php foreach ($categorias as $categoria): ?>
+	<?php endif; ?>
 
-							<tr id="<?= $categoria->id ?>">
+	<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
 
-								<td><?= $categoria->nombre ?></td>
-								<td>
-									<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>">Modificar</a>
-									<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>">Eliminar</a>
-								</td>
+	<a href="<?= base_url("categoria/registrar_categoria") ?>">Registrar categoria</a>
 
-							</tr>
+</div>
 
-						<?php endforeach; ?>
-
-					</tbody>
-
-				</table>
-
-			<?php else: ?>
-
-				<p>No se registraron categorias.</p>
-
-			<?php endif; ?>
-
-			<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
-
-            <a href="<?= base_url("categoria/registrar_categoria") ?>">Registrar categoria</a>
-
-        </div>
-
-    </body>
-
-</html>
+<?php $this->load->view("base/footer"); ?>
