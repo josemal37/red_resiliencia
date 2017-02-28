@@ -40,8 +40,8 @@ class Publicacion_validacion extends Base {
 			)
 		),
 		"descripcion" => array(
-			"field" => "apellido_paterno",
-			"label" => "apellido paterno",
+			"field" => "descripcion",
+			"label" => "descripción",
 			"rules" => array(
 				"min_length[1]"
 			)
@@ -49,6 +49,22 @@ class Publicacion_validacion extends Base {
 		"id_categoria" => array(
 			"field" => "id_categoria",
 			"label" => "categorias",
+			"rules" => array(
+				"numeric",
+				"is_natural"
+			)
+		),
+		"id_institucion" => array(
+			"field" => "id_institucion",
+			"label" => "instituciones",
+			"rules" => array(
+				"numeric",
+				"is_natural"
+			)
+		),
+		"id_autor" => array(
+			"field" => "id_autor",
+			"label" => "autores",
 			"rules" => array(
 				"numeric",
 				"is_natural"
