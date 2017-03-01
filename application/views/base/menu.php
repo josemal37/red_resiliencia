@@ -42,7 +42,7 @@
 
 						<?php if (isset($eventos) && $eventos): ?>
 
-							<li><a href="eventos">Eventos</a></li>
+							<li><a href="#eventos">Eventos</a></li>
 
 						<?php endif; ?>
 

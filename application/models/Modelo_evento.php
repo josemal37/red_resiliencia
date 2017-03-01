@@ -36,7 +36,7 @@ class Modelo_evento extends My_model {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->model(array("Modelo_categoria", "Modelo_institucion"));
+		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_ciudad", "Modelo_pais"));
 	}
 
 	public function select_eventos($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE) {

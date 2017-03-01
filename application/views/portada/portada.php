@@ -112,5 +112,60 @@ if (isset($eventos)) {
 	</section>
 
 <?php endif; ?>
+	
+<?php if (isset($eventos)): ?>
+
+	<!-- Publicaciones -->
+	<section id="eventos" class="container">
+
+		<h2>Eventos</h2>
+
+		<?php if ($eventos): ?>
+
+			<div class="row">
+
+				<?php foreach ($eventos as $evento): ?>
+
+					<div class="col-md-4">
+
+						<div class="text-center">
+
+							<?php if ($evento->imagen != ""): ?>
+
+								<img src="<?= base_url($path_eventos . $evento->imagen) ?>" alt="<?= $evento->nombre ?>" class="img-responsive img-thumbnail">
+
+							<?php endif; ?>
+
+						</div>
+
+						<div class="text-center">
+
+							<label><?= $evento->nombre ?></label>
+
+						</div>
+
+					</div>
+
+				<?php endforeach; ?>
+
+				<div class="clearfix visible-md-block visible-lg-block"></div>
+
+			</div>
+
+			<div>
+
+				<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary pull-right">Ver todos los eventos</a>
+
+			</div>
+
+		<?php else: ?>
+
+			<p>Sin eventos.</p>
+
+		<?php endif; ?>
+
+	</section>
+
+<?php endif; ?>
 
 <?php $this->load->view("base/footer"); ?>

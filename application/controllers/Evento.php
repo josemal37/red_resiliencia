@@ -62,6 +62,8 @@ class Evento extends CI_Controller {
 				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos, $id_institucion);
 				break;
 			default:
+				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos);
+				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
 				break;
 		}
 
