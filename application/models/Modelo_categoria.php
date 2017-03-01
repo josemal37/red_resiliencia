@@ -19,13 +19,12 @@ class Modelo_categoria extends My_model {
 
 	const ID_COL = "id_categoria";
 	const NOMBRE_COL = "nombre_categoria";
-	
 	const COLUMNAS_SELECT = "categoria.id_categoria as id, categoria.nombre_categoria as nombre";
-	
 	const NOMBRE_TABLA = "categoria";
-	
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "categoria_publicacion";
 	const ID_PUBLICACION_COL = "id_publicacion";
+	const NOMBRE_TABLA_JOIN_EVENTO = "categoria_evento";
+	const ID_EVENTO_COL = "id_evento";
 
 	public function __construct() {
 		parent::__construct();
@@ -58,6 +57,16 @@ class Modelo_categoria extends My_model {
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_PUBLICACION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_COL, "left");
 					$this->db->where(self::NOMBRE_TABLA_JOIN_PUBLICACION . "." . self::ID_PUBLICACION_COL, $id);
+
+					$query = $this->db->get();
+
+					$datos = $this->return_result($query);
+					break;
+				case "evento":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_EVENTO, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_EVENTO . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_EVENTO . "." . self::ID_EVENTO_COL, $id);
 
 					$query = $this->db->get();
 
@@ -145,18 +154,18 @@ class Modelo_categoria extends My_model {
 			return FALSE;
 		}
 	}
-	
+
 	public function delete_categoria($id = FALSE) {
 		if ($id) {
 			$eliminado = FALSE;
-			
+
 			$this->db->trans_start();
-			
+
 			$this->db->where(self::ID_COL, $id);
 			$this->db->delete(self::NOMBRE_TABLA);
-			
+
 			$this->db->trans_complete();
-			
+
 			return $eliminado;
 		} else {
 			return FALSE;
@@ -176,25 +185,25 @@ class Modelo_categoria extends My_model {
 
 		return $existe;
 	}
-	
+
 	public function existe_diferente_id($id = FALSE, $nombre = "") {
 		$existe = FALSE;
-		
+
 		$datos = array();
 		$datos[self::ID_COL . "!="] = $id;
 		$datos[self::NOMBRE_COL] = $nombre;
-		
+
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->where($datos);
-		
+
 		$query = $this->db->get();
 		$autor = $this->return_row($query);
-		
-		if($autor) {
+
+		if ($autor) {
 			$existe = TRUE;
 		}
-		
+
 		return $existe;
 	}
 

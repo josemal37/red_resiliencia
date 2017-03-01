@@ -20,16 +20,14 @@ class Modelo_institucion extends My_model {
 	const ID_COL = "id_institucion";
 	const NOMBRE_COL = "nombre_institucion";
 	const SIGLA_COL = "sigla_institucion";
-	
 	const COLUMNAS_SELECT = "institucion.id_institucion as id, institucion.nombre_institucion as nombre, institucion.sigla_institucion as sigla";
-	
 	const NOMBRE_TABLA = "institucion";
-	
 	const NOMBRE_TABLA_JOIN_PUBLICACION = "institucion_publicacion";
 	const ID_PUBLICACION_COL = "id_publicacion";
-	
 	const NOMBRE_TABLA_JOIN_AUTOR = "institucion_autor";
 	const ID_AUTOR_COL = "id_autor";
+	const NOMBRE_TABLA_JOIN_EVENTO = "institucion_evento";
+	const ID_EVENTO_COL = "id_evento";
 
 	public function __construct() {
 		parent::__construct();
@@ -46,7 +44,7 @@ class Modelo_institucion extends My_model {
 
 	public function select_institucion_por_id($id = FALSE, $nombre_tabla = "") {
 		if ($id) {
-			$datos  = FALSE;
+			$datos = FALSE;
 			switch ($nombre_tabla) {
 				case "":
 					$this->db->select(self::COLUMNAS_SELECT);
@@ -72,6 +70,16 @@ class Modelo_institucion extends My_model {
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_AUTOR . "." . self::ID_COL, "left");
 					$this->db->where(self::NOMBRE_TABLA_JOIN_AUTOR . "." . self::ID_AUTOR_COL, $id);
+
+					$query = $this->db->get();
+
+					$datos = $this->return_result($query);
+					break;
+				case "evento":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_EVENTO, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_EVENTO . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_EVENTO . "." . self::ID_EVENTO_COL, $id);
 
 					$query = $this->db->get();
 
@@ -169,18 +177,18 @@ class Modelo_institucion extends My_model {
 			return FALSE;
 		}
 	}
-	
+
 	public function delete_institucion($id = FALSE) {
 		if ($id) {
 			$eliminado = FALSE;
-			
+
 			$this->db->trans_start();
-			
+
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
-			
+
 			$this->db->trans_complete();
-			
+
 			return $eliminado;
 		} else {
 			return FALSE;
@@ -198,26 +206,26 @@ class Modelo_institucion extends My_model {
 
 		return $existe;
 	}
-	
+
 	public function existe_diferente_id($id = FALSE, $nombre = "", $sigla = "") {
 		$existe = FALSE;
-		
+
 		$datos = array();
 		$datos[self::ID_COL . "!="] = $id;
 		$datos[self::NOMBRE_COL] = $nombre;
 		$datos[self::SIGLA_COL] = $sigla;
-		
+
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->where($datos);
-		
+
 		$query = $this->db->get();
 		$autor = $this->return_row($query);
-		
-		if($autor) {
+
+		if ($autor) {
 			$existe = TRUE;
 		}
-		
+
 		return $existe;
 	}
 

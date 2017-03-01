@@ -18,6 +18,7 @@ require_once 'Base.php';
 abstract class Base_archivo {
 
 	const PATH_PUBLICACIONES = "publicaciones/";
+	const PATH_EVENTOS = "eventos/";
 
 	protected $ci;
 	protected $config = array();
@@ -72,6 +73,9 @@ abstract class Base_archivo {
 		switch ($nombre) {
 			case "publicacion":
 				$path = self::PATH_PUBLICACIONES;
+				break;
+			case "evento":
+				$path = self::PATH_EVENTOS;
 				break;
 		}
 
