@@ -269,6 +269,43 @@ class Evento extends CI_Controller {
 		}
 	}
 
+	public function eliminar_evento($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador" || $rol == "usuario") {
+			if ($id) {
+				switch ($rol) {
+					case "administrador":
+						$evento = $this->Modelo_evento->select_evento_por_id($id);
+						break;
+					case "usuario":
+						$id_institucion = $this->session->userdata("id_institucion");
+						$evento = $this->Modelo_evento->select_evento_por_id($id, $id_institucion);
+						break;
+				}
+
+				if ($evento) {
+					if ($this->Modelo_evento->delete_evento($id)) {
+						$path = $this->imagen->get_path_valido("evento");
+						if (isset($evento->imagen) && $evento->imagen != "") {
+							$this->imagen->eliminar_archivo($path . $evento->imagen);
+						}
+
+						redirect(base_url("evento/eventos"));
+					} else {
+						redirect(base_url("evento/eventos"));
+					}
+				} else {
+					redirect(base_url("evento/eventos"));
+				}
+			} else {
+				redirect(base_url("evento/eventos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function get_ciudades_ajax() {
 		if ($this->input->is_ajax_request() && isset($_POST["id_pais"])) {
 			$id_pais = $this->input->post("id_pais");

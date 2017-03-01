@@ -225,6 +225,26 @@ class Modelo_evento extends My_model {
 
 		return $actualizado;
 	}
+	
+	public function delete_evento($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+			
+			$this->db->trans_start();
+			
+			$this->delete_categoria_de_evento($id);
+			$this->delete_institucion_de_evento($id);
+			
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+			
+			$this->db->trans_complete();
+			
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
 
 	private function delete_categoria_de_evento($id = FALSE) {
 		if ($id) {

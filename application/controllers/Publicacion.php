@@ -311,11 +311,11 @@ class Publicacion extends CI_Controller {
 			if ($id) {
 				switch ($rol) {
 					case "administrador":
-						$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+						$publicacion = $this->Modelo_publicacion->select_publicacion_por_id($id);
 						break;
 					case "usuario":
 						$id_institucion = $this->session->userdata("id_institucion");
-						$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id, $id_institucion);
+						$publicacion = $this->Modelo_publicacion->select_publicacion_por_id($id, $id_institucion);
 						break;
 				}
 
