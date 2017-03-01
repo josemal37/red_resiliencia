@@ -70,6 +70,37 @@ class Evento extends CI_Controller {
 		$this->load->view("evento/eventos", $datos);
 	}
 
+	public function ver_evento($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($id) {
+			$datos = array();
+			switch ($rol) {
+				case "administrador":
+					$datos["evento"] = $this->Modelo_evento->select_evento_por_id($id);
+					break;
+				case "usuario":
+					$id_institucion = $this->session->userdata("id_institucion");
+					$datos["evento"] = $this->Modelo_evento->select_evento_por_id($id, $id_institucion);
+					break;
+				default:
+					$datos["evento"] = $this->Modelo_evento->select_evento_por_id($id);
+					break;
+			}
+
+			if ($datos["evento"]) {
+				$datos["titulo"] = $datos["evento"]->nombre;
+				$datos["path_evento"] = $this->imagen->get_path_valido("evento");
+				
+				$this->load->view("evento/evento", $datos);
+			} else {
+				redirect(base_url("evento/eventos"));
+			}
+		} else {
+			redirect(base_url("evento/eventos"));
+		}
+	}
+
 	public function registrar_evento() {
 		$rol = $this->session->userdata("rol");
 

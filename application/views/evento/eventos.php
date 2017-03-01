@@ -79,6 +79,8 @@
 						<?php endif; ?>
 
 					</div>
+					
+					<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">Ver</a>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
