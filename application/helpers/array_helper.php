@@ -35,3 +35,18 @@ function eliminar_elementos_array(&$array, $elementos, $key) {
 		}
 	}
 }
+
+function listar_array_de_stdclass($array = FALSE, $parametro = FALSE, $separador = FALSE) {
+	$cadena = "";
+	if ($array && is_array($array) && $parametro && $separador) {
+		$array_basico = array();
+		
+		foreach ($array as $elem) {
+			$array_basico[] = $elem->$parametro;
+		}
+		
+		$cadena = implode($separador, $array_basico);
+	}
+
+	return $cadena;
+}

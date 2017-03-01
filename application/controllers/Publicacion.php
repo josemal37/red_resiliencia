@@ -71,6 +71,37 @@ class Publicacion extends CI_Controller {
 		$this->load->view("publicacion/publicaciones", $datos);
 	}
 
+	public function ver_publicacion($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($id) {
+			$datos = array();
+			switch ($rol) {
+				case "administrador":
+					$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+					break;
+				case "usuario":
+					$id_institucion = $this->session->userdata("id_institucion");
+					$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id, $id_institucion);
+					break;
+				default:
+					$datos["publicacion"] = $this->Modelo_publicacion->select_publicacion_por_id($id);
+					break;
+			}
+
+			if ($datos["publicacion"]) {
+				$datos["titulo"] = $datos["publicacion"]->nombre;
+				$datos["path_publicacion"] = $this->imagen->get_path_valido("publicacion");
+				
+				$this->load->view("publicacion/publicacion", $datos);
+			} else {
+				redirect(base_url("publicacion/publicaciones"));
+			}
+		} else {
+			redirect(base_url("publicacion/publicaciones"));
+		}
+	}
+
 	public function registrar_publicacion() {
 		$rol = $this->session->userdata("rol");
 
