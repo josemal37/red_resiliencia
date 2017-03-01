@@ -80,6 +80,18 @@
 
 					</div>
 
+					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+						<a href="<?= base_url("evento/modificar_evento/" . $evento->id) ?>">Modificar</a>
+
+					<?php endif; ?>
+
+					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+						<a href="<?= base_url("evento/eliminar_evento/" . $evento->id) ?>">Eliminar</a>
+
+					<?php endif; ?>
+
 				</div>
 
 			</div>
@@ -92,7 +104,13 @@
 
 	<?php endif; ?>
 
-	<a href="<?= base_url("evento/registrar_evento") ?>">Registrar evento</a>
+	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+
+	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+		<a href="<?= base_url("evento/registrar_evento") ?>">Registrar evento</a>
+
+	<?php endif; ?>
 
 </div>
 
