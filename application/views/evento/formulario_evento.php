@@ -29,7 +29,7 @@ switch ($accion) {
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control">
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 
@@ -39,7 +39,7 @@ switch ($accion) {
 
 			<label>Descripción</label>
 
-			<textarea id="descripcion" name="descripcion" class="form-control"></textarea>
+			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $evento->descripcion ?><?php endif; ?></textarea>
 
 			<?= form_error("descripcion") ?>
 
@@ -49,7 +49,29 @@ switch ($accion) {
 
 			<label>Imagen</label>
 
-			<input type="file" id="imagen" name="imagen" required>
+			<?php if ($accion == "modificar"): ?>
+
+				<?php if (isset($evento->imagen)): ?>
+
+					<div>
+
+						<label>Imagen actual</label>
+
+						<br><img src="<?= base_url($path_eventos . $evento->imagen) ?>" class="img-responsive">
+
+						<p><?= $evento->imagen ?></p>
+
+						<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $evento->imagen ?>">
+
+					</div>
+
+					<label>Subir imagen nueva</label>
+
+				<?php endif; ?>
+
+			<?php endif; ?>
+
+			<input type="file" id="imagen" name="imagen" <?php if ($accion == "registrar"): ?>required<?php endif; ?>>
 
 			<?= form_error("imagen") ?>
 
@@ -59,7 +81,7 @@ switch ($accion) {
 
 			<label>Fecha de inicio</label>
 
-			<input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control">
+			<input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_inicio ?>"<?php endif; ?>>
 
 			<?= form_error("fecha_inicio") ?>
 
@@ -69,7 +91,7 @@ switch ($accion) {
 
 			<label>Fecha de fin</label>
 
-			<input type="date" id="fecha_fin" name="fecha_fin" class="form-control">
+			<input type="date" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_fin ?>"<?php endif; ?>>
 
 			<?= form_error("fecha_fin") ?>
 
@@ -85,7 +107,7 @@ switch ($accion) {
 
 					<?php foreach ($paises as $pais): ?>
 
-						<option value="<?= $pais->id ?>"><?= $pais->nombre ?></option>
+						<option value="<?= $pais->id ?>" <?php if ($accion == "modificar" && $evento->pais->id == $pais->id): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
 
 					<?php endforeach; ?>
 
@@ -107,7 +129,7 @@ switch ($accion) {
 
 					<?php foreach ($ciudades as $ciudad): ?>
 
-						<option value="<?= $ciudad->id ?>"><?= $ciudad->nombre ?></option>
+						<option value="<?= $ciudad->id ?>" <?php if ($accion == "modificar" && $evento->ciudad->id == $ciudad->id): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
 
 					<?php endforeach; ?>
 
@@ -123,7 +145,7 @@ switch ($accion) {
 
 			<label>Dirección</label>
 
-			<input type="text" id="direccion" name="direccion" class="form-control">
+			<input type="text" id="direccion" name="direccion" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->direccion ?>"<?php endif; ?>>
 
 			<?= form_error("direccion") ?>
 
@@ -172,9 +194,9 @@ switch ($accion) {
 
 						<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
 
-							<?php if ($publicacion->categorias): ?>
+							<?php if ($accion == "modificar" && $evento->categorias): ?>
 
-								<?php foreach ($publicacion->categorias as $categoria): ?>
+								<?php foreach ($evento->categorias as $categoria): ?>
 
 									<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
 
@@ -239,9 +261,9 @@ switch ($accion) {
 
 						<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
 
-							<?php if (isset($publicacion) && $publicacion->instituciones): ?>
+							<?php if ($accion == "modificar" && $evento->instituciones): ?>
 
-								<?php foreach ($publicacion->instituciones as $institucion): ?>
+								<?php foreach ($evento->instituciones as $institucion): ?>
 
 									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
 
@@ -249,7 +271,7 @@ switch ($accion) {
 
 							<?php endif; ?>
 
-							<?php if ($institucion_usuario): ?>
+							<?php if ($accion == "registrar" && $institucion_usuario): ?>
 
 								<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
 
@@ -272,6 +294,12 @@ switch ($accion) {
 		<?php else: ?>
 
 			<p>No se registraron instituciones.</p>
+
+		<?php endif; ?>
+
+		<?php if ($accion == "modificar"): ?>
+
+			<input type="hidden" id="id" name="id" value="<?= $evento->id ?>">
 
 		<?php endif; ?>
 
@@ -362,8 +390,11 @@ switch ($accion) {
 
 		/** script para antes del envio **/
 
-		$("#form_publicacion").submit(function() {
-			$("option").each(function() {
+		$("#form-evento").submit(function() {
+			$("#id_categoria > option").each(function() {
+				$(this).prop("selected", "selected");
+			});
+			$("#id_institucion > option").each(function() {
 				$(this).prop("selected", "selected");
 			});
 		});

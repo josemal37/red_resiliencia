@@ -98,6 +98,24 @@
 
 		<?php endforeach; ?>
 
+		<?php if (!$criterio): ?>
+
+			<div class="text-center">
+
+				<ul class="pagination">
+
+					<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
+
+						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos/" . $i) ?>"><?= $i ?></a></li>
+
+					<?php endfor; ?>
+
+				</ul>
+
+			</div>
+
+		<?php endif; ?>
+
 	<?php else: ?>
 
 		<p>No se registraron eventos.</p>

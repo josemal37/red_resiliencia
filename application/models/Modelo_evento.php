@@ -26,7 +26,7 @@ class Modelo_evento extends My_model {
 	const DIRECCION_COL = "direccion_evento";
 	const IMAGEN_COL = "imagen_evento";
 	const DESTACADO_COL = "destacado_evento";
-	const COLUMNAS_SELECT = "id_evento as id, id_ciudad as id_ciudad, nombre_evento as nombre, descripcion_evento as descripcion, fecha_inicio_evento as fecha_inicio, fecha_fin_evento as fecha_fin, direccion_evento as direccion, imagen_evento as imagen, destacado_evento as destacado";
+	const COLUMNAS_SELECT = "evento.id_evento as id, evento.id_ciudad as id_ciudad, evento.nombre_evento as nombre, evento.descripcion_evento as descripcion, evento.fecha_inicio_evento as fecha_inicio, evento.fecha_fin_evento as fecha_fin, evento.direccion_evento as direccion, evento.imagen_evento as imagen, evento.destacado_evento as destacado";
 	const NOMBRE_TABLA = "evento";
 	const NOMBRE_TABLA_ASOC_CATEGORIA = "categoria_evento";
 	const ID_TABLA_ASOC_CATEGORIA = "id_categoria";
@@ -39,10 +39,21 @@ class Modelo_evento extends My_model {
 		$this->load->model(array("Modelo_categoria", "Modelo_institucion"));
 	}
 
-	public function select_eventos() {
+	public function select_eventos($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
-		$this->db->order_by(self::FECHA_INICIO_COL);
+		$this->db->order_by(self::FECHA_INICIO_COL, "desc");
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
+
+		if (!$criterio) {
+			if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
+				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
+			}
+		}
 
 		$query = $this->db->get();
 
@@ -67,16 +78,20 @@ class Modelo_evento extends My_model {
 		return $eventos;
 	}
 
-	public function select_evento($id = FALSE) {
+	public function select_evento_por_id($id = FALSE, $id_institucion = FALSE) {
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->where(self::ID_COL, $id);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_COL, $id);
+
+			if ($id_institucion) {
+				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+				$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			}
 
 			$query = $this->db->get();
 
 			$evento = $this->return_row($query);
-
 
 			if ($evento) {
 				$ciudad = $this->Modelo_ciudad->select_ciudad($evento->id_ciudad);
@@ -150,6 +165,121 @@ class Modelo_evento extends My_model {
 			return $asociado;
 		} else {
 			return FALSE;
+		}
+	}
+
+	public function update_evento($id = FALSE, $id_ciudad = FALSE, $nombre = "", $descripcion = "", $fecha_inicio = "", $fecha_fin = "", $direccion = "", $imagen = "", $destacado = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+		if ($id && $id_ciudad && $nombre != "" && $fecha_inicio != "" && $fecha_fin != "" && $direccion != "") {
+			$actualizado = FALSE;
+
+			$this->db->trans_start();
+
+			$datos = array(
+				self::ID_CIUDAD_COL => $id_ciudad,
+				self::NOMBRE_COL => $nombre,
+				self::DESCRIPCION_COL => $descripcion,
+				self::FECHA_INICIO_COL => $fecha_inicio,
+				self::FECHA_FIN_COL => $fecha_fin,
+				self::DIRECCION_COL => $direccion,
+				self::IMAGEN_COL => $imagen,
+				self::DESTACADO_COL => $destacado
+			);
+
+			$this->db->set($datos);
+
+			$this->db->where(self::ID_COL, $id);
+
+			$actualizado = $this->db->update(self::NOMBRE_TABLA);
+
+			$this->update_categoria_de_evento($id, $id_categoria);
+			$this->update_institucion_de_evento($id, $id_institucion);
+
+			$this->db->trans_complete();
+
+			return $actualizado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function update_categoria_de_evento($id_evento = FALSE, $id_categoria = FALSE) {
+		$actualizado = FALSE;
+
+		if ($id_evento && $id_categoria) {
+			if ($this->delete_categoria_de_evento($id_evento)) {
+				$actualizado = $this->insert_categoria_a_evento($id_evento, $id_categoria);
+			}
+		}
+
+		return $actualizado;
+	}
+
+	private function update_institucion_de_evento($id_evento = FALSE, $id_institucion = FALSE) {
+		$actualizado = FALSE;
+
+		if ($id_evento && $id_institucion) {
+			if ($this->delete_institucion_de_evento($id_evento)) {
+				$actualizado = $this->insert_institucion_a_evento($id_evento, $id_institucion);
+			}
+		}
+
+		return $actualizado;
+	}
+
+	private function delete_categoria_de_evento($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_CATEGORIA);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_institucion_de_evento($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_INSTITUCION);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function select_count_eventos($id_institucion = FALSE) {
+		if ($id_institucion) {
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			return $this->db->count_all_results();
+		} else {
+			return $this->db->count_all(self::NOMBRE_TABLA);
+		}
+	}
+
+	public function select_count_nro_paginas($cantidad_eventos_por_pagina = FALSE, $id_institucion = FALSE) {
+		if ($cantidad_eventos_por_pagina) {
+			$nro_paginas = 0;
+
+			$nro_eventos = $this->select_count_eventos($id_institucion);
+
+			if ($nro_eventos % $cantidad_eventos_por_pagina == 0) {
+				$nro_paginas = (integer) ($nro_eventos / $cantidad_eventos_por_pagina);
+			} else {
+				$nro_paginas = (integer) ($nro_eventos / $cantidad_eventos_por_pagina) + 1;
+			}
+
+			return $nro_paginas;
+		} else {
+			return 0;
 		}
 	}
 

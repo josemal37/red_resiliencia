@@ -50,7 +50,7 @@ class Publicacion extends CI_Controller {
 			$criterio = FALSE;
 		}
 		$datos["criterio"] = $criterio;
-		
+
 		$datos["nro_pagina"] = $nro_pagina;
 		switch ($rol) {
 			case "administrador":
@@ -200,6 +200,15 @@ class Publicacion extends CI_Controller {
 						eliminar_elementos_array($datos["autores"], $datos["publicacion"]->autores, "id");
 						eliminar_elementos_array($datos["categorias"], $datos["publicacion"]->categorias, "id");
 						eliminar_elementos_array($datos["instituciones"], $datos["publicacion"]->instituciones, "id");
+
+						if ($rol == "usuario") {
+							$datos["institucion_usuario"] = new stdClass();
+							$datos["institucion_usuario"]->id = $this->session->userdata("id_institucion");
+							$datos["institucion_usuario"]->nombre = $this->session->userdata("nombre_institucion");
+							eliminar_elementos_array($datos["instituciones"], array($datos["institucion_usuario"]), "id");
+						} else {
+							$datos["institucion_usuario"] = FALSE;
+						}
 
 						$this->load->view("publicacion/formulario_publicacion", $datos);
 					} else {

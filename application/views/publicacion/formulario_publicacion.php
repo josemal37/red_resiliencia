@@ -141,7 +141,7 @@
 
 						<br><img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" class="img-responsive">
 
-						<p><?= $publicacion->imagen ?><p>
+						<p><?= $publicacion->imagen ?></p>
 
 							<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $publicacion->imagen ?>">
 
@@ -402,7 +402,7 @@
 
 							<?php endif; ?>
 
-							<?php if ($institucion_usuario): ?>
+							<?php if ($accion == "registrar" && $institucion_usuario): ?>
 
 								<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
 

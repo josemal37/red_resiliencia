@@ -32,11 +32,38 @@ class Evento extends CI_Controller {
 		$this->eventos();
 	}
 
-	public function eventos() {
+	public function eventos($nro_pagina = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		$cantidad_eventos = 3;
+		if (!$nro_pagina) {
+			$nro_pagina = 1;
+		}
+
 		$datos = array();
 		$datos["titulo"] = "Eventos";
 		$datos["path_evento"] = $this->imagen->get_path_valido("evento");
-		$datos["eventos"] = $this->Modelo_evento->select_eventos();
+		$datos["nro_pagina"] = $nro_pagina;
+		if (isset($_GET["criterio"])) {
+			$criterio = $this->input->get("criterio");
+		} else {
+			$criterio = FALSE;
+		}
+		$datos["criterio"] = $criterio;
+
+		switch ($rol) {
+			case "administrador":
+				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos);
+				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
+				break;
+			case "usuario":
+				$id_institucion = $this->session->userdata("id_institucion");
+				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, $id_institucion);
+				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos, $id_institucion);
+				break;
+			default:
+				break;
+		}
 
 		$this->load->view("evento/eventos", $datos);
 	}
@@ -59,6 +86,15 @@ class Evento extends CI_Controller {
 				}
 				$datos["categorias"] = $this->Modelo_categoria->select_categorias();
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+				if ($rol == "usuario") {
+					$datos["institucion_usuario"] = new stdClass();
+					$datos["institucion_usuario"]->id = $this->session->userdata("id_institucion");
+					$datos["institucion_usuario"]->nombre = $this->session->userdata("nombre_institucion");
+					eliminar_elementos_array($datos["instituciones"], array($datos["institucion_usuario"]), "id");
+				} else {
+					$datos["institucion_usuario"] = FALSE;
+				}
 
 				$this->load->view("evento/formulario_evento", $datos);
 			}
@@ -114,6 +150,122 @@ class Evento extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->registrar_evento();
+		}
+	}
+
+	public function modificar_evento($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador" || $rol == "usuario") {
+			if ($id) {
+				if (isset($_POST["submit"])) {
+					$this->modificar_evento_bd();
+				} else {
+					$datos = array();
+
+					switch ($rol) {
+						case "administrador":
+							$datos["evento"] = $this->Modelo_evento->select_evento_por_id($id);
+							break;
+						case "usuario":
+							$id_institucion = $this->session->userdata("id_institucion");
+							$datos["evento"] = $this->Modelo_evento->select_evento_por_id($id, $id_institucion);
+							break;
+					}
+
+					if ($datos["evento"]) {
+						$datos["titulo"] = "Modificar evento";
+						$datos["accion"] = "modificar";
+						$datos["path_eventos"] = $this->imagen->get_path_valido("evento");
+						$datos["paises"] = $this->Modelo_pais->select_paises();
+						if ($datos["paises"]) {
+							$datos["ciudades"] = $this->Modelo_ciudad->select_ciudades($datos["paises"][0]->id);
+						} else {
+							$datos["ciudades"] = FALSE;
+						}
+						$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+						$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+						eliminar_elementos_array($datos["categorias"], $datos["evento"]->categorias, "id");
+						eliminar_elementos_array($datos["instituciones"], $datos["evento"]->instituciones, "id");
+
+						if ($rol == "usuario") {
+							$datos["institucion_usuario"] = new stdClass();
+							$datos["institucion_usuario"]->id = $this->session->userdata("id_institucion");
+							$datos["institucion_usuario"]->nombre = $this->session->userdata("nombre_institucion");
+							eliminar_elementos_array($datos["instituciones"], array($datos["institucion_usuario"]), "id");
+						} else {
+							$datos["institucion_usuario"] = FALSE;
+						}
+
+						$this->load->view("evento/formulario_evento", $datos);
+					} else {
+						$this->session->set_flashdata("error", "El evento seleccionado no existe.");
+						redirect(base_url("evento/eventos"));
+					}
+				}
+			} else {
+				redirect(base_url("evento/eventos"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function modificar_evento_bd() {
+		$id = $this->input->post("id");
+		$nombre = $this->input->post("nombre");
+		$descripcion = $this->input->post("descripcion");
+		$imagen_antiguo = $this->input->post("imagen_antiguo");
+		$fecha_inicio = $this->input->post("fecha_inicio");
+		$fecha_fin = $this->input->post("fecha_fin");
+		$pais = $this->input->post("pais");
+		$ciudad = $this->input->post("ciudad");
+		$direccion = $this->input->post("direccion");
+		$id_categoria = $this->input->post("id_categoria");
+		$id_institucion = $this->input->post("id_institucion");
+
+		if ($this->evento_validacion->validar(array("id", "nombre", "descripcion", "fecha_inicio", "fecha_fin", "ciudad", "direccion", "id_categoria", "id_institucion"))) {
+			$direccion_imagen = "";
+			if ($_FILES["imagen"]["name"] != "") {
+				$path = $this->imagen->get_path_valido("evento");
+
+				if ($path) {
+					$this->imagen->eliminar_archivo($path . $imagen_antiguo);
+					$imagen = $this->imagen->subir_archivo("imagen", $path);
+
+					if (!$imagen["error"]) {
+						$direccion_imagen = "";
+
+						if ($imagen["datos"]) {
+							$direccion_imagen = $imagen["datos"]["file_name"];
+						}
+					} else {
+						$error = "";
+						if ($imagen["error"]) {
+							$error = $imagen["datos"];
+						}
+
+						$this->session->set_flashdata("error", $error);
+						redirect(base_url("evento/modificar_evento/" . $id));
+					}
+				} else {
+					$this->session->set_flashdata("error", "Ocurrió un error al guardar los archivos.");
+					redirect(base_url("evento/modificar_evento/" . $id));
+				}
+			} else {
+				$direccion_imagen = $imagen_antiguo;
+			}
+
+			if ($this->Modelo_evento->update_evento($id, $ciudad, $nombre, $descripcion, $fecha_inicio, $fecha_fin, $direccion, $direccion_imagen, NULL, $id_categoria, $id_institucion)) {
+				redirect(base_url("evento/eventos"));
+			} else {
+				$this->session->set_flashdata("error", "Ocurrió un error al modificar el evento.");
+				redirect(base_url("evento/modificar_evento/" . $id));
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_evento($id);
 		}
 	}
 
