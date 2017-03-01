@@ -4,7 +4,7 @@
 
 	<hr class="small">
 
-	<p class="text-muted">Copyright &copy; Fundación ATICA 2017</p>
+	<p>Copyright &copy; Fundación ATICA 2017</p>
 
 </div>
 

@@ -61,7 +61,7 @@ if (isset($eventos)) {
 <?php if (isset($publicaciones)): ?>
 
 	<!-- Publicaciones -->
-	<section id="publicaciones" class="container">
+	<section id="publicaciones" class="container seccion">
 
 		<h2>Publicaciones</h2>
 
@@ -73,17 +73,13 @@ if (isset($eventos)) {
 
 					<div class="col-md-4">
 
-						<div class="text-center">
+						<div class="text-center publicacion">
 
 							<?php if ($publicacion->imagen != ""): ?>
 
-								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive img-thumbnail">
+								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img img-responsive">
 
 							<?php endif; ?>
-
-						</div>
-
-						<div class="text-center">
 
 							<label><?= $publicacion->nombre ?></label>
 
@@ -112,11 +108,11 @@ if (isset($eventos)) {
 	</section>
 
 <?php endif; ?>
-	
+
 <?php if (isset($eventos)): ?>
 
 	<!-- Publicaciones -->
-	<section id="eventos" class="container">
+	<section id="eventos" class="container seccion">
 
 		<h2>Eventos</h2>
 
@@ -128,17 +124,13 @@ if (isset($eventos)) {
 
 					<div class="col-md-4">
 
-						<div class="text-center">
+						<div class="text-center publicacion">
 
 							<?php if ($evento->imagen != ""): ?>
 
-								<img src="<?= base_url($path_eventos . $evento->imagen) ?>" alt="<?= $evento->nombre ?>" class="img-responsive img-thumbnail">
+								<img src="<?= base_url($path_eventos . $evento->imagen) ?>" alt="<?= $evento->nombre ?>" class="img-responsive">
 
 							<?php endif; ?>
-
-						</div>
-
-						<div class="text-center">
 
 							<label><?= $evento->nombre ?></label>
 
@@ -167,5 +159,10 @@ if (isset($eventos)) {
 	</section>
 
 <?php endif; ?>
+
+<script>
+	$(".publicacion").matchHeight();
+	$(".img").matchHeight();
+</script>
 
 <?php $this->load->view("base/footer"); ?>

@@ -32,6 +32,9 @@
 
 		<!-- Estilos de la pagina -->
 		<link href="<?= base_url("assets/red_resiliencia/css/red_resiliencia.css") ?>" rel="stylesheet">
+		
+		<!-- Altura de elementos -->
+		<script src="<?= base_url("assets/matchHeight/jquery.matchHeight.js")?>"></script>
 
 		<!-- Fuentes -->
 		<link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">

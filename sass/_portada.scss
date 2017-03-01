@@ -1,0 +1,34 @@
+$color-fondo-seccion: $granito;
+$color-titulo-seccion: $vino-tinto;
+
+.seccion {
+    background-color: $color-fondo-seccion;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 10px 30px 10px;
+
+    border: 3px $bronce solid;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $color-titulo-seccion;
+    }
+
+    .publicacion {
+        background-color: $bronce;
+        
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        
+        padding: 5px;
+        margin-bottom: 10px;
+        
+        label {
+            color: $negro;
+        }
+    }
+}

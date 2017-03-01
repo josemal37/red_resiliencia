@@ -1,11 +1,10 @@
 // VARIABLES
 $blanco: #FFF;
 $negro: #111;
-
-$fondo-titulo: $blanco;
-$texto-titulo: $negro;
-
-$fondo-cuerpo: $blanco;
+$granito: #E5DAD5;
+$pizarra: #565656;
+$vino-tinto: #743340;
+$bronce: #BFA07D;
 
 $fondo-menu: $blanco;
 $texto-menu: $negro;
@@ -19,4 +18,8 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: $fuente-titulo;
+}
+
+h1, h2, h3, h4, h5, h6, p, label, li {
+    color: $blanco;
 }
