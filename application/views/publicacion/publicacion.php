@@ -12,11 +12,11 @@
 
 <div class="container">
 
-	<div class="row">
+	<div class="row publicacion">
 
 		<div class="col-md-4">
 
-			<img src="<?= base_url($path_publicacion . $publicacion->imagen) ?>" class="img-responsive">
+			<img src="<?= base_url($path_publicacion . $publicacion->imagen) ?>" class="img-responsive img-center">
 
 		</div>
 
@@ -28,7 +28,7 @@
 
 			<?php if ($publicacion->autores): ?>
 
-				<h4>Autores</h4>
+				<h4>Autor(es)</h4>
 
 				<p><?= listar_array_de_stdclass($publicacion->autores, "nombre_completo", ", ") ?></p>
 
@@ -36,7 +36,7 @@
 
 			<?php if ($publicacion->instituciones): ?>
 
-				<h4>Instituciones</h4>
+				<h4>Institución(es)</h4>
 
 				<p><?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
 
@@ -52,7 +52,7 @@
 
 			<?php if ($publicacion->modulos): ?>
 
-				<h4>Modulos</h4>
+				<h4>Modulo(s)</h4>
 
 				<ol>
 
@@ -68,7 +68,7 @@
 
 			<?php if ($publicacion->categorias): ?>
 
-				<h4>Categorias</h4>
+				<h4>Categoria(s)</h4>
 				
 				<p><?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ")?></p>
 

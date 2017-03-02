@@ -77,7 +77,7 @@ if (isset($eventos)) {
 
 							<?php if ($publicacion->imagen != ""): ?>
 
-								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img img-responsive">
+								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img img-responsive img-center">
 
 							<?php endif; ?>
 

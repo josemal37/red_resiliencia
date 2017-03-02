@@ -40,7 +40,7 @@ foreach ($categorias as $categoria) {
 
 <?php if ($criterio): ?>
 
-	<div>
+	<div class="mensaje-busqueda">
 
 		<h4>Publicaciones relacionadas con la palabra <strong>"<?= $criterio ?>"</strong></h4>
 

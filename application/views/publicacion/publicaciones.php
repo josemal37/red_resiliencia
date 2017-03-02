@@ -12,7 +12,7 @@
 
 <div id="publicaciones" class="container">
 
-	<div class="container">
+	<div>
 
 		<?php $this->load->view("base/busqueda", array("fuente" => "publicacion", "criterio" => $criterio)); ?>
 
@@ -22,13 +22,13 @@
 
 		<?php foreach ($publicaciones as $publicacion): ?>
 
-			<div class="row">
+			<div class="row publicacion">
 
-				<div class="col-md-3">
+				<div class="col-md-3 text-center">
 
 					<?php if ($publicacion->imagen != ""): ?>
 
-						<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive">
+						<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive img-center">
 
 					<?php endif; ?>
 

@@ -1,0 +1,27 @@
+$color-fondo-publicacion: $color-2;
+$color-border-publicacion: $color-5;
+
+$padding-top-publicacion: 15px;
+$padding-bottom-publicacion: 15px;
+
+$margin-top-publicacion: 10px;
+$margin-bottom-publicacion: 10px;
+
+$color-titulo-publicacion: $color-3;
+
+.publicacion {
+    background-color: $color-fondo-publicacion;
+    
+    border: $border-grueso $color-border-publicacion solid;
+    border-radius: $border-radius-grande;
+    
+    padding-top: $padding-top-publicacion;
+    padding-bottom: $padding-bottom-publicacion;
+    
+    margin-top: $margin-top-publicacion;
+    margin-bottom: $margin-bottom-publicacion;
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: $color-titulo-publicacion;
+    }
+}
