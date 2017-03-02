@@ -118,4 +118,15 @@ body {
   .publicacion h1, .publicacion h2, .publicacion h3, .publicacion h4, .publicacion h5, .publicacion h6 {
     color: #743340; }
 
+.evento {
+  background-color: #E5DAD5;
+  border: 3px #BFA07D solid;
+  border-radius: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .evento h1, .evento h2, .evento h3, .evento h4, .evento h5, .evento h6 {
+    color: #743340; }
+
 /*# sourceMappingURL=red_resiliencia.css.map */

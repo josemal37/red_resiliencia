@@ -16,7 +16,7 @@
 
 		<?php foreach ($eventos as $evento): ?>
 
-			<div class="row">
+			<div class="row evento">
 
 				<div class="col-md-3">
 

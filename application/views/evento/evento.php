@@ -12,7 +12,7 @@
 
 <div class="container">
 
-	<div class="row">
+	<div class="row evento">
 
 		<div class="col-md-4">
 
