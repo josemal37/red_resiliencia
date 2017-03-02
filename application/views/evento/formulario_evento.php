@@ -21,7 +21,7 @@ switch ($accion) {
 
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container">
+<div class="container contenido">
 
 	<form action="<?= $url ?>" id="form-evento" method="post" enctype="multipart/form-data" autocomplete="off">
 

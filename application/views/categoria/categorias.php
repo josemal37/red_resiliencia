@@ -12,7 +12,7 @@
 $this->load->view("base/menu");
 ?>
 
-<div class="container">
+<div class="container contenido">
 
 	<?php if ($categorias): ?>
 

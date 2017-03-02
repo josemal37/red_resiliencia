@@ -1,0 +1,31 @@
+$color-fondo-contenido: $color-2;
+$color-border-contenido: $color-5;
+
+$padding-top-contenido: 15px;
+$padding-bottom-contenido: 15px;
+$padding-left-contenido: 15px;
+$padding-right-contenido: 15px;
+
+$margin-top-contenido: 10px;
+$margin-bottom-contenido: 10px;
+
+$color-titulo-contenido: $color-3;
+
+.contenido {
+    background-color: $color-fondo-contenido;
+    
+    border: $border-grueso $color-border-contenido solid;
+    border-radius: $border-radius-grande;
+    
+    padding-top: $padding-top-contenido;
+    padding-bottom: $padding-bottom-contenido;
+    padding-left: $padding-left-contenido;
+    padding-right: $padding-right-contenido;
+    
+    margin-top: $margin-top-contenido;
+    margin-bottom: $margin-bottom-contenido;
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: $color-titulo-contenido;
+    }
+}

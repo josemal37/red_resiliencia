@@ -146,5 +146,17 @@ body {
   .login {
     margin-left: 30%;
     margin-right: 30%; } }
+.contenido {
+  background-color: #E5DAD5;
+  border: 3px #BFA07D solid;
+  border-radius: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .contenido h1, .contenido h2, .contenido h3, .contenido h4, .contenido h5, .contenido h6 {
+    color: #743340; }
 
 /*# sourceMappingURL=red_resiliencia.css.map */
