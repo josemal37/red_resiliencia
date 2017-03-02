@@ -161,8 +161,10 @@ if (isset($eventos)) {
 <?php endif; ?>
 
 <script>
-	$(".publicacion").matchHeight();
-	$(".img").matchHeight();
+	$(document).ready(function() {
+		$(".img").matchHeight();
+		$(".publicacion").matchHeight();
+	});
 </script>
 
 <?php $this->load->view("base/footer"); ?>

@@ -1,15 +1,16 @@
-
-
 $color-fondo-titulo: $granito;
 $color-texto-titulo: $vino-tinto;
+
+$padding-top-header: 40px;
+$padding-bottom-header: 20px;
 
 .header {
     background-color: $color-fondo-titulo;
     color: $color-texto-titulo;
     
     margin: 0;
-    padding-top: 40px;
-    padding-bottom: 20px;
+    padding-top: $padding-top-header;
+    padding-bottom: $padding-bottom-header;
     
     h1 {
         color: $color-texto-titulo;

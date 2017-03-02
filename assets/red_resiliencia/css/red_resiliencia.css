@@ -72,9 +72,9 @@ body {
   margin-bottom: 20px;
   padding: 10px 10px 30px 10px;
   border: 3px #BFA07D solid;
-  border-radius: 15px;
-  -moz-border-radius: 15px;
-  -webkit-border-radius: 15px; }
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px; }
   .seccion h1, .seccion h2, .seccion h3, .seccion h4, .seccion h5, .seccion h6 {
     color: #743340; }
   .seccion .publicacion {

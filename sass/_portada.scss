@@ -1,34 +1,46 @@
 $color-fondo-seccion: $granito;
 $color-titulo-seccion: $vino-tinto;
+$margin-top-seccion: 20px;
+$margin-bottom-seccion: 20px;
+$padding-seccion: 10px 10px 30px 10px;
+$border-seccion: $border-grueso;
+$border-radius-seccion: $border-radius-grande;
+$color-border-seccion: $bronce;
+
+$padding-publicacion: 5px;
+$margin-bottom-publicacion: 10px;
+$color-fondo-publicacion: $bronce;
+$border-radius-publicacion: $border-radius-pequenio;
+$color-label-publicacion: $negro;
 
 .seccion {
     background-color: $color-fondo-seccion;
 
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 10px 10px 30px 10px;
+    margin-top: $margin-top-seccion;
+    margin-bottom: $margin-bottom-seccion;
+    padding: $padding-seccion;
 
-    border: 3px $bronce solid;
-    border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
+    border: $border-seccion $color-border-seccion solid;
+    border-radius: $border-radius-seccion;
+    -moz-border-radius: $border-radius-seccion;
+    -webkit-border-radius: $border-radius-seccion;
 
     h1, h2, h3, h4, h5, h6 {
         color: $color-titulo-seccion;
     }
 
     .publicacion {
-        background-color: $bronce;
+        background-color: $color-fondo-publicacion;
         
-        border-radius: 5px;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
+        border-radius: $border-radius-pequenio;
+        -moz-border-radius: $border-radius-pequenio;
+        -webkit-border-radius: $border-radius-pequenio;
         
-        padding: 5px;
-        margin-bottom: 10px;
+        padding: $padding-publicacion;
+        margin-bottom: $margin-bottom-publicacion;
         
         label {
-            color: $negro;
+            color: $color-label-publicacion;
         }
     }
 }

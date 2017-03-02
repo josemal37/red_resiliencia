@@ -1,4 +1,4 @@
-// VARIABLES
+// VARIABLES GLOBALES
 $blanco: #FFF;
 $negro: #111;
 $granito: #E5DAD5;
@@ -6,11 +6,16 @@ $pizarra: #565656;
 $vino-tinto: #743340;
 $bronce: #BFA07D;
 
-$fondo-menu: $blanco;
-$texto-menu: $negro;
-
 $fuente-titulo: "Sansita", sans-serif;
 $fuente-texto: "Lato", sans-serif;
+
+$border-radius-pequenio: 5px;
+$border-radius-grande: 10px;
+
+$border-delgado: 1px;
+$border-grueso:3px;
+
+$color-texto: $blanco;
 
 html, body {
     font-family: $fuente-texto;
@@ -21,5 +26,5 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, h2, h3, h4, h5, h6, p, label, li {
-    color: $blanco;
+    color: $color-texto;
 }
