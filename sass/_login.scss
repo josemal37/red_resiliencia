@@ -1,0 +1,41 @@
+$color-fondo-login: $color-2;
+$color-border-login: $color-5;
+
+$padding-top-login: 15px;
+$padding-bottom-login: 15px;
+$padding-left-login: 15px;
+$padding-right-login: 15px;
+
+$margin-top-login: 10px;
+$margin-bottom-login: 10px;
+
+$margin-left-login: 30%;
+$margin-right-login: 30%;
+
+$color-titulo-login: $color-3;
+
+.login {
+    background-color: $color-fondo-login;
+    
+    border: $border-grueso $color-border-login solid;
+    border-radius: $border-radius-grande;
+    
+    padding-top: $padding-top-login;
+    padding-bottom: $padding-bottom-login;
+    padding-left: $padding-left-login;
+    padding-right: $padding-right-login;
+    
+    margin-top: $margin-top-login;
+    margin-bottom: $margin-bottom-login;
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: $color-titulo-login;
+    }
+}
+
+@media (min-width: 768px) {
+    .login {
+        margin-left: $margin-left-login;
+        margin-right: $margin-right-login;
+    }
+}

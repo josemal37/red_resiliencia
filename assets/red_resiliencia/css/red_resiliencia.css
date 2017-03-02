@@ -129,4 +129,22 @@ body {
   .evento h1, .evento h2, .evento h3, .evento h4, .evento h5, .evento h6 {
     color: #743340; }
 
+.login {
+  background-color: #E5DAD5;
+  border: 3px #BFA07D solid;
+  border-radius: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .login h1, .login h2, .login h3, .login h4, .login h5, .login h6 {
+    color: #743340; }
+
+@media (min-width: 768px) {
+  .login {
+    margin-left: 30%;
+    margin-right: 30%; } }
+
 /*# sourceMappingURL=red_resiliencia.css.map */

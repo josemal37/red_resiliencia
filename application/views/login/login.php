@@ -12,33 +12,37 @@
 
 <div class="container">
 
-	<form action="<?= base_url("login/iniciar_sesion") ?>" id="form_login" method="post">
+	<div class="login">
 
-		<div class="form-group">
+		<form action="<?= base_url("login/iniciar_sesion") ?>" id="form_login" method="post">
 
-			<label>Login</label>
+			<div class="form-group">
 
-			<input type="text" id="login" name="login" class="form-control" required>
+				<label>Login</label>
 
-			<?= form_error("login") ?>
+				<input type="text" id="login" name="login" class="form-control" required>
 
-		</div>
+				<?= form_error("login") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Password</label>
+			<div class="form-group">
 
-			<input type="password" id="password" name="password" class="form-control" required>
+				<label>Password</label>
 
-			<?= form_error("password") ?>
+				<input type="password" id="password" name="password" class="form-control" required>
 
-		</div>
+				<?= form_error("password") ?>
 
-		<input type="hidden" id="token" name="token" value="<?= $token ?>">
+			</div>
 
-		<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
+			<input type="hidden" id="token" name="token" value="<?= $token ?>">
 
-	</form>
+			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
+
+		</form>
+
+	</div>
 
 </div>
 
