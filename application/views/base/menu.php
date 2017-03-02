@@ -18,7 +18,7 @@
 
 				</button>
 
-				<a class="navbar-brand" href="<?= base_url() ?>">Inicio</a>
+				<a class="navbar-brand page-scroll" href="#header">Inicio</a>
 
 			</div>
 
@@ -28,51 +28,66 @@
 
 					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
 
-						<?php if (isset($articulos) && $articulos): ?>
+						<?php if (current_url() == base_url("index.php/portada") || current_url() == base_url("index.php")): ?>
 
-							<li><a href="#articulos" class="page-scroll">Articulos</a></li>
+							<?php if (isset($articulos) && $articulos): ?>
 
-						<?php endif; ?>
+								<li><a href="#articulos" class="page-scroll">Articulos</a></li>
 
-						<?php if (isset($publicaciones) && $publicaciones): ?>
+							<?php endif; ?>
 
-							<li><a href="#publicaciones" class="page-scroll">Publicaciones</a></li>
+							<?php if (isset($publicaciones) && $publicaciones): ?>
 
-						<?php endif; ?>
+								<li><a href="#publicaciones" class="page-scroll">Publicaciones</a></li>
 
-						<?php if (isset($eventos) && $eventos): ?>
+							<?php endif; ?>
 
-							<li><a href="#eventos" class="page-scroll">Eventos</a></li>
+							<?php if (isset($eventos) && $eventos): ?>
+
+								<li><a href="#eventos" class="page-scroll">Eventos</a></li>
+
+							<?php endif; ?>
+
+
+						<?php elseif ($this->uri->segment(1) == "articulo" || $this->uri->segment(1) == "publicacion" || $this->uri->segment(1) == "evento"): ?>
+
+								<li><a href="<?= base_url()?>" class="page-scroll">Portada</a></li>
+								
+								<li <?php if ($this->uri->segment(1) == "articulo"):?>class="active"<?php endif;?>><a href="<?= base_url("articulo/articulos")?>" class="page-scroll">Articulos</a></li>
+
+								<li <?php if ($this->uri->segment(1) == "publicacion"):?>class="active"<?php endif;?>><a href="<?= base_url("publicacion/publicaciones")?>" class="page-scroll">Publicaciones</a></li>
+
+								<li <?php if ($this->uri->segment(1) == "evento"):?>class="active"<?php endif;?>><a href="<?= base_url("evento/eventos")?>" class="page-scroll">Eventos</a></li>
 
 						<?php endif; ?>
 
 					<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
-						<li><a href="<?= base_url("administrador") ?>">Inicio</a></li>
+						<li <?php if ($this->uri->segment(1) == "administrador"):?>class="active"<?php endif;?>><a href="<?= base_url("administrador") ?>">Inicio</a></li>
 
-						<li><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
+						<li <?php if ($this->uri->segment(1) == "publicacion"):?>class="active"<?php endif;?>><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
 
-						<li><a href="<?= base_url("articulo") ?>">Articulo</a></li>
+						<li <?php if ($this->uri->segment(1) == "articulo"):?>class="active"<?php endif;?>><a href="<?= base_url("articulo") ?>">Articulo</a></li>
 
-						<li><a href="<?= base_url("evento") ?>">Evento</a></li>
+						<li <?php if ($this->uri->segment(1) == "evento"):?>class="active"<?php endif;?>><a href="<?= base_url("evento") ?>">Evento</a></li>
 
-						<li><a href="<?= base_url("categoria") ?>">Categoria</a></li>
+						<li <?php if ($this->uri->segment(1) == "categoria"):?>class="active"<?php endif;?>><a href="<?= base_url("categoria") ?>">Categoria</a></li>
 
-						<li><a href="<?= base_url("autor") ?>">Autor</a></li>
+						<li <?php if ($this->uri->segment(1) == "autor"):?>class="active"<?php endif;?>><a href="<?= base_url("autor") ?>">Autor</a></li>
 
-						<li><a href="<?= base_url("institucion") ?>">Institución</a></li>
+						<li <?php if ($this->uri->segment(1) == "institucion"):?>class="active"<?php endif;?>><a href="<?= base_url("institucion") ?>">Institución</a></li>
 
-						<li><a href="<?= base_url("usuario") ?>">Usuario</a></li>
+						<li <?php if ($this->uri->segment(1) == "usuario"):?>class="active"<?php endif;?>><a href="<?= base_url("usuario") ?>">Usuario</a></li>
 
 					<?php elseif ($this->session->userdata("rol") == "usuario"): ?>
 
-						<li><a href="<?= base_url("usuario_administrador") ?>">Inicio</a></li>
+						<li <?php if ($this->uri->segment(1) == "usuario_administrador"):?>class="active"<?php endif;?>><a href="<?= base_url("usuario_administrador") ?>">Inicio</a></li>
 
-						<li><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
+						<li <?php if ($this->uri->segment(1) == "publicacion"):?>class="active"<?php endif;?>><a href="<?= base_url("publicacion") ?>">Publicación</a></li>
 
-						<li><a href="<?= base_url("articulo") ?>">Articulo</a></li>
+						<li <?php if ($this->uri->segment(1) == "articulo"):?>class="active"<?php endif;?>><a href="<?= base_url("articulo") ?>">Articulo</a></li>
 
-						<li><a href="<?= base_url("evento") ?>">Evento</a></li>
+						<li <?php if ($this->uri->segment(1) == "evento"):?>class="active"<?php endif;?>><a href="<?= base_url("evento") ?>">Evento</a></li>
 
 					<?php endif; ?>
 
@@ -111,3 +126,26 @@
 	</nav>
 
 </nav>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var menu = $('#menu');
+		var origOffsetY = menu.offset().top;
+
+		function scroll() {
+			if ($(window).scrollTop() >= origOffsetY) {
+				$('#menu').addClass('navbar-fixed-top');
+			} else {
+				$('#menu').removeClass('navbar-fixed-top');
+			}
+
+
+		}
+
+		window.onscroll = function(e) {
+			scroll();
+		}
+
+	});
+</script>

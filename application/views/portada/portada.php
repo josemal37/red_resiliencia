@@ -2,7 +2,7 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<header class=" header text-center">
+<header id="header" class="header text-center">
 
 	<h1><?= $titulo ?></h1>
 
@@ -160,11 +160,16 @@ if (isset($eventos)) {
 
 <?php endif; ?>
 
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
 		$(".img").matchHeight();
 		$(".publicacion").matchHeight();
 	});
 </script>
+
+<!-- Scrolling nav -->
+<script src="<?= base_url('assets/bootstrap-scrolling-nav/js/jquery.easing.min.js') ?>"></script>
+<script src="<?= base_url('assets/bootstrap-scrolling-nav/js/scrolling-nav.js') ?>"></script>
+<link href="<?= base_url('assets/bootstrap-scrolling-nav/css/scrolling-nav.css') ?>" rel="stylesheet">
 
 <?php $this->load->view("base/footer"); ?>
