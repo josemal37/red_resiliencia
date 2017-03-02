@@ -2,13 +2,14 @@
     Author     : Jose
 */
 html, body {
+  height: 100%;
   font-family: "Lato", sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Sansita", sans-serif; }
 
 h1, h2, h3, h4, h5, h6, p, label, li {
-  color: #FFF; }
+  color: #111; }
 
 .header {
   background-color: #E5DAD5;
@@ -26,12 +27,12 @@ h1, h2, h3, h4, h5, h6, p, label, li {
   border-right: 0;
   border-color: #111; }
   .navbar-default .navbar-brand {
-    color: #FFF; }
+    color: #111; }
     .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
       color: #FFF;
       background-color: #111; }
   .navbar-default .navbar-nav > li > a {
-    color: #FFF; }
+    color: #111; }
     .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
       color: #FFF;
       background-color: #111; }
@@ -45,8 +46,8 @@ h1, h2, h3, h4, h5, h6, p, label, li {
       border-top-color: #FFF;
       border-bottom-color: #FFF; }
   .navbar-default .navbar-nav > .dropdown > a .caret {
-    border-top-color: #FFF;
-    border-bottom-color: #FFF; }
+    border-top-color: #111;
+    border-bottom-color: #111; }
   .navbar-default .navbar-nav > .dropdown > a:hover .caret, .navbar-default .navbar-nav > .dropdown > a:focus .caret {
     border-top-color: #FFF;
     border-bottom-color: #FFF; }
@@ -55,11 +56,11 @@ h1, h2, h3, h4, h5, h6, p, label, li {
     .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
       background-color: #BFA07D; }
     .navbar-default .navbar-toggle .icon-bar {
-      background-color: #FFF; }
+      background-color: #111; }
 
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #FFF; }
+    color: #111; }
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
       color: #FFF;
       background-color: #111; } }
@@ -68,7 +69,7 @@ body {
 
 .seccion {
   background-color: #E5DAD5;
-  margin-top: 20px;
+  margin-top: 60px;
   margin-bottom: 20px;
   padding: 10px 10px 30px 10px;
   border: 3px #BFA07D solid;
@@ -86,5 +87,10 @@ body {
     margin-bottom: 10px; }
     .seccion .publicacion label {
       color: #111; }
+
+.footer {
+  padding-top: 50px; }
+  .footer p {
+    color: #FFF; }
 
 /*# sourceMappingURL=red_resiliencia.css.map */

@@ -33,9 +33,9 @@ class Portada extends CI_Controller {
 				$datos = array();
 				$datos["titulo"] = "Red para una cultura de resiliencia";
 				$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
-				$datos["publicaciones"] = $this->Modelo_Publicacion->select_publicaciones(1, 3);
+				$datos["publicaciones"] = $this->Modelo_Publicacion->select_publicaciones(1, 4);
 				$datos["path_eventos"] = $this->imagen->get_path_valido("evento");
-				$datos["eventos"] = $this->Modelo_evento->select_eventos(1, 3);
+				$datos["eventos"] = $this->Modelo_evento->select_eventos(1, 4);
 				$this->load->view("portada/portada", $datos);
 				break;
 			case "administrador":

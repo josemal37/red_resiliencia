@@ -30,19 +30,19 @@
 
 						<?php if (isset($articulos) && $articulos): ?>
 
-							<li><a href="#articulos">Articulos</a></li>
+							<li><a href="#articulos" class="page-scroll">Articulos</a></li>
 
 						<?php endif; ?>
 
 						<?php if (isset($publicaciones) && $publicaciones): ?>
 
-							<li><a href="#publicaciones">Publicaciones</a></li>
+							<li><a href="#publicaciones" class="page-scroll">Publicaciones</a></li>
 
 						<?php endif; ?>
 
 						<?php if (isset($eventos) && $eventos): ?>
 
-							<li><a href="#eventos">Eventos</a></li>
+							<li><a href="#eventos" class="page-scroll">Eventos</a></li>
 
 						<?php endif; ?>
 

@@ -71,7 +71,7 @@ if (isset($eventos)) {
 
 				<?php foreach ($publicaciones as $publicacion): ?>
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 
 						<div class="text-center publicacion">
 
@@ -122,7 +122,7 @@ if (isset($eventos)) {
 
 				<?php foreach ($eventos as $evento): ?>
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 
 						<div class="text-center publicacion">
 

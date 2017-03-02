@@ -32,9 +32,14 @@
 
 		<!-- Estilos de la pagina -->
 		<link href="<?= base_url("assets/red_resiliencia/css/red_resiliencia.css") ?>" rel="stylesheet">
-		
+
 		<!-- Altura de elementos -->
-		<script src="<?= base_url("assets/matchHeight/jquery.matchHeight.js")?>"></script>
+		<script src="<?= base_url("assets/matchHeight/jquery.matchHeight.js") ?>"></script>
+
+        <!-- Scrolling nav -->
+        <script src="<?= base_url('assets/bootstrap-scrolling-nav/js/jquery.easing.min.js') ?>"></script>
+        <script src="<?= base_url('assets/bootstrap-scrolling-nav/js/scrolling-nav.js') ?>"></script>
+        <link href="<?= base_url('assets/bootstrap-scrolling-nav/css/scrolling-nav.css') ?>" rel="stylesheet">
 
 		<!-- Fuentes -->
 		<link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">
