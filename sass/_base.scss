@@ -6,6 +6,13 @@ $pizarra: #565656;
 $vino-tinto: #743340;
 $bronce: #BFA07D;
 
+$color-0: $negro;
+$color-1: $blanco;
+$color-2: $granito;
+$color-3: $vino-tinto;
+$color-4: $pizarra;
+$color-5: $bronce;
+
 $fuente-titulo: "Sansita", sans-serif;
 $fuente-texto: "Lato", sans-serif;
 
@@ -15,7 +22,7 @@ $border-radius-grande: 10px;
 $border-delgado: 1px;
 $border-grueso:3px;
 
-$color-texto: $blanco;
+$color-texto: $color-0;
 
 html, body {
     font-family: $fuente-texto;
