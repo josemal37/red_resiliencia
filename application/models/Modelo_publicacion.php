@@ -59,7 +59,7 @@ class Modelo_publicacion extends My_model {
 
 			$this->db->group_start();
 
-			$criterios = explode(" ", $criterio);
+			$criterios = explode(", ", $criterio);
 
 			foreach ($criterios as $criterio) {
 				$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);

@@ -25,7 +25,7 @@ foreach ($categorias as $categoria) {
 
 			<div class="form-group">
 
-				<input type="text" id="criterio" name="criterio" class="form-control" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
+				<input type="text" id="criterio" name="criterio" class="form-control tokenfield" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
 
 			</div>
 
