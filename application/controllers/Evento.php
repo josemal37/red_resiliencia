@@ -35,12 +35,13 @@ class Evento extends CI_Controller {
 	public function eventos($nro_pagina = FALSE) {
 		$rol = $this->session->userdata("rol");
 
+		$datos = array();
+
 		$cantidad_eventos = 3;
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
 		}
 
-		$datos = array();
 		$datos["titulo"] = "Eventos";
 		$datos["path_evento"] = $this->imagen->get_path_valido("evento");
 		$datos["nro_pagina"] = $nro_pagina;
@@ -53,16 +54,16 @@ class Evento extends CI_Controller {
 
 		switch ($rol) {
 			case "administrador":
-				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos);
+				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, NULL, $criterio);
 				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
 				break;
 			case "usuario":
 				$id_institucion = $this->session->userdata("id_institucion");
-				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, $id_institucion);
+				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, $id_institucion, $criterio);
 				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos, $id_institucion);
 				break;
 			default:
-				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos);
+				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, NULL, $criterio);
 				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
 				break;
 		}
@@ -91,7 +92,7 @@ class Evento extends CI_Controller {
 			if ($datos["evento"]) {
 				$datos["titulo"] = $datos["evento"]->nombre;
 				$datos["path_evento"] = $this->imagen->get_path_valido("evento");
-				
+
 				$this->load->view("evento/evento", $datos);
 			} else {
 				redirect(base_url("evento/eventos"));

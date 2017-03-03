@@ -6,6 +6,9 @@ switch ($fuente) {
 	case "publicacion":
 		$url = base_url("publicacion/publicaciones");
 		break;
+	case "evento":
+		$url = base_url("evento/eventos");
+		break;
 }
 $categorias = $this->Modelo_categoria->select_categorias();
 $nombre_categorias = array();
@@ -42,7 +45,24 @@ foreach ($categorias as $categoria) {
 
 	<div class="mensaje-busqueda">
 
-		<h4>Publicaciones relacionadas con la palabra <strong>"<?= $criterio ?>"</strong></h4>
+		<?php
+		switch ($fuente) {
+			case "publicacion":
+				?>
+
+				<h4>Publicaciones relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+				<?php
+				break;
+			case "evento":
+				?>
+
+				<h4>Eventos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+				<?php
+				break;
+		}
+		?>
 
 	</div>
 

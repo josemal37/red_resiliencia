@@ -49,6 +49,38 @@ class Modelo_evento extends My_model {
 			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
 		}
 
+		if ($criterio) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
+			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
+			if (!$id_institucion) {
+				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
+				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");
+			}
+			$this->db->join(Modelo_ciudad::NOMBRE_TABLA, self::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL, "left");
+			$this->db->join(Modelo_pais::NOMBRE_TABLA, Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, "left");
+
+			$this->db->group_start();
+
+			$criterios = explode(" ", $criterio);
+
+			foreach ($criterios as $criterio) {
+				$this->db->or_like(Modelo_categoria::NOMBRE_COL, $criterio);
+				if (!$id_institucion) {
+					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
+					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
+				}
+				$this->db->or_like(self::NOMBRE_COL, $criterio);
+				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
+				$this->db->or_like(self::FECHA_INICIO_COL, $criterio);
+				$this->db->or_like(self::FECHA_FIN_COL, $criterio);
+				$this->db->or_like(self::DIRECCION_COL, $criterio);
+				$this->db->or_like(Modelo_ciudad::NOMBRE_COL, $criterio);
+				$this->db->or_like(Modelo_pais::NOMBRE_COL, $criterio);
+			}
+
+			$this->db->group_end();
+		}
+
 		if (!$criterio) {
 			if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
 				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
@@ -225,21 +257,21 @@ class Modelo_evento extends My_model {
 
 		return $actualizado;
 	}
-	
+
 	public function delete_evento($id = FALSE) {
 		if ($id) {
 			$eliminado = FALSE;
-			
+
 			$this->db->trans_start();
-			
+
 			$this->delete_categoria_de_evento($id);
 			$this->delete_institucion_de_evento($id);
-			
+
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
-			
+
 			$this->db->trans_complete();
-			
+
 			return $eliminado;
 		} else {
 			return FALSE;

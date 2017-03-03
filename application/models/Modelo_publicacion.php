@@ -58,15 +58,22 @@ class Modelo_publicacion extends My_model {
 			}
 
 			$this->db->group_start();
-			$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);
-			$this->db->or_like(Modelo_autor::NOMBRE_COL, $criterio);
-			$this->db->or_like(Modelo_autor::APELLIDO_PATERNO_COL, $criterio);
-			$this->db->or_like(Modelo_autor::APELLIDO_MATERNO_COL, $criterio);
-			if (!$id_institucion) {
-				$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
+
+			$criterios = explode(" ", $criterio);
+
+			foreach ($criterios as $criterio) {
+				$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);
+				$this->db->or_like(Modelo_autor::NOMBRE_COL, $criterio);
+				$this->db->or_like(Modelo_autor::APELLIDO_PATERNO_COL, $criterio);
+				$this->db->or_like(Modelo_autor::APELLIDO_MATERNO_COL, $criterio);
+				if (!$id_institucion) {
+					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
+					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
+				}
+				$this->db->or_like(self::NOMBRE_COL, $criterio);
+				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
 			}
-			$this->db->or_like(self::NOMBRE_COL, $criterio);
-			$this->db->or_like(self::DESCRIPCION_COL, $criterio);
+
 			$this->db->group_end();
 		}
 
@@ -79,7 +86,7 @@ class Modelo_publicacion extends My_model {
 		$this->db->order_by(self::NOMBRE_TABLA . "." . self::ID_COL . " DESC, " . self::NOMBRE_TABLA . "." . self::FECHA_COL . " DESC");
 
 		$this->db->distinct();
-		
+
 		$query = $this->db->get();
 
 		$publicaciones = $this->return_result($query);
