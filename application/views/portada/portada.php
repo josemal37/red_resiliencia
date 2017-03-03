@@ -77,7 +77,11 @@ if (isset($eventos)) {
 
 							<?php if ($publicacion->imagen != ""): ?>
 
-								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img img-responsive img-center">
+								<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
+
+									<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img img-responsive img-center">
+
+								</a>
 
 							<?php endif; ?>
 
@@ -111,7 +115,7 @@ if (isset($eventos)) {
 
 <?php if (isset($eventos)): ?>
 
-	<!-- Publicaciones -->
+	<!-- Eventos -->
 	<section id="eventos" class="container seccion">
 
 		<h2>Eventos</h2>
@@ -128,7 +132,11 @@ if (isset($eventos)) {
 
 							<?php if ($evento->imagen != ""): ?>
 
-								<img src="<?= base_url($path_eventos . $evento->imagen) ?>" alt="<?= $evento->nombre ?>" class="img-responsive">
+								<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
+
+									<img src="<?= base_url($path_eventos . $evento->imagen) ?>" alt="<?= $evento->nombre ?>" class="img-responsive">
+
+								</a>
 
 							<?php endif; ?>
 

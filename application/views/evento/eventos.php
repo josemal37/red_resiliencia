@@ -79,7 +79,7 @@
 						<?php endif; ?>
 
 					</div>
-					
+
 					<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">Ver</a>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
@@ -120,7 +120,11 @@
 
 	<?php else: ?>
 
-		<p>No se registraron eventos.</p>
+		<div class="contenido">
+
+			<p>No se registraron eventos.</p>
+
+		</div>
 
 	<?php endif; ?>
 

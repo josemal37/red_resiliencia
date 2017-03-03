@@ -129,7 +129,7 @@
 						<div class="clearfix visible-md-block visible-lg-block"></div>
 
 					</div>
-						
+
 					<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">Ver</a>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
@@ -172,7 +172,11 @@
 
 	<?php else: ?>
 
-		<p>No se registraron publicaciones.</p>
+		<div class="contenido">
+
+			<p>No se registraron publicaciones.</p>
+
+		</div>
 
 	<?php endif; ?>
 

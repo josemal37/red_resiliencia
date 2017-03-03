@@ -159,4 +159,16 @@ body {
   .contenido h1, .contenido h2, .contenido h3, .contenido h4, .contenido h5, .contenido h6 {
     color: #743340; }
 
+.table {
+  border: 1px #743340 solid; }
+  .table thead {
+    border: 1px #743340 solid; }
+    .table thead tr th {
+      border: 1px #743340 solid;
+      color: #743340; }
+  .table tbody {
+    border: 1px #743340 solid; }
+    .table tbody tr td {
+      border: 1px #743340 solid; }
+
 /*# sourceMappingURL=red_resiliencia.css.map */

@@ -1,0 +1,25 @@
+$border-table: 1px;
+$color-border-table: $color-3;
+$color-th: $color-3;
+
+.table {
+    border: $border-table $color-border-table solid;
+    thead {
+        border: $border-table $color-border-table solid;
+        tr {
+            th {
+                border: $border-table $color-border-table solid;
+                color: $color-th;
+            }
+        }
+    }
+    tbody {
+        border: $border-table $color-border-table solid;
+        tr {        
+            td {
+                border: $border-table $color-border-table solid;
+            }
+        }
+
+    }
+}
