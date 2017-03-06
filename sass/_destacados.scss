@@ -6,21 +6,23 @@ $height-destacados: 400px;
 .destacados {
     background-color: $color-fondo-destacados;
 
-    .carousel-control {
-        background-image: none !important;
-    }
-    
     .item {
         padding: $item-padding-destacados;
     }
-    
+
     .imagen-item {
         min-height: $height-destacados;
         background-repeat: no-repeat;
         background-position: right center;
         background-size: contain;
     }
-    
+
+    @media (max-width: 768px) {
+        .imagen-item {
+            background-position: center center;
+        }
+    }
+
     .contenido-item {
         min-height: $height-destacados;
         display: table;
@@ -29,7 +31,7 @@ $height-destacados: 400px;
             vertical-align: middle;
         }
     }
-    
+
     .descripcion_evento {
         height: 100px;
         max-height: 100px;
@@ -37,11 +39,11 @@ $height-destacados: 400px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
     h1, h2, h3, h4, h5, h6 {
         color: $color-titulo-destacados;
     }
-    
+
     .carousel-control {
         .icon-prev, .icon-next {
             font-size: 100px;
