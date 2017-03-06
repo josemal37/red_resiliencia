@@ -86,6 +86,8 @@ class Modelo_evento extends My_model {
 				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
 			}
 		}
+		
+		$this->db->distinct();
 
 		$query = $this->db->get();
 
