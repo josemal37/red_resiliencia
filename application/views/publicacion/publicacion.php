@@ -69,8 +69,16 @@
 			<?php if ($publicacion->categorias): ?>
 
 				<h4>Categoria(s)</h4>
-				
-				<p><?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ")?></p>
+
+				<p><?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ") ?></p>
+
+			<?php endif; ?>
+
+			<?php if ($publicacion->url): ?>
+
+				<h4>Descargar</h4>
+
+				<a href="<?= base_url($path_publicacion . $publicacion->url) ?>">Descargar documento</a>
 
 			<?php endif; ?>
 

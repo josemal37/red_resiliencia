@@ -21,7 +21,7 @@ foreach ($categorias as $categoria) {
 
 	<div class="row">
 
-		<div class="col-md-5 col-md-offset-6 col-xs-10">
+		<div class="col-md-5 col-md-offset-6 col-sm-9 col-xs-8">
 
 			<div class="form-group">
 

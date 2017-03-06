@@ -110,6 +110,39 @@ class Modelo_evento extends My_model {
 		return $eventos;
 	}
 
+	public function select_eventos_proximos($cantidad = FALSE) {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->where(self::FECHA_INICIO_COL . " > NOW()");
+		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO_COL, "ASC");
+
+		if ($cantidad) {
+			$this->db->limit($cantidad);
+		}
+
+		$query = $this->db->get();
+
+		$eventos = $this->return_result($query);
+
+		if ($eventos) {
+			$i = 0;
+			foreach ($eventos as $evento) {
+				$ciudad = $this->Modelo_ciudad->select_ciudad($evento->id_ciudad);
+				if ($ciudad) {
+					$pais = $this->Modelo_pais->select_pais($ciudad->id_pais);
+				}
+				$eventos[$i]->ciudad = $ciudad;
+				$eventos[$i]->pais = $pais;
+				$eventos[$i]->instituciones = $this->Modelo_institucion->select_institucion_por_id($evento->id, "evento");
+				$eventos[$i]->categorias = $this->Modelo_categoria->select_categoria_por_id($evento->id, "evento");
+
+				$i += 1;
+			}
+		}
+
+		return $eventos;
+	}
+
 	public function select_evento_por_id($id = FALSE, $id_institucion = FALSE) {
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT);

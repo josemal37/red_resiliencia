@@ -141,16 +141,9 @@
 		function scroll() {
 			if ($(window).scrollTop() >= origOffsetY) {
 				$('#menu').addClass('navbar-fixed-top');
-				console.log("asd");
-				console.log($(window).scrollTop());
-				console.log(origOffsetY);
 
 			} else {
 				$('#menu').removeClass('navbar-fixed-top');
-				console.log("qwe");
-				console.log($(window).scrollTop());
-				console.log(origOffsetY);
-
 			}
 		}
 

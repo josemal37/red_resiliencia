@@ -29,6 +29,115 @@ if (isset($eventos)) {
 
 <?php $this->load->view("base/menu", $datos); ?>
 
+<div>
+
+	<div id="destacados" class="carousel slide carousel-fade destacados" data-ride="carousel">
+
+		<ol class="carousel-indicators">
+
+			<?php $i = 0; ?>
+
+			<?php if ($eventos_proximos): ?>
+
+				<?php for ($j = 0; $j < sizeof($eventos_proximos); $j = $j + 1): ?>
+
+					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
+
+					<?php $i += 1; ?>
+
+				<?php endfor; ?>
+
+			<?php endif; ?>
+		</ol>
+
+		<div class="carousel-inner" role="listbox">
+
+			<?php if ($eventos_proximos): ?>
+
+				<?php $i = 0; ?>
+
+				<?php foreach ($eventos_proximos as $evento): ?>
+
+					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+
+						<div class="row">
+
+							<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>');">
+
+							</div>
+
+							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+
+								<div>
+
+									<?php if ($evento->nombre): ?>
+
+										<h2><?= $evento->nombre ?></h2>
+
+									<?php endif; ?>
+
+									<?php if ($evento->descripcion): ?>
+
+										<div class="descripcion_evento text-ellipsis">
+
+											<p class="text-justify"><?= $evento->descripcion ?></p>
+
+										</div>
+
+									<?php endif; ?>
+
+									<?php if ($evento->ciudad || $evento->pais): ?>
+
+										<p><label>Lugar:</label> <?php if ($evento->ciudad): ?><?= $evento->ciudad->nombre ?>, <?php endif; ?><?php if ($evento->pais): ?><?= $evento->pais->nombre ?><?php endif; ?></p>
+
+									<?php endif; ?>
+
+									<?php if ($evento->fecha_inicio || $evento->fecha_fin): ?>
+
+										<p><?php if ($evento->fecha_inicio): ?><label>Inicio:</label> <?= $evento->fecha_inicio ?> <?php endif; ?><?php if ($evento->fecha_fin): ?><label>Fin:</label> <?= $evento->fecha_fin ?><?php endif; ?></p>
+
+									<?php endif; ?>
+
+									<?php if ($evento->instituciones): ?>
+
+										<p><label>Instituciónes:</label> <?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
+
+									<?php endif; ?>
+
+									<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-primary pull-right">Ver evento</a>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<?php $i += 1; ?>
+
+				<?php endforeach; ?>
+
+			<?php endif; ?>
+
+		</div>
+
+		<a class="left carousel-control" href="#destacados" data-slide="prev">
+
+			<span class="icon-prev"></span>
+
+		</a>
+
+		<a class="right carousel-control" href="#destacados" data-slide="next">
+
+			<span class="icon-next"></span>
+
+		</a>
+
+	</div>
+
+</div>
+
 <?php if (isset($articulos)): ?>
 
 	<!-- Articulos -->
@@ -172,6 +281,10 @@ if (isset($eventos)) {
 	$(document).ready(function() {
 		$(".img").matchHeight();
 		$(".publicacion").matchHeight();
+	});
+	
+	$("#destacados").carousel({
+		interval: 3000
 	});
 </script>
 

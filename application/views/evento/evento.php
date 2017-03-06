@@ -16,7 +16,7 @@
 
 		<div class="col-md-4">
 
-			<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive">
+			<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive img-center">
 
 		</div>
 

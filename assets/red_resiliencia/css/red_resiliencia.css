@@ -171,4 +171,52 @@ body {
     .table tbody tr td {
       border: 1px #743340 solid; }
 
+.destacados {
+  background-color: #E5DAD5; }
+  .destacados .carousel-control {
+    background-image: none !important; }
+  .destacados .item {
+    padding: 5px; }
+  .destacados .imagen-item {
+    min-height: 400px;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain; }
+  .destacados .contenido-item {
+    min-height: 400px;
+    display: table; }
+    .destacados .contenido-item div {
+      display: table-cell;
+      vertical-align: middle; }
+  .destacados .descripcion_evento {
+    height: 100px;
+    max-height: 100px;
+    display: block !important;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .destacados h1, .destacados h2, .destacados h3, .destacados h4, .destacados h5, .destacados h6 {
+    color: #743340; }
+  .destacados .carousel-control .icon-prev, .destacados .carousel-control .icon-next {
+    font-size: 100px;
+    margin-top: -50px; }
+
+.carousel-fade .carousel-inner .item {
+  transition-property: opacity; }
+.carousel-fade .carousel-inner .item,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  opacity: 0; }
+.carousel-fade .carousel-inner .active,
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+  opacity: 1; }
+.carousel-fade .carousel-inner .next,
+.carousel-fade .carousel-inner .prev,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+  left: 0;
+  transform: translate3d(0, 0, 0); }
+.carousel-fade .carousel-control {
+  z-index: 2; }
+
 /*# sourceMappingURL=red_resiliencia.css.map */
