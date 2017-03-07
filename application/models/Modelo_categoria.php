@@ -25,6 +25,8 @@ class Modelo_categoria extends My_model {
 	const ID_PUBLICACION_COL = "id_publicacion";
 	const NOMBRE_TABLA_JOIN_EVENTO = "categoria_evento";
 	const ID_EVENTO_COL = "id_evento";
+	const NOMBRE_TABLA_JOIN_ARTICULO = "categoria_articulo";
+	const ID_ARTICULO_COL = "id_articulo";
 
 	public function __construct() {
 		parent::__construct();
@@ -67,6 +69,16 @@ class Modelo_categoria extends My_model {
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_EVENTO, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_EVENTO . "." . self::ID_COL, "left");
 					$this->db->where(self::NOMBRE_TABLA_JOIN_EVENTO . "." . self::ID_EVENTO_COL, $id);
+
+					$query = $this->db->get();
+
+					$datos = $this->return_result($query);
+					break;
+				case "articulo":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_ARTICULO, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_ARTICULO . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_ARTICULO . "." . self::ID_ARTICULO_COL, $id);
 
 					$query = $this->db->get();
 

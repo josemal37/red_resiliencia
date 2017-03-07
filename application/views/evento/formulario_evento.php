@@ -152,7 +152,7 @@ switch ($accion) {
 		</div>
 
 		<!-- Categorias -->
-		<?php if (isset($categorias) || isset($publicacion->categorias)): ?>
+		<?php if (isset($categorias) || isset($evento->categorias)): ?>
 
 			<div class="form-group">
 
@@ -219,7 +219,7 @@ switch ($accion) {
 		<?php endif; ?>
 
 		<!-- Instituciones -->
-		<?php if (isset($instituciones) || isset($publicacion->instituciones)): ?>
+		<?php if (isset($instituciones) || isset($evento->instituciones)): ?>
 
 			<div class="form-group">
 

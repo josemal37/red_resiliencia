@@ -1,0 +1,28 @@
+$color-fondo-mce: $color-2;
+$color-border-mce: $color-5;
+
+$padding-top-mce: 15px;
+$padding-bottom-mce: 15px;
+$padding-left-mce: 15px;
+$padding-right-mce: 15px;
+
+$margin-top-mce: 10px;
+$margin-bottom-mce: 10px;
+
+$color-titulo-mce: $color-3;
+
+.contenido-mce {
+    background-color: $color-fondo-mce;
+
+    padding-top: $padding-top-mce;
+    padding-bottom: $padding-bottom-mce;
+    padding-left: $padding-left-mce;
+    padding-right: $padding-right-mce;
+
+    margin-top: $margin-top-mce;
+    margin-bottom: $margin-bottom-mce;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $color-titulo-mce;
+    }
+}

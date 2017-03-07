@@ -19,6 +19,7 @@ abstract class Base_archivo {
 
 	const PATH_PUBLICACIONES = "publicaciones/";
 	const PATH_EVENTOS = "eventos/";
+	const PATH_ARTICULO = "articulos/";
 
 	protected $ci;
 	protected $config = array();
@@ -77,12 +78,15 @@ abstract class Base_archivo {
 			case "evento":
 				$path = self::PATH_EVENTOS;
 				break;
+			case "articulo":
+				$path = self::PATH_ARTICULO;
+				break;
 		}
 
 		//verificamos si existe el directorio
 		if ($path != FALSE && (!file_exists($path) || !is_dir($path))) {
 			//si no existe creamos el directorio
-			if (!$this->crear_dorectorio($path)) {
+			if (!$this->crear_directorio($path)) {
 				$path = FALSE;
 			}
 		}
@@ -90,7 +94,7 @@ abstract class Base_archivo {
 		return $path;
 	}
 
-	public function crear_dorectorio($path) {
+	public function crear_directorio($path) {
 		$creado = FALSE;
 
 		if (!file_exists($path)) {

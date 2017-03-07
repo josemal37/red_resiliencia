@@ -143,7 +143,7 @@
 
 						<p><?= $publicacion->imagen ?></p>
 
-							<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $publicacion->imagen ?>">
+						<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $publicacion->imagen ?>">
 
 					</div>
 
@@ -211,18 +211,6 @@
 
 								<?php foreach ($autores as $autor): ?>
 
-									<?php
-									$autor->nombre_completo = $autor->nombre;
-
-									if ($autor->apellido_paterno != "") {
-										$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
-									}
-
-									if ($autor->apellido_materno != "") {
-										$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
-									}
-									?>
-
 									<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
 
 								<?php endforeach; ?>
@@ -249,18 +237,6 @@
 							<?php if ($publicacion->autores): ?>
 
 								<?php foreach ($publicacion->autores as $autor): ?>
-
-									<?php
-									$autor->nombre_completo = $autor->nombre;
-
-									if ($autor->apellido_paterno != "") {
-										$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_paterno;
-									}
-
-									if ($autor->apellido_materno != "") {
-										$autor->nombre_completo = $autor->nombre_completo . " " . $autor->apellido_materno;
-									}
-									?>
 
 									<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
 
@@ -462,7 +438,7 @@
 				var id_institucion = $("#id_institucion_usuario").attr("value");
 				if (typeof id_institucion != "undefined") {
 					console.log("asd");
-					$("#" + id_origen + " option:selected").each(function(){
+					$("#" + id_origen + " option:selected").each(function() {
 						console.log($(this));
 						if ($(this).attr("value") == id_institucion) {
 							$(this).prop("selected", false);

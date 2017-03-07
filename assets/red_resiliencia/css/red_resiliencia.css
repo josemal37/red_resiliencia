@@ -220,4 +220,15 @@ body {
 .carousel-fade .carousel-control {
   z-index: 2; }
 
+.contenido-mce {
+  background-color: #E5DAD5;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+  .contenido-mce h1, .contenido-mce h2, .contenido-mce h3, .contenido-mce h4, .contenido-mce h5, .contenido-mce h6 {
+    color: #743340; }
+
 /*# sourceMappingURL=red_resiliencia.css.map */
