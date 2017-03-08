@@ -42,7 +42,7 @@ class Modelo_articulo extends My_model {
 	public function select_articulos($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
-		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_COL);
+		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_COL, "DESC");
 
 		if ($id_institucion) {
 			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);

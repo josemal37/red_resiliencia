@@ -141,21 +141,35 @@ if (isset($eventos)) {
 <?php if (isset($articulos)): ?>
 
 	<!-- Articulos -->
-	<section id="articulos" class="container">
+	<section id="articulos" class="container seccion">
 
 		<h2>Artículos</h2>
 
 		<?php if ($articulos): ?>
 
-			<div class="row">
+			<?php foreach ($articulos as $articulo): ?>
 
-				<?php foreach ($articulos as $articulo): ?>
+				<div class="row articulo">
 
-					<h3><?= $articulo->nombre ?></h3>
+					<div class="col-md-2">
 
-				<?php endforeach; ?>
+						<img src="<?= base_url($path_articulos . $articulo->imagen) ?>" class="img-responsive">
 
-			</div>
+					</div>
+
+					<div class="col-md-10">
+
+						<h4><?= $articulo->nombre ?></h4>
+
+						<p class="text-justify"><?= $articulo->descripcion ?></p>
+
+					</div>
+
+				</div>
+
+			<?php endforeach; ?>
+
+			<a href="<?= base_url("articulo/articulos") ?>" class="btn btn-primary pull-right">Ver todos los artículos</a>
 
 		<?php else: ?>
 
@@ -282,7 +296,7 @@ if (isset($eventos)) {
 		$(".img").matchHeight();
 		$(".publicacion").matchHeight();
 	});
-	
+
 	$("#destacados").carousel({
 		interval: 3000
 	});

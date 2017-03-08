@@ -96,9 +96,13 @@
 
 					<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver</a>
 
-					<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>">Modificar</a>
+					<?php if ($this->session->userdata("rol") == "administrador" && $this->session->userdata("rol") == "usuario"): ?>
 
-					<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>">Eliminar</a>
+						<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>">Modificar</a>
+
+						<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>">Eliminar</a>
+
+					<?php endif; ?>
 
 				</div>
 

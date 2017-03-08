@@ -92,6 +92,8 @@ body {
   -webkit-border-radius: 10px; }
   .seccion h1, .seccion h2, .seccion h3, .seccion h4, .seccion h5, .seccion h6 {
     color: #743340; }
+  .seccion .articulo {
+    margin-bottom: 30px; }
   .seccion .publicacion {
     background-color: #BFA07D;
     border-radius: 5px;

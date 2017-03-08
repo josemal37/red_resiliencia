@@ -7,6 +7,8 @@ $border-seccion: $border-grueso;
 $border-radius-seccion: $border-radius-grande;
 $color-border-seccion: $color-5;
 
+$margin-bottom-articulo: 30px;
+
 $padding-publicacion: 5px;
 $margin-bottom-publicacion: 10px;
 $color-fondo-publicacion: $color-5;
@@ -27,6 +29,10 @@ $color-label-publicacion: $color-0;
 
     h1, h2, h3, h4, h5, h6 {
         color: $color-titulo-seccion;
+    }
+    
+    .articulo {
+        margin-bottom: $margin-bottom-articulo;
     }
 
     .publicacion {
