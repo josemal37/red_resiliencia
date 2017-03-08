@@ -77,11 +77,16 @@ class Modelo_articulo extends My_model {
 		return $articulos;
 	}
 
-	public function select_articulo_por_id($id = FALSE) {
+	public function select_articulo_por_id($id = FALSE, $id_institucion = FALSE) {
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT);
 			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->where(self::ID_COL, $id);
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_COL, $id);
+
+			if ($id_institucion) {
+				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+				$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			}
 
 			$query = $this->db->get();
 

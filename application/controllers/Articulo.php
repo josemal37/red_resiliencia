@@ -35,7 +35,7 @@ class Articulo extends CI_Controller {
 
 	public function articulos($nro_pagina = FALSE) {
 		$rol = $this->session->userdata("rol");
-		
+
 		$cantidad_articulos = 3;
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
@@ -46,7 +46,7 @@ class Articulo extends CI_Controller {
 		} else {
 			$criterio = FALSE;
 		}
-		
+
 		if ($rol == "usuario") {
 			$id_institucion = $this->session->userdata("id_institucion");
 		} else {
@@ -66,9 +66,17 @@ class Articulo extends CI_Controller {
 	}
 
 	public function ver_articulo($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
 		if ($id) {
+			if ($rol == "usuario") {
+				$id_institucion = $this->session->userdata("id_institucion");
+			} else {
+				$id_institucion = FALSE;
+			}
+
 			$datos = array();
-			$datos["articulo"] = $this->Modelo_articulo->select_articulo_por_id($id);
+			$datos["articulo"] = $this->Modelo_articulo->select_articulo_por_id($id, $id_institucion);
 
 			if ($datos["articulo"]) {
 				$datos["titulo"] = $datos["articulo"]->nombre;
