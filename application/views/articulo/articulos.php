@@ -106,6 +106,24 @@
 
 		<?php endforeach; ?>
 
+		<?php if (!$criterio): ?>
+
+			<div class="text-center">
+
+				<ul class="pagination">
+
+					<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
+
+						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos/" . $i) ?>"><?= $i ?></a></li>
+
+					<?php endfor; ?>
+
+				</ul>
+
+			</div>
+
+		<?php endif; ?>
+
 	<?php else: ?>
 
 		<div class="contenido">
@@ -115,6 +133,8 @@
 		</div>
 
 	<?php endif; ?>
+
+	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
 	<a href="<?= base_url("articulo/registrar_articulo") ?>">Registrar articulo</a>
 

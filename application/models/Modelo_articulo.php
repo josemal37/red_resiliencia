@@ -39,10 +39,14 @@ class Modelo_articulo extends My_model {
 		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_modulo"));
 	}
 
-	public function select_articulos() {
+	public function select_articulos($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_COL);
+
+		if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
+			$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
+		}
 
 		$query = $this->db->get();
 
@@ -167,13 +171,13 @@ class Modelo_articulo extends My_model {
 			return FALSE;
 		}
 	}
-	
+
 	public function update_articulo($id = FALSE, $nombre = "", $descripcion = "", $imagen = "", $fecha = "", $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
 		if ($id && $nombre != "") {
 			$actualizado = FALSE;
-			
+
 			$this->db->trans_start();
-			
+
 			$datos = array(
 				self::NOMBRE_COL => $nombre,
 				self::DESCRIPCION_COL => $descripcion,
@@ -184,76 +188,76 @@ class Modelo_articulo extends My_model {
 			} else {
 				$this->db->set(self::FECHA_COL, "NOW()", FALSE);
 			}
-			
+
 			$this->db->set($datos);
-			
+
 			$this->db->where(self::ID_COL, $id);
-			
+
 			$actualizado = $this->db->update(self::NOMBRE_TABLA);
-			
+
 			$this->update_autores_de_articulo($id, $id_autor);
 			$this->update_categorias_de_articulo($id, $id_categoria);
 			$this->update_instituciones_de_articulo($id, $id_institucion);
-			
+
 			$this->db->trans_complete();
-			
+
 			return $actualizado;
 		} else {
 			return FALSE;
 		}
 	}
-	
+
 	private function update_autores_de_articulo($id_articulo = FALSE, $id_autores = FALSE) {
 		$actualizado = FALSE;
-		
+
 		if ($id_articulo !== FALSE && $id_autores !== FALSE) {
 			if ($this->delete_autores_de_articulo($id_articulo)) {
 				$actualizado = $this->insert_autor_a_articulo($id_articulo, $id_autores);
 			}
 		}
-		
+
 		return $actualizado;
 	}
-	
+
 	private function update_categorias_de_articulo($id_articulo = FALSE, $id_categorias = FALSE) {
 		$actualizado = FALSE;
-		
+
 		if ($id_articulo !== FALSE && $id_categorias !== FALSE) {
 			if ($this->delete_categorias_de_articulo($id_articulo)) {
 				$actualizado = $this->insert_categoria_a_articulo($id_articulo, $id_categorias);
 			}
 		}
-		
+
 		return $actualizado;
 	}
-	
+
 	private function update_instituciones_de_articulo($id_articulo = FALSE, $id_instituciones = FALSE) {
 		$actualizado = FALSE;
-		
+
 		if ($id_articulo !== FALSE && $id_instituciones !== FALSE) {
 			if ($this->delete_instituciones_de_articulo($id_articulo)) {
 				$actualizado = $this->insert_institucion_a_articulo($id_articulo, $id_instituciones);
 			}
 		}
-		
+
 		return $actualizado;
 	}
-	
+
 	public function delete_articulo($id = FALSE) {
 		if ($id) {
 			$eliminado = FALSE;
-			
+
 			$this->db->trans_start();
-			
+
 			$this->delete_autores_de_articulo($id);
 			$this->delete_categorias_de_articulo($id);
 			$this->delete_instituciones_de_articulo($id);
-			
+
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
-			
+
 			$this->db->trans_complete();
-			
+
 			return $eliminado;
 		} else {
 			return FALSE;
@@ -296,6 +300,35 @@ class Modelo_articulo extends My_model {
 			return $eliminado;
 		} else {
 			return FALSE;
+		}
+	}
+
+	public function select_count_articulos($id_institucion = FALSE) {
+		if ($id_institucion) {
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			return $this->db->count_all_results();
+		} else {
+			return $this->db->count_all(self::NOMBRE_TABLA);
+		}
+	}
+
+	public function select_count_nro_paginas($cantidad_articulos_por_pagina = FALSE, $id_institucion = FALSE) {
+		if ($cantidad_articulos_por_pagina) {
+			$nro_paginas = 0;
+
+			$nro_articulos = $this->select_count_articulos($id_institucion);
+
+			if ($nro_articulos % $cantidad_articulos_por_pagina == 0) {
+				$nro_paginas = (integer) ($nro_articulos / $cantidad_articulos_por_pagina);
+			} else {
+				$nro_paginas = (integer) ($nro_articulos / $cantidad_articulos_por_pagina) + 1;
+			}
+
+			return $nro_paginas;
+		} else {
+			return 0;
 		}
 	}
 

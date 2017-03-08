@@ -33,11 +33,25 @@ class Articulo extends CI_Controller {
 		$this->articulos();
 	}
 
-	public function articulos() {
+	public function articulos($nro_pagina = FALSE) {
+		$cantidad_articulos = 3;
+		if (!$nro_pagina) {
+			$nro_pagina = 1;
+		}
+
+		if (isset($_GET["criterio"])) {
+			$criterio = $this->input->get("criterio");
+		} else {
+			$criterio = FALSE;
+		}
+
 		$datos = array();
 
 		$datos["titulo"] = "Articulos";
-		$datos["articulos"] = $this->Modelo_articulo->select_articulos();
+		$datos["criterio"] = $criterio;
+		$datos["nro_pagina"] = $nro_pagina;
+		$datos["nro_paginas"] = $this->Modelo_articulo->select_count_nro_paginas($cantidad_articulos);
+		$datos["articulos"] = $this->Modelo_articulo->select_articulos($nro_pagina, $cantidad_articulos);
 		$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
 
 		$this->load->view("articulo/articulos", $datos);
@@ -276,7 +290,7 @@ class Articulo extends CI_Controller {
 				if ($this->Modelo_articulo->delete_articulo($id)) {
 					unlink($path . $articulo->url);
 					unlink($path . $articulo->imagen);
-					
+
 					redirect(base_url("articulo/articulos"));
 				} else {
 					$this->session->set_flashdata("error", "Ocurrió un problema al eliminar el articulo.");
