@@ -105,6 +105,15 @@ class Articulo extends CI_Controller {
 				$datos["categorias"] = $this->Modelo_categoria->select_categorias();
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 
+				if ($rol == "usuario") {
+					$datos["institucion_usuario"] = new stdClass();
+					$datos["institucion_usuario"]->id = $this->session->userdata("id_institucion");
+					$datos["institucion_usuario"]->nombre = $this->session->userdata("nombre_institucion");
+					eliminar_elementos_array($datos["instituciones"], array($datos["institucion_usuario"]), "id");
+				} else {
+					$datos["institucion_usuario"] = FALSE;
+				}
+
 				$this->load->view("articulo/formulario_articulo", $datos);
 			}
 		}
