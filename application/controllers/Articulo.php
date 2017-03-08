@@ -220,7 +220,7 @@ class Articulo extends CI_Controller {
 					} else {
 						$id_institucion = FALSE;
 					}
-					
+
 					$datos = array();
 					$datos["articulo"] = $this->Modelo_articulo->select_articulo_por_id($id, $id_institucion);
 
@@ -313,7 +313,13 @@ class Articulo extends CI_Controller {
 		$rol = $this->session->userdata("rol");
 
 		if ($rol == "administrador" || $rol == "usuario") {
-			$articulo = $this->Modelo_articulo->select_articulo_por_id($id);
+			if ($rol == "usuario") {
+				$id_institucion = $this->session->userdata("id_institucion");
+			} else {
+				$id_institucion = FALSE;
+			}
+
+			$articulo = $this->Modelo_articulo->select_articulo_por_id($id, $id_institucion);
 
 			if ($articulo) {
 				$path = $this->imagen->get_path_valido("articulo");
