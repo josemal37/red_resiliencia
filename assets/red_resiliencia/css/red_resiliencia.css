@@ -191,8 +191,7 @@ body {
     .destacados .contenido-item div {
       display: table-cell;
       vertical-align: middle; }
-  .destacados .descripcion_evento {
-    height: 100px;
+  .destacados .descripcion {
     max-height: 100px;
     display: block !important;
     overflow: hidden;

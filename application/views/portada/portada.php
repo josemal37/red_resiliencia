@@ -37,7 +37,7 @@ if (isset($eventos)) {
 
 			<?php $i = 0; ?>
 
-			<?php if ($eventos_proximos): ?>
+			<?php if (isset($eventos_proximos) && $eventos_proximos): ?>
 
 				<?php for ($j = 0; $j < sizeof($eventos_proximos); $j = $j + 1): ?>
 
@@ -48,11 +48,36 @@ if (isset($eventos)) {
 				<?php endfor; ?>
 
 			<?php endif; ?>
+
+			<?php if (isset($articulos_recientes) && $articulos_recientes): ?>
+
+				<?php for ($j = 0; $j < sizeof($articulos_recientes); $j = $j + 1): ?>
+
+					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
+
+					<?php $i += 1; ?>
+
+				<?php endfor; ?>
+
+			<?php endif; ?>
+
+			<?php if (isset($publicaciones_recientes) && $publicaciones_recientes): ?>
+
+				<?php for ($j = 0; $j < sizeof($publicaciones_recientes); $j = $j + 1): ?>
+
+					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
+
+					<?php $i += 1; ?>
+
+				<?php endfor; ?>
+
+			<?php endif; ?>
+
 		</ol>
 
 		<div class="carousel-inner" role="listbox">
 
-			<?php if ($eventos_proximos): ?>
+			<?php if (isset($eventos_proximos) && $eventos_proximos): ?>
 
 				<?php $i = 0; ?>
 
@@ -62,9 +87,11 @@ if (isset($eventos)) {
 
 						<div class="row">
 
-							<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>');">
+							<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
 
-							</div>
+								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>');"></div>
+
+							</a>
 
 							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
 
@@ -78,7 +105,7 @@ if (isset($eventos)) {
 
 									<?php if ($evento->descripcion): ?>
 
-										<div class="descripcion_evento text-ellipsis">
+										<div class="descripcion text-ellipsis">
 
 											<p class="text-justify"><?= $evento->descripcion ?></p>
 
@@ -105,6 +132,124 @@ if (isset($eventos)) {
 									<?php endif; ?>
 
 									<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-primary pull-right">Ver evento</a>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<?php $i += 1; ?>
+
+				<?php endforeach; ?>
+
+			<?php endif; ?>
+
+			<?php if (isset($articulos_recientes) && $articulos_recientes): ?>
+
+				<?php foreach ($articulos_recientes as $articulo): ?>
+
+					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+
+						<div class="row">
+
+							<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">
+
+								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_articulos . $articulo->imagen) ?>');"></div>
+
+							</a>
+
+							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+
+								<div>
+
+									<?php if ($articulo->nombre): ?>
+
+										<h2><?= $articulo->nombre ?></h2>
+
+									<?php endif; ?>
+
+									<?php if ($articulo->descripcion): ?>
+
+										<div class="descripcion text-ellipsis">
+
+											<p class="text-justify"><?= $articulo->descripcion ?></p>
+
+										</div>
+
+										<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver más...</a>
+
+									<?php endif; ?>
+
+									<?php if ($articulo->autores): ?>
+
+										<p><label>Autores:</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
+
+									<?php endif; ?>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<?php $i += 1; ?>
+
+				<?php endforeach; ?>
+
+			<?php endif; ?>
+			
+			<?php if (isset($publicaciones_recientes) && $publicaciones_recientes): ?>
+
+				<?php foreach ($publicaciones_recientes as $publicacion): ?>
+
+					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+
+						<div class="row">
+
+							<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
+
+								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_publicaciones . $publicacion->imagen) ?>');"></div>
+
+							</a>
+
+							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+
+								<div>
+
+									<?php if ($publicacion->nombre): ?>
+
+										<h2><?= $publicacion->nombre ?></h2>
+
+									<?php endif; ?>
+
+									<?php if ($publicacion->descripcion): ?>
+
+										<div class="descripcion text-ellipsis">
+
+											<p class="text-justify"><?= $publicacion->descripcion ?></p>
+
+										</div>
+
+										<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">Ver más...</a>
+
+									<?php endif; ?>
+
+									<?php if ($publicacion->autores): ?>
+
+										<p><label>Autores:</label> <?= listar_array_de_stdclass($publicacion->autores, "nombre", ", ") ?></p>
+
+									<?php endif; ?>
+
+									<?php if ($publicacion->instituciones): ?>
+
+										<p><label>Instituciones:</label> <?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
+
+									<?php endif; ?>
 
 								</div>
 
