@@ -96,6 +96,10 @@
 
 					<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver</a>
 
+					<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>">Modificar</a>
+
+					<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>">Eliminar</a>
+
 				</div>
 
 			</div>

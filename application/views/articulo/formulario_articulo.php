@@ -15,6 +15,9 @@ switch ($accion) {
 	case "registrar":
 		$url = base_url("articulo/registrar_articulo");
 		break;
+	case "modificar":
+		$url = base_url("articulo/modificar_articulo/" . $articulo->id);
+		break;
 }
 ?>
 
@@ -26,7 +29,7 @@ switch ($accion) {
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control">
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $articulo->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 
@@ -36,7 +39,7 @@ switch ($accion) {
 
 			<label>Descripción</label>
 
-			<textarea id="descripcion" name="descripcion" class="form-control"></textarea>
+			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $articulo->descripcion ?><?php endif; ?></textarea>
 
 			<?= form_error("descripcion") ?>
 
@@ -78,7 +81,13 @@ switch ($accion) {
 
 			<label>Contenido</label>
 
-			<textarea id="contenido" name="contenido"></textarea>
+			<textarea id="contenido" name="contenido"><?php if ($accion == "modificar"): ?><?php $this->load->ext_view("articulos", $articulo->url) ?><?php endif; ?></textarea>
+
+			<?php if ($accion == "modificar"): ?>
+
+				<input type="hidden" id="id_contenido" name="id_contenido" value="<?= $articulo->url ?>">
+
+			<?php endif; ?>
 
 			<?= form_error("contenido") ?>
 
@@ -407,16 +416,8 @@ switch ($accion) {
 			return id_select;
 		}
 		;
-
-		/** script para antes del envio **/
-
-		$("#form_articulo").submit(function() {
-			$("option").each(function() {
-				$(this).prop("selected", "selected");
-			});
-		});
 	});
-	
+
 	tinymce.init({
 		selector: '#contenido',
 		height: 400,
@@ -429,6 +430,14 @@ switch ($accion) {
 		toolbar: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect forecolor backcolor | link unlink anchor | image | print preview",
 		content_css: '<?= base_url("assets/red_resiliencia/css/red_resiliencia.css") ?>,https://fonts.googleapis.com/css?family=Sansita,https://fonts.googleapis.com/css?family=Lato',
 		body_class: "contenido-mce"
+	});
+
+	/** script para antes del envio **/
+
+	$("#form-articulo").submit(function() {
+		$("option").each(function() {
+			$(this).prop("selected", "selected");
+		});
 	});
 </script>
 

@@ -257,7 +257,7 @@ class Modelo_publicacion extends My_model {
 	private function update_autores_de_publicacion($id_publicacion = FALSE, $id_autores = FALSE) {
 		$this->delete_autores_de_publicacion($id_publicacion);
 
-		if ($id_publicacion && $id_autores) {
+		if ($id_publicacion !== FALSE && $id_autores !== FALSE) {
 			$actualizado = FALSE;
 
 			$actualizado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_AUTOR, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_AUTOR, $id_autores);
@@ -271,7 +271,7 @@ class Modelo_publicacion extends My_model {
 	private function update_categorias_de_publicacion($id_publicacion = FALSE, $id_categoria = FALSE) {
 		$this->delete_categorias_de_publicacion($id_publicacion);
 
-		if ($id_publicacion && $id_categoria) {
+		if ($id_publicacion !== FALSE && $id_categoria !== FALSE) {
 			$asociado = FALSE;
 			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_CATEGORIA, $id_categoria);
 
@@ -284,7 +284,7 @@ class Modelo_publicacion extends My_model {
 	private function update_instituciones_de_publicacion($id_publicacion = FALSE, $id_institucion = FALSE) {
 		$this->delete_instituciones_de_publicacion($id_publicacion);
 
-		if ($id_publicacion && $id_institucion) {
+		if ($id_publicacion !== FALSE && $id_institucion !== FALSE) {
 			$asociado = FALSE;
 
 			$asociado = $this->insert_many_to_many(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::ID_COL, $id_publicacion, self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);

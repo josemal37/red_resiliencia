@@ -272,7 +272,7 @@ class Modelo_evento extends My_model {
 	private function update_categoria_de_evento($id_evento = FALSE, $id_categoria = FALSE) {
 		$actualizado = FALSE;
 
-		if ($id_evento && $id_categoria) {
+		if ($id_evento !== FALSE && $id_categoria !== FALSE) {
 			if ($this->delete_categoria_de_evento($id_evento)) {
 				$actualizado = $this->insert_categoria_a_evento($id_evento, $id_categoria);
 			}
@@ -284,7 +284,7 @@ class Modelo_evento extends My_model {
 	private function update_institucion_de_evento($id_evento = FALSE, $id_institucion = FALSE) {
 		$actualizado = FALSE;
 
-		if ($id_evento && $id_institucion) {
+		if ($id_evento !== FALSE && $id_institucion !== FALSE) {
 			if ($this->delete_institucion_de_evento($id_evento)) {
 				$actualizado = $this->insert_institucion_a_evento($id_evento, $id_institucion);
 			}
