@@ -34,4 +34,8 @@
 
 </div>
 
+<script type="text/javascript">
+	$("img").addClass("img-responsive");
+</script>
+
 <?php $this->load->view("base/footer"); ?>
