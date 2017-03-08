@@ -34,6 +34,8 @@ class Articulo extends CI_Controller {
 	}
 
 	public function articulos($nro_pagina = FALSE) {
+		$rol = $this->session->userdata("rol");
+		
 		$cantidad_articulos = 3;
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
@@ -44,14 +46,20 @@ class Articulo extends CI_Controller {
 		} else {
 			$criterio = FALSE;
 		}
+		
+		if ($rol == "usuario") {
+			$id_institucion = $this->session->userdata("id_institucion");
+		} else {
+			$id_institucion = FALSE;
+		}
 
 		$datos = array();
 
 		$datos["titulo"] = "Articulos";
 		$datos["criterio"] = $criterio;
 		$datos["nro_pagina"] = $nro_pagina;
-		$datos["nro_paginas"] = $this->Modelo_articulo->select_count_nro_paginas($cantidad_articulos);
-		$datos["articulos"] = $this->Modelo_articulo->select_articulos($nro_pagina, $cantidad_articulos);
+		$datos["nro_paginas"] = $this->Modelo_articulo->select_count_nro_paginas($cantidad_articulos, $id_institucion);
+		$datos["articulos"] = $this->Modelo_articulo->select_articulos($nro_pagina, $cantidad_articulos, $id_institucion);
 		$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
 
 		$this->load->view("articulo/articulos", $datos);

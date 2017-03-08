@@ -24,7 +24,7 @@ class Modelo_articulo extends My_model {
 	const IMAGEN_COL = "imagen_articulo";
 	const DESTACADO_COL = "destacado_articulo";
 	const FECHA_COL = "fecha_articulo";
-	const COLUMNAS_SELECT = "id_articulo as id, nombre_articulo as nombre, descripcion_articulo as descripcion, url_articulo as url, imagen_articulo as imagen, destacado_articulo as destacado, fecha_articulo as fecha";
+	const COLUMNAS_SELECT = "articulo.id_articulo as id, articulo.nombre_articulo as nombre, articulo.descripcion_articulo as descripcion, articulo.url_articulo as url, articulo.imagen_articulo as imagen, articulo.destacado_articulo as destacado, articulo.fecha_articulo as fecha";
 	const NOMBRE_TABLA = "articulo";
 	const NOMBRE_TABLA_ASOC_AUTOR = "autor_articulo";
 	const ID_TABLA_ASOC_AUTOR = "id_autor";
@@ -43,6 +43,11 @@ class Modelo_articulo extends My_model {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_COL);
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
 
 		if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
 			$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
