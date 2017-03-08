@@ -131,8 +131,8 @@
 	$(document).ready(function() {
 		
 		//minima altura permitida
-		if ($("body").height() < 768) {
-			$("body").height(768);
+		if ($("body").height() < 800) {
+			$("body").height(800);
 		}
 
 		var menu = $('#menu');

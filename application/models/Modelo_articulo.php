@@ -35,19 +35,19 @@ class Modelo_articulo extends My_model {
 
 	public function __construct() {
 		parent::__construct();
-		
+
 		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_modulo"));
 	}
-	
+
 	public function select_articulos() {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_COL);
-		
+
 		$query = $this->db->get();
-		
+
 		$articulos = $this->return_result($query);
-		
+
 		if ($articulos) {
 			$i = 0;
 
@@ -64,8 +64,35 @@ class Modelo_articulo extends My_model {
 				$i += 1;
 			}
 		}
-		
+
 		return $articulos;
+	}
+
+	public function select_articulo($id = FALSE) {
+		if ($id) {
+			$this->db->select(self::COLUMNAS_SELECT);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->where(self::ID_COL, $id);
+
+			$query = $this->db->get();
+
+			$articulo = $this->return_row($query);
+
+			if ($articulo) {
+				$categorias = $this->Modelo_categoria->select_categoria_por_id($articulo->id, self::NOMBRE_TABLA);
+				$articulo->categorias = $categorias;
+
+				$instituciones = $this->Modelo_institucion->select_institucion_por_id($articulo->id, self::NOMBRE_TABLA);
+				$articulo->instituciones = $instituciones;
+
+				$autores = $this->Modelo_autor->select_autor_por_id($articulo->id, self::NOMBRE_TABLA);
+				$articulo->autores = $autores;
+			}
+
+			return $articulo;
+		} else {
+			return FALSE;
+		}
 	}
 
 	public function insert_articulo($nombre = "", $descripcion = "", $url = "", $imagen = "", $fecha = "", $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {

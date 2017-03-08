@@ -94,6 +94,8 @@
 
 					</div>
 
+					<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver</a>
+
 				</div>
 
 			</div>

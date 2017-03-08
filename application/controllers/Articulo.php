@@ -41,6 +41,25 @@ class Articulo extends CI_Controller {
 
 		$this->load->view("articulo/articulos", $datos);
 	}
+	
+	public function ver_articulo($id = FALSE) {
+		if ($id) {
+			$datos = array();
+			$datos["articulo"] = $this->Modelo_articulo->select_articulo($id);
+			
+			if ($datos["articulo"]) {
+				$datos["titulo"] = $datos["articulo"]->nombre;
+				$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
+				
+				$this->load->view("articulo/articulo", $datos);
+			} else {
+				redirect(base_url("articulo/articulos"));
+			}
+			
+		} else {
+			redirect(base_url("articulo/articulos"));
+		}
+	}
 
 	public function registrar_articulo() {
 		$rol = $this->session->userdata("rol");
@@ -125,6 +144,8 @@ class Articulo extends CI_Controller {
 			$nombre = tempnam($path, "art");
 			
 			if ($nombre) {
+				$contenido = str_replace('src="..', 'src="' . base_url(), $contenido);
+				
 				$guardado = write_file($nombre, $contenido);
 			} else {
 				$guardado = FALSE;

@@ -230,5 +230,7 @@ body {
   margin-bottom: 10px; }
   .contenido-mce h1, .contenido-mce h2, .contenido-mce h3, .contenido-mce h4, .contenido-mce h5, .contenido-mce h6 {
     color: #743340; }
+  .contenido-mce p {
+    text-align: justify !important; }
 
 /*# sourceMappingURL=red_resiliencia.css.map */
