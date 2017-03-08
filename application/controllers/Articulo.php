@@ -215,8 +215,14 @@ class Articulo extends CI_Controller {
 				if (isset($_POST["submit"])) {
 					$this->modificar_articulo_bd();
 				} else {
+					if ($rol == "usuario") {
+						$id_institucion = $this->session->userdata("id_institucion");
+					} else {
+						$id_institucion = FALSE;
+					}
+					
 					$datos = array();
-					$datos["articulo"] = $this->Modelo_articulo->select_articulo_por_id($id);
+					$datos["articulo"] = $this->Modelo_articulo->select_articulo_por_id($id, $id_institucion);
 
 					if ($datos["articulo"]) {
 						$datos["titulo"] = "Modificar articulo";
@@ -233,7 +239,7 @@ class Articulo extends CI_Controller {
 						$this->load->view("articulo/formulario_articulo", $datos);
 					} else {
 						$this->session->set_flashdata("error", "El articulo seleccionado no existe.");
-						redirect(base_url("ariculo/articulos"));
+						redirect(base_url("articulo/articulos"));
 					}
 				}
 			} else {
