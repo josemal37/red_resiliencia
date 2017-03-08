@@ -226,7 +226,7 @@ class Articulo extends CI_Controller {
 				$direccion_imagen = $imagen_antiguo;
 			}
 			$this->modificar_contenido($id_contenido, $contenido);
-			
+
 			if ($this->Modelo_articulo->update_articulo($id, $nombre, $descripcion, $direccion_imagen, $fecha, $id_autor, $id_categoria, $id_institucion)) {
 				redirect(base_url("articulo/articulos"));
 			} else {
@@ -261,6 +261,32 @@ class Articulo extends CI_Controller {
 			}
 		} else {
 			return FALSE;
+		}
+	}
+
+	public function eliminar_articulo($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador" || $rol == "usuario") {
+			$articulo = $this->Modelo_articulo->select_articulo_por_id($id);
+
+			if ($articulo) {
+				$path = $this->imagen->get_path_valido("articulo");
+
+				if ($this->Modelo_articulo->delete_articulo($id)) {
+					unlink($path . $articulo->url);
+					unlink($path . $articulo->imagen);
+					
+					redirect(base_url("articulo/articulos"));
+				} else {
+					$this->session->set_flashdata("error", "Ocurrió un problema al eliminar el articulo.");
+					redirect(base_url("articulo/articulos"));
+				}
+			} else {
+				redirect(base_url("articulo/articulos"));
+			}
+		} else {
+			redirect(base_url());
 		}
 	}
 

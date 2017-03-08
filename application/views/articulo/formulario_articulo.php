@@ -317,7 +317,7 @@ switch ($accion) {
 
 		<?php endif; ?>
 
-		<input type="submit" id="submit" name="submit" value="Aceptar">
+		<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
 
 	</form>
 
