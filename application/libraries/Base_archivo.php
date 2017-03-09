@@ -37,8 +37,12 @@ abstract class Base_archivo {
 		if (isset($_FILES[$archivo]) && $_FILES[$archivo]["size"] != 0) {
 			//cofiguramos la libreria de archivos
 			$configuraciones = $this->config;
+			
 			$configuraciones["upload_path"] = $path_valido;
 
+			$nombre_limpio = $this->sanitizar_cadena($_FILES[$archivo]["name"]);
+			$configuraciones["file_name"] = $nombre_limpio;
+			
 			$this->ci->upload->initialize($configuraciones);
 
 			if (!$this->ci->upload->do_upload($archivo)) {
@@ -52,15 +56,15 @@ abstract class Base_archivo {
 
 		return $res;
 	}
-	
+
 	public function eliminar_archivo($archivo = FALSE) {
 		if ($archivo) {
 			$eliminado = FALSE;
-			
+
 			if (file_exists($archivo)) {
 				$eliminado = unlink($archivo);
 			}
-			
+
 			return $eliminado;
 		} else {
 			return FALSE;
@@ -104,6 +108,27 @@ abstract class Base_archivo {
 		}
 
 		return $creado;
+	}
+
+	public function sanitizar_cadena($cadena) {
+		$cadena = str_replace(array('á', 'à', 'â', 'ã', 'ª', 'ä'), "a", $cadena);
+		$cadena = str_replace(array('Á', 'À', 'Â', 'Ã', 'Ä'), "A", $cadena);
+		$cadena = str_replace(array('Í', 'Ì', 'Î', 'Ï'), "I", $cadena);
+		$cadena = str_replace(array('í', 'ì', 'î', 'ï'), "i", $cadena);
+		$cadena = str_replace(array('é', 'è', 'ê', 'ë'), "e", $cadena);
+		$cadena = str_replace(array('É', 'È', 'Ê', 'Ë'), "E", $cadena);
+		$cadena = str_replace(array('ó', 'ò', 'ô', 'õ', 'ö', 'º'), "o", $cadena);
+		$cadena = str_replace(array('Ó', 'Ò', 'Ô', 'Õ', 'Ö'), "O", $cadena);
+		$cadena = str_replace(array('ú', 'ù', 'û', 'ü'), "u", $cadena);
+		$cadena = str_replace(array('Ú', 'Ù', 'Û', 'Ü'), "U", $cadena);
+		$cadena = str_replace(array('[', '^', '´', '`', '¨', '~', ']', ',', '+', '=', '&'), "", $cadena);
+		$cadena = str_replace("ç", "c", $cadena);
+		$cadena = str_replace("Ç", "C", $cadena);
+		$cadena = str_replace("ñ", "n", $cadena);
+		$cadena = str_replace("Ñ", "N", $cadena);
+		$cadena = str_replace("Ý", "Y", $cadena);
+		$cadena = str_replace("ý", "y", $cadena);
+		return $cadena;
 	}
 
 }

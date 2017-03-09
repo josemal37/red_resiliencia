@@ -31,163 +31,111 @@ if (isset($eventos)) {
 
 <div>
 
-	<div id="destacados" class="carousel slide carousel-fade destacados" data-ride="carousel">
+	<?php if ((isset($eventos_proximos) && $eventos_proximos) || (isset($articulos_recientes) && $articulos_recientes) || (isset($publicaciones_recientes) && $publicaciones_recientes)): ?>
 
-		<ol class="carousel-indicators">
+		<div id="destacados" class="carousel slide carousel-fade destacados" data-ride="carousel">
 
-			<?php $i = 0; ?>
-
-			<?php if (isset($eventos_proximos) && $eventos_proximos): ?>
-
-				<?php for ($j = 0; $j < sizeof($eventos_proximos); $j = $j + 1): ?>
-
-					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
-
-					<?php $i += 1; ?>
-
-				<?php endfor; ?>
-
-			<?php endif; ?>
-
-			<?php if (isset($articulos_recientes) && $articulos_recientes): ?>
-
-				<?php for ($j = 0; $j < sizeof($articulos_recientes); $j = $j + 1): ?>
-
-					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
-
-					<?php $i += 1; ?>
-
-				<?php endfor; ?>
-
-			<?php endif; ?>
-
-			<?php if (isset($publicaciones_recientes) && $publicaciones_recientes): ?>
-
-				<?php for ($j = 0; $j < sizeof($publicaciones_recientes); $j = $j + 1): ?>
-
-					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
-
-					<?php $i += 1; ?>
-
-				<?php endfor; ?>
-
-			<?php endif; ?>
-
-		</ol>
-
-		<div class="carousel-inner" role="listbox">
-
-			<?php if (isset($eventos_proximos) && $eventos_proximos): ?>
+			<ol class="carousel-indicators">
 
 				<?php $i = 0; ?>
 
-				<?php foreach ($eventos_proximos as $evento): ?>
+				<?php if (isset($eventos_proximos) && $eventos_proximos): ?>
 
-					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+					<?php for ($j = 0; $j < sizeof($eventos_proximos); $j = $j + 1): ?>
 
-						<div class="row">
+						<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
 
-							<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
+						<?php $i += 1; ?>
 
-								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>');"></div>
+					<?php endfor; ?>
 
-							</a>
+				<?php endif; ?>
 
-							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+				<?php if (isset($articulos_recientes) && $articulos_recientes): ?>
 
-								<div>
+					<?php for ($j = 0; $j < sizeof($articulos_recientes); $j = $j + 1): ?>
 
-									<?php if ($evento->nombre): ?>
+						<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
 
-										<h2><?= $evento->nombre ?></h2>
+						<?php $i += 1; ?>
 
-									<?php endif; ?>
+					<?php endfor; ?>
 
-									<?php if ($evento->descripcion): ?>
+				<?php endif; ?>
 
-										<div class="descripcion text-ellipsis">
+				<?php if (isset($publicaciones_recientes) && $publicaciones_recientes): ?>
 
-											<p class="text-justify"><?= $evento->descripcion ?></p>
+					<?php for ($j = 0; $j < sizeof($publicaciones_recientes); $j = $j + 1): ?>
 
-										</div>
+						<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
 
-									<?php endif; ?>
+						<?php $i += 1; ?>
 
-									<?php if ($evento->ciudad || $evento->pais): ?>
+					<?php endfor; ?>
 
-										<p><label>Lugar:</label> <?php if ($evento->ciudad): ?><?= $evento->ciudad->nombre ?>, <?php endif; ?><?php if ($evento->pais): ?><?= $evento->pais->nombre ?><?php endif; ?></p>
+				<?php endif; ?>
 
-									<?php endif; ?>
+			</ol>
 
-									<?php if ($evento->fecha_inicio || $evento->fecha_fin): ?>
+			<div class="carousel-inner" role="listbox">
 
-										<p><?php if ($evento->fecha_inicio): ?><label>Inicio:</label> <?= $evento->fecha_inicio ?> <?php endif; ?><?php if ($evento->fecha_fin): ?><label>Fin:</label> <?= $evento->fecha_fin ?><?php endif; ?></p>
+				<?php $i = 0; ?>
 
-									<?php endif; ?>
+				<?php if (isset($eventos_proximos) && $eventos_proximos): ?>
 
-									<?php if ($evento->instituciones): ?>
+					<?php foreach ($eventos_proximos as $evento): ?>
 
-										<p><label>Instituciónes:</label> <?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
+						<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
 
-									<?php endif; ?>
+							<div class="row">
 
-									<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-primary pull-right">Ver evento</a>
+								<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
 
-								</div>
+									<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>');"></div>
 
-							</div>
+								</a>
 
-						</div>
+								<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
 
-					</div>
+									<div>
 
-					<?php $i += 1; ?>
+										<?php if ($evento->nombre): ?>
 
-				<?php endforeach; ?>
+											<h2><?= $evento->nombre ?></h2>
 
-			<?php endif; ?>
+										<?php endif; ?>
 
-			<?php if (isset($articulos_recientes) && $articulos_recientes): ?>
+										<?php if ($evento->descripcion): ?>
 
-				<?php foreach ($articulos_recientes as $articulo): ?>
+											<div class="descripcion text-ellipsis">
 
-					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+												<p class="text-justify"><?= $evento->descripcion ?></p>
 
-						<div class="row">
+											</div>
 
-							<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">
+										<?php endif; ?>
 
-								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_articulos . $articulo->imagen) ?>');"></div>
+										<?php if ($evento->ciudad || $evento->pais): ?>
 
-							</a>
+											<p><label>Lugar:</label> <?php if ($evento->ciudad): ?><?= $evento->ciudad->nombre ?>, <?php endif; ?><?php if ($evento->pais): ?><?= $evento->pais->nombre ?><?php endif; ?></p>
 
-							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+										<?php endif; ?>
 
-								<div>
+										<?php if ($evento->fecha_inicio || $evento->fecha_fin): ?>
 
-									<?php if ($articulo->nombre): ?>
+											<p><?php if ($evento->fecha_inicio): ?><label>Inicio:</label> <?= $evento->fecha_inicio ?> <?php endif; ?><?php if ($evento->fecha_fin): ?><label>Fin:</label> <?= $evento->fecha_fin ?><?php endif; ?></p>
 
-										<h2><?= $articulo->nombre ?></h2>
+										<?php endif; ?>
 
-									<?php endif; ?>
+										<?php if ($evento->instituciones): ?>
 
-									<?php if ($articulo->descripcion): ?>
+											<p><label>Instituciónes:</label> <?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
 
-										<div class="descripcion text-ellipsis">
+										<?php endif; ?>
 
-											<p class="text-justify"><?= $articulo->descripcion ?></p>
+										<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-primary pull-right">Ver evento</a>
 
-										</div>
-
-										<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver más...</a>
-
-									<?php endif; ?>
-
-									<?php if ($articulo->autores): ?>
-
-										<p><label>Autores:</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
-
-									<?php endif; ?>
+									</div>
 
 								</div>
 
@@ -195,61 +143,55 @@ if (isset($eventos)) {
 
 						</div>
 
-					</div>
+						<?php $i += 1; ?>
 
-					<?php $i += 1; ?>
+					<?php endforeach; ?>
 
-				<?php endforeach; ?>
+				<?php endif; ?>
 
-			<?php endif; ?>
-			
-			<?php if (isset($publicaciones_recientes) && $publicaciones_recientes): ?>
+				<?php if (isset($articulos_recientes) && $articulos_recientes): ?>
 
-				<?php foreach ($publicaciones_recientes as $publicacion): ?>
+					<?php foreach ($articulos_recientes as $articulo): ?>
 
-					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+						<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
 
-						<div class="row">
+							<div class="row">
 
-							<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
+								<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">
 
-								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_publicaciones . $publicacion->imagen) ?>');"></div>
+									<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_articulos . $articulo->imagen) ?>');"></div>
 
-							</a>
+								</a>
 
-							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+								<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
 
-								<div>
+									<div>
 
-									<?php if ($publicacion->nombre): ?>
+										<?php if ($articulo->nombre): ?>
 
-										<h2><?= $publicacion->nombre ?></h2>
+											<h2><?= $articulo->nombre ?></h2>
 
-									<?php endif; ?>
+										<?php endif; ?>
 
-									<?php if ($publicacion->descripcion): ?>
+										<?php if ($articulo->descripcion): ?>
 
-										<div class="descripcion text-ellipsis">
+											<div class="descripcion text-ellipsis">
 
-											<p class="text-justify"><?= $publicacion->descripcion ?></p>
+												<p class="text-justify"><?= $articulo->descripcion ?></p>
 
-										</div>
+											</div>
 
-										<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">Ver más...</a>
+											<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver más...</a>
 
-									<?php endif; ?>
+										<?php endif; ?>
 
-									<?php if ($publicacion->autores): ?>
+										<?php if ($articulo->autores): ?>
 
-										<p><label>Autores:</label> <?= listar_array_de_stdclass($publicacion->autores, "nombre", ", ") ?></p>
+											<p><label>Autores:</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
 
-									<?php endif; ?>
+										<?php endif; ?>
 
-									<?php if ($publicacion->instituciones): ?>
-
-										<p><label>Instituciones:</label> <?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
-
-									<?php endif; ?>
+									</div>
 
 								</div>
 
@@ -257,29 +199,91 @@ if (isset($eventos)) {
 
 						</div>
 
-					</div>
+						<?php $i += 1; ?>
 
-					<?php $i += 1; ?>
+					<?php endforeach; ?>
 
-				<?php endforeach; ?>
+				<?php endif; ?>
 
-			<?php endif; ?>
+				<?php if (isset($publicaciones_recientes) && $publicaciones_recientes): ?>
+
+					<?php foreach ($publicaciones_recientes as $publicacion): ?>
+
+						<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+
+							<div class="row">
+
+								<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
+
+									<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_publicaciones . $publicacion->imagen) ?>');"></div>
+
+								</a>
+
+								<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+
+									<div>
+
+										<?php if ($publicacion->nombre): ?>
+
+											<h2><?= $publicacion->nombre ?></h2>
+
+										<?php endif; ?>
+
+										<?php if ($publicacion->descripcion): ?>
+
+											<div class="descripcion text-ellipsis">
+
+												<p class="text-justify"><?= $publicacion->descripcion ?></p>
+
+											</div>
+
+											<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">Ver más...</a>
+
+										<?php endif; ?>
+
+										<?php if ($publicacion->autores): ?>
+
+											<p><label>Autores:</label> <?= listar_array_de_stdclass($publicacion->autores, "nombre", ", ") ?></p>
+
+										<?php endif; ?>
+
+										<?php if ($publicacion->instituciones): ?>
+
+											<p><label>Instituciones:</label> <?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
+
+										<?php endif; ?>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<?php $i += 1; ?>
+
+					<?php endforeach; ?>
+
+				<?php endif; ?>
+
+			</div>
+
+			<a class="left carousel-control" href="#destacados" data-slide="prev">
+
+				<span class="icon-prev"></span>
+
+			</a>
+
+			<a class="right carousel-control" href="#destacados" data-slide="next">
+
+				<span class="icon-next"></span>
+
+			</a>
 
 		</div>
 
-		<a class="left carousel-control" href="#destacados" data-slide="prev">
-
-			<span class="icon-prev"></span>
-
-		</a>
-
-		<a class="right carousel-control" href="#destacados" data-slide="next">
-
-			<span class="icon-next"></span>
-
-		</a>
-
-	</div>
+	<?php endif; ?>
 
 </div>
 

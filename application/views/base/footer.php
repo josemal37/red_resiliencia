@@ -1,7 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
 <script type="text/javascript">
-	$(".tokenfield").tokenfield();
+	$(".tokenfield").tokenfield({
+		createTokensOnBlur: true
+	});
 </script>
 
 <div class="container text-center footer">

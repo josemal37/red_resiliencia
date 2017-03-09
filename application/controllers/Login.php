@@ -58,13 +58,16 @@ class Login extends CI_Controller {
 					$datos = array(
 						"nombre_completo" => $usuario->nombre_completo,
 						"rol" => $usuario->nombre_rol,
-						"id_institucion" =>$usuario->id_institucion,
+						"id_institucion" => $usuario->id_institucion,
 						"nombre_institucion" => $usuario->nombre_institucion
 					);
 					$this->session->set_userdata($datos);
-				}
 
-				$this->index();
+					$this->index();
+				} else {
+					$this->session->set_flashdata("error", "Datos Incorrectos.");
+					redirect(base_url("login"), "refresh");
+				}
 			} else {
 				$this->index();
 			}

@@ -28,7 +28,7 @@
 
 					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
 
-						<?php if (current_url() == base_url("index.php/portada") || current_url() == base_url("index.php")): ?>
+						<?php if (current_url() == base_url("index.php/portada") || current_url() == base_url("index.php") || current_url() == base_url()): ?>
 
 							<?php if (isset($articulos) && $articulos): ?>
 
@@ -58,6 +58,10 @@
 							<li <?php if ($this->uri->segment(1) == "publicacion"): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones") ?>" class="page-scroll">Publicaciones</a></li>
 
 							<li <?php if ($this->uri->segment(1) == "evento"): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos") ?>" class="page-scroll">Eventos</a></li>
+
+						<?php elseif ($this->uri->segment(1) == "login"): ?>
+
+							<li><a href="<?= base_url() ?>" class="page-scroll">Portada</a></li>
 
 						<?php endif; ?>
 
@@ -129,7 +133,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
 		//minima altura permitida
 		if ($("body").height() < 800) {
 			$("body").height(800);

@@ -10,11 +10,6 @@ switch ($fuente) {
 		$url = base_url("evento/eventos");
 		break;
 }
-$categorias = $this->Modelo_categoria->select_categorias();
-$nombre_categorias = array();
-foreach ($categorias as $categoria) {
-	$nombre_categorias[] = $categoria->nombre;
-}
 ?>
 
 <form action="<?= $url ?>" id="form-busqueda" method="get">

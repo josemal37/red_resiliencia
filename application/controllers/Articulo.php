@@ -94,7 +94,7 @@ class Articulo extends CI_Controller {
 	public function registrar_articulo() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "administrador" || $rol = "usuario") {
+		if ($rol == "administrador" || $rol == "usuario") {
 			if (isset($_POST["submit"])) {
 				$this->registrar_articulo_bd();
 			} else {
@@ -116,6 +116,8 @@ class Articulo extends CI_Controller {
 
 				$this->load->view("articulo/formulario_articulo", $datos);
 			}
+		} else {
+			redirect(base_url());
 		}
 	}
 

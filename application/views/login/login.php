@@ -36,6 +36,8 @@
 
 			</div>
 
+			<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+
 			<input type="hidden" id="token" name="token" value="<?= $token ?>">
 
 			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">

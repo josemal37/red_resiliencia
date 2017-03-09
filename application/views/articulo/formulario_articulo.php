@@ -347,7 +347,6 @@ switch ($accion) {
 			if (id == "quitar_institucion") {
 				var id_institucion = $("#id_institucion_usuario").attr("value");
 				if (typeof id_institucion != "undefined") {
-					console.log("asd");
 					$("#" + id_origen + " option:selected").each(function() {
 						console.log($(this));
 						if ($(this).attr("value") == id_institucion) {

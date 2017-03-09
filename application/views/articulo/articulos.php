@@ -140,7 +140,11 @@
 
 	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
-	<a href="<?= base_url("articulo/registrar_articulo") ?>">Registrar articulo</a>
+	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+		<a href="<?= base_url("articulo/registrar_articulo") ?>">Registrar articulo</a>
+
+	<?php endif; ?>
 
 </div>
 
