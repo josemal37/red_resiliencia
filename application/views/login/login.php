@@ -35,8 +35,15 @@
 				<?= form_error("password") ?>
 
 			</div>
+			<?php if ($this->session->flashdata("error")): ?>
 
-			<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+				<div class="form-group has-error">
+
+					<label class="control-label"><?= $this->session->flashdata("error") ?></label>
+
+				</div>
+
+			<?php endif; ?>
 
 			<input type="hidden" id="token" name="token" value="<?= $token ?>">
 
@@ -47,5 +54,9 @@
 	</div>
 
 </div>
+
+<script type="text/javascript">
+	$("#form_login").validate(<?= $reglas_validacion ?>);
+</script>
 
 <?php $this->load->view("base/footer"); ?>

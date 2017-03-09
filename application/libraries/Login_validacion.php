@@ -37,5 +37,23 @@ class Login_validacion extends Base {
 			)
 		)
 	);
+	
+	protected $jquery_validate = array(
+		"login" => array(
+			"required" => true
+		),
+		"password" => array(
+			"required" => true
+		)
+	);
+	
+	protected $mensajes = array(
+		"login" => array(
+			"required" => "Introduzca su nombre de usuario."
+		),
+		"password" => array(
+			"required" => "Introduzca su password."
+		)
+	);
 
 }

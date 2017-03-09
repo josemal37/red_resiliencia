@@ -35,6 +35,10 @@
 
 		<!-- Altura de elementos -->
 		<script src="<?= base_url("assets/matchHeight/jquery.matchHeight.js") ?>"></script>
+		
+		<!-- JQuery validate -->
+		<script src="<?= base_url("assets/jquery-validate-1.15.0/jquery.validate.js") ?>"></script>
+		<script src="<?= base_url("assets/jquery-validate-1.15.0/jquery.validate.bootstrap.defaults.js") ?>"></script>
 
 		<!-- Fuentes -->
 		<link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet">

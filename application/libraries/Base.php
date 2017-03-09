@@ -60,8 +60,36 @@ abstract class Base {
 		return $reglas;
 	}
 	
-	public function eliminar_elementos_array() {
+	public function get_reglas_cliente($campos) {
+		return $this->get_reglas_jquery_validate($campos);
+	}
+	
+	private function get_reglas_jquery_validate($campos) {
+		$reglas = "";
 		
+		if (is_array($campos)) {
+			$seleccion = array();
+			foreach ($campos as $campo) {
+				if (isset($this->jquery_validate[$campo])) {
+					$seleccion[$campo] = $this->jquery_validate[$campo];
+				}
+			}
+			
+			$seleccion_mensajes = array();
+			foreach ($campos as $campo) {
+				if (isset($this->mensajes[$campo])) {
+					$seleccion_mensajes[$campo] = $this->mensajes[$campo];
+				}
+			}
+			
+			$reglas = json_encode(array("rules" => $seleccion, "messages" => $seleccion_mensajes));
+		} else if (is_string($campos)) {
+			if (isset($this->jquery_validate[$campos])) {
+				$reglas = json_encode(array($campos => $this->jquery_validate[$campos]));
+			}
+		}
+		
+		return $reglas;
 	}
 	
 }

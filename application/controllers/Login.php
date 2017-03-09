@@ -30,6 +30,7 @@ class Login extends CI_Controller {
 			case "":
 				$data["token"] = $this->token();
 				$data["titulo"] = "Inicio de sesión";
+				$data["reglas_validacion"] = $this->login_validacion->get_reglas_cliente(array("login", "password"));
 				$this->load->view("login/login", $data);
 				break;
 			case "administrador":
