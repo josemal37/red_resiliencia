@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-
 jQuery.validator.setDefaults({
+    errorClass: "has-error",
+    validClass: "has-success",
     highlight: function(element, errorClass, validClass) {
         $(element).closest('.form-group').addClass(errorClass).removeClass(validClass);
     },
