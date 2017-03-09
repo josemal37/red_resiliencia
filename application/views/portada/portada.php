@@ -343,7 +343,7 @@ if (isset($eventos)) {
 
 				<?php foreach ($publicaciones as $publicacion): ?>
 
-					<div class="col-md-3">
+					<div class="col-md-4">
 
 						<div class="text-center publicacion">
 
@@ -351,7 +351,7 @@ if (isset($eventos)) {
 
 								<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
 
-									<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img img-responsive img-center">
+									<div style="background-image: url('<?= base_url($path_publicaciones . $publicacion->imagen) ?>')" class="img"></div>
 
 								</a>
 
@@ -398,7 +398,7 @@ if (isset($eventos)) {
 
 				<?php foreach ($eventos as $evento): ?>
 
-					<div class="col-md-3">
+					<div class="col-md-4">
 
 						<div class="text-center publicacion">
 
@@ -406,7 +406,7 @@ if (isset($eventos)) {
 
 								<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
 
-									<img src="<?= base_url($path_eventos . $evento->imagen) ?>" alt="<?= $evento->nombre ?>" class="img-responsive">
+									<div style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>')" class="img"></div>
 
 								</a>
 

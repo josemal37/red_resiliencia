@@ -103,6 +103,11 @@ body {
     margin-bottom: 10px; }
     .seccion .publicacion label {
       color: #111; }
+  .seccion .img {
+    min-height: 450px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain; }
 
 .footer {
   padding-top: 50px; }

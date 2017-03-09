@@ -64,7 +64,7 @@ class Modelo_evento extends My_model {
 			$criterios = explode(", ", $criterio);
 
 			foreach ($criterios as $criterio) {
-				$this->db->or_like(Modelo_categoria::NOMBRE_COL, $criterio);
+				$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);
 				if (!$id_institucion) {
 					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
 					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);

@@ -52,7 +52,7 @@ class Modelo_publicacion extends My_model {
 			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
 			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL, "left");
 			$this->db->join(Modelo_autor::NOMBRE_TABLA, Modelo_autor::NOMBRE_TABLA . "." . Modelo_autor::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . Modelo_autor::ID_COL, "left");
-			$this->db->join(Modelo_modulo::NOMBRE_TABLA, Modelo_modulo::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA . "." . self::ID_COL);
+			$this->db->join(Modelo_modulo::NOMBRE_TABLA, Modelo_modulo::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA . "." . self::ID_COL, "left");
 			if (!$id_institucion) {
 				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
 				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");

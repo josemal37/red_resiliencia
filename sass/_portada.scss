@@ -30,23 +30,30 @@ $color-label-publicacion: $color-0;
     h1, h2, h3, h4, h5, h6 {
         color: $color-titulo-seccion;
     }
-    
+
     .articulo {
         margin-bottom: $margin-bottom-articulo;
     }
 
     .publicacion {
         background-color: $color-fondo-publicacion;
-        
+
         border-radius: $border-radius-pequenio;
         -moz-border-radius: $border-radius-pequenio;
         -webkit-border-radius: $border-radius-pequenio;
-        
+
         padding: $padding-publicacion;
         margin-bottom: $margin-bottom-publicacion;
-        
+
         label {
             color: $color-label-publicacion;
         }
+    }
+
+    .img {
+        min-height: 450px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
     }
 }

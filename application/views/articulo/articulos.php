@@ -12,6 +12,12 @@
 
 <div class="container">
 
+	<div>
+
+		<?php $this->load->view("base/busqueda", array("fuente" => "articulo", "criterio" => $criterio)); ?>
+
+	</div>
+
 	<?php if ($articulos): ?>
 
 		<?php foreach ($articulos as $articulo): ?>

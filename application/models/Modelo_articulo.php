@@ -49,8 +49,41 @@ class Modelo_articulo extends My_model {
 			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
 		}
 
-		if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
-			$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
+		if ($criterio) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL, "left");
+			$this->db->join(Modelo_autor::NOMBRE_TABLA, Modelo_autor::NOMBRE_TABLA . "." . Modelo_autor::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . Modelo_autor::ID_COL, "left");
+			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
+			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
+			if (!$id_institucion) {
+				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
+				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");
+			}
+
+			$this->db->group_start();
+
+			$criterios = explode(", ", $criterio);
+
+			foreach ($criterios as $criterio) {
+				$this->db->or_like(Modelo_autor::NOMBRE_COL, $criterio);
+				$this->db->or_like(Modelo_autor::APELLIDO_PATERNO_COL, $criterio);
+				$this->db->or_like(Modelo_autor::APELLIDO_MATERNO_COL, $criterio);
+				$this->db->or_like(Modelo_categoria::NOMBRE_COL, $criterio);
+				if (!$id_institucion) {
+					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
+					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
+				}
+				$this->db->or_like(self::NOMBRE_COL, $criterio);
+				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
+				$this->db->or_like(self::FECHA_COL, $criterio);
+			}
+
+			$this->db->group_end();
+		}
+
+		if (!$criterio) {
+			if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
+				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
+			}
 		}
 
 		$query = $this->db->get();

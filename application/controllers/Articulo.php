@@ -59,7 +59,7 @@ class Articulo extends CI_Controller {
 		$datos["criterio"] = $criterio;
 		$datos["nro_pagina"] = $nro_pagina;
 		$datos["nro_paginas"] = $this->Modelo_articulo->select_count_nro_paginas($cantidad_articulos, $id_institucion);
-		$datos["articulos"] = $this->Modelo_articulo->select_articulos($nro_pagina, $cantidad_articulos, $id_institucion);
+		$datos["articulos"] = $this->Modelo_articulo->select_articulos($nro_pagina, $cantidad_articulos, $id_institucion, $criterio);
 		$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
 
 		$this->load->view("articulo/articulos", $datos);

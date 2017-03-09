@@ -9,6 +9,9 @@ switch ($fuente) {
 	case "evento":
 		$url = base_url("evento/eventos");
 		break;
+	case "articulo":
+		$url = base_url("articulo/articulos");
+		break;
 }
 ?>
 
@@ -53,6 +56,14 @@ switch ($fuente) {
 				?>
 
 				<h4>Eventos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+				<?php
+				break;
+
+			case "articulo":
+				?>
+
+				<h4>Artículos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
 
 				<?php
 				break;
