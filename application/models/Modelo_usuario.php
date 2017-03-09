@@ -83,16 +83,66 @@ class Modelo_usuario extends My_model {
 
 	public function select_usuario_por_login($login = "", $no_id = FALSE) {
 		if ($login != "") {
-			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
-			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
-			$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
-			$this->db->where(self::LOGIN_COL, $login);
-			if ($no_id) {
-				$this->db->where(self::ID_COL . " != ", $no_id);
-			}
+			/**
+			  $this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
+			  $this->db->from(self::NOMBRE_TABLA);
+			  $this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			  $this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
+			  $this->db->where(self::LOGIN_COL, $login);
+			  if ($no_id) {
+			  $this->db->where(self::ID_COL . " != ", $no_id);
+			  }
 
-			$query = $this->db->get();
+			  $query = $this->db->get();
+			 */
+			if ($no_id) {
+				$sql = "
+					SELECT 
+						`usuario`.`id_usuario` as `id`, 
+						`usuario`.`id_institucion` as `id_institucion`, 
+						`usuario`.`id_rol` as `id_rol`, 
+						`usuario`.`nombre_usuario` as `nombre`, 
+						`usuario`.`apellido_paterno_usuario` as `apellido_paterno`, 
+						`usuario`.`apellido_materno_usuario` as `apellido_materno`, 
+						`usuario`.`login_usuario` as `login`, 
+						`usuario`.`password_usuario` as `password`, 
+						`rol`.`nombre_rol` as `nombre_rol`, 
+						`institucion`.`nombre_institucion` as `nombre_institucion`
+					FROM 
+						`usuario`
+					JOIN `rol` ON 
+						`usuario`.`id_rol` = `rol`.`id_rol`
+					LEFT JOIN `institucion` ON 
+						`usuario`.`id_institucion` = `institucion`.`id_institucion`
+					WHERE 
+						BINARY `login_usuario` = ? AND
+						`usuario`.`id_usuario` != ?";
+
+				$query = $this->db->query($sql, array($login, $no_id));
+			} else {
+				$sql = "
+					SELECT 
+						`usuario`.`id_usuario` as `id`, 
+						`usuario`.`id_institucion` as `id_institucion`, 
+						`usuario`.`id_rol` as `id_rol`, 
+						`usuario`.`nombre_usuario` as `nombre`, 
+						`usuario`.`apellido_paterno_usuario` as `apellido_paterno`, 
+						`usuario`.`apellido_materno_usuario` as `apellido_materno`, 
+						`usuario`.`login_usuario` as `login`, 
+						`usuario`.`password_usuario` as `password`, 
+						`rol`.`nombre_rol` as `nombre_rol`, 
+						`institucion`.`nombre_institucion` as `nombre_institucion`
+					FROM 
+						`usuario`
+					JOIN `rol` ON 
+						`usuario`.`id_rol` = `rol`.`id_rol`
+					LEFT JOIN `institucion` ON 
+						`usuario`.`id_institucion` = `institucion`.`id_institucion`
+					WHERE 
+						BINARY `login_usuario` = ?";
+
+				$query = $this->db->query($sql, array($login));
+			}
 
 			$usuario = $this->return_row($query);
 
@@ -108,14 +158,44 @@ class Modelo_usuario extends My_model {
 
 	public function select_usuario_por_login_password($login = "", $password = "") {
 		if ($login != "" && $password != "") {
-			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
-			$this->db->from(self::NOMBRE_TABLA);
-			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
-			$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
-			$this->db->where(self::LOGIN_COL, $login);
-			$this->db->where(self::PASSWORD_COL, $password);
 
-			$query = $this->db->get();
+			/**
+			  $this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
+			  $this->db->from(self::NOMBRE_TABLA);
+			  $this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL);
+			  $this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
+			  $this->db->where(self::LOGIN_COL, $login);
+			  $this->db->where(self::PASSWORD_COL, $password);
+
+
+			  $query = $this->db->get();
+
+			 */
+			// para ditincion de mayusculas y minusculas
+
+			$sql = "
+				SELECT 
+					`usuario`.`id_usuario` as `id`, 
+					`usuario`.`id_institucion` as `id_institucion`, 
+					`usuario`.`id_rol` as `id_rol`, 
+					`usuario`.`nombre_usuario` as `nombre`, 
+					`usuario`.`apellido_paterno_usuario` as `apellido_paterno`, 
+					`usuario`.`apellido_materno_usuario` as `apellido_materno`, 
+					`usuario`.`login_usuario` as `login`, 
+					`usuario`.`password_usuario` as `password`, 
+					`rol`.`nombre_rol` as `nombre_rol`, 
+					`institucion`.`nombre_institucion` as `nombre_institucion`
+				FROM 
+					`usuario`
+				JOIN `rol` ON 
+					`usuario`.`id_rol` = `rol`.`id_rol`
+				LEFT JOIN `institucion` ON 
+					`usuario`.`id_institucion` = `institucion`.`id_institucion`
+				WHERE 
+					BINARY `login_usuario` = ? AND 
+					BINARY `password_usuario` = ?";
+
+			$query = $this->db->query($sql, array($login, $password));
 
 			$usuario = $this->return_row($query);
 
