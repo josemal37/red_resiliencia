@@ -93,6 +93,7 @@ class Articulo_validacion extends Base {
 			)
 		)
 	);
+	
 	protected $jquery_validate = array(
 		"id" => array(
 			"required" => true,

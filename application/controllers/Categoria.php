@@ -57,6 +57,8 @@ class Categoria extends CI_Controller {
 				$datos["titulo"] = "Registrar categoria";
 				$datos["accion"] = "registrar";
 
+				$datos["reglas_validacion"] = $this->categoria_validacion->get_reglas_cliente(array("nombre"));
+
 				$this->load->view("categoria/formulario_categoria", $datos);
 			}
 		} else {
@@ -92,6 +94,8 @@ class Categoria extends CI_Controller {
 					$datos["accion"] = "modificar";
 					$datos["categoria"] = $this->Modelo_categoria->select_categoria_por_id($id);
 
+					$datos["reglas_validacion"] = $this->categoria_validacion->get_reglas_cliente(array("nombre"));
+
 					if ($datos["categoria"]) {
 						$this->load->view("categoria/formulario_categoria", $datos);
 					} else {
@@ -111,7 +115,7 @@ class Categoria extends CI_Controller {
 		$id = $this->input->post("id");
 		$nombre = $this->input->post("nombre");
 
-		if ($this->categoria->validar(array("id", "nombre"))) {
+		if ($this->categoria_validacion->validar(array("id", "nombre"))) {
 
 			if ($this->Modelo_categoria->update_categoria($id, $nombre)) {
 				redirect(base_url("categoria/categorias"));

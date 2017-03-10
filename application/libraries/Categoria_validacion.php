@@ -40,5 +40,27 @@ class Categoria_validacion extends Base {
 			)
 		)
 	);
+	
+	protected $jquery_validate = array(
+		"id" => array(
+			"required" => true,
+			"number" => true
+		),
+		"nombre" => array(
+			"required" => true,
+			"minlength" => 1
+		)
+	);
+	
+	protected $mensajes = array(
+		"id" => array(
+			"required" => "Hay un error con la identificación del archivo.",
+			"number" => "Hay un error con la identificación del archivo."
+		),
+		"nombre" => array(
+			"required" => "Introduzca el nombre de la categoria.",
+			"minlength" => "El nombre de la categoria debe tener al menos 1 caracter."
+		)
+	);
 
 }
