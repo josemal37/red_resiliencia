@@ -166,4 +166,9 @@
 
 </div>
 
+<script type="text/javascript">
+	/** script para validaciones **/
+	$("#form_usuario").validate(<?= $reglas_validacion ?>);
+</script>
+
 <?php $this->load->view("base/footer"); ?>

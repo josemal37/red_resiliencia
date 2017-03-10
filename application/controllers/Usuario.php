@@ -59,6 +59,8 @@ class Usuario extends CI_Controller {
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 				$datos["roles"] = $this->Modelo_rol->select_roles();
 
+				$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "institucion", "rol", "login", "password", "confirmacion"));
+				
 				$this->load->view("usuario/formulario_usuario", $datos);
 			}
 		} else {
@@ -101,6 +103,8 @@ class Usuario extends CI_Controller {
 					$datos["roles"] = $this->Modelo_rol->select_roles();
 					$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 					if ($datos["usuario"]) {
+						$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "institucion", "rol", "login"));
+						
 						$this->load->view("usuario/formulario_usuario", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "El usuario seleccionado no existe.");
@@ -149,6 +153,8 @@ class Usuario extends CI_Controller {
 					$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 
 					if ($datos["usuario"]) {
+						$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("password", "confirmacion"));
+						
 						$this->load->view("usuario/formulario_usuario", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "El usuario seleccionado no existe.");
