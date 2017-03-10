@@ -130,6 +130,8 @@ class Evento extends CI_Controller {
 					$datos["institucion_usuario"] = FALSE;
 				}
 
+				$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "imagen", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion"));
+
 				$this->load->view("evento/formulario_evento", $datos);
 			}
 		} else {
@@ -231,6 +233,8 @@ class Evento extends CI_Controller {
 						} else {
 							$datos["institucion_usuario"] = FALSE;
 						}
+						
+						$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion"));
 
 						$this->load->view("evento/formulario_evento", $datos);
 					} else {

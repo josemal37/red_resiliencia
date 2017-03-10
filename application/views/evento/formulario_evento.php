@@ -428,4 +428,9 @@ switch ($accion) {
 
 </script>
 
+<script type="text/javascript">
+	/** script para validaciones **/
+	$("#form-evento").validate(<?= $reglas_validacion ?>);
+</script>
+
 <?php $this->load->view("base/footer"); ?>
