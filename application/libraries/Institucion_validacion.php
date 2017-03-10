@@ -48,5 +48,35 @@ class Institucion_validacion extends Base {
 			)
 		)
 	);
+	
+	protected $jquery_validate = array(
+		"id" => array(
+			"required" => true,
+			"number" => true
+		),
+		"nombre" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"sigla" => array(
+			"required" => true,
+			"minlength" => 1
+		)
+	);
+	
+	protected $mensajes = array(
+		"id" => array(
+			"required" => "Hay un error con la identificación del archivo.",
+			"number" => "Hay un error con la identificación del archivo."
+		),
+		"nombre" => array(
+			"required" => "Introduzca el nombre de la institución.",
+			"minlength" => "El nombre de la institución debe tener al menos 1 caracter."
+		),
+		"sigla" => array(
+			"required" => "Introduzca la sigla de la institución",
+			"minlength" => "La sigla de la institución debe tener al menos 1 caracter."
+		)
+	);
 
 }

@@ -23,7 +23,7 @@
 	}
 	?>
 
-	<form action="<?= $url ?>" method="post" autocomplete="off">
+	<form action="<?= $url ?>" id="form-institucion" method="post" autocomplete="off">
 
 		<div class="form-group">
 
@@ -58,5 +58,10 @@
 	</form>
 
 </div>
+
+<script type="text/javascript">
+	/** script para validaciones **/
+	$("#form-institucion").validate(<?= $reglas_validacion ?>);
+</script>
 
 <?php $this->load->view("base/footer"); ?>

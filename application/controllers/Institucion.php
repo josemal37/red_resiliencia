@@ -57,6 +57,8 @@ class Institucion extends CI_Controller {
 				$datos["titulo"] = "Registrar institución";
 				$datos["accion"] = "registrar";
 
+				$datos["reglas_validacion"] = $this->institucion_validacion->get_reglas_cliente(array("nombre", "sigla"));
+				
 				$this->load->view("institucion/formulario_institucion", $datos);
 			}
 		} else {
@@ -94,6 +96,8 @@ class Institucion extends CI_Controller {
 					$datos["institucion"] = $this->Modelo_institucion->select_institucion_por_id($id);
 
 					if ($datos["institucion"]) {
+						$datos["reglas_validacion"] = $this->institucion_validacion->get_reglas_cliente(array("nombre", "sigla"));
+						
 						$this->load->view("institucion/formulario_institucion", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "La institucion seleccionada no existe.");
