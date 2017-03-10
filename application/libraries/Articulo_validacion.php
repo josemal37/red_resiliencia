@@ -93,5 +93,70 @@ class Articulo_validacion extends Base {
 			)
 		)
 	);
+	protected $jquery_validate = array(
+		"id" => array(
+			"required" => true,
+			"number" => true
+		),
+		"nombre" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"descripcion" => array(
+			"minlength" => 1
+		),
+		"contenido" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"imagen" => array(
+			"required" => true
+		),
+		"fecha" => array(
+			"date" => true
+		),
+		"id_categoria[]" => array(
+			"number" => true
+		),
+		"id_institucion[]" => array(
+			"number" => true
+		),
+		"id_autor[]" => array(
+			"number" => true
+		)
+	);
+	
+	protected $mensajes = array(
+		"id" => array(
+			"required" => "Hay un error con la identificación del archivo.",
+			"number" => "Hay un error con la identificación del archivo."
+		),
+		"nombre" => array(
+			"required" => "Introduzca el nombre del artículo.",
+			"minlength" => "El nombre del artículo debe tener al menos 1 caracter."
+		),
+		"descripcion" => array(
+			"minlength" => "La descripcion del artículo debe tener al menos 1 caracter."
+		),
+		"contenido" => array(
+			"required" => "Introduzca el contenido del artículo.",
+			"minlength" => "El contenido del articulo debe tener al menos 1 caracter."
+		),
+		"imagen" => array(
+			"required" => "Seleccione una imagen para el artículo."
+		),
+		"fecha" => array(
+			"date" => "El formato de la fecha no es correcto."
+		),
+		"id_categoria[]" => array(
+			"number" => "El formato de las categorias no es correcto."
+		),
+		"id_institucion[]" => array(
+			"number" => "El formato de las instituciones no es correcto."
+		),
+		"id_autor[]" => array(
+			"number" => "El formato de los autores no es correcto."
+		)
+	);
 
 }

@@ -24,6 +24,8 @@ abstract class Base {
 
 	public function validar($campos = NULL) {
 		if ($campos != NULL) {
+			$this->ci->form_validation->set_error_delimiters('<label class="control-label">', '</label>');
+			
 			$this->establecer_reglas($campos);
 			if ($this->ci->form_validation->run() == FALSE) {
 				return FALSE;
@@ -69,15 +71,11 @@ abstract class Base {
 		
 		if (is_array($campos)) {
 			$seleccion = array();
+			$seleccion_mensajes = array();
+			
 			foreach ($campos as $campo) {
 				if (isset($this->jquery_validate[$campo])) {
 					$seleccion[$campo] = $this->jquery_validate[$campo];
-				}
-			}
-			
-			$seleccion_mensajes = array();
-			foreach ($campos as $campo) {
-				if (isset($this->mensajes[$campo])) {
 					$seleccion_mensajes[$campo] = $this->mensajes[$campo];
 				}
 			}
@@ -85,7 +83,7 @@ abstract class Base {
 			$reglas = json_encode(array("rules" => $seleccion, "messages" => $seleccion_mensajes));
 		} else if (is_string($campos)) {
 			if (isset($this->jquery_validate[$campos])) {
-				$reglas = json_encode(array($campos => $this->jquery_validate[$campos]));
+				$reglas = json_encode(array("rules" => array($campos => $this->jquery_validate[$campos]), "messages" => array($campos => $this->mensajes[$campos])));
 			}
 		}
 		

@@ -29,7 +29,7 @@ switch ($accion) {
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $articulo->nombre ?>"<?php endif; ?>>
+			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $articulo->nombre ?>"<?php endif; ?> required>
 
 			<?= form_error("nombre") ?>
 
@@ -81,7 +81,7 @@ switch ($accion) {
 
 			<label>Contenido</label>
 
-			<textarea id="contenido" name="contenido"><?php if ($accion == "modificar"): ?><?php $this->load->ext_view("articulos", $articulo->url) ?><?php endif; ?></textarea>
+			<textarea id="contenido" name="contenido" required><?php if ($accion == "modificar"): ?><?php $this->load->ext_view("articulos", $articulo->url) ?><?php endif; ?></textarea>
 
 			<?php if ($accion == "modificar"): ?>
 
@@ -438,6 +438,22 @@ switch ($accion) {
 			$(this).prop("selected", "selected");
 		});
 	});
+
+	/** script para validaciones **/
+	jQuery.validator.setDefaults({
+		ignore: []
+	});
+
+	$("#form-articulo").validate(<?= $reglas_validacion ?>);
+</script>
+
+<script type="text/javascript">
+	/** script para validaciones **/
+	jQuery.validator.setDefaults({
+		ignore: []
+	});
+
+	$("#form-articulo").validate(<?= $reglas_validacion ?>);
 </script>
 
 <?php $this->load->view("base/footer"); ?>

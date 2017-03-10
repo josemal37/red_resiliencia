@@ -16,7 +16,7 @@
 
 		<form action="<?= base_url("login/iniciar_sesion") ?>" id="form_login" method="post">
 
-			<div class="form-group">
+			<div class="form-group <?php if (form_error("login")): ?>has-error<?php endif; ?>">
 
 				<label>Login</label>
 
@@ -26,7 +26,7 @@
 
 			</div>
 
-			<div class="form-group">
+			<div class="form-group <?php if (form_error("password")): ?>has-error<?php endif; ?>">
 
 				<label>Password</label>
 

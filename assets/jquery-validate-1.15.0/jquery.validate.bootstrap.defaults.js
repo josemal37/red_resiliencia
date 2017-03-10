@@ -16,9 +16,9 @@ jQuery.validator.setDefaults({
     errorPlacement: function(error, element) {
         $(error).addClass('control-label');
         if (element.attr('type') == 'file') {
-            error.insertAfter(element.parent());
+            $(element.parent()).append(error);
         } else {
-            if(element.parent('.input-group').length) {
+            if (element.parent('.input-group').length) {
                 error.insertAfter(element.parent());
             } else {
                 error.insertAfter(element);

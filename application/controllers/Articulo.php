@@ -113,6 +113,8 @@ class Articulo extends CI_Controller {
 				} else {
 					$datos["institucion_usuario"] = FALSE;
 				}
+				
+				$datos["reglas_validacion"] = $this->articulo_validacion->get_reglas_cliente(array("nombre", "descripcion", "imagen", "contenido"));
 
 				$this->load->view("articulo/formulario_articulo", $datos);
 			}
@@ -238,6 +240,8 @@ class Articulo extends CI_Controller {
 						eliminar_elementos_array($datos["categorias"], $datos["articulo"]->categorias, "id");
 						eliminar_elementos_array($datos["instituciones"], $datos["articulo"]->instituciones, "id");
 
+						$datos["reglas_validacion"] = $this->articulo_validacion->get_reglas_cliente(array("nombre", "descripcion", "contenido"));
+						
 						$this->load->view("articulo/formulario_articulo", $datos);
 					} else {
 						$this->session->set_flashdata("error", "El articulo seleccionado no existe.");
