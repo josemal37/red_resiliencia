@@ -59,6 +59,8 @@ class Autor extends CI_Controller {
 				$datos["accion"] = "registrar";
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 
+				$datos["reglas_validacion"] = $this->autor_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno"));
+				
 				$this->load->view("autor/formulario_autor", $datos);
 			}
 		} else {
@@ -99,6 +101,8 @@ class Autor extends CI_Controller {
 					$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 					eliminar_elementos_array($datos["instituciones"], $datos["autor"]->instituciones, "id");
 					if ($datos["autor"]) {
+						$datos["reglas_validacion"] = $this->autor_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno"));
+						
 						$this->load->view("autor/formulario_autor", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "El autor seleccionado no existe.");

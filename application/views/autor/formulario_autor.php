@@ -212,4 +212,9 @@
 
 </script>
 
+<script type="text/javascript">
+	/** script para validaciones **/
+	$("#form_autor").validate(<?= $reglas_validacion ?>);
+</script>
+
 <?php $this->load->view("base/footer"); ?>

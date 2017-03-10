@@ -62,4 +62,44 @@ class Autor_validacion extends Base {
 			)
 		)
 	);
+	
+	protected $jquery_validate = array(
+		"id" => array(
+			"required" => true,
+			"number" => true
+		),
+		"nombre" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"apellido_paterno" => array(
+			"minlength" => 1
+		),
+		"apellido_materno" => array(
+			"minlength" => 1
+		),
+		"id_institucion[]" => array(
+			"number" => true
+		)
+	);
+	
+	protected $mensajes = array(
+		"id" => array(
+			"required" => "Hay un error con la identificación del archivo.",
+			"number" => "Hay un error con la identificación del archivo."
+		),
+		"nombre" => array(
+			"required" => "Introduzca el nombre del autor.",
+			"minlength" => "El nombre del autor debe tener al menos 1 caracter."
+		),
+		"apellido_paterno" => array(
+			"minlength" => "El apellido paterno del autor debe tener al menos 1 caracter."
+		),
+		"apellido_materno" => array(
+			"minlength" => "El apellido materno del autor debe tener al menos 1 caracter."
+		),
+		"id_institucion[]" => array(
+			"number" => "Hay un error en la categoria seleccionada."
+		)
+	);
 }
