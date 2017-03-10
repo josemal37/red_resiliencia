@@ -16,11 +16,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'Base.php';
 
 class Publicacion_validacion extends Base {
-	
+
 	public function __construct() {
 		parent::__construct();
 	}
-	
+
 	protected $reglas_validacion = array(
 		"id" => array(
 			"field" => "id",
@@ -78,4 +78,61 @@ class Publicacion_validacion extends Base {
 			)
 		)
 	);
+	protected $jquery_validate = array(
+		"id" => array(
+			"required" => true,
+			"number" => true
+		),
+		"nombre" => array(
+			"required" => true,
+			"minlength" => 1
+		),
+		"descripcion" => array(
+			"minlength" => 1
+		),
+		"imagen" => array(
+			"required" => true
+		),
+		"id_categoria[]" => array(
+			"number" => true
+		),
+		"id_institucion[]" => array(
+			"number" => true
+		),
+		"id_autor[]" => array(
+			"number" => true
+		),
+		"modulos[]" => array(
+			"minlength" => 1
+		)
+	);
+	protected $mensajes = array(
+		"id" => array(
+			"required" => "Hay un error con la identificación del archivo.",
+			"number" => "Hay un error con la identificación del archivo."
+		),
+		"nombre" => array(
+			"required" => "Introduzca el nombre de la publicación.",
+			"minlength" => "El nombre de la publicación debe tener al menos 1 caracter."
+		),
+		"descripcion" => array(
+			"minlength" => "La descripción de la publicación debe tener al menos 1 caracter."
+		),
+		"imagen" => array(
+			"required" => "Seleccione una imagen para la publicación."
+		),
+		"id_categoria[]" => array(
+			"number" => "El formato de las categorias no es correcto."
+		),
+		"id_institucion[]" => array(
+			"number" => "El formato de las instituciones no es correcto."
+		),
+		"id_autor[]" => array(
+			"number" => "El formato de los autores no es correcto."
+		),
+		"modulos[]" => array(
+			"minlength" => "El modulo debe tener al menos 1 caracter."
+		)
+	);
+
 }

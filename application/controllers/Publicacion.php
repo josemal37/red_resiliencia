@@ -125,6 +125,8 @@ class Publicacion extends CI_Controller {
 				} else {
 					$datos["institucion_usuario"] = FALSE;
 				}
+				
+				$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "modulos[]", "imagen"));
 
 				$this->load->view("publicacion/formulario_publicacion", $datos);
 			}
@@ -240,6 +242,8 @@ class Publicacion extends CI_Controller {
 						} else {
 							$datos["institucion_usuario"] = FALSE;
 						}
+						
+						$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "modulos[]"));
 
 						$this->load->view("publicacion/formulario_publicacion", $datos);
 					} else {

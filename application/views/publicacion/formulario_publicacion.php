@@ -30,7 +30,7 @@
 
 			<label>Nombre</label>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $publicacion->nombre ?>"<?php endif; ?>>
+			<input type="text" id="nombre" name="nombre" class="form-control" required <?php if ($accion == "modificar"): ?>value="<?= $publicacion->nombre ?>"<?php endif; ?>>
 
 			<?= form_error("nombre") ?>
 
@@ -567,6 +567,13 @@
 		});
 	});
 
+</script>
+
+<script src="<?= base_url("assets/jquery-validate-1.15.0/jquery.validate.html.array.extend.js")?>"></script>
+
+<script type="text/javascript">
+	/** script para validaciones **/
+	$("#form_publicacion").validate(<?= $reglas_validacion ?>);
 </script>
 
 <?php $this->load->view("base/footer"); ?>

@@ -34,7 +34,7 @@ class Modelo_publicacion extends My_model {
 	const ID_TABLA_ASOC_INSTITUCION = "id_institucion";
 
 	public function __construct() {
-		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_modulo"));
+		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_autor", "Modelo_modulo"));
 		parent::__construct();
 	}
 
@@ -302,6 +302,11 @@ class Modelo_publicacion extends My_model {
 			$eliminado = FALSE;
 
 			$this->db->trans_start();
+
+			$this->Modelo_modulo->delete_modulos_publicacion($id);
+			$this->delete_autores_de_publicacion($id);
+			$this->delete_categorias_de_publicacion($id);
+			$this->delete_instituciones_de_publicacion($id);
 
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
