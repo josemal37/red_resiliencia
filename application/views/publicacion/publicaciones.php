@@ -2,7 +2,7 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center header">
+<div class="text-center titulo">
 
 	<h1><?= $titulo ?></h1>
 
@@ -22,7 +22,7 @@
 
 		<?php foreach ($publicaciones as $publicacion): ?>
 
-			<div class="row publicacion">
+			<div class="row contenido-pagina">
 
 				<div class="col-md-3 text-center">
 
@@ -130,17 +130,17 @@
 
 					</div>
 
-					<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">Ver</a>
+					<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-						<a href="<?= base_url("publicacion/modificar_publicacion/" . $publicacion->id) ?>">Modificar</a>
+						<a href="<?= base_url("publicacion/modificar_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
 
 					<?php endif; ?>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-						<a href="<?= base_url("publicacion/eliminar_publicacion/" . $publicacion->id) ?>">Eliminar</a>
+						<a href="<?= base_url("publicacion/eliminar_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
 
 					<?php endif; ?>
 
@@ -184,7 +184,7 @@
 
 	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-		<a href="<?= base_url("publicacion/registrar_publicacion") ?>">Registrar publicación</a>
+		<a href="<?= base_url("publicacion/registrar_publicacion") ?>" class="btn btn-default btn-resiliencia">Registrar publicación</a>
 
 	<?php endif; ?>
 

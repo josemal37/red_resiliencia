@@ -2,7 +2,7 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="header text-center">
+<div class="titulo text-center">
 
 	<h1><?= $titulo ?></h1>
 
@@ -22,7 +22,7 @@
 
 		<?php foreach ($articulos as $articulo): ?>
 
-			<div class="row contenido">
+			<div class="row contenido-pagina">
 
 				<div class="col-md-3">
 
@@ -100,13 +100,13 @@
 
 					</div>
 
-					<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver</a>
+					<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-						<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>">Modificar</a>
+						<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
 
-						<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>">Eliminar</a>
+						<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
 
 					<?php endif; ?>
 
@@ -148,7 +148,7 @@
 
 	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-		<a href="<?= base_url("articulo/registrar_articulo") ?>">Registrar articulo</a>
+		<a href="<?= base_url("articulo/registrar_articulo") ?>" class="btn btn-default btn-resiliencia">Registrar articulo</a>
 
 	<?php endif; ?>
 

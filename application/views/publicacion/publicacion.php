@@ -2,7 +2,7 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center header">
+<div class="text-center titulo">
 
 	<h1><?= $titulo ?></h1>
 
@@ -76,7 +76,7 @@
 
 			<?php if ($publicacion->url): ?>
 
-				<h4>Descargar</h4>
+				<h4>Documento</h4>
 
 				<a href="<?= base_url($path_publicacion . $publicacion->url) ?>">Descargar documento</a>
 

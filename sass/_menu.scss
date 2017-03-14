@@ -1,14 +1,15 @@
-$color-fondo-menu: $color-5;
-$color-fondo-menu-resaltado: $color-0;
-$color-texto-menu: $color-0;
-$color-texto-menu-resaltado: $color-1;
+$color-fondo-menu: $negro-transparente;
+$color-fondo-menu-resaltado: $amarillo;
+$color-texto-menu: $blanco;
+$color-texto-menu-resaltado: $negro;
 
 .navbar-default {
     background-color: $color-fondo-menu;
     border-radius: 0;
     border-left: 0;
     border-right: 0;
-    border-color: $color-fondo-menu-resaltado;
+    border-color: $color-fondo-menu;
+    
     .navbar-brand {
         color: $color-texto-menu;
         &:hover, &:focus {

@@ -1,5 +1,5 @@
-$color-fondo-destacados: $color-2;
-$color-titulo-destacados: $color-3;
+$color-fondo-destacados: $negro-transparente;
+$color-titulo-destacados: $blanco;
 $item-padding-destacados: 5px;
 $height-destacados: 400px;
 
@@ -11,7 +11,7 @@ $height-destacados: 400px;
     }
 
     .imagen-item {
-        min-height: $height-destacados;
+        height: $height-destacados;
         background-repeat: no-repeat;
         background-position: right center;
         background-size: contain;
@@ -24,8 +24,9 @@ $height-destacados: 400px;
     }
 
     .contenido-item {
-        min-height: $height-destacados;
+        height: $height-destacados;
         display: table;
+        vertical-align: middle !important;
         div {
             display: table-cell;
             vertical-align: middle;
@@ -37,6 +38,10 @@ $height-destacados: 400px;
         display: block !important;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    p, li, strong, label {
+        color: $blanco;
     }
 
     h1, h2, h3, h4, h5, h6 {

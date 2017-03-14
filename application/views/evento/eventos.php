@@ -2,7 +2,7 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center header">
+<div class="text-center titulo">
 
 	<h1><?= $titulo ?></h1>
 
@@ -22,7 +22,7 @@
 
 		<?php foreach ($eventos as $evento): ?>
 
-			<div class="row evento">
+			<div class="row contenido-pagina">
 
 				<div class="col-md-3">
 
@@ -86,17 +86,17 @@
 
 					</div>
 
-					<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">Ver</a>
+					<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-						<a href="<?= base_url("evento/modificar_evento/" . $evento->id) ?>">Modificar</a>
+						<a href="<?= base_url("evento/modificar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
 
 					<?php endif; ?>
 
 					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-						<a href="<?= base_url("evento/eliminar_evento/" . $evento->id) ?>">Eliminar</a>
+						<a href="<?= base_url("evento/eliminar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
 
 					<?php endif; ?>
 
@@ -138,7 +138,7 @@
 
 	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-		<a href="<?= base_url("evento/registrar_evento") ?>">Registrar evento</a>
+		<a href="<?= base_url("evento/registrar_evento") ?>" class="btn btn-default btn-resiliencia">Registrar evento</a>
 
 	<?php endif; ?>
 

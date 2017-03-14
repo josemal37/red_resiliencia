@@ -2,12 +2,6 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<header id="header" class="header text-center">
-
-	<h1><?= $titulo ?></h1>
-
-</header>
-
 <?php
 $datos = array();
 if (isset($articulos)) {
@@ -27,9 +21,9 @@ if (isset($eventos)) {
 }
 ?>
 
-<?php $this->load->view("base/menu", $datos); ?>
+<header id="header" class="header text-center">
 
-<div>
+	<h1><?= $titulo ?></h1>
 
 	<?php if ((isset($eventos_proximos) && $eventos_proximos) || (isset($articulos_recientes) && $articulos_recientes) || (isset($publicaciones_recientes) && $publicaciones_recientes)): ?>
 
@@ -117,23 +111,23 @@ if (isset($eventos)) {
 
 										<?php if ($evento->ciudad || $evento->pais): ?>
 
-											<p><label>Lugar:</label> <?php if ($evento->ciudad): ?><?= $evento->ciudad->nombre ?>, <?php endif; ?><?php if ($evento->pais): ?><?= $evento->pais->nombre ?><?php endif; ?></p>
+											<p class="text-left"><label>Lugar:</label> <?php if ($evento->ciudad): ?><?= $evento->ciudad->nombre ?>, <?php endif; ?><?php if ($evento->pais): ?><?= $evento->pais->nombre ?><?php endif; ?></p>
 
 										<?php endif; ?>
 
 										<?php if ($evento->fecha_inicio || $evento->fecha_fin): ?>
 
-											<p><?php if ($evento->fecha_inicio): ?><label>Inicio:</label> <?= $evento->fecha_inicio ?> <?php endif; ?><?php if ($evento->fecha_fin): ?><label>Fin:</label> <?= $evento->fecha_fin ?><?php endif; ?></p>
+											<p class="text-left"><?php if ($evento->fecha_inicio): ?><label>Inicio:</label> <?= $evento->fecha_inicio ?> <?php endif; ?><?php if ($evento->fecha_fin): ?><label>Fin:</label> <?= $evento->fecha_fin ?><?php endif; ?></p>
 
 										<?php endif; ?>
 
 										<?php if ($evento->instituciones): ?>
 
-											<p><label>Instituciónes:</label> <?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
+											<p class="text-left"><label>Instituciónes:</label> <?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
 
 										<?php endif; ?>
 
-										<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-primary pull-right">Ver evento</a>
+										<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-primary btn-resiliencia pull-right">Ver evento</a>
 
 									</div>
 
@@ -181,15 +175,15 @@ if (isset($eventos)) {
 
 											</div>
 
-											<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">Ver más...</a>
-
 										<?php endif; ?>
 
 										<?php if ($articulo->autores): ?>
 
-											<p><label>Autores:</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
+											<p class="text-left"><label>Autores:</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
 
 										<?php endif; ?>
+
+										<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>"  class="btn btn-primary btn-resiliencia pull-right">Ver artículo</a>
 
 									</div>
 
@@ -237,21 +231,21 @@ if (isset($eventos)) {
 
 											</div>
 
-											<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">Ver más...</a>
-
 										<?php endif; ?>
 
 										<?php if ($publicacion->autores): ?>
 
-											<p><label>Autores:</label> <?= listar_array_de_stdclass($publicacion->autores, "nombre", ", ") ?></p>
+											<p class="text-left"><label>Autores:</label> <?= listar_array_de_stdclass($publicacion->autores, "nombre", ", ") ?></p>
 
 										<?php endif; ?>
 
 										<?php if ($publicacion->instituciones): ?>
 
-											<p><label>Instituciones:</label> <?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
+											<p class="text-left"><label>Instituciones:</label> <?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
 
 										<?php endif; ?>
+
+										<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>" class="btn btn-primary btn-resiliencia pull-right">Ver publicación</a>
 
 									</div>
 
@@ -285,40 +279,52 @@ if (isset($eventos)) {
 
 	<?php endif; ?>
 
-</div>
+</header>
+
+<?php $this->load->view("base/menu", $datos); ?>
 
 <?php if (isset($articulos)): ?>
 
 	<!-- Articulos -->
-	<section id="articulos" class="container seccion">
+	<section id="articulos" class="seccion">
 
-		<h2>Artículos</h2>
+		<div class="titulo">
+
+			<h1>Artículos</h1>
+
+		</div>
 
 		<?php if ($articulos): ?>
 
-			<?php foreach ($articulos as $articulo): ?>
+			<div class="row recientes">
 
-				<div class="row articulo">
+				<?php foreach ($articulos as $articulo): ?>
 
-					<div class="col-md-2">
+					<div class="item col-md-3 col-sm-6 text-center">
 
-						<img src="<?= base_url($path_articulos . $articulo->imagen) ?>" class="img-responsive">
+						<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>">
+
+							<div class="img-contenido" style="background: url('<?= base_url($path_articulos . $articulo->imagen) ?>');">
+
+								<div class="contenido"></div>
+
+							</div>
+
+							<label><?= $articulo->nombre ?></label>
+
+						</a>
 
 					</div>
 
-					<div class="col-md-10">
+				<?php endforeach; ?>
 
-						<h4><?= $articulo->nombre ?></h4>
+			</div>
 
-						<p class="text-justify"><?= $articulo->descripcion ?></p>
+			<div>
 
-					</div>
+				<a href="<?= base_url("articulo/articulos") ?>" class="btn btn-primary btn-ver-todo pull-right">Ver todos los artículos</a>
 
-				</div>
-
-			<?php endforeach; ?>
-
-			<a href="<?= base_url("articulo/articulos") ?>" class="btn btn-primary pull-right">Ver todos los artículos</a>
+			</div>
 
 		<?php else: ?>
 
@@ -330,36 +336,38 @@ if (isset($eventos)) {
 
 <?php endif; ?>
 
+<div class="entre-seccion parallax-1"></div>
+
 <?php if (isset($publicaciones)): ?>
 
 	<!-- Publicaciones -->
-	<section id="publicaciones" class="container seccion">
+	<section id="publicaciones" class="seccion">
 
-		<h2>Publicaciones</h2>
+		<div class="titulo">
+
+			<h1>Publicaciones</h1>
+
+		</div>
 
 		<?php if ($publicaciones): ?>
 
-			<div class="row">
+			<div class="row recientes">
 
 				<?php foreach ($publicaciones as $publicacion): ?>
 
-					<div class="col-md-4">
+					<div class="item col-md-3 col-sm-6 text-center">
 
-						<div class="text-center publicacion">
+						<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
 
-							<?php if ($publicacion->imagen != ""): ?>
+							<div style="background-image: url('<?= base_url($path_publicaciones . $publicacion->imagen) ?>')" class="img-contenido">
 
-								<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>">
+								<div class="contenido"></div>
 
-									<div style="background-image: url('<?= base_url($path_publicaciones . $publicacion->imagen) ?>')" class="img"></div>
-
-								</a>
-
-							<?php endif; ?>
+							</div>
 
 							<label><?= $publicacion->nombre ?></label>
 
-						</div>
+						</a>
 
 					</div>
 
@@ -371,7 +379,7 @@ if (isset($eventos)) {
 
 			<div>
 
-				<a href="<?= base_url("publicacion/publicaciones") ?>" class="btn btn-primary pull-right">Ver todas las publicaciones</a>
+				<a href="<?= base_url("publicacion/publicaciones") ?>" class="btn btn-primary btn-ver-todo pull-right">Ver todas las publicaciones</a>
 
 			</div>
 
@@ -385,36 +393,38 @@ if (isset($eventos)) {
 
 <?php endif; ?>
 
+<div class="entre-seccion parallax-2"></div>
+
 <?php if (isset($eventos)): ?>
 
 	<!-- Eventos -->
-	<section id="eventos" class="container seccion">
+	<section id="eventos" class="seccion">
 
-		<h2>Eventos</h2>
+		<div class="titulo">
+
+			<h1>Eventos</h1>
+
+		</div>
 
 		<?php if ($eventos): ?>
 
-			<div class="row">
+			<div class="row recientes">
 
 				<?php foreach ($eventos as $evento): ?>
 
-					<div class="col-md-4">
+					<div class="item col-md-3 col-sm-6 text-center">
 
-						<div class="text-center publicacion">
+						<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
 
-							<?php if ($evento->imagen != ""): ?>
+							<div style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>')" class="img-contenido">
 
-								<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
+								<div class="contenido"></div>
 
-									<div style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>')" class="img"></div>
+							</div>
 
-								</a>
+						</a>
 
-							<?php endif; ?>
-
-							<label><?= $evento->nombre ?></label>
-
-						</div>
+						<label><?= $evento->nombre ?></label>
 
 					</div>
 
@@ -426,7 +436,7 @@ if (isset($eventos)) {
 
 			<div>
 
-				<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary pull-right">Ver todos los eventos</a>
+				<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary btn-ver-todo pull-right">Ver todos los eventos</a>
 
 			</div>
 
@@ -439,6 +449,8 @@ if (isset($eventos)) {
 	</section>
 
 <?php endif; ?>
+
+<div class="entre-seccion parallax-3"></div>
 
 <script type="text/javascript">
 	$(document).ready(function() {

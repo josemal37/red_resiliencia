@@ -2,7 +2,7 @@
 
 <nav>
 
-	<nav id="menu" class="navbar navbar-default">
+	<nav id="menu" class="navbar navbar-default navbar-fixed-top">
 
 		<div class="container-fluid">
 
@@ -130,30 +130,3 @@
 	</nav>
 
 </nav>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		//minima altura permitida
-		if ($("body").height() < 800) {
-			$("body").height(800);
-		}
-
-		var menu = $('#menu');
-		var origOffsetY = menu.offset().top;
-
-		function scroll() {
-			if ($(window).scrollTop() >= origOffsetY) {
-				$('#menu').addClass('navbar-fixed-top');
-
-			} else {
-				$('#menu').removeClass('navbar-fixed-top');
-			}
-		}
-
-		window.onscroll = function(e) {
-			scroll();
-		}
-
-	});
-</script>

@@ -2,7 +2,7 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center header">
+<div class="text-center titulo">
 
 	<h1><?= $titulo ?></h1>
 

@@ -1,17 +1,14 @@
 // VARIABLES GLOBALES
 $blanco: #FFF;
 $negro: #111;
-$granito: #E5DAD5;
-$pizarra: #565656;
-$vino-tinto: #743340;
-$bronce: #BFA07D;
+$naranja: #F39402;
+$azul: #0E71B4;
+$verde: #98C10F;
+$amarillo: #FDED01;
 
-$color-0: $negro;
-$color-1: $blanco;
-$color-2: $granito;
-$color-3: $vino-tinto;
-$color-4: $pizarra;
-$color-5: $bronce;
+$opacity: 0.5;
+
+$negro-transparente: rgba($negro, $opacity);
 
 $fuente-titulo: "Sansita", sans-serif;
 $fuente-texto: "Lato", sans-serif;
@@ -20,12 +17,15 @@ $border-radius-pequenio: 5px;
 $border-radius-grande: 10px;
 
 $border-delgado: 1px;
-$border-grueso:3px;
+$border-grueso: 3px;
 
-$color-texto: $color-0;
+$color-texto: $negro;
 
 html, body {
+    width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
     font-family: $fuente-texto;
 }
 
@@ -44,4 +44,40 @@ h1, h2, h3, h4, h5, h6, p, label, li {
 
 .img-center {
     margin: 0 auto;
+}
+
+.btn-primary.btn-resiliencia {
+    background-color: $amarillo;
+    color: $negro;
+
+    border-top: 2px solid $negro;
+    border-bottom: 2px solid $negro;
+    border-left: 2px solid $negro;
+    border-right: 2px solid $negro;
+
+    border-radius: 5px 5px 5px 5px;
+
+    &:hover, &:active {
+        background-color: $naranja;
+        -webkit-transition: background-color .5s;
+        transition: background-color .5s;
+    }
+}
+
+.btn-default.btn-resiliencia {
+    background-color: $blanco;
+    color: $negro;
+
+    border-top: 2px solid #888888;
+    border-bottom: 2px solid #888888;
+    border-left: 2px solid #888888;
+    border-right: 2px solid #888888;
+
+    border-radius: 5px 5px 5px 5px;
+
+    &:hover, &:active {
+        background-color: #D5D5D5;
+        -webkit-transition: background-color .5s;
+        transition: background-color .5s;
+    }
 }
