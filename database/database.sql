@@ -1,302 +1,425 @@
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     17/02/2017 10:25:34                          */
+/* DBMS name:      MySQL 5.0 modificado                         */
+/* Created on:     09/03/2017 09:02:07                          */
 /*==============================================================*/
 
 /*==============================================================*/
-/* Table: ARTICULO                                              */
+/* Table: articulo                                              */
 /*==============================================================*/
-create table ARTICULO
+create table `articulo`
 (
-   ID_ARTICULO          int not null auto_increment,
-   NOMBRE_ARTICULO      varchar(1024) not null,
-   DESCRIPCION_ARTICULO text,
-   URL_ARTICULO         varchar(1024) not null,
-   IMAGEN_ARTICULO      varchar(1024),
-   DESTACADO_ARTICULO   bool,
-   FECHA_ARTICULO       date,
-   primary key (ID_ARTICULO)
-);
+   `id_articulo` int not null auto_increment,
+   `nombre_articulo` varchar(1024) not null,
+   `descripcion_articulo` text,
+   `url_articulo` varchar(1024) not null,
+   `imagen_articulo` varchar(1024),
+   `destacado_articulo` bool,
+   `fecha_articulo` date,
+   primary key (`id_articulo`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: AUTOR                                                 */
+/* Table: autor                                                 */
 /*==============================================================*/
-create table AUTOR
+create table `autor`
 (
-   ID_AUTOR             int not null auto_increment,
-   NOMBRE_AUTOR         varchar(1024) not null,
-   APELLIDO_PATERNO_AUTOR varchar(1024),
-   APELLIDO_MATERNO_AUTOR varchar(1024),
-   primary key (ID_AUTOR)
-);
+   `id_autor` int not null auto_increment,
+   `nombre_autor` varchar(1024) not null,
+   `apellido_paterno_autor` varchar(1024),
+   `apellido_materno_autor` varchar(1024),
+   primary key (`id_autor`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: AUTOR_ARTICULO                                        */
+/* Table: autor_articulo                                        */
 /*==============================================================*/
-create table AUTOR_ARTICULO
+create table `autor_articulo`
 (
-   ID_ARTICULO          int not null,
-   ID_AUTOR             int not null,
-   primary key (ID_ARTICULO, ID_AUTOR)
-);
+   `id_articulo` int not null,
+   `id_autor` int not null,
+   primary key (`id_articulo`, `id_autor`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: AUTOR_PUBLICACION                                     */
+/* Table: autor_publicacion                                     */
 /*==============================================================*/
-create table AUTOR_PUBLICACION
+create table `autor_publicacion`
 (
-   ID_PUBLICACION       int not null,
-   ID_AUTOR             int not null,
-   primary key (ID_PUBLICACION, ID_AUTOR)
-);
+   `id_publicacion` int not null,
+   `id_autor` int not null,
+   primary key (`id_publicacion`, `id_autor`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: CATEGORIA                                             */
+/* Table: categoria                                             */
 /*==============================================================*/
-create table CATEGORIA
+create table `categoria`
 (
-   ID_CATEGORIA         int not null auto_increment,
-   NOMBRE_CATEGORIA     varchar(1024) not null,
-   primary key (ID_CATEGORIA)
-);
+   `id_categoria` int not null auto_increment,
+   `nombre_categoria` varchar(1024) not null,
+   primary key (`id_categoria`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: CATEGORIA_ARTICULO                                    */
+/* Table: categoria_articulo                                    */
 /*==============================================================*/
-create table CATEGORIA_ARTICULO
+create table `categoria_articulo`
 (
-   ID_ARTICULO          int not null,
-   ID_CATEGORIA         int not null,
-   primary key (ID_ARTICULO, ID_CATEGORIA)
-);
+   `id_articulo` int not null,
+   `id_categoria` int not null,
+   primary key (`id_articulo`, `id_categoria`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: CATEGORIA_EVENTO                                      */
+/* Table: categoria_evento                                      */
 /*==============================================================*/
-create table CATEGORIA_EVENTO
+create table `categoria_evento`
 (
-   ID_EVENTO            int not null,
-   ID_CATEGORIA         int not null,
-   primary key (ID_EVENTO, ID_CATEGORIA)
-);
+   `id_evento` int not null,
+   `id_categoria` int not null,
+   primary key (`id_evento`, `id_categoria`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: CATEGORIA_PUBLICACION                                 */
+/* Table: categoria_publicacion                                 */
 /*==============================================================*/
-create table CATEGORIA_PUBLICACION
+create table `categoria_publicacion`
 (
-   ID_PUBLICACION       int not null,
-   ID_CATEGORIA         int not null,
-   primary key (ID_PUBLICACION, ID_CATEGORIA)
-);
+   `id_publicacion` int not null,
+   `id_categoria` int not null,
+   primary key (`id_publicacion`, `id_categoria`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: CIUDAD                                                */
+/* Table: ciudad                                                */
 /*==============================================================*/
-create table CIUDAD
+create table `ciudad`
 (
-   ID_CIUDAD            int not null auto_increment,
-   ID_PAIS              int,
-   NOMBRE_CIUDAD        varchar(1024) not null,
-   primary key (ID_CIUDAD)
-);
+   `id_ciudad` int not null auto_increment,
+   `id_pais` int,
+   `nombre_ciudad` varchar(1024) not null,
+   primary key (`id_ciudad`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: EVENTO                                                */
+/* Table: evento                                                */
 /*==============================================================*/
-create table EVENTO
+create table `evento`
 (
-   ID_EVENTO            int not null auto_increment,
-   ID_CIUDAD            int,
-   NOMBRE_EVENTO        varchar(1024) not null,
-   DESCRIPCION_EVENTO   varchar(1024),
-   FECHA_INICIO_EVENTO  date not null,
-   FECHA_FIN_EVENTO     date not null,
-   DIRECCION_EVENTO     varchar(1024) not null,
-   IMAGEN_EVENTO        varchar(1024),
-   DESTACADO_EVENTO     bool,
-   primary key (ID_EVENTO)
-);
+   `id_evento` int not null auto_increment,
+   `id_ciudad` int,
+   `nombre_evento` varchar(1024) not null,
+   `descripcion_evento` varchar(1024),
+   `fecha_inicio_evento` date not null,
+   `fecha_fin_evento` date not null,
+   `direccion_evento` varchar(1024) not null,
+   `imagen_evento` varchar(1024),
+   `destacado_evento` bool,
+   primary key (`id_evento`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: INSTITUCION                                           */
+/* Table: institucion                                           */
 /*==============================================================*/
-create table INSTITUCION
+create table `institucion`
 (
-   ID_INSTITUCION       int not null auto_increment,
-   NOMBRE_INSTITUCION   varchar(1024) not null,
-   SIGLA_INSTITUCION    varchar(1024),
-   primary key (ID_INSTITUCION)
-);
+   `id_institucion` int not null auto_increment,
+   `nombre_institucion` varchar(1024) not null,
+   `sigla_institucion` varchar(1024),
+   primary key (`id_institucion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: INSTITUCION_ARTICULO                                  */
+/* Table: institucion_articulo                                  */
 /*==============================================================*/
-create table INSTITUCION_ARTICULO
+create table `institucion_articulo`
 (
-   ID_ARTICULO          int not null,
-   ID_INSTITUCION       int not null,
-   primary key (ID_ARTICULO, ID_INSTITUCION)
-);
+   `id_articulo` int not null,
+   `id_institucion` int not null,
+   primary key (`id_articulo`, `id_institucion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: INSTITUCION_AUTOR                                     */
+/* Table: institucion_autor                                     */
 /*==============================================================*/
-create table INSTITUCION_AUTOR
+create table `institucion_autor`
 (
-   ID_AUTOR             int not null,
-   ID_INSTITUCION       int not null,
-   primary key (ID_AUTOR, ID_INSTITUCION)
-);
+   `id_autor` int not null,
+   `id_institucion` int not null,
+   primary key (`id_autor`, `id_institucion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: INSTITUCION_EVENTO                                    */
+/* Table: institucion_evento                                    */
 /*==============================================================*/
-create table INSTITUCION_EVENTO
+create table `institucion_evento`
 (
-   ID_EVENTO            int not null,
-   ID_INSTITUCION       int not null,
-   primary key (ID_EVENTO, ID_INSTITUCION)
-);
+   `id_evento` int not null,
+   `id_institucion` int not null,
+   primary key (`id_evento`, `id_institucion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: INSTITUCION_PUBLICACION                               */
+/* Table: institucion_publicacion                               */
 /*==============================================================*/
-create table INSTITUCION_PUBLICACION
+create table `institucion_publicacion`
 (
-   ID_PUBLICACION       int not null,
-   ID_INSTITUCION       int not null,
-   primary key (ID_PUBLICACION, ID_INSTITUCION)
-);
+   `id_publicacion` int not null,
+   `id_institucion` int not null,
+   primary key (`id_publicacion`, `id_institucion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: MODULO                                                */
+/* Table: modulo                                                */
 /*==============================================================*/
-create table MODULO
+create table `modulo`
 (
-   ID_MODULO            int not null auto_increment,
-   ID_PUBLICACION       int not null,
-   NOMBRE_MODULO        varchar(1024),
-   primary key (ID_MODULO)
-);
+   `id_modulo` int not null auto_increment,
+   `id_publicacion` int not null,
+   `nombre_modulo` varchar(1024),
+   primary key (`id_modulo`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: PAIS                                                  */
+/* Table: pais                                                  */
 /*==============================================================*/
-create table PAIS
+create table `pais`
 (
-   ID_PAIS              int not null auto_increment,
-   NOMBRE_PAIS          varchar(1024) not null,
-   primary key (ID_PAIS)
-);
+   `id_pais` int not null auto_increment,
+   `nombre_pais` varchar(1024) not null,
+   primary key (`id_pais`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: PUBLICACION                                           */
+/* Table: publicacion                                           */
 /*==============================================================*/
-create table PUBLICACION
+create table `publicacion`
 (
-   ID_PUBLICACION       int not null auto_increment,
-   NOMBRE_PUBLICACION   varchar(1024) not null,
-   DESCRIPCION_PUBLICACION text,
-   URL_PUBLICACION      varchar(1024),
-   IMAGEN_PUBLICACION   varchar(1024),
-   DESTACADA_PUBLICACION bool,
-   FECHA_PUBLICACION    date,
-   primary key (ID_PUBLICACION)
-);
+   `id_publicacion` int not null auto_increment,
+   `nombre_publicacion` varchar(1024) not null,
+   `descripcion_publicacion` text,
+   `url_publicacion` varchar(1024),
+   `imagen_publicacion` varchar(1024),
+   `destacada_publicacion` bool,
+   `fecha_publicacion` date,
+   primary key (`id_publicacion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: ROL                                                   */
+/* Table: rol                                                   */
 /*==============================================================*/
-create table ROL
+create table `rol`
 (
-   ID_ROL               int not null auto_increment,
-   NOMBRE_ROL           varchar(1024),
-   primary key (ID_ROL)
-);
+   `id_rol` int not null auto_increment,
+   `nombre_rol` varchar(1024),
+   primary key (`id_rol`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
 /*==============================================================*/
-/* Table: USUARIO                                               */
+/* Table: usuario                                               */
 /*==============================================================*/
-create table USUARIO
+create table `usuario`
 (
-   ID_USUARIO           int not null auto_increment,
-   ID_INSTITUCION       int,
-   ID_ROL               int not null,
-   NOMBRE_USUARIO       varchar(1024),
-   APELLIDO_PATERNO_USUARIO varchar(1024),
-   APELLIDO_MATERNO_USUARIO varchar(1024),
-   LOGIN_USUARIO        varchar(1024),
-   PASSWORD_USUARIO     varchar(1024),
-   primary key (ID_USUARIO)
-);
+   `id_usuario` int not null auto_increment,
+   `id_institucion` int,
+   `id_rol` int not null,
+   `nombre_usuario` varchar(1024),
+   `apellido_paterno_usuario` varchar(1024),
+   `apellido_materno_usuario` varchar(1024),
+   `login_usuario` varchar(1024),
+   `password_usuario` varchar(1024),
+   primary key (`id_usuario`)
+)
 
-alter table AUTOR_ARTICULO add constraint FK_AUTOR_ARTICULO foreign key (ID_ARTICULO)
-      references ARTICULO (ID_ARTICULO) on delete cascade on update cascade;
 
-alter table AUTOR_ARTICULO add constraint FK_AUTOR_ARTICULO2 foreign key (ID_AUTOR)
-      references AUTOR (ID_AUTOR) on delete cascade on update cascade;
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
 
-alter table AUTOR_PUBLICACION add constraint FK_AUTOR_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
+alter table `autor_articulo` add constraint `fk_autor_articulo` foreign key (`id_articulo`)
+      references `articulo` (`id_articulo`) on delete restrict on update restrict;
 
-alter table AUTOR_PUBLICACION add constraint FK_AUTOR_PUBLICACION2 foreign key (ID_AUTOR)
-      references AUTOR (ID_AUTOR) on delete cascade on update cascade;
+alter table `autor_articulo` add constraint `fk_autor_articulo2` foreign key (`id_autor`)
+      references `autor` (`id_autor`) on delete restrict on update restrict;
 
-alter table CATEGORIA_ARTICULO add constraint FK_CATEGORIA_ARTICULO foreign key (ID_ARTICULO)
-      references ARTICULO (ID_ARTICULO) on delete cascade on update cascade;
+alter table `autor_publicacion` add constraint `fk_autor_publicacion` foreign key (`id_publicacion`)
+      references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
 
-alter table CATEGORIA_ARTICULO add constraint FK_CATEGORIA_ARTICULO2 foreign key (ID_CATEGORIA)
-      references CATEGORIA (ID_CATEGORIA) on delete cascade on update cascade;
+alter table `autor_publicacion` add constraint `fk_autor_publicacion2` foreign key (`id_autor`)
+      references `autor` (`id_autor`) on delete restrict on update restrict;
 
-alter table CATEGORIA_EVENTO add constraint FK_CATEGORIA_EVENTO foreign key (ID_EVENTO)
-      references EVENTO (ID_EVENTO) on delete cascade on update cascade;
+alter table `categoria_articulo` add constraint `fk_categoria_articulo` foreign key (`id_articulo`)
+      references `articulo` (`id_articulo`) on delete restrict on update restrict;
 
-alter table CATEGORIA_EVENTO add constraint FK_CATEGORIA_EVENTO2 foreign key (ID_CATEGORIA)
-      references CATEGORIA (ID_CATEGORIA) on delete cascade on update cascade;
+alter table `categoria_articulo` add constraint `fk_categoria_articulo2` foreign key (`id_categoria`)
+      references `categoria` (`id_categoria`) on delete restrict on update restrict;
 
-alter table CATEGORIA_PUBLICACION add constraint FK_CATEGORIA_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
+alter table `categoria_evento` add constraint `fk_categoria_evento` foreign key (`id_evento`)
+      references `evento` (`id_evento`) on delete restrict on update restrict;
 
-alter table CATEGORIA_PUBLICACION add constraint FK_CATEGORIA_PUBLICACION2 foreign key (ID_CATEGORIA)
-      references CATEGORIA (ID_CATEGORIA) on delete cascade on update cascade;
+alter table `categoria_evento` add constraint `fk_categoria_evento2` foreign key (`id_categoria`)
+      references `categoria` (`id_categoria`) on delete restrict on update restrict;
 
-alter table CIUDAD add constraint FK_PAIS_CIUDAD foreign key (ID_PAIS)
-      references PAIS (ID_PAIS) on delete restrict on update restrict;
+alter table `categoria_publicacion` add constraint `fk_categoria_publicacion` foreign key (`id_publicacion`)
+      references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
 
-alter table EVENTO add constraint FK_CIUDAD_EVENTO foreign key (ID_CIUDAD)
-      references CIUDAD (ID_CIUDAD) on delete restrict on update restrict;
+alter table `categoria_publicacion` add constraint `fk_categoria_publicacion2` foreign key (`id_categoria`)
+      references `categoria` (`id_categoria`) on delete restrict on update restrict;
 
-alter table INSTITUCION_ARTICULO add constraint FK_INSTITUCION_ARTICULO foreign key (ID_ARTICULO)
-      references ARTICULO (ID_ARTICULO) on delete cascade on update cascade;
+alter table `ciudad` add constraint `fk_pais_ciudad` foreign key (`id_pais`)
+      references `pais` (`id_pais`) on delete restrict on update restrict;
 
-alter table INSTITUCION_ARTICULO add constraint FK_INSTITUCION_ARTICULO2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
+alter table `evento` add constraint `fk_ciudad_evento` foreign key (`id_ciudad`)
+      references `ciudad` (`id_ciudad`) on delete restrict on update restrict;
 
-alter table INSTITUCION_AUTOR add constraint FK_INSTITUCION_AUTOR foreign key (ID_AUTOR)
-      references AUTOR (ID_AUTOR) on delete cascade on update cascade;
+alter table `institucion_articulo` add constraint `fk_institucion_articulo` foreign key (`id_articulo`)
+      references `articulo` (`id_articulo`) on delete restrict on update restrict;
 
-alter table INSTITUCION_AUTOR add constraint FK_INSTITUCION_AUTOR2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
+alter table `institucion_articulo` add constraint `fk_institucion_articulo2` foreign key (`id_institucion`)
+      references `institucion` (`id_institucion`) on delete restrict on update restrict;
 
-alter table INSTITUCION_EVENTO add constraint FK_INSTITUCION_EVENTO foreign key (ID_EVENTO)
-      references EVENTO (ID_EVENTO) on delete cascade on update cascade;
+alter table `institucion_autor` add constraint `fk_institucion_autor` foreign key (`id_autor`)
+      references `autor` (`id_autor`) on delete restrict on update restrict;
 
-alter table INSTITUCION_EVENTO add constraint FK_INSTITUCION_EVENTO2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
+alter table `institucion_autor` add constraint `fk_institucion_autor2` foreign key (`id_institucion`)
+      references `institucion` (`id_institucion`) on delete restrict on update restrict;
 
-alter table INSTITUCION_PUBLICACION add constraint FK_INSTITUCION_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
+alter table `institucion_evento` add constraint `fk_institucion_evento` foreign key (`id_evento`)
+      references `evento` (`id_evento`) on delete restrict on update restrict;
 
-alter table INSTITUCION_PUBLICACION add constraint FK_INSTITUCION_PUBLICACION2 foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete cascade on update cascade;
+alter table `institucion_evento` add constraint `fk_institucion_evento2` foreign key (`id_institucion`)
+      references `institucion` (`id_institucion`) on delete restrict on update restrict;
 
-alter table MODULO add constraint FK_MODULO_PUBLICACION foreign key (ID_PUBLICACION)
-      references PUBLICACION (ID_PUBLICACION) on delete cascade on update cascade;
+alter table `institucion_publicacion` add constraint `fk_institucion_publicacion` foreign key (`id_publicacion`)
+      references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
 
-alter table USUARIO add constraint FK_ROL_USUARIO foreign key (ID_ROL)
-      references ROL (ID_ROL) on delete restrict on update restrict;
+alter table `institucion_publicacion` add constraint `fk_institucion_publicacion2` foreign key (`id_institucion`)
+      references `institucion` (`id_institucion`) on delete restrict on update restrict;
 
-alter table USUARIO add constraint FK_USUARIO_INSTITUCION foreign key (ID_INSTITUCION)
-      references INSTITUCION (ID_INSTITUCION) on delete restrict on update restrict;
+alter table `modulo` add constraint `fk_modulo_publicacion` foreign key (`id_publicacion`)
+      references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
 
+alter table `usuario` add constraint `fk_rol_usuario` foreign key (`id_rol`)
+      references `rol` (`id_rol`) on delete restrict on update restrict;
+
+alter table `usuario` add constraint `fk_usuario_institucion` foreign key (`id_institucion`)
+      references `institucion` (`id_institucion`) on delete restrict on update restrict;
+
+/*==============================================================*/
+/* Datos                                                        */
+/*==============================================================*/
+
+INSERT INTO `pais` (`id_pais`, `nombre_pais`) VALUES
+(1, 'Bolivia');
+
+INSERT INTO `ciudad` (`id_ciudad`, `id_pais`, `nombre_ciudad`) VALUES
+(1, 1, 'Chuquisaca'),
+(2, 1, 'Cochabamba'),
+(3, 1, 'Beni'),
+(4, 1, 'La Paz'),
+(5, 1, 'Oruro'),
+(6, 1, 'Pando'),
+(7, 1, 'Potosí'),
+(8, 1, 'Santa Cruz'),
+(9, 1, 'Tarija');
+
+INSERT INTO `rol` (`id_rol`, `nombre_rol`) VALUES (1, 'administrador'), (2, 'usuario');
+
+INSERT INTO `institucion` (`id_institucion`, `nombre_institucion`, `sigla_institucion`) VALUES (1, 'Fundación Atica', 'ATICA');
+
+INSERT INTO `usuario` (`id_usuario`, `id_institucion`, `id_rol`, `nombre_usuario`, `login_usuario`, `password_usuario`) VALUES (1, 1, 1, 'admin', 'admin', SHA1('admin'));
