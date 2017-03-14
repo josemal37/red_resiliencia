@@ -328,7 +328,11 @@ if (isset($eventos)) {
 
 		<?php else: ?>
 
-			<p>Sin artículos.</p>
+			<div class="container">
+
+				<p>Sin artículos.</p>
+
+			</div>
 
 		<?php endif; ?>
 
@@ -385,7 +389,11 @@ if (isset($eventos)) {
 
 		<?php else: ?>
 
-			<p>Sin publicaciones.</p>
+			<div class="container">
+
+				<p>Sin publicaciones.</p>
+
+			</div>
 
 		<?php endif; ?>
 
@@ -442,7 +450,11 @@ if (isset($eventos)) {
 
 		<?php else: ?>
 
-			<p>Sin eventos.</p>
+			<div class="container">
+
+				<p>Sin eventos.</p>
+
+			</div>
 
 		<?php endif; ?>
 
