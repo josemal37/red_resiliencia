@@ -215,7 +215,7 @@ class Evento extends CI_Controller {
 						$datos["path_eventos"] = $this->imagen->get_path_valido("evento");
 						$datos["paises"] = $this->Modelo_pais->select_paises();
 						if ($datos["paises"]) {
-							$datos["ciudades"] = $this->Modelo_ciudad->select_ciudades($datos["paises"][0]->id);
+							$datos["ciudades"] = $this->Modelo_ciudad->select_ciudades($datos["evento"]->pais->id);
 						} else {
 							$datos["ciudades"] = FALSE;
 						}
