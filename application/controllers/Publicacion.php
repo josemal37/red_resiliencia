@@ -92,7 +92,7 @@ class Publicacion extends CI_Controller {
 			if ($datos["publicacion"]) {
 				$datos["titulo"] = $datos["publicacion"]->nombre;
 				$datos["path_publicacion"] = $this->imagen->get_path_valido("publicacion");
-				
+
 				$this->load->view("publicacion/publicacion", $datos);
 			} else {
 				redirect(base_url("publicacion/publicaciones"));
@@ -125,7 +125,7 @@ class Publicacion extends CI_Controller {
 				} else {
 					$datos["institucion_usuario"] = FALSE;
 				}
-				
+
 				$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "modulos[]", "imagen"));
 
 				$this->load->view("publicacion/formulario_publicacion", $datos);
@@ -242,7 +242,7 @@ class Publicacion extends CI_Controller {
 						} else {
 							$datos["institucion_usuario"] = FALSE;
 						}
-						
+
 						$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "modulos[]"));
 
 						$this->load->view("publicacion/formulario_publicacion", $datos);
@@ -379,6 +379,52 @@ class Publicacion extends CI_Controller {
 		} else {
 			redirect(base_url());
 		}
+	}
+
+	public function busqueda_avanzada() {
+		$datos = array();
+
+		$datos["titulo"] = "Busqueda avanzada";
+		$datos["fuente"] = "publicacion";
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["autores"] = $this->Modelo_autor->select_autores();
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+		if (isset($_POST["submit"])) {
+			$con_categorias = $this->input->post("con_categorias") == "on" ? TRUE : FALSE;
+			$categorias = $con_categorias ? $this->input->post("id_categoria") : FALSE;
+			$con_autor = $this->input->post("con_autor") == "on" ? TRUE : FALSE;
+			$id_autor = $con_autor ? $this->input->post("id_autor") : FALSE;
+			$con_institucion = $this->input->post("con_institucion") == "on" ? TRUE : FALSE;
+			$id_institucion = $con_institucion ? $this->input->post("id_institucion") : FALSE;
+
+			$datos["id_autor"] = $id_autor;
+			$datos["id_institucion"] = $id_institucion;
+
+			if ($categorias) {
+				$datos["categorias_seleccionadas"] = $datos["categorias"];
+				$ids_categorias = array();
+				foreach ($categorias as $categoria) {
+					$obj_categoria = new stdClass();
+					$obj_categoria->id = $categoria;
+					$ids_categorias[] = $obj_categoria;
+				}
+				eliminar_elementos_array($datos["categorias"], $ids_categorias, "id");
+				eliminar_elementos_array($datos["categorias_seleccionadas"], $datos["categorias"], "id");
+			} else {
+				$datos["categorias_seleccionadas"] = FALSE;
+			}
+
+			$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones_con_filtro($categorias, $id_autor, $id_institucion);
+			$datos["submit"] = TRUE;
+
+			$datos["path_publicaciones"] = $this->imagen->get_path_valido("publicacion");
+		} else {
+			$datos["publicaciones"] = FALSE;
+			$datos["submit"] = FALSE;
+		}
+
+		$this->load->view("base/busqueda_avanzada", $datos);
 	}
 
 }

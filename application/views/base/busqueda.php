@@ -2,15 +2,19 @@
 
 <?php
 $url = "";
+$avanzada = "";
 switch ($fuente) {
 	case "publicacion":
 		$url = base_url("publicacion/publicaciones");
+		$avanzada = base_url("publicacion/busqueda_avanzada");
 		break;
 	case "evento":
 		$url = base_url("evento/eventos");
+		$avanzada = base_url("evento/busqueda_avanzada");
 		break;
 	case "articulo":
 		$url = base_url("articulo/articulos");
+		$avanzada = base_url("evento/busqueda_avanzada");
 		break;
 }
 ?>
@@ -38,6 +42,8 @@ switch ($fuente) {
 	</div>
 
 </form>
+
+<a href="<?= $avanzada ?>" class="pull-right">Busqueda avanzada</a>
 
 <?php if ($criterio): ?>
 

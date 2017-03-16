@@ -81,3 +81,11 @@ h1, h2, h3, h4, h5, h6, p, label, li {
         transition: background-color .5s;
     }
 }
+
+.btn-redondo {
+    border-radius: 50%;
+    &:hover, &:active, &:focus {
+        border-radius: 50%;
+        outline: 0;
+    }
+}

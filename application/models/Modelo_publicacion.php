@@ -120,6 +120,69 @@ class Modelo_publicacion extends My_model {
 		return $publicaciones;
 	}
 
+	public function select_publicaciones_con_filtro($id_categorias, $id_autor, $id_institucion) {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+
+		if ($id_autor) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_TABLA_ASOC_AUTOR, $id_autor);
+		}
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
+
+		if ($id_categorias) {
+			$this->db->where(
+					"NOT EXISTS (
+						SELECT
+						categoria.id_categoria
+						FROM
+						categoria
+						WHERE
+						categoria.id_categoria IN (" . implode(", ", $id_categorias) . ") AND
+						NOT EXISTS (
+							SELECT
+							categoria_publicacion.id_categoria, categoria_publicacion.id_publicacion
+							FROM
+							categoria_publicacion
+							WHERE
+							publicacion.id_publicacion = categoria_publicacion.id_publicacion AND
+							categoria.id_categoria = categoria_publicacion.id_categoria
+						)
+					)"
+			, NULL, FALSE);
+		}
+
+		$query = $this->db->get();
+
+		$publicaciones = $this->return_result($query);
+
+		if ($publicaciones) {
+			$i = 0;
+
+			foreach ($publicaciones as $publicacion) {
+				$categorias = $this->Modelo_categoria->select_categoria_por_id($publicacion->id, self::NOMBRE_TABLA);
+				$publicaciones[$i]->categorias = $categorias;
+
+				$instituciones = $this->Modelo_institucion->select_institucion_por_id($publicacion->id, self::NOMBRE_TABLA);
+				$publicaciones[$i]->instituciones = $instituciones;
+
+				$autores = $this->Modelo_autor->select_autor_por_id($publicacion->id, self::NOMBRE_TABLA);
+				$publicaciones[$i]->autores = $autores;
+
+				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
+				$publicaciones[$i]->modulos = $modulos;
+
+				$i += 1;
+			}
+		}
+
+		return $publicaciones;
+	}
+
 	public function select_publicacion_por_id($id = FALSE, $id_institucion = FALSE) {
 		if ($id) {
 			$this->db->select(self::COLUMNAS_SELECT);
