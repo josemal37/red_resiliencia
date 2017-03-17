@@ -85,6 +85,68 @@ class Modelo_articulo extends My_model {
 				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
 			}
 		}
+		
+		$this->db->distinct();
+
+		$query = $this->db->get();
+
+		$articulos = $this->return_result($query);
+
+		if ($articulos) {
+			$i = 0;
+
+			foreach ($articulos as $articulo) {
+				$categorias = $this->Modelo_categoria->select_categoria_por_id($articulo->id, self::NOMBRE_TABLA);
+				$articulos[$i]->categorias = $categorias;
+
+				$instituciones = $this->Modelo_institucion->select_institucion_por_id($articulo->id, self::NOMBRE_TABLA);
+				$articulos[$i]->instituciones = $instituciones;
+
+				$autores = $this->Modelo_autor->select_autor_por_id($articulo->id, self::NOMBRE_TABLA);
+				$articulos[$i]->autores = $autores;
+
+				$i += 1;
+			}
+		}
+
+		return $articulos;
+	}
+
+	public function select_articulos_con_filtro($id_categorias, $id_autor, $id_institucion) {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+
+		if ($id_autor) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_TABLA_ASOC_AUTOR, $id_autor);
+		}
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
+
+		if ($id_categorias) {
+			$this->db->where(
+					"NOT EXISTS (
+						SELECT
+						" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . "
+						FROM
+						" . Modelo_categoria::NOMBRE_TABLA . "
+						WHERE
+						" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " IN (" . implode(", ", $id_categorias) . ") AND
+						NOT EXISTS (
+							SELECT
+							" . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_TABLA_ASOC_CATEGORIA . ", " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL . "
+							FROM
+							" . self::NOMBRE_TABLA_ASOC_CATEGORIA . "
+							WHERE
+							" . self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL . " AND
+							" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL . "
+						)
+					)"
+			, NULL, FALSE);
+		}
 
 		$query = $this->db->get();
 

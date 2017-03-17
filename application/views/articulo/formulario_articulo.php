@@ -81,7 +81,7 @@ switch ($accion) {
 
 			<label>Contenido</label>
 
-			<textarea id="contenido" name="contenido" required><?php if ($accion == "modificar"): ?><?php $this->load->ext_view("articulos", $articulo->url) ?><?php endif; ?></textarea>
+			<textarea id="contenido" name="contenido"><?php if ($accion == "modificar"): ?><?php $this->load->ext_view("articulos", $articulo->url) ?><?php endif; ?></textarea>
 
 			<?php if ($accion == "modificar"): ?>
 

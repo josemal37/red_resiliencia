@@ -14,7 +14,7 @@ switch ($fuente) {
 		break;
 	case "articulo":
 		$url = base_url("articulo/articulos");
-		$avanzada = base_url("evento/busqueda_avanzada");
+		$avanzada = base_url("articulo/busqueda_avanzada");
 		break;
 }
 ?>

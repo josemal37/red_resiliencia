@@ -113,8 +113,8 @@ class Articulo extends CI_Controller {
 				} else {
 					$datos["institucion_usuario"] = FALSE;
 				}
-				
-				$datos["reglas_validacion"] = $this->articulo_validacion->get_reglas_cliente(array("nombre", "descripcion", "imagen", "contenido"));
+
+				$datos["reglas_validacion"] = $this->articulo_validacion->get_reglas_cliente(array("nombre", "descripcion", "imagen"));
 
 				$this->load->view("articulo/formulario_articulo", $datos);
 			}
@@ -240,8 +240,8 @@ class Articulo extends CI_Controller {
 						eliminar_elementos_array($datos["categorias"], $datos["articulo"]->categorias, "id");
 						eliminar_elementos_array($datos["instituciones"], $datos["articulo"]->instituciones, "id");
 
-						$datos["reglas_validacion"] = $this->articulo_validacion->get_reglas_cliente(array("nombre", "descripcion", "contenido"));
-						
+						$datos["reglas_validacion"] = $this->articulo_validacion->get_reglas_cliente(array("nombre", "descripcion"));
+
 						$this->load->view("articulo/formulario_articulo", $datos);
 					} else {
 						$this->session->set_flashdata("error", "El articulo seleccionado no existe.");
@@ -345,6 +345,52 @@ class Articulo extends CI_Controller {
 		} else {
 			redirect(base_url());
 		}
+	}
+
+	public function busqueda_avanzada() {
+		$datos = array();
+
+		$datos["titulo"] = "Busqueda avanzada";
+		$datos["fuente"] = "articulo";
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["autores"] = $this->Modelo_autor->select_autores();
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+		if (isset($_POST["submit"])) {
+			$con_categorias = $this->input->post("con_categorias") == "on" ? TRUE : FALSE;
+			$categorias = $con_categorias ? $this->input->post("id_categoria") : FALSE;
+			$con_autor = $this->input->post("con_autor") == "on" ? TRUE : FALSE;
+			$id_autor = $con_autor ? $this->input->post("id_autor") : FALSE;
+			$con_institucion = $this->input->post("con_institucion") == "on" ? TRUE : FALSE;
+			$id_institucion = $con_institucion ? $this->input->post("id_institucion") : FALSE;
+
+			$datos["id_autor"] = $id_autor;
+			$datos["id_institucion"] = $id_institucion;
+
+			if ($categorias) {
+				$datos["categorias_seleccionadas"] = $datos["categorias"];
+				$ids_categorias = array();
+				foreach ($categorias as $categoria) {
+					$obj_categoria = new stdClass();
+					$obj_categoria->id = $categoria;
+					$ids_categorias[] = $obj_categoria;
+				}
+				eliminar_elementos_array($datos["categorias"], $ids_categorias, "id");
+				eliminar_elementos_array($datos["categorias_seleccionadas"], $datos["categorias"], "id");
+			} else {
+				$datos["categorias_seleccionadas"] = FALSE;
+			}
+
+			$datos["articulos"] = $this->Modelo_articulo->select_articulos_con_filtro($categorias, $id_autor, $id_institucion);
+			$datos["submit"] = TRUE;
+
+			$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
+		} else {
+			$datos["articulos"] = FALSE;
+			$datos["submit"] = FALSE;
+		}
+
+		$this->load->view("base/busqueda_avanzada", $datos);
 	}
 
 }

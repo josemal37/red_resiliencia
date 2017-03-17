@@ -10,13 +10,27 @@
 
 <?php $this->load->view("base/menu"); ?>
 
+<?php
+switch ($fuente) {
+	case "publicacion":
+		$url = base_url("publicacion/busqueda_avanzada");
+		break;
+	case "articulo":
+		$url = base_url("articulo/busqueda_avanzada");
+		break;
+	case "evento":
+		$url = base_url("evento/busqueda_avanzada");
+		break;
+}
+?>
+
 <div class="container">
 
 	<button id="activar_busqueda" class="btn btn-default btn-lg btn-redondo"><span class="glyphicon glyphicon-search"></span></button>
 
 	<div id="div_busqueda" <?php if ($submit): ?>style="display: none;"<?php endif; ?>>
 
-		<form id="form-busqueda" action="<?= base_url("publicacion/busqueda_avanzada") ?>" method="post">
+		<form id="form-busqueda" action="<?= $url ?>" method="post">
 
 			<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "evento"): ?>
 
@@ -26,11 +40,11 @@
 
 					<div class="checkbox">
 
-						<label><input type="checkbox" id="con_categorias" name="con_categorias" <?php if (!$submit):?>checked<?php elseif ($categorias_seleccionadas):?>checked<?php endif;?>>Filtrar por categorías</label>
+						<label><input type="checkbox" id="con_categorias" name="con_categorias" <?php if (!$submit): ?>checked<?php elseif ($categorias_seleccionadas): ?>checked<?php endif; ?>>Filtrar por categorías</label>
 
 					</div>
 
-					<div id="div_categorias" class="form-group" <?php if ($submit && !$categorias_seleccionadas):?>style="display: none;"<?php endif;?>>
+					<div id="div_categorias" class="form-group" <?php if ($submit && !$categorias_seleccionadas): ?>style="display: none;"<?php endif; ?>>
 
 						<div class="row">
 
@@ -104,11 +118,11 @@
 
 					<div class="checkbox">
 
-						<label><input type="checkbox" id="con_autor" name="con_autor" <?php if (!$submit):?>checked<?php elseif ($id_autor):?>checked<?php endif;?>>Filtrar por autor</label>
+						<label><input type="checkbox" id="con_autor" name="con_autor" <?php if (!$submit): ?>checked<?php elseif ($id_autor): ?>checked<?php endif; ?>>Filtrar por autor</label>
 
 					</div>
 
-					<div id="div_autor" class="form-group" <?php if ($submit && !$id_autor):?>style="display: none;"<?php endif;?>>
+					<div id="div_autor" class="form-group" <?php if ($submit && !$id_autor): ?>style="display: none;"<?php endif; ?>>
 
 						<select id="id_autor" name="id_autor" class="form-control">
 
@@ -144,11 +158,11 @@
 
 					<div class="checkbox">
 
-						<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if (!$submit):?>checked<?php elseif ($id_institucion):?>checked<?php endif;?>>Filtrar por institución</label>
+						<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if (!$submit): ?>checked<?php elseif ($id_institucion): ?>checked<?php endif; ?>>Filtrar por institución</label>
 
 					</div>
 
-					<div id="div_institucion" class="form-group" <?php if ($submit && !$id_institucion):?>style="display: none;"<?php endif;?>>
+					<div id="div_institucion" class="form-group" <?php if ($submit && !$id_institucion): ?>style="display: none;"<?php endif; ?>>
 
 						<select id="id_institucion" name="id_institucion" class="form-control">
 
@@ -156,7 +170,7 @@
 
 								<?php foreach ($instituciones as $institucion): ?>
 
-									<option value="<?= $institucion->id ?>" <?php if ($submit && $institucion->id = $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+									<option value="<?= $institucion->id ?>" <?php if ($submit && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
 
 								<?php endforeach; ?>
 
@@ -334,6 +348,120 @@
 
 		<?php endif; ?>
 
+		<?php if ($fuente == "articulo"): ?>
+
+			<h4>Artículos relacionados</h4>
+
+			<?php if ($articulos): ?>
+
+				<?php foreach ($articulos as $articulo): ?>
+
+					<div class="row contenido-pagina">
+
+						<div class="col-md-3">
+
+							<img src="<?= base_url($path_articulos . $articulo->imagen) ?>" class="img-responsive">
+
+						</div>
+
+						<div class="col-md-9">
+
+							<h4><?= $articulo->nombre ?></h4>
+
+							<p class="text-justify"><?= $articulo->descripcion ?></p>
+
+							<div class="row">
+
+								<?php if ($articulo->autores): ?>
+
+									<div class="col-md-4">
+
+										<h4>Autores</h4>
+
+										<ul>
+
+											<?php foreach ($articulo->autores as $autor): ?>
+
+												<li><?= $autor->nombre_completo ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									</div>
+
+								<?php endif; ?>
+
+								<?php if ($articulo->categorias): ?>
+
+									<div class="col-md-4">
+
+										<h4>Categorias</h4>
+
+										<ul>
+
+											<?php foreach ($articulo->categorias as $categoria): ?>
+
+												<li><?= $categoria->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									</div>
+
+								<?php endif; ?>
+
+								<?php if ($articulo->instituciones): ?>
+
+									<div class="col-md-4">
+
+										<h4>Instituciones</h4>
+
+										<ul>
+
+											<?php foreach ($articulo->instituciones as $institucion): ?>
+
+												<li><?= $institucion->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									</div>
+
+								<?php endif; ?>
+
+							</div>
+
+							<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
+
+							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+								<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+
+								<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+
+							<?php endif; ?>
+
+						</div>
+
+					</div>
+
+				<?php endforeach; ?>
+
+			<?php else: ?>
+
+				<div class="contenido">
+
+					<p>No se registraron articulos.</p>
+
+				</div>
+
+			<?php endif; ?>
+
+		<?php endif; ?>
+
 	</div>
 
 <?php endif; ?>
@@ -426,7 +554,7 @@
 	;
 
 	$("#form-busqueda").submit(function() {
-		$("option").each(function() {
+		$("#id_categoria > option").each(function() {
 			$(this).prop("selected", "selected");
 		});
 	});
