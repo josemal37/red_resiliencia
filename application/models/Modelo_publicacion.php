@@ -138,19 +138,19 @@ class Modelo_publicacion extends My_model {
 			$this->db->where(
 					"NOT EXISTS (
 						SELECT
-						categoria.id_categoria
+						" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . "
 						FROM
-						categoria
+						" . Modelo_categoria::NOMBRE_TABLA . "
 						WHERE
-						categoria.id_categoria IN (" . implode(", ", $id_categorias) . ") AND
+						" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " IN (" . implode(", ", $id_categorias) . ") AND
 						NOT EXISTS (
 							SELECT
-							categoria_publicacion.id_categoria, categoria_publicacion.id_publicacion
+							" . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_TABLA_ASOC_CATEGORIA . ", " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL . "
 							FROM
-							categoria_publicacion
+							" . self::NOMBRE_TABLA_ASOC_CATEGORIA . "
 							WHERE
-							publicacion.id_publicacion = categoria_publicacion.id_publicacion AND
-							categoria.id_categoria = categoria_publicacion.id_categoria
+							" . self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL . " AND
+							" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL . "
 						)
 					)"
 			, NULL, FALSE);
