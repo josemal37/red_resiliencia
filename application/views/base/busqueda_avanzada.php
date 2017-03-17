@@ -34,17 +34,15 @@ switch ($fuente) {
 
 			<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "evento"): ?>
 
-				<?php if (isset($categorias) || isset($publicacion->categorias)): ?>
-
-					<label>Categoria(s)</label>
+				<?php if (isset($categorias)): ?>
 
 					<div class="checkbox">
 
-						<label><input type="checkbox" id="con_categorias" name="con_categorias" <?php if (!$submit): ?>checked<?php elseif ($categorias_seleccionadas): ?>checked<?php endif; ?>>Filtrar por categorías</label>
+						<label><input type="checkbox" id="con_categorias" name="con_categorias" <?php if ($submit && (isset($categorias_seleccionadas) && $categorias_seleccionadas)): ?>checked<?php endif; ?>>Filtrar por categorías</label>
 
 					</div>
 
-					<div id="div_categorias" class="form-group" <?php if ($submit && !$categorias_seleccionadas): ?>style="display: none;"<?php endif; ?>>
+					<div id="div_categorias" class="form-group" <?php if (!$submit || (isset($categorias_seleccionadas) && !$categorias_seleccionadas)): ?>style="display: none;"<?php endif; ?>>
 
 						<div class="row">
 
@@ -54,7 +52,7 @@ switch ($fuente) {
 
 								<select id="categorias" class="form-control" multiple>
 
-									<?php if ($categorias): ?>
+									<?php if (isset($categorias) && $categorias): ?>
 
 										<?php foreach ($categorias as $categoria): ?>
 
@@ -82,7 +80,7 @@ switch ($fuente) {
 
 								<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
 
-									<?php if ($categorias_seleccionadas): ?>
+									<?php if (isset($categorias_seleccionadas) && $categorias_seleccionadas): ?>
 
 										<?php foreach ($categorias_seleccionadas as $categoria): ?>
 
@@ -114,15 +112,13 @@ switch ($fuente) {
 
 				<?php if (isset($autores) && $autores): ?>
 
-					<label>Autor</label>
-
 					<div class="checkbox">
 
-						<label><input type="checkbox" id="con_autor" name="con_autor" <?php if (!$submit): ?>checked<?php elseif ($id_autor): ?>checked<?php endif; ?>>Filtrar por autor</label>
+						<label><input type="checkbox" id="con_autor" name="con_autor" <?php if ($submit && (isset($id_autor) && $id_autor)): ?>checked<?php endif; ?>>Filtrar por autor</label>
 
 					</div>
 
-					<div id="div_autor" class="form-group" <?php if ($submit && !$id_autor): ?>style="display: none;"<?php endif; ?>>
+					<div id="div_autor" class="form-group" <?php if (!$submit || (isset($id_autor) && !$id_autor)): ?>style="display: none;"<?php endif; ?>>
 
 						<select id="id_autor" name="id_autor" class="form-control">
 
@@ -130,7 +126,7 @@ switch ($fuente) {
 
 								<?php foreach ($autores as $autor): ?>
 
-									<option value="<?= $autor->id ?>" <?php if ($submit && $autor->id = $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
+									<option value="<?= $autor->id ?>" <?php if ($submit && isset($id_autor) && $autor->id = $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
 
 								<?php endforeach; ?>
 
@@ -154,15 +150,13 @@ switch ($fuente) {
 
 				<?php if (isset($instituciones) && $instituciones): ?>
 
-					<label>Institución</label>
-
 					<div class="checkbox">
 
-						<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if (!$submit): ?>checked<?php elseif ($id_institucion): ?>checked<?php endif; ?>>Filtrar por institución</label>
+						<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if ($submit && (isset($id_institucion) && $id_institucion)): ?>checked<?php endif; ?>>Filtrar por institución</label>
 
 					</div>
 
-					<div id="div_institucion" class="form-group" <?php if ($submit && !$id_institucion): ?>style="display: none;"<?php endif; ?>>
+					<div id="div_institucion" class="form-group" <?php if (!$submit || (isset($id_institucion) && !$id_institucion)): ?>style="display: none;"<?php endif; ?>>
 
 						<select id="id_institucion" name="id_institucion" class="form-control">
 
@@ -170,7 +164,7 @@ switch ($fuente) {
 
 								<?php foreach ($instituciones as $institucion): ?>
 
-									<option value="<?= $institucion->id ?>" <?php if ($submit && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+									<option value="<?= $institucion->id ?>" <?php if ($submit && isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
 
 								<?php endforeach; ?>
 
@@ -187,6 +181,92 @@ switch ($fuente) {
 					<p>No se registraron instituciones.</p>
 
 				<?php endif; ?>
+
+			<?php endif; ?>
+
+			<?php if ($fuente == "evento"): ?>
+
+				<div class="checkbox">
+
+					<label><input type="checkbox" id="con_fecha" name="con_fecha" <?php if ($submit && isset($id_fecha) && $id_fecha): ?>checked<?php endif; ?>>Filtrar por fecha</label>
+
+				</div>
+
+				<div id="div_fecha" <?php if (!$submit || (isset($id_fecha) && !$id_fecha)): ?>style="display: none;"<?php endif; ?>>
+
+					<div class="radio">
+
+						<label><input type="radio" name="fecha" value="proximos" <?php if (!$submit || (isset($id_fecha) && ($id_fecha == "proximos" || !$id_fecha))):?>checked<?php endif;?>>Sólo eventos próximos</label>
+
+					</div>
+
+					<div class="radio">
+
+						<label><input type="radio" name="fecha" value="todos" <?php if ($submit && isset($id_fecha) && $id_fecha == "todos"):?>checked<?php endif; ?>>Todos los eventos</label>
+
+					</div>
+
+				</div>
+
+			<?php endif; ?>
+
+			<?php if ($fuente == "evento"): ?>
+
+				<div class="checkbox">
+
+					<label><input type="checkbox" id="con_pais" name="con_pais" <?php if ($submit && isset($id_pais) && $id_pais): ?>checked<?php endif; ?>>Filtrar por país</label>
+
+				</div>
+
+				<div id="div_pais" <?php if (!$submit || (isset($id_pais) && !$id_pais)): ?>style="display: none;"<?php endif; ?>>
+
+					<div class="form-group">
+
+						<select id="pais" name="pais" class="form-control">
+
+							<?php if ($paises): ?>
+
+								<?php foreach ($paises as $pais): ?>
+
+									<option value="<?= $pais->id ?>" <?php if ($submit && isset($id_pais) && $pais->id == $id_pais): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
+
+								<?php endforeach; ?>
+
+							<?php endif; ?>
+
+						</select>
+
+						<?= form_error("pais") ?>
+
+					</div>
+
+					<div class="checkbox">
+
+						<label><input type="checkbox" id="con_ciudad" name="con_ciudad" <?php if ($submit && isset($id_ciudad) && $id_ciudad): ?>checked<?php endif; ?>>Filtrar por ciudad</label>
+
+					</div>
+
+					<div id="div_ciudad" class="form-group" <?php if (!$submit || (isset($id_ciudad) && !$id_ciudad)): ?>style="display: none;"<?php endif; ?>>
+
+						<select id="ciudad" name="ciudad" class="form-control">
+
+							<?php if ($ciudades): ?>
+
+								<?php foreach ($ciudades as $ciudad): ?>
+
+									<option value="<?= $ciudad->id ?>" <?php if ($submit && isset($id_ciudad) && $ciudad->id == $id_ciudad): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
+
+								<?php endforeach; ?>
+
+							<?php endif; ?>
+
+						</select>
+
+						<?= form_error("pais") ?>
+
+					</div>
+
+				</div>
 
 			<?php endif; ?>
 
@@ -462,6 +542,108 @@ switch ($fuente) {
 
 		<?php endif; ?>
 
+		<?php if ($fuente == "evento"): ?>
+
+			<?php if ($eventos): ?>
+
+				<?php foreach ($eventos as $evento): ?>
+
+					<div class="row contenido-pagina">
+
+						<div class="col-md-3">
+
+							<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive img-center">
+
+						</div>
+
+						<div class="col-md-9">
+
+							<h4><?= $evento->nombre ?></h4>
+
+							<p class="text-justify"><?= $evento->descripcion ?></p>
+
+							<p><label>Fecha de inicio:</label> <?= $evento->fecha_inicio ?></p>
+
+							<p><label>Fecha de fin:</label> <?= $evento->fecha_fin ?></p>
+
+							<p><label>Lugar:</label> <?= $evento->direccion . ", " . $evento->ciudad->nombre . ", " . $evento->pais->nombre ?></p>
+
+							<div class="row">
+
+								<?php if ($evento->instituciones): ?>
+
+									<div class="col-md-6">
+
+										<h4>Instituciones</h4>
+
+										<ul>
+
+											<?php foreach ($evento->instituciones as $institucion): ?>
+
+												<li><?= $institucion->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									</div>
+
+								<?php endif; ?>
+
+								<?php if ($evento->categorias): ?>
+
+									<div class="col-md-6">
+
+										<h4>Categorias</h4>
+
+										<ul>
+
+											<?php foreach ($evento->categorias as $categoria): ?>
+
+												<li><?= $categoria->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									</div>
+
+								<?php endif; ?>
+
+							</div>
+
+							<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
+
+							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+								<a href="<?= base_url("evento/modificar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+
+							<?php endif; ?>
+
+							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+								<a href="<?= base_url("evento/eliminar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+
+							<?php endif; ?>
+
+						</div>
+
+					</div>
+
+				<?php endforeach; ?>
+
+			<?php else: ?>
+
+				<div class="contenido">
+
+					<p>No se registraron eventos.</p>
+
+				</div>
+
+			<?php endif; ?>
+
+		<?php endif; ?>
+
 	</div>
 
 <?php endif; ?>
@@ -582,11 +764,57 @@ switch ($fuente) {
 			$("#div_institucion").hide(300);
 		}
 	});
+	$("#con_fecha").click(function() {
+		if ($(this).prop("checked") == true) {
+			$("#div_fecha").show(300);
+		} else {
+			$("#div_fecha").hide(300);
+		}
+	});
+
+	$("#con_pais").click(function() {
+		if ($(this).prop("checked") == true) {
+			$("#div_pais").show(300);
+		} else {
+			$("#div_pais").hide(300);
+		}
+	});
+
+	$("#con_ciudad").click(function() {
+		if ($(this).prop("checked") == true) {
+			$("#div_ciudad").show(300);
+		} else {
+			$("#div_ciudad").hide(300);
+		}
+	});
 
 	$("#activar_busqueda").click(function(event) {
 		event.preventDefault();
 		$("#div_busqueda").toggle(500);
 	});
+
+	$("#pais").on("change", function() {
+		var id_pais = $(this).find("option:selected").prop("value");
+		$.ajax({
+			url: "<?= base_url("evento/get_ciudades_ajax") ?>",
+			method: "POST",
+			data: {
+				id_pais: id_pais
+			}, dataType: "json"}).done(function(response) {
+			actualizar_ciudades(response);
+		});
+	});
+
+	function actualizar_ciudades(ciudades) {
+		var opciones = Array();
+		for (var i = 0; i < ciudades.length; i++) {
+			var ciudad = ciudades[i];
+			var opcion = $("<option/>").prop("value", ciudad.id).html(ciudad.nombre);
+			opciones.push(opcion);
+		}
+		$("#ciudad").find("option").remove();
+		$("#ciudad").append(opciones);
+	}
 </script>
 
 <?php $this->load->view("base/footer"); ?>

@@ -233,7 +233,7 @@ class Evento extends CI_Controller {
 						} else {
 							$datos["institucion_usuario"] = FALSE;
 						}
-						
+
 						$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion"));
 
 						$this->load->view("evento/formulario_evento", $datos);
@@ -354,6 +354,65 @@ class Evento extends CI_Controller {
 		} else {
 			echo("false");
 		}
+	}
+
+	public function busqueda_avanzada() {
+		$datos = array();
+
+		$datos["titulo"] = "Busqueda avanzada";
+		$datos["fuente"] = "evento";
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["paises"] = $this->Modelo_pais->select_paises();
+		if ($datos["paises"]) {
+			$datos["ciudades"] = $this->Modelo_ciudad->select_ciudades($datos["paises"][0]->id);
+		} else {
+			$datos["ciudades"] = FALSE;
+		}
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+		if (isset($_POST["submit"])) {
+
+			$con_categorias = $this->input->post("con_categorias") == "on" ? TRUE : FALSE;
+			$categorias = $con_categorias ? $this->input->post("id_categoria") : FALSE;
+			$con_institucion = $this->input->post("con_institucion") == "on" ? TRUE : FALSE;
+			$id_institucion = $con_institucion ? $this->input->post("id_institucion") : FALSE;
+			$con_pais = $this->input->post("con_pais") == "on" ? TRUE : FALSE;
+			$id_pais = $con_pais ? $this->input->post("pais") : FALSE;
+			$con_ciudad = $con_pais && $this->input->post("con_ciudad") == "on" ? TRUE : FALSE;
+			$id_ciudad = $con_ciudad ? $this->input->post("ciudad") : FALSE;
+			$con_fecha = $this->input->post("con_fecha") == "on" ? TRUE : FALSE;
+			$id_fecha = $con_fecha ? $this->input->post("fecha") : FALSE;
+
+			$datos["id_institucion"] = $id_institucion;
+			$datos["id_pais"] = $id_pais;
+			$datos["id_ciudad"] = $id_ciudad;
+			$datos["id_fecha"] = $id_fecha;
+			$datos["ciudades"] = $this->Modelo_ciudad->select_ciudades($id_pais);
+
+			if ($categorias) {
+				$datos["categorias_seleccionadas"] = $datos["categorias"];
+				$ids_categorias = array();
+				foreach ($categorias as $categoria) {
+					$obj_categoria = new stdClass();
+					$obj_categoria->id = $categoria;
+					$ids_categorias[] = $obj_categoria;
+				}
+				eliminar_elementos_array($datos["categorias"], $ids_categorias, "id");
+				eliminar_elementos_array($datos["categorias_seleccionadas"], $datos["categorias"], "id");
+			} else {
+				$datos["categorias_seleccionadas"] = FALSE;
+			}
+
+			$datos["eventos"] = $this->Modelo_evento->select_eventos_con_filtro($categorias, $id_institucion, $id_pais, $id_ciudad, $id_fecha);
+			$datos["submit"] = TRUE;
+
+			$datos["path_evento"] = $this->imagen->get_path_valido("evento");
+		} else {
+			$datos["articulos"] = FALSE;
+			$datos["submit"] = FALSE;
+		}
+
+		$this->load->view("base/busqueda_avanzada", $datos);
 	}
 
 }

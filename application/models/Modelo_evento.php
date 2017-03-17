@@ -86,7 +86,7 @@ class Modelo_evento extends My_model {
 				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
 			}
 		}
-		
+
 		$this->db->distinct();
 
 		$query = $this->db->get();
@@ -121,6 +121,77 @@ class Modelo_evento extends My_model {
 		if ($cantidad) {
 			$this->db->limit($cantidad);
 		}
+
+		$query = $this->db->get();
+
+		$eventos = $this->return_result($query);
+
+		if ($eventos) {
+			$i = 0;
+			foreach ($eventos as $evento) {
+				$ciudad = $this->Modelo_ciudad->select_ciudad($evento->id_ciudad);
+				if ($ciudad) {
+					$pais = $this->Modelo_pais->select_pais($ciudad->id_pais);
+				}
+				$eventos[$i]->ciudad = $ciudad;
+				$eventos[$i]->pais = $pais;
+				$eventos[$i]->instituciones = $this->Modelo_institucion->select_institucion_por_id($evento->id, "evento");
+				$eventos[$i]->categorias = $this->Modelo_categoria->select_categoria_por_id($evento->id, "evento");
+
+				$i += 1;
+			}
+		}
+
+		return $eventos;
+	}
+
+	public function select_eventos_con_filtro($id_categorias, $id_institucion, $id_pais, $id_ciudad, $fecha) {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
+
+		if ($id_ciudad) {
+			$this->db->join(Modelo_ciudad::NOMBRE_TABLA, self::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL, "left");
+			$this->db->where(Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL, $id_ciudad);
+		} else {
+			if ($id_pais) {
+				$this->db->join(Modelo_ciudad::NOMBRE_TABLA, self::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL, "left");
+				$this->db->join(Modelo_pais::NOMBRE_TABLA, Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, "left");
+				$this->db->where(Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, $id_pais);
+			}
+		}
+		
+		if ($fecha == "proximos") {
+			$this->db->where(self::FECHA_INICIO_COL . " > NOW()");
+		}
+
+		if ($id_categorias) {
+			$this->db->where(
+					"NOT EXISTS (
+						SELECT
+						" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . "
+						FROM
+						" . Modelo_categoria::NOMBRE_TABLA . "
+						WHERE
+						" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " IN (" . implode(", ", $id_categorias) . ") AND
+						NOT EXISTS (
+							SELECT
+							" . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_TABLA_ASOC_CATEGORIA . ", " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL . "
+							FROM
+							" . self::NOMBRE_TABLA_ASOC_CATEGORIA . "
+							WHERE
+							" . self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL . " AND
+							" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL . "
+						)
+					)"
+					, NULL, FALSE);
+		}
+		
+		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO_COL, "ASC");
 
 		$query = $this->db->get();
 
