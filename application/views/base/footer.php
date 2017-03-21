@@ -6,21 +6,25 @@
 	});
 </script>
 
-<div class="social">
+<div class="footer">
 
-	<a href="<?= base_url("feed/rss") ?>">
+	<div class="social">
 
-		<img src="<?= base_url("assets/red_resiliencia/img/rss.png") ?>" class="img-responsive pull-right">
+		<a href="<?= base_url("feed/rss") ?>">
 
-	</a>
+			<img src="<?= base_url("assets/red_resiliencia/img/rss.png") ?>" class="img-responsive pull-right">
 
-</div>
+		</a>
 
-<div class="container text-center footer">
+	</div>
 
-	<hr class="small">
+	<div class="container text-center">
 
-	<p>Copyright &copy; Fundación ATICA 2017</p>
+		<hr class="small">
+
+		<p>Copyright &copy; Fundación ATICA 2017</p>
+
+	</div>
 
 </div>
 

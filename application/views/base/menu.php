@@ -113,6 +113,8 @@
 
 								<li class="navbar-text"><p><?= $this->session->userdata("nombre_institucion") ?></p></li>
 
+								<li><a href="<?= base_url("usuario/modificar_password/" . $this->session->userdata("id_usuario")) ?>">Cambiar password</a></li>
+								
 								<li><a href="<?= base_url("login/cerrar_sesion") ?>">Cerrar sesión</a></li>
 
 							</ul>

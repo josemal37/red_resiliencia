@@ -60,7 +60,7 @@ class Usuario extends CI_Controller {
 				$datos["roles"] = $this->Modelo_rol->select_roles();
 
 				$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "institucion", "rol", "login", "password", "confirmacion"));
-				
+
 				$this->load->view("usuario/formulario_usuario", $datos);
 			}
 		} else {
@@ -104,7 +104,7 @@ class Usuario extends CI_Controller {
 					$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 					if ($datos["usuario"]) {
 						$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno", "institucion", "rol", "login"));
-						
+
 						$this->load->view("usuario/formulario_usuario", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "El usuario seleccionado no existe.");
@@ -149,12 +149,12 @@ class Usuario extends CI_Controller {
 				} else {
 					$datos = array();
 					$datos["titulo"] = "Modificar usuario";
-					$datos["accion"] = "modificar_password";
+					$datos["accion"] = "modificar_password_usuario";
 					$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 
 					if ($datos["usuario"]) {
 						$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("password", "confirmacion"));
-						
+
 						$this->load->view("usuario/formulario_usuario", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "El usuario seleccionado no existe.");
@@ -182,6 +182,59 @@ class Usuario extends CI_Controller {
 		} else {
 			unset($_POST["submit"]);
 			$this->modificar_password_usuario($id);
+		}
+	}
+
+	public function modificar_password($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador" || $rol == "usuario") {
+			if ($id) {
+				if (isset($_POST["submit"])) {
+					$this->modificar_password_bd();
+				} else {
+					$datos = array();
+					$datos["titulo"] = "Modificar password";
+					$datos["accion"] = "modificar_password";
+					$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
+
+					if ($datos["usuario"]) {
+						$datos["reglas_validacion"] = $this->usuario_validacion->get_reglas_cliente(array("password", "confirmacion", "password_anterior"));
+
+						$this->load->view("usuario/formulario_usuario", $datos);
+					} else {
+						redirect(base_url(), "refresh");
+					}
+				}
+			} else {
+				redirect(base_url(), "refresh");
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function modificar_password_bd() {
+		$id = $this->input->post("id");
+		$password = $this->input->post("password");
+		$password_anterior = $this->input->post("password_anterior");
+		if ($this->usuario_validacion->validar(array("id", "password", "confirmacion", "password_anterior"))) {
+			$usuario = $id == $this->session->userdata("id_usuario") ? $this->Modelo_usuario->select_usuario_por_id($id) : FALSE;
+			
+			if ($usuario && $usuario->password == sha1($password_anterior)) {
+				if ($this->Modelo_usuario->update_password_usuario($id, $password)) {
+					redirect(base_url());
+				} else {
+					$this->session->set_flashdata("error", "Ocurrió un error al modificar el password.");
+					redirect(base_url("usuario/modificar_password/" . $id), "refresh");
+				}
+			} else {
+				$this->session->set_flashdata("error", "El password anterior no coincide.");
+				redirect(base_url("usuario/modificar_password/" . $id), "refresh");
+			}
+		} else {
+			unset($_POST["submit"]);
+			$this->modificar_password($id);
 		}
 	}
 

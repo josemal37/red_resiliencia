@@ -52,12 +52,13 @@ class Login extends CI_Controller {
 		if (isset($_POST["submit"]) && isset($_POST["token"]) && $this->input->post("token") == $this->session->userdata("token")) {
 			if ($this->login_validacion->validar(array("login", "password"))) {
 				$login = $this->input->post("login");
-				$password = sha1($this->input->post("password"));
+				$password = $this->input->post("password");
 
 				$usuario = $this->Modelo_usuario->select_usuario_por_login_password($login, $password);
 
 				if ($usuario) {
 					$datos = array(
+						"id_usuario" => $usuario->id,
 						"nombre_completo" => $usuario->nombre_completo,
 						"rol" => $usuario->nombre_rol,
 						"id_institucion" => $usuario->id_institucion,

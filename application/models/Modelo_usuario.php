@@ -193,7 +193,7 @@ class Modelo_usuario extends My_model {
 					`usuario`.`id_institucion` = `institucion`.`id_institucion`
 				WHERE 
 					BINARY `login_usuario` = ? AND 
-					BINARY `password_usuario` = ?";
+					BINARY `password_usuario` = SHA1(?)";
 
 			$query = $this->db->query($sql, array($login, $password));
 

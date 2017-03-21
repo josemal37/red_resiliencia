@@ -20,9 +20,11 @@
 		case "modificar":
 			$url = base_url("usuario/" . $accion . "_usuario/" . $usuario->id);
 			break;
-		case "modificar_password":
-			$url = base_url("usuario/" . $accion . "_usuario/" . $usuario->id);
+		case "modificar_password_usuario":
+			$url = base_url("usuario/" . $accion . "/" . $usuario->id);
 			break;
+		case "modificar_password":
+			$url = base_url("usuario/" . $accion . "/" . $usuario->id);
 	}
 	?>
 
@@ -118,7 +120,7 @@
 
 		<?php endif; ?>
 
-		<?php if ($accion == "modificar_password"): ?>
+		<?php if ($accion == "modificar_password_usuario" || $accion == "modificar_password"): ?>
 
 			<div>
 
@@ -128,11 +130,33 @@
 
 		<?php endif; ?>
 
-		<?php if ($accion == "registrar" || $accion == "modificar_password"): ?>
+		<?php if ($accion == "modificar_password"): ?>
 
 			<div class="form-group">
 
-				<label>Password</label>
+				<label>Password anterior</label>
+
+				<input type="password" id="password_anterior" name="password_anterior" class="form-control">
+
+				<?= form_error("password_anterior") ?>
+
+			</div>
+
+		<?php endif; ?>
+
+		<?php if ($accion == "registrar" || $accion == "modificar_password_usuario" || $accion == "modificar_password"): ?>
+
+			<div class="form-group">
+
+				<?php if ($accion == "registrar" || $accion == "modificar_password_usuario"): ?>
+
+					<label>Password</label>
+
+				<?php elseif ($accion == "modificar_password"): ?>
+
+					<label>Password nuevo</label>
+
+				<?php endif; ?>
 
 				<input type="password" id="password" name="password" class="form-control" required>
 
@@ -152,7 +176,7 @@
 
 		<?php endif; ?>
 
-		<?php if ($accion == "modificar" || $accion == "modificar_password"): ?>
+		<?php if ($accion == "modificar" || $accion == "modificar_password_usuario" || $accion == "modificar_password"): ?>
 
 			<input type="hidden" id="id" name="id" value="<?= $usuario->id ?>">
 

@@ -95,6 +95,14 @@ class Usuario_validacion extends Base {
 				"min_length[5]",
 				"matches[password]"
 			)
+		),
+		"password_anterior" => array(
+			"field" => "password_anterior",
+			"label" => "password anterior",
+			"rules" => array(
+				"required",
+				"min_length[5]"
+			)
 		)
 	);
 	
@@ -133,6 +141,10 @@ class Usuario_validacion extends Base {
 			"required"=>true,
 			"minlength"=>5,
 			"equalTo"=>"#password"
+		),
+		"password_anterior"=>array(
+			"required"=>true,
+			"minlength"=>5
 		)
 	);
 	
@@ -171,6 +183,10 @@ class Usuario_validacion extends Base {
 			"required"=>"Confirme el password introducido.",
 			"minlength"=>"La confirmación del password debe tener al menos 5 caracteres.",
 			"equalTo"=>"La confirmación no es igual al password introducido."
+		),
+		"password_anterior"=>array(
+			"required"=>"Introduzca el password del usuario.",
+			"minlength"=>"El password del usuario debe tener al menos 5 caracteres."
 		)
 	);
 

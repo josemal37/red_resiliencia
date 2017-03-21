@@ -14,6 +14,9 @@ h1, h2, h3, h4, h5, h6 {
 h1, h2, h3, h4, h5, h6, p, label, li {
   color: #111; }
 
+.main {
+  min-height: 100%; }
+
 .vertical-center {
   display: table-cell;
   vertical-align: middle; }
@@ -255,6 +258,9 @@ h1, h2, h3, h4, h5, h6, p, label, li {
   margin-bottom: 30px;
   padding-bottom: 30px;
   border-bottom: 1px solid; }
+
+.footer {
+  border-top: 1px solid #D9D9D9; }
 
 .social {
   padding: 10px;
