@@ -8,11 +8,11 @@
 
 <div class="social">
 
-			<a href="<?= base_url("feed/rss") ?>">
+	<a href="<?= base_url("feed/rss") ?>">
 
-				<img src="<?= base_url("assets/red_resiliencia/img/rss.png") ?>" class="img-responsive pull-right">
+		<img src="<?= base_url("assets/red_resiliencia/img/rss.png") ?>" class="img-responsive pull-right">
 
-			</a>
+	</a>
 
 </div>
 

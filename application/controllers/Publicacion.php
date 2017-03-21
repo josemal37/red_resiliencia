@@ -270,6 +270,7 @@ class Publicacion extends CI_Controller {
 		$id_institucion = $this->input->post("id_institucion");
 		$imagen_antiguo = $this->input->post("imagen_antiguo");
 		$documento_antiguo = $this->input->post("url_antiguo");
+		$borrar_documento = $this->input->post("borrar_url") == "on" ? TRUE : FALSE;
 
 		$array_validacion = array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion");
 
@@ -292,7 +293,7 @@ class Publicacion extends CI_Controller {
 					$this->imagen->eliminar_archivo($path . $imagen_antiguo);
 				}
 				$imagen = $this->imagen->subir_archivo("imagen", $path);
-				if (isset($_FILES["url"]) && $_FILES["url"]["name"] != "") {
+				if ((isset($_FILES["url"]) && $_FILES["url"]["name"] != "") || $borrar_documento) {
 					$this->documento->eliminar_archivo($path . $documento_antiguo);
 				}
 				$documento = $this->documento->subir_archivo("url", $path);
@@ -310,7 +311,9 @@ class Publicacion extends CI_Controller {
 					if ($documento["datos"]) {
 						$direccion_documento = $documento["datos"]["file_name"];
 					} else {
-						$direccion_documento = $documento_antiguo;
+						if (!$borrar_documento) {
+							$direccion_documento = $documento_antiguo;
+						}
 					}
 
 					if ($this->Modelo_publicacion->update_publicacion($id, $nombre, $descripcion, $modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {

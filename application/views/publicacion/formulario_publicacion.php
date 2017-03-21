@@ -176,6 +176,12 @@
 
 						<input type="hidden" id="url_antiguo" name="url_antiguo" value="<?= $publicacion->url ?>">
 
+						<div class="checkbox">
+							
+							<label><input type="checkbox" id="borrar_url" name="borrar_url">Borrar documento actual</label>
+							
+						</div>
+						
 					</div>
 
 					<label>Subir nuevo documento</label>
