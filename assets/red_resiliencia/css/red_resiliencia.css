@@ -256,4 +256,10 @@ h1, h2, h3, h4, h5, h6, p, label, li {
   padding-bottom: 30px;
   border-bottom: 1px solid; }
 
+.social {
+  padding: 10px;
+  height: 50px; }
+  .social img {
+    height: 30px; }
+
 /*# sourceMappingURL=red_resiliencia.css.map */

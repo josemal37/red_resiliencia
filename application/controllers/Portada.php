@@ -21,7 +21,7 @@ class Portada extends CI_Controller {
 
 		$this->load->model(array("Modelo_publicacion", "Modelo_autor", "Modelo_categoria", "Modelo_evento", "Modelo_articulo"));
 		
-		$this->load->library(array("Session", "Form_Validation"));
+		$this->load->library(array("Session", "Form_validation"));
 		$this->load->library(array("Imagen"));
 		
 		$this->load->helper(array("Url", "Form"));
