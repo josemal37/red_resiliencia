@@ -150,29 +150,39 @@ switch ($fuente) {
 
 				<?php if (isset($instituciones) && $instituciones): ?>
 
-					<div class="checkbox">
+					<?php if ($this->session->userdata("rol") != "usuario"): ?>
 
-						<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if ($submit && (isset($id_institucion) && $id_institucion)): ?>checked<?php endif; ?>>Filtrar por institución</label>
+						<div class="checkbox">
 
-					</div>
+							<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if ($submit && (isset($id_institucion) && $id_institucion)): ?>checked<?php endif; ?>>Filtrar por institución</label>
 
-					<div id="div_institucion" class="form-group" <?php if (!$submit || (isset($id_institucion) && !$id_institucion)): ?>style="display: none;"<?php endif; ?>>
+						</div>
 
-						<select id="id_institucion" name="id_institucion" class="form-control">
+						<div id="div_institucion" class="form-group" <?php if (!$submit || (isset($id_institucion) && !$id_institucion)): ?>style="display: none;"<?php endif; ?>>
 
-							<?php if ($instituciones): ?>
+							<select id="id_institucion" name="id_institucion" class="form-control">
 
-								<?php foreach ($instituciones as $institucion): ?>
+								<?php if ($instituciones): ?>
 
-									<option value="<?= $institucion->id ?>" <?php if ($submit && isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+									<?php foreach ($instituciones as $institucion): ?>
 
-								<?php endforeach; ?>
+										<option value="<?= $institucion->id ?>" <?php if ($submit && isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
 
-							<?php endif; ?>
+									<?php endforeach; ?>
 
-						</select>
+								<?php endif; ?>
 
-					</div>
+							</select>
+
+						</div>
+
+					<?php else: ?>
+
+						<input type="hidden" id="con_institucion" name="con_institucion" value="on">
+
+						<input type="hidden" id="id_institucion" name="id_institucion" value="<?= $this->session->userdata("id_institucion") ?>">
+
+					<?php endif; ?>
 
 				<?php else: ?>
 
@@ -196,13 +206,13 @@ switch ($fuente) {
 
 					<div class="radio">
 
-						<label><input type="radio" name="fecha" value="proximos" <?php if (!$submit || (isset($id_fecha) && ($id_fecha == "proximos" || !$id_fecha))):?>checked<?php endif;?>>Sólo eventos próximos</label>
+						<label><input type="radio" name="fecha" value="proximos" <?php if (!$submit || (isset($id_fecha) && ($id_fecha == "proximos" || !$id_fecha))): ?>checked<?php endif; ?>>Sólo eventos próximos</label>
 
 					</div>
 
 					<div class="radio">
 
-						<label><input type="radio" name="fecha" value="todos" <?php if ($submit && isset($id_fecha) && $id_fecha == "todos"):?>checked<?php endif; ?>>Todos los eventos</label>
+						<label><input type="radio" name="fecha" value="todos" <?php if ($submit && isset($id_fecha) && $id_fecha == "todos"): ?>checked<?php endif; ?>>Todos los eventos</label>
 
 					</div>
 
