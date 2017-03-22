@@ -42,6 +42,12 @@
 
 					<p><label>Lugar:</label> <?= $evento->direccion . ", " . $evento->ciudad->nombre . ", " . $evento->pais->nombre ?></p>
 
+					<?php if ($evento->url): ?>
+
+						<p><label>Sitio web:</label> <a href="<?= $evento->url ?>">Ir al sitio web</a></p>
+
+					<?php endif; ?>
+
 					<div class="row">
 
 						<?php if ($evento->instituciones): ?>

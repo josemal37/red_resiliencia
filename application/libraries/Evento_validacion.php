@@ -86,6 +86,13 @@ class Evento_validacion extends Base {
 				"required"
 			)
 		),
+		"url" => array(
+			"field" => "url",
+			"label" => "sitio web",
+			"rules" => array (
+				"valid_url"
+			)
+		),
 		"id_categoria" => array(
 			"field" => "id_categoria",
 			"label" => "categorias",
@@ -138,6 +145,9 @@ class Evento_validacion extends Base {
 		"imagen" => array(
 			"required" => true
 		),
+		"url" => array(
+			"url" => true
+		),
 		"id_categoria[]" => array(
 			"required" => true,
 			"number" => true
@@ -181,6 +191,9 @@ class Evento_validacion extends Base {
 		),
 		"imagen" => array(
 			"required" => "Seleccione una imagen para el evento."
+		),
+		"url" => array(
+			"url" => "Introduzca un sitio web válido."
 		),
 		"id_categoria[]" => array(
 			"required" => "Hay un error en la categoria seleccionada.",

@@ -130,7 +130,7 @@ class Evento extends CI_Controller {
 					$datos["institucion_usuario"] = FALSE;
 				}
 
-				$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "imagen", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion"));
+				$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "imagen", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion", "url"));
 
 				$this->load->view("evento/formulario_evento", $datos);
 			}
@@ -150,8 +150,9 @@ class Evento extends CI_Controller {
 		$direccion = $this->input->post("direccion");
 		$id_categoria = $this->input->post("id_categoria");
 		$id_institucion = $this->input->post("id_institucion");
+		$url = $this->input->post("url");
 
-		if ($this->evento_validacion->validar(array("nombre", "descripcion", "fecha_inicio", "fecha_fin", "ciudad", "direccion", "id_categoria", "id_institucion"))) {
+		if ($this->evento_validacion->validar(array("nombre", "descripcion", "fecha_inicio", "fecha_fin", "ciudad", "direccion", "id_categoria", "id_institucion", "url"))) {
 			$path = $this->imagen->get_path_valido("evento");
 
 			if ($path) {
@@ -164,7 +165,7 @@ class Evento extends CI_Controller {
 						$direccion_imagen = $imagen["datos"]["file_name"];
 					}
 
-					if ($this->Modelo_evento->insert_evento($ciudad, $nombre, $descripcion, $fecha_inicio, $fecha_fin, $direccion, $direccion_imagen, NULL, $id_categoria, $id_institucion)) {
+					if ($this->Modelo_evento->insert_evento($ciudad, $nombre, $descripcion, $fecha_inicio, $fecha_fin, $direccion, $direccion_imagen, NULL, $id_categoria, $id_institucion, $url)) {
 						redirect(base_url("evento/eventos"));
 					} else {
 						$this->session->set_flashdata("error", "Ocurrió un error al registrar el evento.");
@@ -234,7 +235,7 @@ class Evento extends CI_Controller {
 							$datos["institucion_usuario"] = FALSE;
 						}
 
-						$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion"));
+						$datos["reglas_validacion"] = $this->evento_validacion->get_reglas_cliente(array("nombre", "descripcion", "fecha_inicio", "fecha_fin", "pais", "ciudad", "direccion", "url"));
 
 						$this->load->view("evento/formulario_evento", $datos);
 					} else {
@@ -262,8 +263,9 @@ class Evento extends CI_Controller {
 		$direccion = $this->input->post("direccion");
 		$id_categoria = $this->input->post("id_categoria");
 		$id_institucion = $this->input->post("id_institucion");
+		$url = $this->input->post("url");
 
-		if ($this->evento_validacion->validar(array("id", "nombre", "descripcion", "fecha_inicio", "fecha_fin", "ciudad", "direccion", "id_categoria", "id_institucion"))) {
+		if ($this->evento_validacion->validar(array("id", "nombre", "descripcion", "fecha_inicio", "fecha_fin", "ciudad", "direccion", "id_categoria", "id_institucion", "url"))) {
 			$direccion_imagen = "";
 			if ($_FILES["imagen"]["name"] != "") {
 				$path = $this->imagen->get_path_valido("evento");
@@ -295,7 +297,7 @@ class Evento extends CI_Controller {
 				$direccion_imagen = $imagen_antiguo;
 			}
 
-			if ($this->Modelo_evento->update_evento($id, $ciudad, $nombre, $descripcion, $fecha_inicio, $fecha_fin, $direccion, $direccion_imagen, NULL, $id_categoria, $id_institucion)) {
+			if ($this->Modelo_evento->update_evento($id, $ciudad, $nombre, $descripcion, $fecha_inicio, $fecha_fin, $direccion, $direccion_imagen, NULL, $id_categoria, $id_institucion, $url)) {
 				redirect(base_url("evento/eventos"));
 			} else {
 				$this->session->set_flashdata("error", "Ocurrió un error al modificar el evento.");

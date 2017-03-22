@@ -151,6 +151,16 @@ switch ($accion) {
 
 		</div>
 
+		<div class="form-group">
+
+			<label>Sitio web</label>
+
+			<input type="url" id="url" name="url" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->url ?>"<?php endif; ?>>
+
+			<?= form_error("direccion") ?>
+
+		</div>
+
 		<!-- Categorias -->
 		<?php if (isset($categorias) || isset($evento->categorias)): ?>
 

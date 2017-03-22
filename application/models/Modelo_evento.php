@@ -26,7 +26,8 @@ class Modelo_evento extends My_model {
 	const DIRECCION_COL = "direccion_evento";
 	const IMAGEN_COL = "imagen_evento";
 	const DESTACADO_COL = "destacado_evento";
-	const COLUMNAS_SELECT = "evento.id_evento as id, evento.id_ciudad as id_ciudad, evento.nombre_evento as nombre, evento.descripcion_evento as descripcion, evento.fecha_inicio_evento as fecha_inicio, evento.fecha_fin_evento as fecha_fin, evento.direccion_evento as direccion, evento.imagen_evento as imagen, evento.destacado_evento as destacado";
+	const URL_COL = "url_evento";
+	const COLUMNAS_SELECT = "evento.id_evento as id, evento.id_ciudad as id_ciudad, evento.nombre_evento as nombre, evento.descripcion_evento as descripcion, evento.fecha_inicio_evento as fecha_inicio, evento.fecha_fin_evento as fecha_fin, evento.direccion_evento as direccion, evento.imagen_evento as imagen, evento.destacado_evento as destacado, evento.url_evento as url";
 	const NOMBRE_TABLA = "evento";
 	const NOMBRE_TABLA_ASOC_CATEGORIA = "categoria_evento";
 	const ID_TABLA_ASOC_CATEGORIA = "id_categoria";
@@ -248,7 +249,7 @@ class Modelo_evento extends My_model {
 		}
 	}
 
-	public function insert_evento($id_ciudad = FALSE, $nombre = "", $descripcion = "", $fecha_inicio = "", $fecha_fin = "", $direccion = "", $imagen = "", $destacado = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function insert_evento($id_ciudad = FALSE, $nombre = "", $descripcion = "", $fecha_inicio = "", $fecha_fin = "", $direccion = "", $imagen = "", $destacado = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $url = FALSE) {
 		if ($id_ciudad && $nombre != "" && $fecha_inicio != "" && $fecha_fin != "" && $direccion != "") {
 			$insertado = FALSE;
 
@@ -262,7 +263,8 @@ class Modelo_evento extends My_model {
 				self::FECHA_FIN_COL => $fecha_fin,
 				self::DIRECCION_COL => $direccion,
 				self::IMAGEN_COL => $imagen,
-				self::DESTACADO_COL => $destacado
+				self::DESTACADO_COL => $destacado,
+				self::URL_COL => $url
 			);
 
 			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
@@ -306,7 +308,7 @@ class Modelo_evento extends My_model {
 		}
 	}
 
-	public function update_evento($id = FALSE, $id_ciudad = FALSE, $nombre = "", $descripcion = "", $fecha_inicio = "", $fecha_fin = "", $direccion = "", $imagen = "", $destacado = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function update_evento($id = FALSE, $id_ciudad = FALSE, $nombre = "", $descripcion = "", $fecha_inicio = "", $fecha_fin = "", $direccion = "", $imagen = "", $destacado = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $url = FALSE) {
 		if ($id && $id_ciudad && $nombre != "" && $fecha_inicio != "" && $fecha_fin != "" && $direccion != "") {
 			$actualizado = FALSE;
 
@@ -320,7 +322,8 @@ class Modelo_evento extends My_model {
 				self::FECHA_FIN_COL => $fecha_fin,
 				self::DIRECCION_COL => $direccion,
 				self::IMAGEN_COL => $imagen,
-				self::DESTACADO_COL => $destacado
+				self::DESTACADO_COL => $destacado,
+				self::URL_COL => $url
 			);
 
 			$this->db->set($datos);

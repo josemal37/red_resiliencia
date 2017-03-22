@@ -160,6 +160,7 @@ create table `evento`
    `direccion_evento` varchar(1024) not null,
    `imagen_evento` varchar(1024),
    `destacado_evento` bool,
+    `url_evento` varchar(1024),
    primary key (`id_evento`)
 )
 

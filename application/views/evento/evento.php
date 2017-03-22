@@ -50,6 +50,14 @@
 
 			<?php endif; ?>
 
+			<?php if ($evento->url): ?>
+
+				<h4>Sitio web</h4>
+
+				<a href="<?= $evento->url ?>">Ir al sitio web</a>
+
+			<?php endif; ?>
+
 			<?php if ($evento->instituciones): ?>
 
 				<h4>Instituciones encargadas</h4>
