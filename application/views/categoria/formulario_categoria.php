@@ -2,54 +2,58 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container contenido">
+<?php
+switch ($accion) {
+	case "registrar":
+		$url = base_url("categoria/" . $accion . "_categoria");
+		break;
+	case "modificar":
+		$url = base_url("categoria/" . $accion . "_categoria/" . $categoria->id);
+		break;
+}
+?>
 
-	<?php
-	switch ($accion) {
-		case "registrar":
-			$url = base_url("categoria/" . $accion . "_categoria");
-			break;
-		case "modificar":
-			$url = base_url("categoria/" . $accion . "_categoria/" . $categoria->id);
-			break;
-	}
-	?>
+<div class="pagina">
 
-	<form action="<?= $url ?>" id="form-categoria" method="post" autocomplete="off">
+	<div class="titulo">
 
-		<div class="form-group">
+		<h1><?= $titulo ?></h1>
 
-			<label>Nombre</label>
+	</div>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $categoria->nombre ?>"<?php endif; ?>>
+	<div class="container contenido">
 
-			<?= form_error("nombre") ?>
+		<form action="<?= $url ?>" id="form-categoria" method="post" autocomplete="off">
 
-			<?php if ($this->session->flashdata("existe")): ?>
+			<div class="form-group">
 
-				<p><?= $this->session->flashdata("existe") ?></p>
+				<label>Nombre</label>
+
+				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $categoria->nombre ?>"<?php endif; ?>>
+
+				<?= form_error("nombre") ?>
+
+				<?php if ($this->session->flashdata("existe")): ?>
+
+					<p><?= $this->session->flashdata("existe") ?></p>
+
+				<?php endif; ?>
+
+			</div>
+
+			<?php if ($accion == "modificar"): ?>
+
+				<input type="hidden" id="id" name="id" value="<?= $categoria->id ?>">
 
 			<?php endif; ?>
 
-		</div>
+			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
-		<?php if ($accion == "modificar"): ?>
+		</form>
 
-			<input type="hidden" id="id" name="id" value="<?= $categoria->id ?>">
-
-		<?php endif; ?>
-
-		<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
-
-	</form>
+	</div>
 
 </div>
 

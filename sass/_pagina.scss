@@ -1,12 +1,25 @@
-.titulo {
-    padding-top: 40px;
-}
-
-.contenido-pagina {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    
-    padding-bottom: 30px;
-    
-    border-bottom: 1px solid;
+.pagina {
+    margin-top: 50px;
+    min-height: 100%;
+    .titulo {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        background-color: $azul;
+        h1, h2, h3, h4, h5, h6 {
+            color: $blanco;
+        }
+    }
+    .busqueda {
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+    .contenido {
+        margin-top: 20px;
+        padding: 30px 20px;
+        @include box-shadow(2px, 4px, 10px, 0, rgba(0, 0, 0, 0.5));
+        .item {
+            
+        }
+    }
 }

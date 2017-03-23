@@ -2,155 +2,161 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="titulo text-center">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container">
+<div class="pagina">
 
-	<div>
+	<div class="titulo">
+
+		<h1><?= $titulo ?></h1>
+
+	</div>
+
+	<div class="busqueda">
 
 		<?php $this->load->view("base/busqueda", array("fuente" => "articulo", "criterio" => $criterio)); ?>
 
 	</div>
 
-	<?php if ($articulos): ?>
+	<div class="container contenido">
 
-		<?php foreach ($articulos as $articulo): ?>
+		<?php if ($articulos): ?>
 
-			<div class="row contenido-pagina">
+			<?php foreach ($articulos as $articulo): ?>
 
-				<div class="col-md-3">
+				<div class="row item">
 
-					<img src="<?= base_url($path_articulos . $articulo->imagen) ?>" class="img-responsive">
+					<div class="col-md-3">
 
-				</div>
+						<img src="<?= base_url($path_articulos . $articulo->imagen) ?>" class="img-responsive">
 
-				<div class="col-md-9">
+					</div>
 
-					<h4><?= $articulo->nombre ?></h4>
+					<div class="col-md-9">
 
-					<p class="text-justify"><?= $articulo->descripcion ?></p>
+						<h4><?= $articulo->nombre ?></h4>
 
-					<div class="row">
+						<p class="text-justify"><?= $articulo->descripcion ?></p>
 
-						<?php if ($articulo->autores): ?>
+						<div class="row">
 
-							<div class="col-md-4">
+							<?php if ($articulo->autores): ?>
 
-								<h4>Autores</h4>
+								<div class="col-md-4">
 
-								<ul>
+									<h4>Autores</h4>
 
-									<?php foreach ($articulo->autores as $autor): ?>
+									<ul>
 
-										<li><?= $autor->nombre_completo ?></li>
+										<?php foreach ($articulo->autores as $autor): ?>
 
-									<?php endforeach; ?>
+											<li><?= $autor->nombre_completo ?></li>
 
-								</ul>
+										<?php endforeach; ?>
 
-							</div>
+									</ul>
 
-						<?php endif; ?>
+								</div>
 
-						<?php if ($articulo->categorias): ?>
+							<?php endif; ?>
 
-							<div class="col-md-4">
+							<?php if ($articulo->categorias): ?>
 
-								<h4>Categorias</h4>
+								<div class="col-md-4">
 
-								<ul>
+									<h4>Categorias</h4>
 
-									<?php foreach ($articulo->categorias as $categoria): ?>
+									<ul>
 
-										<li><?= $categoria->nombre ?></li>
+										<?php foreach ($articulo->categorias as $categoria): ?>
 
-									<?php endforeach; ?>
+											<li><?= $categoria->nombre ?></li>
 
-								</ul>
+										<?php endforeach; ?>
 
-							</div>
+									</ul>
 
-						<?php endif; ?>
+								</div>
 
-						<?php if ($articulo->instituciones): ?>
+							<?php endif; ?>
 
-							<div class="col-md-4">
+							<?php if ($articulo->instituciones): ?>
 
-								<h4>Instituciones</h4>
+								<div class="col-md-4">
 
-								<ul>
+									<h4>Instituciones</h4>
 
-									<?php foreach ($articulo->instituciones as $institucion): ?>
+									<ul>
 
-										<li><?= $institucion->nombre ?></li>
+										<?php foreach ($articulo->instituciones as $institucion): ?>
 
-									<?php endforeach; ?>
+											<li><?= $institucion->nombre ?></li>
 
-								</ul>
+										<?php endforeach; ?>
 
-							</div>
+									</ul>
+
+								</div>
+
+							<?php endif; ?>
+
+						</div>
+
+						<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
+
+						<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+							<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+
+							<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
 
 						<?php endif; ?>
 
 					</div>
 
-					<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
+				</div>
 
-					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+				<hr>
 
-						<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+			<?php endforeach; ?>
 
-						<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+			<?php if (!$criterio): ?>
 
-					<?php endif; ?>
+				<div class="text-center">
+
+					<ul class="pagination">
+
+						<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
+
+							<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos/" . $i) ?>"><?= $i ?></a></li>
+
+						<?php endfor; ?>
+
+					</ul>
 
 				</div>
 
-			</div>
+			<?php endif; ?>
 
-		<?php endforeach; ?>
+		<?php else: ?>
 
-		<?php if (!$criterio): ?>
+			<div>
 
-			<div class="text-center">
-
-				<ul class="pagination">
-
-					<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
-
-						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos/" . $i) ?>"><?= $i ?></a></li>
-
-					<?php endfor; ?>
-
-				</ul>
+				<p>No se registraron articulos.</p>
 
 			</div>
 
 		<?php endif; ?>
 
-	<?php else: ?>
+		<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
-		<div class="contenido">
+			<a href="<?= base_url("articulo/registrar_articulo") ?>" class="btn btn-default btn-resiliencia">Registrar articulo</a>
 
-			<p>No se registraron articulos.</p>
+		<?php endif; ?>
 
-		</div>
-
-	<?php endif; ?>
+	</div>
 
 	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
-
-	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-		<a href="<?= base_url("articulo/registrar_articulo") ?>" class="btn btn-default btn-resiliencia">Registrar articulo</a>
-
-	<?php endif; ?>
 
 </div>
 

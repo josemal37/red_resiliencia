@@ -2,60 +2,64 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container contenido">
+<?php
+switch ($accion) {
+	case "registrar":
+		$url = base_url("institucion/" . $accion . "_institucion");
+		break;
+	case "modificar":
+		$url = base_url("institucion/" . $accion . "_institucion/" . $institucion->id);
+		break;
+}
+?>
 
-	<?php
-	switch ($accion) {
-		case "registrar":
-			$url = base_url("institucion/" . $accion . "_institucion");
-			break;
-		case "modificar":
-			$url = base_url("institucion/" . $accion . "_institucion/" . $institucion->id);
-			break;
-	}
-	?>
+<div class="pagina">
 
-	<form action="<?= $url ?>" id="form-institucion" method="post" autocomplete="off">
+	<div class="titulo">
 
-		<div class="form-group">
+		<h1><?= $titulo ?></h1>
 
-			<label>Nombre</label>
+	</div>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $institucion->nombre ?>"<?php endif; ?>>
+	<div class="container contenido">
 
-			<?= form_error("nombre") ?>
+		<form action="<?= $url ?>" id="form-institucion" method="post" autocomplete="off">
 
-		</div>
+			<div class="form-group">
 
-		<div class="form-group">
+				<label>Nombre</label>
 
-			<label>Sigla</label>
+				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $institucion->nombre ?>"<?php endif; ?>>
 
-			<input type="text" id="sigla" name="sigla" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $institucion->sigla ?>"<?php endif; ?>>
+				<?= form_error("nombre") ?>
 
-			<?= form_error("sigla") ?>
+			</div>
 
-		</div>
+			<div class="form-group">
 
-		<?php if ($accion == "modificar"): ?>
+				<label>Sigla</label>
 
-			<input type="hidden" id="id" name="id" value="<?= $institucion->id ?>">
+				<input type="text" id="sigla" name="sigla" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $institucion->sigla ?>"<?php endif; ?>>
 
-		<?php endif; ?>
+				<?= form_error("sigla") ?>
 
-		<?php if ($this->session->flashdata("existe")): ?><p><?= $this->session->flashdata("existe") ?></p><?php endif; ?>
+			</div>
 
-		<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
+			<?php if ($accion == "modificar"): ?>
 
-	</form>
+				<input type="hidden" id="id" name="id" value="<?= $institucion->id ?>">
+
+			<?php endif; ?>
+
+			<?php if ($this->session->flashdata("existe")): ?><p><?= $this->session->flashdata("existe") ?></p><?php endif; ?>
+
+			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
+
+		</form>
+
+	</div>
 
 </div>
 

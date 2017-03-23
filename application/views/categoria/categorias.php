@@ -2,62 +2,67 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php
 $this->load->view("base/menu");
 ?>
 
-<div class="container contenido">
+<div class="pagina">
 
-	<?php if ($categorias): ?>
+	<div class="titulo">
 
-		<table class="table">
+		<h1><?= $titulo ?></h1>
 
-			<thead>
+	</div>
 
-				<tr>
+	<div class="container contenido">
 
-					<th>Nombre</th>
-					<th>Acciones</th>
+		<?php if ($categorias): ?>
 
-				</tr>
+			<table class="table table-bordered">
 
-			</thead>
+				<thead>
 
-			<tbody>
+					<tr>
 
-				<?php foreach ($categorias as $categoria): ?>
-
-					<tr id="<?= $categoria->id ?>">
-
-						<td><?= $categoria->nombre ?></td>
-						<td>
-							<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>">Modificar</a>
-							<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>">Eliminar</a>
-						</td>
+						<th>Nombre</th>
+						<th>Acciones</th>
 
 					</tr>
 
-				<?php endforeach; ?>
+				</thead>
 
-			</tbody>
+				<tbody>
 
-		</table>
+					<?php foreach ($categorias as $categoria): ?>
 
-	<?php else: ?>
+						<tr id="<?= $categoria->id ?>">
 
-		<p>No se registraron categorias.</p>
+							<td><?= $categoria->nombre ?></td>
+							<td>
+								<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+								
+								<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+							</td>
 
-	<?php endif; ?>
+						</tr>
+
+					<?php endforeach; ?>
+
+				</tbody>
+
+			</table>
+
+		<?php else: ?>
+
+			<p>No se registraron categorias.</p>
+
+		<?php endif; ?>
+
+			<a href="<?= base_url("categoria/registrar_categoria") ?>" class="btn btn-default btn-resiliencia">Registrar categoria</a>
+
+	</div>
 
 	<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
-
-	<a href="<?= base_url("categoria/registrar_categoria") ?>">Registrar categoria</a>
 
 </div>
 

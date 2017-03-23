@@ -2,85 +2,89 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container">
+<div class="pagina">
 
-	<div class="row publicacion">
+	<div class="titulo">
 
-		<div class="col-md-4">
+		<h1><?= $titulo ?></h1>
 
-			<img src="<?= base_url($path_publicacion . $publicacion->imagen) ?>" class="img-responsive img-center">
+	</div>
 
-		</div>
+	<div class="container contenido">
 
-		<div class="col-md-8">
+		<div class="row">
 
-			<h4>Título</h4>
+			<div class="col-md-4">
 
-			<p class="text-justify"><?= $publicacion->nombre ?></p>
+				<img src="<?= base_url($path_publicacion . $publicacion->imagen) ?>" class="img-responsive img-center">
 
-			<?php if ($publicacion->autores): ?>
+			</div>
 
-				<h4>Autor(es)</h4>
+			<div class="col-md-8">
 
-				<p><?= listar_array_de_stdclass($publicacion->autores, "nombre_completo", ", ") ?></p>
+				<h4>Título</h4>
 
-			<?php endif; ?>
+				<p class="text-justify"><?= $publicacion->nombre ?></p>
 
-			<?php if ($publicacion->instituciones): ?>
+				<?php if ($publicacion->autores): ?>
 
-				<h4>Institución(es)</h4>
+					<h4>Autor(es)</h4>
 
-				<p><?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
+					<p><?= listar_array_de_stdclass($publicacion->autores, "nombre_completo", ", ") ?></p>
 
-			<?php endif; ?>
+				<?php endif; ?>
 
-			<?php if ($publicacion->descripcion): ?>
+				<?php if ($publicacion->instituciones): ?>
 
-				<h4>Resumen</h4>
+					<h4>Institución(es)</h4>
 
-				<p class="text-justify"><?= $publicacion->descripcion ?></p>
+					<p><?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
 
-			<?php endif; ?>
+				<?php endif; ?>
 
-			<?php if ($publicacion->modulos): ?>
+				<?php if ($publicacion->descripcion): ?>
 
-				<h4>Modulo(s)</h4>
+					<h4>Resumen</h4>
 
-				<ol>
+					<p class="text-justify"><?= $publicacion->descripcion ?></p>
 
-					<?php foreach ($publicacion->modulos as $modulo): ?>
+				<?php endif; ?>
 
-						<li><?= $modulo->nombre ?></li>
+				<?php if ($publicacion->modulos): ?>
 
-					<?php endforeach; ?>
+					<h4>Modulo(s)</h4>
 
-				</ol>
+					<ol>
 
-			<?php endif; ?>
+						<?php foreach ($publicacion->modulos as $modulo): ?>
 
-			<?php if ($publicacion->categorias): ?>
+							<li><?= $modulo->nombre ?></li>
 
-				<h4>Categoria(s)</h4>
+						<?php endforeach; ?>
 
-				<p><?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ") ?></p>
+					</ol>
 
-			<?php endif; ?>
+				<?php endif; ?>
 
-			<?php if ($publicacion->url): ?>
+				<?php if ($publicacion->categorias): ?>
 
-				<h4>Documento</h4>
+					<h4>Categoria(s)</h4>
 
-				<a href="<?= base_url($path_publicacion . $publicacion->url) ?>">Descargar documento</a>
+					<p><?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ") ?></p>
 
-			<?php endif; ?>
+				<?php endif; ?>
+
+				<?php if ($publicacion->url): ?>
+
+					<h4>Documento</h4>
+
+					<a href="<?= base_url($path_publicacion . $publicacion->url) ?>">Descargar documento</a>
+
+				<?php endif; ?>
+
+			</div>
 
 		</div>
 

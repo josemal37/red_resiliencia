@@ -1,0 +1,5 @@
+@mixin box-shadow($ancho, $alto, $radio, $propagacion, $color) {
+    -webkit-box-shadow: $ancho $alto $radio $propagacion $color;
+    -moz-box-shadow: $ancho $alto $radio $propagacion $color;
+    box-shadow: $ancho $alto $radio $propagacion $color;
+}

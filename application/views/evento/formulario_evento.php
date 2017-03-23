@@ -2,12 +2,6 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php
 switch ($accion) {
 	case "registrar":
@@ -21,301 +15,311 @@ switch ($accion) {
 
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container contenido">
+<div class="pagina">
 
-	<form action="<?= $url ?>" id="form-evento" method="post" enctype="multipart/form-data" autocomplete="off">
+	<div class="titulo">
 
-		<div class="form-group">
+		<h1><?= $titulo ?></h1>
 
-			<label>Nombre</label>
+	</div>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->nombre ?>"<?php endif; ?>>
+	<div class="container contenido">
 
-			<?= form_error("nombre") ?>
+		<form action="<?= $url ?>" id="form-evento" method="post" enctype="multipart/form-data" autocomplete="off">
 
-		</div>
+			<div class="form-group">
 
-		<div class="form-group">
+				<label>Nombre</label>
 
-			<label>Descripción</label>
+				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->nombre ?>"<?php endif; ?>>
 
-			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $evento->descripcion ?><?php endif; ?></textarea>
+				<?= form_error("nombre") ?>
 
-			<?= form_error("descripcion") ?>
+			</div>
 
-		</div>
+			<div class="form-group">
 
-		<div class="form-group">
+				<label>Descripción</label>
 
-			<label>Imagen</label>
+				<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $evento->descripcion ?><?php endif; ?></textarea>
 
-			<?php if ($accion == "modificar"): ?>
+				<?= form_error("descripcion") ?>
 
-				<?php if (isset($evento->imagen)): ?>
+			</div>
 
-					<div>
+			<div class="form-group">
 
-						<label>Imagen actual</label>
+				<label>Imagen</label>
 
-						<br><img src="<?= base_url($path_eventos . $evento->imagen) ?>" class="img-responsive">
+				<?php if ($accion == "modificar"): ?>
 
-						<p><?= $evento->imagen ?></p>
+					<?php if (isset($evento->imagen)): ?>
 
-						<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $evento->imagen ?>">
+						<div>
+
+							<label>Imagen actual</label>
+
+							<br><img src="<?= base_url($path_eventos . $evento->imagen) ?>" class="img-responsive">
+
+							<p><?= $evento->imagen ?></p>
+
+							<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $evento->imagen ?>">
+
+						</div>
+
+						<label>Subir imagen nueva</label>
+
+					<?php endif; ?>
+
+				<?php endif; ?>
+
+				<input type="file" id="imagen" name="imagen" <?php if ($accion == "registrar"): ?>required<?php endif; ?>>
+
+				<?= form_error("imagen") ?>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Fecha de inicio</label>
+
+				<input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_inicio ?>"<?php endif; ?>>
+
+				<?= form_error("fecha_inicio") ?>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Fecha de fin</label>
+
+				<input type="date" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_fin ?>"<?php endif; ?>>
+
+				<?= form_error("fecha_fin") ?>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Pais</label>
+
+				<select id="pais" class="form-control">
+
+					<?php if ($paises): ?>
+
+						<?php foreach ($paises as $pais): ?>
+
+							<option value="<?= $pais->id ?>" <?php if ($accion == "modificar" && $evento->pais->id == $pais->id): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
+
+						<?php endforeach; ?>
+
+					<?php endif; ?>
+
+				</select>
+
+				<?= form_error("pais") ?>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Ciudad</label>
+
+				<select id="ciudad" name="ciudad" class="form-control">
+
+					<?php if ($ciudades): ?>
+
+						<?php foreach ($ciudades as $ciudad): ?>
+
+							<option value="<?= $ciudad->id ?>" <?php if ($accion == "modificar" && $evento->ciudad->id == $ciudad->id): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
+
+						<?php endforeach; ?>
+
+					<?php endif; ?>
+
+				</select>
+
+				<?= form_error("pais") ?>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Dirección</label>
+
+				<input type="text" id="direccion" name="direccion" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->direccion ?>"<?php endif; ?>>
+
+				<?= form_error("direccion") ?>
+
+			</div>
+
+			<div class="form-group">
+
+				<label>Sitio web</label>
+
+				<input type="url" id="url" name="url" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->url ?>"<?php endif; ?>>
+
+				<?= form_error("direccion") ?>
+
+			</div>
+
+			<!-- Categorias -->
+			<?php if (isset($categorias) || isset($evento->categorias)): ?>
+
+				<div class="form-group">
+
+					<label>Categoria(s)</label>
+
+					<div class="row">
+
+						<div class="col-md-5">
+
+							<label>Categorias disponibles</label>
+
+							<select id="categorias" class="form-control" multiple>
+
+								<?php if ($categorias): ?>
+
+									<?php foreach ($categorias as $categoria): ?>
+
+										<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+						<div class="col-md-2 btn-group">
+
+							<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
+
+							<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
+
+						</div>
+
+						<div class="col-md-5">
+
+							<label>Categorias seleccionadas</label>
+
+							<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
+
+								<?php if ($accion == "modificar" && $evento->categorias): ?>
+
+									<?php foreach ($evento->categorias as $categoria): ?>
+
+										<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
 
 					</div>
 
-					<label>Subir imagen nueva</label>
+				</div>
 
-				<?php endif; ?>
+			<?php else: ?>
+
+				<p>No se registraron categorias.</p>
 
 			<?php endif; ?>
 
-			<input type="file" id="imagen" name="imagen" <?php if ($accion == "registrar"): ?>required<?php endif; ?>>
+			<!-- Instituciones -->
+			<?php if (isset($instituciones) || isset($evento->instituciones)): ?>
 
-			<?= form_error("imagen") ?>
+				<div class="form-group">
 
-		</div>
+					<label>Institución(es)</label>
 
-		<div class="form-group">
+					<div class="row">
 
-			<label>Fecha de inicio</label>
+						<div class="col-md-5">
 
-			<input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_inicio ?>"<?php endif; ?>>
+							<label>Instituciones disponibles</label>
 
-			<?= form_error("fecha_inicio") ?>
+							<select id="instituciones" class="form-control" multiple>
 
-		</div>
+								<?php if ($instituciones): ?>
 
-		<div class="form-group">
+									<?php foreach ($instituciones as $institucion): ?>
 
-			<label>Fecha de fin</label>
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
 
-			<input type="date" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_fin ?>"<?php endif; ?>>
+									<?php endforeach; ?>
 
-			<?= form_error("fecha_fin") ?>
+								<?php endif; ?>
 
-		</div>
+							</select>
 
-		<div class="form-group">
+						</div>
 
-			<label>Pais</label>
+						<div class="col-md-2 btn-group">
 
-			<select id="pais" class="form-control">
+							<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
 
-				<?php if ($paises): ?>
+							<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
 
-					<?php foreach ($paises as $pais): ?>
+						</div>
 
-						<option value="<?= $pais->id ?>" <?php if ($accion == "modificar" && $evento->pais->id == $pais->id): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
+						<div class="col-md-5">
 
-					<?php endforeach; ?>
+							<label>Instituciones seleccionadas</label>
 
-				<?php endif; ?>
+							<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
 
-			</select>
+								<?php if ($accion == "modificar" && $evento->instituciones): ?>
 
-			<?= form_error("pais") ?>
+									<?php foreach ($evento->instituciones as $institucion): ?>
 
-		</div>
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
 
-		<div class="form-group">
+									<?php endforeach; ?>
 
-			<label>Ciudad</label>
+								<?php endif; ?>
 
-			<select id="ciudad" name="ciudad" class="form-control">
+								<?php if ($accion == "registrar" && $institucion_usuario): ?>
 
-				<?php if ($ciudades): ?>
+									<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
 
-					<?php foreach ($ciudades as $ciudad): ?>
+								<?php endif; ?>
 
-						<option value="<?= $ciudad->id ?>" <?php if ($accion == "modificar" && $evento->ciudad->id == $ciudad->id): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
+							</select>
 
-					<?php endforeach; ?>
-
-				<?php endif; ?>
-
-			</select>
-
-			<?= form_error("pais") ?>
-
-		</div>
-
-		<div class="form-group">
-
-			<label>Dirección</label>
-
-			<input type="text" id="direccion" name="direccion" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->direccion ?>"<?php endif; ?>>
-
-			<?= form_error("direccion") ?>
-
-		</div>
-
-		<div class="form-group">
-
-			<label>Sitio web</label>
-
-			<input type="url" id="url" name="url" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->url ?>"<?php endif; ?>>
-
-			<?= form_error("direccion") ?>
-
-		</div>
-
-		<!-- Categorias -->
-		<?php if (isset($categorias) || isset($evento->categorias)): ?>
-
-			<div class="form-group">
-
-				<label>Categoria(s)</label>
-
-				<div class="row">
-
-					<div class="col-md-5">
-
-						<label>Categorias disponibles</label>
-
-						<select id="categorias" class="form-control" multiple>
-
-							<?php if ($categorias): ?>
-
-								<?php foreach ($categorias as $categoria): ?>
-
-									<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
+						</div>
 
 					</div>
 
-					<div class="col-md-2 btn-group">
+					<?php if ($this->session->userdata("rol") == "usuario"): ?>
 
-						<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
+						<input type="hidden" id="id_institucion_usuario" name="id_institucion_usuario" value="<?= $this->session->userdata("id_institucion") ?>">
 
-						<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
-
-					</div>
-
-					<div class="col-md-5">
-
-						<label>Categorias seleccionadas</label>
-
-						<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
-
-							<?php if ($accion == "modificar" && $evento->categorias): ?>
-
-								<?php foreach ($evento->categorias as $categoria): ?>
-
-									<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
+					<?php endif; ?>
 
 				</div>
 
-			</div>
+			<?php else: ?>
 
-		<?php else: ?>
+				<p>No se registraron instituciones.</p>
 
-			<p>No se registraron categorias.</p>
+			<?php endif; ?>
 
-		<?php endif; ?>
+			<?php if ($accion == "modificar"): ?>
 
-		<!-- Instituciones -->
-		<?php if (isset($instituciones) || isset($evento->instituciones)): ?>
+				<input type="hidden" id="id" name="id" value="<?= $evento->id ?>">
 
-			<div class="form-group">
+			<?php endif; ?>
 
-				<label>Institución(es)</label>
+			<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
 
-				<div class="row">
+		</form>
 
-					<div class="col-md-5">
-
-						<label>Instituciones disponibles</label>
-
-						<select id="instituciones" class="form-control" multiple>
-
-							<?php if ($instituciones): ?>
-
-								<?php foreach ($instituciones as $institucion): ?>
-
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-					<div class="col-md-2 btn-group">
-
-						<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
-
-						<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
-
-					</div>
-
-					<div class="col-md-5">
-
-						<label>Instituciones seleccionadas</label>
-
-						<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
-
-							<?php if ($accion == "modificar" && $evento->instituciones): ?>
-
-								<?php foreach ($evento->instituciones as $institucion): ?>
-
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-							<?php if ($accion == "registrar" && $institucion_usuario): ?>
-
-								<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-				</div>
-
-				<?php if ($this->session->userdata("rol") == "usuario"): ?>
-
-					<input type="hidden" id="id_institucion_usuario" name="id_institucion_usuario" value="<?= $this->session->userdata("id_institucion") ?>">
-
-				<?php endif; ?>
-
-			</div>
-
-		<?php else: ?>
-
-			<p>No se registraron instituciones.</p>
-
-		<?php endif; ?>
-
-		<?php if ($accion == "modificar"): ?>
-
-			<input type="hidden" id="id" name="id" value="<?= $evento->id ?>">
-
-		<?php endif; ?>
-
-		<input type="submit" id="submit" name="submit" value="Aceptar" class="btn btn-primary">
-
-	</form>
+	</div>
 
 </div>
 

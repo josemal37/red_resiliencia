@@ -2,75 +2,109 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container contenido">
+<?php
+switch ($accion) {
+	case "registrar":
+		$url = base_url("publicacion/" . $accion . "_publicacion");
+		break;
+	case "modificar":
+		$url = base_url("publicacion/" . $accion . "_publicacion/" . $publicacion->id);
+		break;
+}
+?>
 
-	<?php
-	switch ($accion) {
-		case "registrar":
-			$url = base_url("publicacion/" . $accion . "_publicacion");
-			break;
-		case "modificar":
-			$url = base_url("publicacion/" . $accion . "_publicacion/" . $publicacion->id);
-			break;
-	}
-	?>
+<div class="pagina">
 
-	<form action="<?= $url ?>" id="form_publicacion" method="post" enctype="multipart/form-data" autocomplete="off">
+	<div class="titulo">
 
-		<!-- Nombre -->
-		<div class="form-group">
+		<h1><?= $titulo ?></h1>
 
-			<label>Nombre</label>
+	</div>
 
-			<input type="text" id="nombre" name="nombre" class="form-control" required <?php if ($accion == "modificar"): ?>value="<?= $publicacion->nombre ?>"<?php endif; ?>>
+	<div class="container contenido">
 
-			<?= form_error("nombre") ?>
+		<form action="<?= $url ?>" id="form_publicacion" method="post" enctype="multipart/form-data" autocomplete="off">
 
-		</div>
+			<!-- Nombre -->
+			<div class="form-group">
 
-		<!-- Descripcion -->
-		<div class="form-group">
+				<label>Nombre</label>
 
-			<label>Descripción</label>
+				<input type="text" id="nombre" name="nombre" class="form-control" required <?php if ($accion == "modificar"): ?>value="<?= $publicacion->nombre ?>"<?php endif; ?>>
 
-			<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $publicacion->descripcion ?><?php endif; ?></textarea>
-
-			<?= form_error("descripcion") ?>
-
-		</div>
-
-		<!-- Modulos -->
-		<div class="form-group">
-
-			<label>Modulos</label>
-
-			<div class="checkbox">
-
-				<label><input type="checkbox" id="con_modulos" name="con_modulos" <?php if ($accion == "modificar" && $publicacion->modulos): ?>checked<?php endif; ?>>Agregar modulos</label>
+				<?= form_error("nombre") ?>
 
 			</div>
 
-			<?php if ($accion == "modificar" && $publicacion->modulos): ?>
+			<!-- Descripcion -->
+			<div class="form-group">
 
-				<div id="div_modulos">
+				<label>Descripción</label>
 
-					<ol id="lista_modulos">
+				<textarea id="descripcion" name="descripcion" class="form-control"><?php if ($accion == "modificar"): ?><?= $publicacion->descripcion ?><?php endif; ?></textarea>
 
-						<?php foreach ($publicacion->modulos as $modulo): ?>
+				<?= form_error("descripcion") ?>
+
+			</div>
+
+			<!-- Modulos -->
+			<div class="form-group">
+
+				<label>Modulos</label>
+
+				<div class="checkbox">
+
+					<label><input type="checkbox" id="con_modulos" name="con_modulos" <?php if ($accion == "modificar" && $publicacion->modulos): ?>checked<?php endif; ?>>Agregar modulos</label>
+
+				</div>
+
+				<?php if ($accion == "modificar" && $publicacion->modulos): ?>
+
+					<div id="div_modulos">
+
+						<ol id="lista_modulos">
+
+							<?php foreach ($publicacion->modulos as $modulo): ?>
+
+								<li>
+
+									<span class="input-group">
+
+										<input type="text" id="modulos" name="modulos[]" class="form-control" value="<?= $modulo->nombre ?>">
+
+										<span class="input-group-btn">
+
+											<button class="eliminar_modulo btn btn-default">Eliminar</button>
+
+										</span>
+
+									</span>
+
+								</li>
+
+							<?php endforeach; ?>
+
+						</ol>
+
+						<?= form_error("modulos") ?>
+
+						<button id="agregar_modulo" name="agregar_modulo" class="btn btn-default">Agregar modulo</button>
+
+					</div>
+
+				<?php else: ?>
+
+					<div id="div_modulos" style="display: none">
+
+						<ol id="lista_modulos">
 
 							<li>
 
 								<span class="input-group">
 
-									<input type="text" id="modulos" name="modulos[]" class="form-control" value="<?= $modulo->nombre ?>">
+									<input type="text" id="modulos" name="modulos[]" class="form-control">
 
 									<span class="input-group-btn">
 
@@ -82,344 +116,313 @@
 
 							</li>
 
-						<?php endforeach; ?>
+						</ol>
 
-					</ol>
+						<?= form_error("modulos") ?>
 
-					<?= form_error("modulos") ?>
+						<button id="agregar_modulo" name="agregar_modulo" class="btn btn-default">Agregar modulo</button>
 
-					<button id="agregar_modulo" name="agregar_modulo" class="btn btn-default">Agregar modulo</button>
+					</div>
+
+				<?php endif; ?>
+
+			</div>
+
+			<!-- Imagen -->
+			<div class="form-group">
+
+				<label>Imagen</label>
+
+				<?php if ($accion == "modificar"): ?>
+
+					<?php if (isset($publicacion->imagen)): ?>
+
+						<div>
+
+							<label>Imagen actual</label>
+
+							<br><img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" class="img-responsive">
+
+							<p><?= $publicacion->imagen ?></p>
+
+							<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $publicacion->imagen ?>">
+
+						</div>
+
+						<label>Subir imagen nueva</label>
+
+					<?php endif; ?>
+
+				<?php endif; ?>
+
+				<input type="file" id="imagen" name="imagen" <?php if ($accion == "registrar"): ?>required<?php endif; ?>>
+
+				<?= form_error("imagen") ?>
+
+			</div>
+
+			<!-- Documento -->
+			<div class="form-group">
+
+				<label>Documento</label>
+
+				<?php if ($accion == "modificar"): ?>
+
+					<?php if ($publicacion->url): ?>
+
+						<div>
+
+							<label>Documento actual</label>
+
+							<p><a href="<?= base_url($path_publicaciones . $publicacion->url) ?>"><?= $publicacion->url ?></a></p>
+
+							<input type="hidden" id="url_antiguo" name="url_antiguo" value="<?= $publicacion->url ?>">
+
+							<div class="checkbox">
+
+								<label><input type="checkbox" id="borrar_url" name="borrar_url">Borrar documento actual</label>
+
+							</div>
+
+						</div>
+
+						<label>Subir nuevo documento</label>
+
+					<?php endif; ?>
+
+				<?php endif; ?>
+
+				<input type="file" id="url" name="url">
+
+				<?= form_error("url") ?>
+
+			</div>
+
+			<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+
+			<!-- Autores -->
+			<?php if (isset($autores) || isset($publicacion->autores)): ?>
+
+				<div class="form-group">
+
+					<label>Autor(es)</label>
+
+					<div class="row">
+
+						<div class="col-md-5">
+
+							<label>Autores disponibles</label>
+
+							<select id="autores" class="form-control" multiple>
+
+								<?php if ($autores): ?>
+
+									<?php foreach ($autores as $autor): ?>
+
+										<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+						<div class="col-md-2 btn-group">
+
+							<button id="agregar_autor" class="agregar btn btn-default">Agregar ></button>
+							<button id="quitar_autor" class="quitar btn btn-default">< Quitar</button>
+
+						</div>
+
+						<div class="col-md-5">
+
+							<label>Autores seleccionados</label>
+
+							<select id="id_autor" name="id_autor[]" class="form-control" multiple="">
+
+								<?php if ($publicacion->autores): ?>
+
+									<?php foreach ($publicacion->autores as $autor): ?>
+
+										<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+					</div>
 
 				</div>
 
 			<?php else: ?>
 
-				<div id="div_modulos" style="display: none">
-
-					<ol id="lista_modulos">
-
-						<li>
-
-							<span class="input-group">
-
-								<input type="text" id="modulos" name="modulos[]" class="form-control">
-
-								<span class="input-group-btn">
-
-									<button class="eliminar_modulo btn btn-default">Eliminar</button>
-
-								</span>
-
-							</span>
-
-						</li>
-
-					</ol>
-
-					<?= form_error("modulos") ?>
-
-					<button id="agregar_modulo" name="agregar_modulo" class="btn btn-default">Agregar modulo</button>
-
-				</div>
+				<p>No se registraron autores.</p>
 
 			<?php endif; ?>
 
-		</div>
+			<!-- Categorias -->
+			<?php if (isset($categorias) || isset($publicacion->categorias)): ?>
 
-		<!-- Imagen -->
-		<div class="form-group">
+				<div class="form-group">
 
-			<label>Imagen</label>
+					<label>Categoria(s)</label>
 
-			<?php if ($accion == "modificar"): ?>
+					<div class="row">
 
-				<?php if (isset($publicacion->imagen)): ?>
+						<div class="col-md-5">
 
-					<div>
+							<label>Categorias disponibles</label>
 
-						<label>Imagen actual</label>
+							<select id="categorias" class="form-control" multiple>
 
-						<br><img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" class="img-responsive">
+								<?php if ($categorias): ?>
 
-						<p><?= $publicacion->imagen ?></p>
+									<?php foreach ($categorias as $categoria): ?>
 
-						<input type="hidden" id="imagen_antiguo" name="imagen_antiguo" value="<?= $publicacion->imagen ?>">
+										<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
 
-					</div>
+									<?php endforeach; ?>
 
-					<label>Subir imagen nueva</label>
+								<?php endif; ?>
 
-				<?php endif; ?>
+							</select>
 
-			<?php endif; ?>
-
-			<input type="file" id="imagen" name="imagen" <?php if ($accion == "registrar"): ?>required<?php endif; ?>>
-
-			<?= form_error("imagen") ?>
-
-		</div>
-
-		<!-- Documento -->
-		<div class="form-group">
-
-			<label>Documento</label>
-
-			<?php if ($accion == "modificar"): ?>
-
-				<?php if ($publicacion->url): ?>
-
-					<div>
-
-						<label>Documento actual</label>
-
-						<p><a href="<?= base_url($path_publicaciones . $publicacion->url) ?>"><?= $publicacion->url ?></a></p>
-
-						<input type="hidden" id="url_antiguo" name="url_antiguo" value="<?= $publicacion->url ?>">
-
-						<div class="checkbox">
-							
-							<label><input type="checkbox" id="borrar_url" name="borrar_url">Borrar documento actual</label>
-							
 						</div>
-						
+
+						<div class="col-md-2 btn-group">
+
+							<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
+
+							<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
+
+						</div>
+
+						<div class="col-md-5">
+
+							<label>Categorias seleccionadas</label>
+
+							<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
+
+								<?php if ($publicacion->categorias): ?>
+
+									<?php foreach ($publicacion->categorias as $categoria): ?>
+
+										<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
 					</div>
 
-					<label>Subir nuevo documento</label>
+				</div>
 
-				<?php endif; ?>
+			<?php else: ?>
+
+				<p>No se registraron categorias.</p>
 
 			<?php endif; ?>
 
-			<input type="file" id="url" name="url">
+			<!-- Instituciones -->
+			<?php if (isset($instituciones) || isset($publicacion->instituciones)): ?>
 
-			<?= form_error("url") ?>
+				<div class="form-group">
 
-		</div>
+					<label>Institución(es)</label>
 
-		<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+					<div class="row">
 
-		<!-- Autores -->
-		<?php if (isset($autores) || isset($publicacion->autores)): ?>
+						<div class="col-md-5">
 
-			<div class="form-group">
+							<label>Instituciones disponibles</label>
 
-				<label>Autor(es)</label>
+							<select id="instituciones" class="form-control" multiple>
 
-				<div class="row">
+								<?php if ($instituciones): ?>
 
-					<div class="col-md-5">
+									<?php foreach ($instituciones as $institucion): ?>
 
-						<label>Autores disponibles</label>
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
 
-						<select id="autores" class="form-control" multiple>
+									<?php endforeach; ?>
 
-							<?php if ($autores): ?>
+								<?php endif; ?>
 
-								<?php foreach ($autores as $autor): ?>
+							</select>
 
-									<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
+						</div>
 
-								<?php endforeach; ?>
+						<div class="col-md-2 btn-group">
 
-							<?php endif; ?>
+							<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
 
-						</select>
+							<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
+
+						</div>
+
+						<div class="col-md-5">
+
+							<label>Instituciones seleccionadas</label>
+
+							<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
+
+								<?php if (isset($publicacion) && $publicacion->instituciones): ?>
+
+									<?php foreach ($publicacion->instituciones as $institucion): ?>
+
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+								<?php if ($accion == "registrar" && $institucion_usuario): ?>
+
+									<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
 
 					</div>
 
-					<div class="col-md-2 btn-group">
+					<?php if ($this->session->userdata("rol") == "usuario"): ?>
 
-						<button id="agregar_autor" class="agregar btn btn-default">Agregar ></button>
-						<button id="quitar_autor" class="quitar btn btn-default">< Quitar</button>
+						<input type="hidden" id="id_institucion_usuario" name="id_institucion_usuario" value="<?= $this->session->userdata("id_institucion") ?>">
 
-					</div>
-
-					<div class="col-md-5">
-
-						<label>Autores seleccionados</label>
-
-						<select id="id_autor" name="id_autor[]" class="form-control" multiple="">
-
-							<?php if ($publicacion->autores): ?>
-
-								<?php foreach ($publicacion->autores as $autor): ?>
-
-									<option value="<?= $autor->id ?>"><?= $autor->nombre_completo ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
+					<?php endif; ?>
 
 				</div>
 
-			</div>
+			<?php else: ?>
 
-		<?php else: ?>
+				<p>No se registraron instituciones.</p>
 
-			<p>No se registraron autores.</p>
+			<?php endif; ?>
 
-		<?php endif; ?>
+			<?php if ($accion == "modificar"): ?>
 
-		<!-- Categorias -->
-		<?php if (isset($categorias) || isset($publicacion->categorias)): ?>
+				<input type="hidden" id="id" name="id" value="<?= $publicacion->id ?>">
 
-			<div class="form-group">
+			<?php endif; ?>
 
-				<label>Categoria(s)</label>
+			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
-				<div class="row">
+		</form>
 
-					<div class="col-md-5">
-
-						<label>Categorias disponibles</label>
-
-						<select id="categorias" class="form-control" multiple>
-
-							<?php if ($categorias): ?>
-
-								<?php foreach ($categorias as $categoria): ?>
-
-									<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-					<div class="col-md-2 btn-group">
-
-						<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
-
-						<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
-
-					</div>
-
-					<div class="col-md-5">
-
-						<label>Categorias seleccionadas</label>
-
-						<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
-
-							<?php if ($publicacion->categorias): ?>
-
-								<?php foreach ($publicacion->categorias as $categoria): ?>
-
-									<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-				</div>
-
-			</div>
-
-		<?php else: ?>
-
-			<p>No se registraron categorias.</p>
-
-		<?php endif; ?>
-
-		<!-- Instituciones -->
-		<?php if (isset($instituciones) || isset($publicacion->instituciones)): ?>
-
-			<div class="form-group">
-
-				<label>Institución(es)</label>
-
-				<div class="row">
-
-					<div class="col-md-5">
-
-						<label>Instituciones disponibles</label>
-
-						<select id="instituciones" class="form-control" multiple>
-
-							<?php if ($instituciones): ?>
-
-								<?php foreach ($instituciones as $institucion): ?>
-
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-					<div class="col-md-2 btn-group">
-
-						<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
-
-						<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
-
-					</div>
-
-					<div class="col-md-5">
-
-						<label>Instituciones seleccionadas</label>
-
-						<select id="id_institucion" name="id_institucion[]" class="form-control" multiple>
-
-							<?php if (isset($publicacion) && $publicacion->instituciones): ?>
-
-								<?php foreach ($publicacion->instituciones as $institucion): ?>
-
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-							<?php if ($accion == "registrar" && $institucion_usuario): ?>
-
-								<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-				</div>
-
-				<?php if ($this->session->userdata("rol") == "usuario"): ?>
-
-					<input type="hidden" id="id_institucion_usuario" name="id_institucion_usuario" value="<?= $this->session->userdata("id_institucion") ?>">
-
-				<?php endif; ?>
-
-			</div>
-
-		<?php else: ?>
-
-			<p>No se registraron instituciones.</p>
-
-		<?php endif; ?>
-
-		<?php if ($accion == "modificar"): ?>
-
-			<input type="hidden" id="id" name="id" value="<?= $publicacion->id ?>">
-
-		<?php endif; ?>
-
-		<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
-
-	</form>
-
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -575,7 +578,7 @@
 
 </script>
 
-<script src="<?= base_url("assets/jquery-validate-1.15.0/jquery.validate.html.array.extend.js")?>"></script>
+<script src="<?= base_url("assets/jquery-validate-1.15.0/jquery.validate.html.array.extend.js") ?>"></script>
 
 <script type="text/javascript">
 	/** script para validaciones **/

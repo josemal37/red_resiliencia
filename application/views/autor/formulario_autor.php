@@ -2,129 +2,133 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container contenido">
+<?php
+switch ($accion) {
+	case "registrar":
+		$url = base_url("autor/" . $accion . "_autor");
+		break;
+	case "modificar":
+		$url = base_url("autor/" . $accion . "_autor/" . $autor->id);
+		break;
+}
+?>
 
-	<?php
-	switch ($accion) {
-		case "registrar":
-			$url = base_url("autor/" . $accion . "_autor");
-			break;
-		case "modificar":
-			$url = base_url("autor/" . $accion . "_autor/" . $autor->id);
-			break;
-	}
-	?>
+<div class="pagina">
 
-	<form action="<?= $url ?>" id="form_autor" method="post" autocomplete="off">
+	<div class="titulo">
 
-		<div class="form-group">
+		<h1><?= $titulo ?></h1>
 
-			<label>Nombre</label>
-			<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $autor->nombre ?>"<?php endif; ?>>
-			<?= form_error("nombre") ?>
+	</div>
 
-		</div>
+	<div class="container contenido">
 
-		<div class="form-group">
+		<form action="<?= $url ?>" id="form_autor" method="post" autocomplete="off">
 
-			<label>Apellido paterno</label>
-			<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $autor->apellido_paterno ?>"<?php endif; ?>>
-			<?= form_error("apellido_paterno") ?>
+			<div class="form-group">
 
-		</div>
+				<label>Nombre</label>
+				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $autor->nombre ?>"<?php endif; ?>>
+				<?= form_error("nombre") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Apellido materno</label>
-			<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $autor->apellido_materno ?>"<?php endif; ?>>
-			<?= form_error("apellido_materno") ?>
+			<div class="form-group">
 
-		</div>
+				<label>Apellido paterno</label>
+				<input type="text" id="apellido_paterno" name="apellido_paterno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $autor->apellido_paterno ?>"<?php endif; ?>>
+				<?= form_error("apellido_paterno") ?>
 
-		<div class="form-group">
+			</div>
 
-			<label>Institución(es)</label>
+			<div class="form-group">
 
-			<?php if (isset($instituciones) || isset($autor->instituciones)): ?>
+				<label>Apellido materno</label>
+				<input type="text" id="apellido_materno" name="apellido_materno" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $autor->apellido_materno ?>"<?php endif; ?>>
+				<?= form_error("apellido_materno") ?>
 
-				<div class="row">
+			</div>
 
-					<div class="col-md-5">
+			<div class="form-group">
 
-						<label>Instituciones disponibles</label>
+				<label>Institución(es)</label>
 
-						<select id="instituciones" multiple class="form-control">
+				<?php if (isset($instituciones) || isset($autor->instituciones)): ?>
 
-							<?php if ($instituciones): ?>
+					<div class="row">
 
-								<?php foreach ($instituciones as $institucion): ?>
+						<div class="col-md-5">
 
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+							<label>Instituciones disponibles</label>
 
-								<?php endforeach; ?>
+							<select id="instituciones" multiple class="form-control">
 
-							<?php endif; ?>
+								<?php if ($instituciones): ?>
 
-						</select>
+									<?php foreach ($instituciones as $institucion): ?>
+
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+						<div class="col-md-2 btn-group">
+
+							<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
+							<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
+
+						</div>
+
+						<div class="col-md-5">
+
+							<label>Instituciones seleccionadas</label>
+
+							<select id="id_institucion" name="id_institucion[]" multiple class="form-control">
+
+								<?php if ($autor->instituciones): ?>
+
+									<?php foreach ($autor->instituciones as $institucion): ?>
+
+										<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
 
 					</div>
 
-					<div class="col-md-2 btn-group">
+				<?php else: ?>
 
-						<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
-						<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
+					<p class="control-label">No se registraron instituciones.</p>
 
-					</div>
+				<?php endif; ?>
 
-					<div class="col-md-5">
+			</div>
 
-						<label>Instituciones seleccionadas</label>
+			<?php if ($accion == "modificar"): ?>
 
-						<select id="id_institucion" name="id_institucion[]" multiple class="form-control">
-
-							<?php if ($autor->instituciones): ?>
-
-								<?php foreach ($autor->instituciones as $institucion): ?>
-
-									<option value="<?= $institucion->id ?>"><?= $institucion->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-				</div>
-
-			<?php else: ?>
-
-				<p class="control-label">No se registraron instituciones.</p>
+				<input type="hidden" id="id" name="id" value="<?= $autor->id ?>">
 
 			<?php endif; ?>
 
-		</div>
+			<?php if ($this->session->flashdata("existe")): ?><p><?= $this->session->flashdata("existe") ?></p><?php endif; ?>
 
-		<?php if ($accion == "modificar"): ?>
+			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
-			<input type="hidden" id="id" name="id" value="<?= $autor->id ?>">
+		</form>
 
-		<?php endif; ?>
-
-		<?php if ($this->session->flashdata("existe")): ?><p><?= $this->session->flashdata("existe") ?></p><?php endif; ?>
-
-		<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
-
-	</form>
+	</div>
 
 </div>
 

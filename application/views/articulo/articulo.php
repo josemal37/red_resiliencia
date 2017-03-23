@@ -2,35 +2,39 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="titulo text-center">
-
-	<h1><?= $titulo ?></h1>
-
-</div>
-
 <?php $this->load->view("base/menu"); ?>
 
-<div class="container contenido contenido-mce">
+<div class="pagina">
 
-	<?php $this->load->ext_view("articulos", $articulo->url) ?>
+	<div class="titulo">
 
-	<?php if ($articulo->autores): ?>
+		<h1><?= $titulo ?></h1>
 
-		<p><label>Autor(es):</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
+	</div>
 
-	<?php endif; ?>
+	<div class="container contenido">
 
-	<?php if ($articulo->instituciones): ?>
+		<?php $this->load->ext_view("articulos", $articulo->url) ?>
 
-		<p><label>Institución(es):</label> <?= listar_array_de_stdclass($articulo->instituciones, "nombre", ", ") ?></p>
+		<?php if ($articulo->autores): ?>
 
-	<?php endif; ?>
+			<p><label>Autor(es):</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
 
-	<?php if ($articulo->categorias): ?>
+		<?php endif; ?>
 
-		<p><label>Categoria(s):</label> <?= listar_array_de_stdclass($articulo->categorias, "nombre", ", ") ?></p>
+		<?php if ($articulo->instituciones): ?>
 
-	<?php endif; ?>
+			<p><label>Institución(es):</label> <?= listar_array_de_stdclass($articulo->instituciones, "nombre", ", ") ?></p>
+
+		<?php endif; ?>
+
+		<?php if ($articulo->categorias): ?>
+
+			<p><label>Categoria(s):</label> <?= listar_array_de_stdclass($articulo->categorias, "nombre", ", ") ?></p>
+
+		<?php endif; ?>
+
+	</div>
 
 </div>
 
