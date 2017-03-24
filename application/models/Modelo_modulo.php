@@ -20,7 +20,8 @@ class Modelo_modulo extends My_model {
 	const ID_COL = "id_modulo";
 	const ID_PUBLICACION_COL = "id_publicacion";
 	const NOMBRE_COL = "nombre_modulo";
-	const COLUMNAS_SELECT = "modulo.id_modulo as id, modulo.id_publicacion as id_publicacion, modulo.nombre_modulo as nombre";
+	const DESCRIPCION_COL = "descripcion_modulo";
+	const COLUMNAS_SELECT = "modulo.id_modulo as id, modulo.id_publicacion as id_publicacion, modulo.nombre_modulo as nombre, modulo.descripcion_modulo as descripcion";
 	const NOMBRE_TABLA = "modulo";
 
 	public function __construct() {
@@ -46,7 +47,7 @@ class Modelo_modulo extends My_model {
 		}
 	}
 
-	public function insert_modulo($id_publicacion = FALSE, $nombre = "") {
+	public function insert_modulo($id_publicacion = FALSE, $nombre = "", $descripcion = "") {
 		if ($id_publicacion && $nombre != "") {
 			$insertado = FALSE;
 
@@ -54,7 +55,7 @@ class Modelo_modulo extends My_model {
 
 			$datos = array();
 
-			if (is_array($nombre)) {
+			if (is_array($nombre) && is_array($descripcion)) {
 				foreach ($nombre as $n) {
 					$actual = array();
 					$actual[self::ID_PUBLICACION_COL] = $id_publicacion;
@@ -62,11 +63,18 @@ class Modelo_modulo extends My_model {
 
 					$datos[] = $actual;
 				}
+				
+				$i = 0;
+				foreach ($descripcion as $d) {
+					$datos[$i][self::DESCRIPCION_COL] = $d;
+					$i += 1;
+				}
 
 				$insertado = $this->db->insert_batch(self::NOMBRE_TABLA, $datos);
 			} else {
 				$datos[self::ID_PUBLICACION_COL] = $id_publicacion;
 				$datos[self::NOMBRE_COL] = $nombre;
+				$datos[self::DESCRIPCION_COL] = $descripcion;
 
 				$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
 			}
@@ -101,35 +109,10 @@ class Modelo_modulo extends My_model {
 		}
 	}
 
-	public function update_modulos_publicacion($id_publicacion = FALSE, $modulos = FALSE) {
+	public function update_modulos_publicacion($id_publicacion = FALSE, $modulos = "", $descripcion_modulos = "") {
 		$this->delete_modulos_publicacion($id_publicacion);
 
-		if ($id_publicacion && $modulos) {
-			$actualizado = FALSE;
-
-			$datos = array();
-
-			if (is_array($modulos)) {
-				foreach ($modulos as $modulo) {
-					$actual = array();
-					$actual[self::ID_PUBLICACION_COL] = $id_publicacion;
-					$actual[self::NOMBRE_COL] = $modulo;
-
-					$datos[] = $actual;
-				}
-
-				$actualizado = $this->db->insert_batch(self::NOMBRE_TABLA, $datos);
-			} else {
-				$datos[self::ID_PUBLICACION_COL] = $id_publicacion;
-				$datos[self::NOMBRE_COL] = $modulos;
-
-				$actualizado = $this->db->insert(self::NOMBRE_TABLA, $datos);
-			}
-
-			return $actualizado;
-		} else {
-			return FALSE;
-		}
+		return $this->insert_modulo($id_publicacion, $modulos, $descripcion_modulos);
 	}
 
 	public function delete_modulos_publicacion($id_publicacion = FALSE) {

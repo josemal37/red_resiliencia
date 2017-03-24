@@ -140,6 +140,7 @@ class Publicacion extends CI_Controller {
 		$descripcion = $this->input->post("descripcion");
 		$con_modulos = $this->input->post("con_modulos") == "on" ? TRUE : FALSE;
 		$modulos = $con_modulos === TRUE ? $this->input->post("modulos") : FALSE;
+		$descripcion_modulos = $con_modulos === TRUE ? $this->input->post("descripcion_modulos") : FALSE;
 		$id_autor = $this->input->post("id_autor");
 		$id_categoria = $this->input->post("id_categoria");
 		$id_institucion = $this->input->post("id_institucion");
@@ -176,7 +177,7 @@ class Publicacion extends CI_Controller {
 						$direccion_documento = $documento["datos"]["file_name"];
 					}
 
-					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $modulos, $direccion_documento, $direccion_imagen, NULL, date('Y-m-d'), $id_autor, $id_categoria, $id_institucion)) {
+					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $modulos, $descripcion_modulos, $direccion_documento, $direccion_imagen, NULL, date('Y-m-d'), $id_autor, $id_categoria, $id_institucion)) {
 						redirect(base_url("publicacion/publicaciones"));
 					} else {
 						$this->session->set_flashdata("error", "Ocurrió un error al registrar la publicación.");
@@ -265,6 +266,7 @@ class Publicacion extends CI_Controller {
 		$descripcion = $this->input->post("descripcion");
 		$con_modulos = $this->input->post("con_modulos") == "on" ? TRUE : FALSE;
 		$modulos = $con_modulos === TRUE ? $this->input->post("modulos") : FALSE;
+		$descripcion_modulos = $con_modulos === TRUE ? $this->input->post("descripcion_modulos") : FALSE;
 		$id_autor = $this->input->post("id_autor");
 		$id_categoria = $this->input->post("id_categoria");
 		$id_institucion = $this->input->post("id_institucion");
@@ -316,7 +318,7 @@ class Publicacion extends CI_Controller {
 						}
 					}
 
-					if ($this->Modelo_publicacion->update_publicacion($id, $nombre, $descripcion, $modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {
+					if ($this->Modelo_publicacion->update_publicacion($id, $nombre, $descripcion, $modulos, $descripcion_modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {
 						redirect(base_url("publicacion/publicaciones"));
 					} else {
 						$this->session->set_flashdata("error", "Ocurrió un error al modificar la publicación.");

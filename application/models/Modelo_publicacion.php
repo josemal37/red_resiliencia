@@ -221,7 +221,7 @@ class Modelo_publicacion extends My_model {
 		}
 	}
 
-	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $fecha = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $descripcion_modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $fecha = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
 		if ($nombre != "") {
 			$insertado = FALSE;
 
@@ -240,7 +240,7 @@ class Modelo_publicacion extends My_model {
 			if ($insertado) {
 				$id_publicacion = $this->db->insert_id();
 
-				$this->Modelo_modulo->insert_modulo($id_publicacion, $modulos);
+				$this->Modelo_modulo->insert_modulo($id_publicacion, $modulos, $descripcion_modulos);
 				$this->insert_categoria_a_publicacion($id_publicacion, $id_categoria);
 				$this->insert_autor_a_publicacion($id_publicacion, $id_autor);
 				$this->insert_institucion_a_publicacion($id_publicacion, $id_institucion);
@@ -290,7 +290,7 @@ class Modelo_publicacion extends My_model {
 		}
 	}
 
-	public function update_publicacion($id = FALSE, $nombre = "", $descripcion = "", $modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function update_publicacion($id = FALSE, $nombre = "", $descripcion = "", $modulos = FALSE, $descripcion_modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
 		if ($id && $nombre != "") {
 			$actualizado = FALSE;
 
@@ -309,7 +309,7 @@ class Modelo_publicacion extends My_model {
 			$this->update_autores_de_publicacion($id, $id_autor);
 			$this->update_categorias_de_publicacion($id, $id_categoria);
 			$this->update_instituciones_de_publicacion($id, $id_institucion);
-			$this->Modelo_modulo->update_modulos_publicacion($id, $modulos);
+			$this->Modelo_modulo->update_modulos_publicacion($id, $modulos, $descripcion_modulos);
 
 			$this->db->trans_complete();
 

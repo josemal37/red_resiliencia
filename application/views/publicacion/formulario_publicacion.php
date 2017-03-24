@@ -70,6 +70,8 @@ switch ($accion) {
 
 								<li>
 
+									<label>Nombre</label>
+
 									<span class="input-group">
 
 										<input type="text" id="modulos" name="modulos[]" class="form-control" value="<?= $modulo->nombre ?>">
@@ -81,6 +83,10 @@ switch ($accion) {
 										</span>
 
 									</span>
+
+									<label>Descripción</label>
+
+									<textarea name="descripcion_modulos[]" class="form-control"><?= $modulo->descripcion ?></textarea>
 
 								</li>
 
@@ -102,6 +108,8 @@ switch ($accion) {
 
 							<li>
 
+								<label>Nombre</label>
+
 								<span class="input-group">
 
 									<input type="text" id="modulos" name="modulos[]" class="form-control">
@@ -113,6 +121,10 @@ switch ($accion) {
 									</span>
 
 								</span>
+
+								<label>Descripción</label>
+
+								<textarea name="descripcion_modulos[]" class="form-control"></textarea>
 
 							</li>
 
@@ -536,6 +548,9 @@ switch ($accion) {
 		/* agregar un modulo */
 		$("#agregar_modulo").click(function(event) {
 			event.preventDefault();
+			
+			var nombreLabel = $("<label/>");
+			nombreLabel.html("Nombre");
 
 			var input = $("<input/>", {
 				type: "text",
@@ -559,9 +574,20 @@ switch ($accion) {
 			span_conjunto.append(input);
 			span_conjunto.append(span_button);
 
+			var descripcionLabel = $("<label/>");
+			descripcionLabel.html("Descripción");
+			
+			var descripcion = $("<textarea>", {
+				name: "descripcion_modulos[]"
+			});
+			descripcion.addClass("form-control");
+
 			var li = $("<li/>");
 
+			li.append(nombreLabel);
 			li.append(span_conjunto);
+			li.append(descripcionLabel);
+			li.append(descripcion);
 
 			li.appendTo("#lista_modulos");
 		});

@@ -60,7 +60,25 @@
 
 						<?php foreach ($publicacion->modulos as $modulo): ?>
 
-							<li><?= $modulo->nombre ?></li>
+							<li>
+
+								<div>
+
+									<p><?= $modulo->nombre ?></p>
+
+								</div>
+
+								<?php if ($modulo->descripcion): ?>
+
+									<div>
+
+										<p><?= $modulo->descripcion ?></p>
+
+									</div>
+
+								<?php endif; ?>
+
+							</li>
 
 						<?php endforeach; ?>
 
