@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0 modificado                         */
-/* Created on:     09/03/2017 09:02:07                          */
+/* Created on:     24/03/2017 10:44:37                          */
 /*==============================================================*/
 
 /*==============================================================*/
@@ -32,6 +32,8 @@ create table `autor`
    `nombre_autor` varchar(1024) not null,
    `apellido_paterno_autor` varchar(1024),
    `apellido_materno_autor` varchar(1024),
+   `correo_autor` varchar(1024),
+   `foto_autor` varchar(1024),
    primary key (`id_autor`)
 )
 
@@ -160,7 +162,7 @@ create table `evento`
    `direccion_evento` varchar(1024) not null,
    `imagen_evento` varchar(1024),
    `destacado_evento` bool,
-    `url_evento` varchar(1024),
+   `url_evento` varchar(1024),
    primary key (`id_evento`)
 )
 
@@ -177,6 +179,7 @@ create table `institucion`
    `id_institucion` int not null auto_increment,
    `nombre_institucion` varchar(1024) not null,
    `sigla_institucion` varchar(1024),
+   `logo_institucion` varchar(1024),
    primary key (`id_institucion`)
 )
 
@@ -253,6 +256,7 @@ create table `modulo`
    `id_modulo` int not null auto_increment,
    `id_publicacion` int not null,
    `nombre_modulo` varchar(1024),
+   `descripcion_modulo` text,
    primary key (`id_modulo`)
 )
 
@@ -324,6 +328,8 @@ create table `usuario`
    `apellido_materno_usuario` varchar(1024),
    `login_usuario` varchar(1024),
    `password_usuario` varchar(1024),
+   `correo_usuario` varchar(1024),
+   `telefono_usuario` varchar(1024),
    primary key (`id_usuario`)
 )
 
