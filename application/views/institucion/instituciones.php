@@ -2,70 +2,88 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
 <div class="pagina">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu"); ?>
 
-		<?php if ($instituciones): ?>
+	<div class="titulo-pagina">
 
-			<table class="table table-bordered">
+		<div class="container-fluid">
 
-				<thead>
+			<h1><?= $titulo ?></h1>
 
-					<tr>
+		</div>
 
-						<th>Sigla</th>
-						<th>Nombre</th>
-						<th>Acciones</th>
+	</div>
 
-					</tr>
+	<div class="contenido">
 
-				</thead>
+		<div class="container-fluid">
 
-				<tbody>
+			<?php if ($instituciones): ?>
 
-					<?php foreach ($instituciones as $institucion): ?>
+				<table class="table table-bordered">
 
-						<tr id="<?= $institucion->id ?>">
+					<thead>
 
-							<td><?= $institucion->sigla ?></td>
-							<td><?= $institucion->nombre ?></td>
+						<tr>
 
-							<td>
-
-								<a href="<?= base_url("institucion/modificar_institucion/" . $institucion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-								<a href="<?= base_url("institucion/eliminar_institucion/" . $institucion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-
-							</td>
+							<th>Sigla</th>
+							<th>Nombre</th>
+							<th>Acciones</th>
 
 						</tr>
 
-					<?php endforeach; ?>
+					</thead>
 
-				</tbody>
+					<tbody>
 
-			</table>
+						<?php foreach ($instituciones as $institucion): ?>
 
-		<?php else: ?>
+							<tr id="<?= $institucion->id ?>">
 
-			<p>No se registraron instituciones.</p>
+								<td><?= $institucion->sigla ?></td>
+								<td><?= $institucion->nombre ?></td>
 
-		<?php endif; ?>
+								<td>
 
-		<a href="<?= base_url("institucion/registrar_institucion") ?>" class="btn btn-default btn-resiliencia">Registrar institución</a>
+									<a href="<?= base_url("institucion/modificar_institucion/" . $institucion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+
+									<a href="<?= base_url("institucion/eliminar_institucion/" . $institucion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+
+								</td>
+
+							</tr>
+
+						<?php endforeach; ?>
+
+					</tbody>
+
+				</table>
+
+			<?php else: ?>
+
+				<p>No se registraron instituciones.</p>
+
+			<?php endif; ?>
+
+			<a href="<?= base_url("institucion/registrar_institucion") ?>" class="btn btn-default btn-resiliencia">Registrar institución</a>
+
+			<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
+
+		</div>
 
 	</div>
-
-	<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
 
 </div>
 

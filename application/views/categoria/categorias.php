@@ -2,67 +2,91 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php
-$this->load->view("base/menu");
-?>
-
 <div class="pagina">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php
+	$this->load->view("base/menu");
+	?>
 
-		<?php if ($categorias): ?>
+	<div class="pagina">
 
-			<table class="table table-bordered">
+		<div class="titulo-pagina">
 
-				<thead>
+			<div class="container-fluid">
 
-					<tr>
+				<h1><?= $titulo ?></h1>
 
-						<th>Nombre</th>
-						<th>Acciones</th>
+			</div>
 
-					</tr>
+		</div>
 
-				</thead>
+		<div class="contenido">
 
-				<tbody>
+			<div class="container-fluid">
 
-					<?php foreach ($categorias as $categoria): ?>
+				<?php if ($categorias): ?>
 
-						<tr id="<?= $categoria->id ?>">
+					<table class="table table-bordered">
 
-							<td><?= $categoria->nombre ?></td>
-							<td>
-								<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+						<thead>
+
+							<tr>
+
+								<th>Nombre</th>
 								
-								<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-							</td>
+								<th>Acciones</th>
 
-						</tr>
+							</tr>
 
-					<?php endforeach; ?>
+						</thead>
 
-				</tbody>
+						<tbody>
 
-			</table>
+							<?php foreach ($categorias as $categoria): ?>
 
-		<?php else: ?>
+								<tr id="<?= $categoria->id ?>">
 
-			<p>No se registraron categorias.</p>
+									<td><?= $categoria->nombre ?></td>
+									
+									<td>
+										<a href="<?= base_url("categoria/modificar_categoria/" . $categoria->id) ?>" class="btn btn-default btn-xs">Modificar</a>
 
-		<?php endif; ?>
+										<a href="<?= base_url("categoria/eliminar_categoria/" . $categoria->id) ?>" class="btn btn-default btn-xs">Eliminar</a>
+									</td>
 
-			<a href="<?= base_url("categoria/registrar_categoria") ?>" class="btn btn-default btn-resiliencia">Registrar categoria</a>
+								</tr>
+
+							<?php endforeach; ?>
+
+						</tbody>
+
+					</table>
+
+				<?php else: ?>
+
+					<p>No se registraron categorias.</p>
+
+				<?php endif; ?>
+
+				<a href="<?= base_url("categoria/registrar_categoria") ?>" class="btn btn-default btn-resiliencia">Registrar categoria</a>
+
+			</div>
+
+		</div>
+
+		<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
 
 	</div>
-
-	<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
 
 </div>
 

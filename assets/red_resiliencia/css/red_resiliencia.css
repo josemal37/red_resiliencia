@@ -320,7 +320,20 @@ section {
     padding: 20px; }
 
 .pagina {
-  font-family: "Josefin Sans", sans-serif; }
+  font-family: "Josefin Sans", sans-serif;
+  min-height: 100%; }
+  .pagina .titulo {
+    padding-top: 50px;
+    padding-bottom: 20px; }
+    .pagina .titulo h1 {
+      font-size: 50px;
+      margin: 0; }
+  .pagina .titulo-pagina h1 {
+    margin: 0; }
+  .pagina .contenido .imagen {
+    max-height: 500px; }
+  .pagina .contenido .subtitulo {
+    color: #b2dd39; }
 
 .login {
   min-height: 100%;

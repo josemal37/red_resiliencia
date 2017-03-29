@@ -1,3 +1,25 @@
 .pagina {
     font-family: $fuente-josefin;
+    min-height: 100%;
+    .titulo {
+        padding-top: 50px;
+        padding-bottom: 20px;
+        h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+    }
+    .titulo-pagina {
+        h1 {
+            margin: 0;
+        }
+    }
+    .contenido {
+        .imagen {
+            max-height: 500px;
+        }
+        .subtitulo {
+            color: $verde;
+        }
+    }
 }

@@ -2,8 +2,6 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
 <?php
 switch ($accion) {
 	case "registrar":
@@ -19,39 +17,59 @@ switch ($accion) {
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu"); ?>
 
-		<form action="<?= $url ?>" id="form-categoria" method="post" autocomplete="off">
+	<div class="titulo-pagina">
 
-			<div class="form-group">
+		<div class="container-fluid">
 
-				<label>Nombre</label>
+			<h1><?= $titulo ?></h1>
 
-				<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $categoria->nombre ?>"<?php endif; ?>>
+		</div>
 
-				<?= form_error("nombre") ?>
+	</div>
 
-				<?php if ($this->session->flashdata("existe")): ?>
+	<div class="contenido">
 
-					<p><?= $this->session->flashdata("existe") ?></p>
+		<div class="container">
+
+			<form action="<?= $url ?>" id="form-categoria" method="post" autocomplete="off">
+
+				<div class="form-group">
+
+					<label>Nombre</label>
+
+					<input type="text" id="nombre" name="nombre" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $categoria->nombre ?>"<?php endif; ?>>
+
+					<?= form_error("nombre") ?>
+
+					<?php if ($this->session->flashdata("existe")): ?>
+
+						<p><?= $this->session->flashdata("existe") ?></p>
+
+					<?php endif; ?>
+
+				</div>
+
+				<?php if ($accion == "modificar"): ?>
+
+					<input type="hidden" id="id" name="id" value="<?= $categoria->id ?>">
 
 				<?php endif; ?>
 
-			</div>
+				<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
 
-			<?php if ($accion == "modificar"): ?>
+			</form>
 
-				<input type="hidden" id="id" name="id" value="<?= $categoria->id ?>">
-
-			<?php endif; ?>
-
-			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Aceptar">
-
-		</form>
+		</div>
 
 	</div>
 

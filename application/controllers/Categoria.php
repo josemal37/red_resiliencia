@@ -37,7 +37,7 @@ class Categoria extends CI_Controller {
 
 		if ($rol == "administrador") {
 			$datos = array();
-			$datos["titulo"] = "Categorias";
+			$datos["titulo"] = "Categorías";
 			$datos["categorias"] = $this->Modelo_categoria->select_categorias();
 
 			$this->load->view("categoria/categorias", $datos);
@@ -54,7 +54,7 @@ class Categoria extends CI_Controller {
 				$this->registrar_categoria_bd();
 			} else {
 				$datos = array();
-				$datos["titulo"] = "Registrar categoria";
+				$datos["titulo"] = "Registrar categoría";
 				$datos["accion"] = "registrar";
 
 				$datos["reglas_validacion"] = $this->categoria_validacion->get_reglas_cliente(array("nombre"));
@@ -90,7 +90,7 @@ class Categoria extends CI_Controller {
 					$this->modificar_categoria_bd();
 				} else {
 					$datos = array();
-					$datos["titulo"] = "Modificar categoria";
+					$datos["titulo"] = "Modificar categoría";
 					$datos["accion"] = "modificar";
 					$datos["categoria"] = $this->Modelo_categoria->select_categoria_por_id($id);
 

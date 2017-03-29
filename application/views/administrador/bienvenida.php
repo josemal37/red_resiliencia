@@ -2,17 +2,39 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
+<div class="pagina">
 
-	<h1><?= $titulo ?></h1>
+	<div class="titulo">
 
-</div>
+		<div class="container-fluid">
 
-<?php $this->load->view("base/menu"); ?>
+			<h1><?= NOMBRE_PAGINA ?></h1>
 
-<div class="container contenido">
+		</div>
 
-	<p>Bienvenido al sistema.</p>
+	</div>
+
+	<?php $this->load->view("base/menu"); ?>
+
+	<div class="titulo-pagina">
+
+		<div class="container-fluid">
+
+			<h1><?= $titulo ?></h1>
+
+		</div>
+
+	</div>
+
+	<div class="contenido">
+
+		<div class="container-fluid">
+
+			<p>Bienvenido al sistema.</p>
+
+		</div>
+
+	</div>
 
 </div>
 

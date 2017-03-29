@@ -2,77 +2,95 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
 <div class="pagina">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu"); ?>
 
-		<?php if ($usuarios): ?>
+	<div class="titulo-pagina">
 
-			<div class="table-responsive">
+		<div class="container-fluid">
 
-				<table class="table table-bordered">
+			<h1><?= $titulo ?></h1>
 
-					<thead>
+		</div>
 
-						<tr>
+	</div>
 
-							<th>Nombre</th>
-							<th>Apellido paterno</th>
-							<th>Apellido materno</th>
-							<th>Rol</th>
-							<th>Acciones</th>
+	<div class="contenido">
 
-						</tr>
+		<div class="container-fluid">
 
-					</thead>
+			<?php if ($usuarios): ?>
 
-					<tbody>
+				<div class="table-responsive">
 
-						<?php foreach ($usuarios as $usuario): ?>
+					<table class="table table-bordered">
+
+						<thead>
 
 							<tr>
 
-								<td><?= $usuario->nombre ?></td>
-								<td><?= $usuario->apellido_paterno ?></td>
-								<td><?= $usuario->apellido_materno ?></td>
-								<td><?= $usuario->nombre_rol ?></td>
-								<td>
-									<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-									<a href="<?= base_url("usuario/modificar_password_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar password</a>
-
-									<a href="<?= base_url("usuario/eliminar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-								</td>
+								<th>Nombre</th>
+								<th>Apellido paterno</th>
+								<th>Apellido materno</th>
+								<th>Rol</th>
+								<th>Acciones</th>
 
 							</tr>
 
-						<?php endforeach; ?>
+						</thead>
 
-					</tbody>
+						<tbody>
 
-				</table>
+							<?php foreach ($usuarios as $usuario): ?>
 
-			</div>
+								<tr>
 
-		<?php else: ?>
+									<td><?= $usuario->nombre ?></td>
+									<td><?= $usuario->apellido_paterno ?></td>
+									<td><?= $usuario->apellido_materno ?></td>
+									<td><?= $usuario->nombre_rol ?></td>
+									<td>
+										<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
 
-			<p>No se registraron usuarios.</p>
+										<a href="<?= base_url("usuario/modificar_password_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar password</a>
 
-		<?php endif; ?>
+										<a href="<?= base_url("usuario/eliminar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+									</td>
 
-		<a href="<?= base_url("usuario/registrar_usuario") ?>" class="btn btn-default btn-resiliencia">Registrar usuario</a>
+								</tr>
+
+							<?php endforeach; ?>
+
+						</tbody>
+
+					</table>
+
+				</div>
+
+			<?php else: ?>
+
+				<p>No se registraron usuarios.</p>
+
+			<?php endif; ?>
+
+			<a href="<?= base_url("usuario/registrar_usuario") ?>" class="btn btn-default btn-resiliencia">Registrar usuario</a>
+
+			<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
+
+		</div>
 
 	</div>
-
-	<?php if ($this->session->flashdata("no_existe")): ?><p><?= $this->session->flashdata("no_existe") ?></p><?php endif; ?>
 
 </div>
 

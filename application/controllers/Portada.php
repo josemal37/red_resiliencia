@@ -41,7 +41,7 @@ class Portada extends CI_Controller {
 				$datos["path_evento"] = $this->imagen->get_path_valido("evento");
 				$datos["eventos"] = $this->Modelo_evento->select_eventos(1, 4);
 				$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
-				$datos["articulos"] = $this->Modelo_articulo->select_articulos(1, 4);
+				$datos["articulos"] = $this->Modelo_articulo->select_articulos(1, 3);
 				
 				$datos["eventos_proximos"] = $this->Modelo_evento->select_eventos_proximos(2);
 				$datos["articulos_recientes"] = $this->Modelo_articulo->select_articulos(1, 2);

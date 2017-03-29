@@ -2,87 +2,105 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
 <div class="pagina">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu"); ?>
 
-		<?php if ($autores): ?>
+	<div class="titulo-pagina">
 
-			<table class="table table-bordered">
+		<div class="container-fluid">
 
-				<thead>
+			<h1><?= $titulo ?></h1>
 
-					<tr>
+		</div>
 
-						<th>Nombre</th>
-						<th>Apellido paterno</th>
-						<th>Apellido materno</th>
-						<th>Instituciones</th>
-						<th>Acciones</th>
+	</div>
 
-					</tr>
+	<div class="contenido">
 
-				</thead>
+		<div class="container-fluid">
 
-				<tbody>
+			<?php if ($autores): ?>
 
-					<?php foreach ($autores as $autor): ?>
+				<table class="table table-bordered">
 
-						<tr id="<?= $autor->id ?>">
+					<thead>
 
-							<td><?= $autor->nombre ?></td>
-							<td><?= $autor->apellido_paterno ?></td>
-							<td><?= $autor->apellido_materno ?></td>
+						<tr>
 
-							<td>
-
-								<?php if ($autor->instituciones): ?>
-
-									<ul>
-
-										<?php foreach ($autor->instituciones as $institucion): ?>
-
-											<li><?= $institucion->nombre ?></li>
-
-										<?php endforeach; ?>
-
-									</ul>
-
-								<?php endif; ?>
-
-							</td>
-
-							<td>
-
-								<a href="<?= base_url("autor/modificar_autor/" . $autor->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-								<a href="<?= base_url("autor/eliminar_autor/" . $autor->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-
-							</td>
+							<th>Nombre</th>
+							<th>Apellido paterno</th>
+							<th>Apellido materno</th>
+							<th>Instituciones</th>
+							<th>Acciones</th>
 
 						</tr>
 
-					<?php endforeach; ?>
+					</thead>
 
-				</tbody>
+					<tbody>
 
-			</table>
+						<?php foreach ($autores as $autor): ?>
 
-		<?php else: ?>
+							<tr id="<?= $autor->id ?>">
 
-			<p>No se registraron autores.</p>
+								<td><?= $autor->nombre ?></td>
+								<td><?= $autor->apellido_paterno ?></td>
+								<td><?= $autor->apellido_materno ?></td>
 
-		<?php endif; ?>
+								<td>
+
+									<?php if ($autor->instituciones): ?>
+
+										<ul>
+
+											<?php foreach ($autor->instituciones as $institucion): ?>
+
+												<li><?= $institucion->nombre ?></li>
+
+											<?php endforeach; ?>
+
+										</ul>
+
+									<?php endif; ?>
+
+								</td>
+
+								<td>
+
+									<a href="<?= base_url("autor/modificar_autor/" . $autor->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+
+									<a href="<?= base_url("autor/eliminar_autor/" . $autor->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+
+								</td>
+
+							</tr>
+
+						<?php endforeach; ?>
+
+					</tbody>
+
+				</table>
+
+			<?php else: ?>
+
+				<p>No se registraron autores.</p>
+
+			<?php endif; ?>
 
 			<a href="<?= base_url("autor/registrar_autor") ?>" class="btn btn-default btn-resiliencia">Registrar autor</a>
+
+		</div>
 
 	</div>
 

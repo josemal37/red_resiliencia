@@ -148,7 +148,7 @@ class Usuario extends CI_Controller {
 					$this->modificar_password_usuario_bd();
 				} else {
 					$datos = array();
-					$datos["titulo"] = "Modificar usuario";
+					$datos["titulo"] = "Modificar password";
 					$datos["accion"] = "modificar_password_usuario";
 					$datos["usuario"] = $this->Modelo_usuario->select_usuario_por_id($id);
 
