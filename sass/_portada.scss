@@ -1,132 +1,127 @@
+//seccion de cabecera
 .header {
-    display: table;
-
-    width: 100%;
-    height: 100%;
-
-    background-image: url(../img/naturaleza.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
-    background-color: $verde;
-    color: $blanco;
-
-    h1 {
-        margin-top: 70px;
-        color: $blanco;
+    min-height: 100%;
+    font-family: $fuente-josefin;
+    .titulo {
+        padding-top: 50px;
+        padding-bottom: 20px;
+        h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+    }
+    .social {
+        padding-top: 75px;
+        padding-bottom: 20px;
+        img {
+            width: 25px;
+            height: 25px;
+        }
+    }
+    @media (max-width: 767px) {
+        .titulo {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            h1 {
+                font-size: 30px;
+                margin: 0;
+            }
+        }
+        .social {
+            padding-top: 10px;
+            padding-bottom: 20px;
+            img {
+                width: 25px;
+                height: 25px;
+            }
+        }
     }
 }
 
-.seccion {
-
-    border-bottom: 2px solid $negro;
-
-    .titulo {
-        width: 100%;
-        margin: 0;
-
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 50px;
-    }
-
-    .recientes {
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 50px;
-    }
-
+//subseccion de destacados
+.destacados {
+    background-color: $cian;
     .item {
         padding: 5px;
-
-        .img-contenido {
-            height: 250px;
-
-            border: 3px solid $negro;
-
-            background-position: center center !important;
-            background-repeat: no-repeat;
-            background-size: cover !important;
-        }
-
-        .contenido {
-            height: 100%;
-
-            padding: 5px;
-
-            background: rgba($negro, 0.2);
-
-            h1, h2, h3, h4, h5, h6, p, label, a {
-                color: $blanco;
-            }
-
-            &:hover {
-                background: none;
-            }
-        }
-
-        a {
-            outline: none;
-            &:hover {
-                text-decoration: none;
-            }
+    }
+    .imagen-item {
+        height: 400px;
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: contain;
+    }
+    @media (max-width: 767px) {
+        .imagen-item {
+            background-position: center center;
         }
     }
-
-    .btn-ver-todo {
-        margin-right: 10px;
-
-        background-color: $amarillo;
-        color: $negro;
-
-        border-top: 2px solid $negro;
-        border-bottom: 2px solid $negro;
-        border-left: 2px solid $negro;
-        border-right: 2px solid $negro;
-
-        border-radius: 0 0 5px 5px;
-
-        &:hover, &:active {
-            background-color: $amarillo;
-            color: $negro;
+    .contenido-item {
+        height: 400px;
+        display: table;
+        vertical-align: middle !important;
+        div {
+            display: table-cell;
+            vertical-align: middle;
         }
-
-        &:hover {
-            padding-top: 20px;
-            -webkit-transition: padding-top .5s;
-            transition: padding-top .5s;
+    }
+    .descripcion {
+        max-height: 100px;
+        display: block !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    p, li, strong, label {
+        color: $blanco;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: $blanco;
+    }
+    .carousel-control {
+        .icon-prev, .icon-next {
+            font-size: 100px;
+            margin-top: -50px;
         }
     }
 }
 
-.entre-seccion {
-    height: 300px;
-}
-
-@media (max-width: 768px) {
-    .entre-seccion {
-        height: 100px;
+//transicion del carousel
+.carousel-fade {
+    .carousel-inner {
+        .item {
+            transition-property: opacity;
+        }
+        .item,
+        .active.left,
+        .active.right {
+            opacity: 0;
+        }
+        .active,
+        .next.left,
+        .prev.right {
+            opacity: 1;
+        }
+        .next,
+        .prev,
+        .active.left,
+        .active.right {
+            left: 0;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    .carousel-control {
+        z-index: 2;
     }
 }
 
-.parallax-1 {
-    background-image: url(../img/diente-de-leon.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.parallax-2 {
-    background-image: url(../img/flor.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.parallax-3 {
-    background-image: url(../img/atardecer.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+//seccion
+section {
+    font-family: $fuente-josefin;
+    .titulo {
+        h1 {
+            margin: 0;
+        }
+    }
+    .acciones {
+        padding: 20px;
+    }
 }

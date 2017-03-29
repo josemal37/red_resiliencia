@@ -8,21 +8,43 @@
 
 <div class="footer">
 
-	<div class="social">
+	<hr>
 
-		<a href="<?= base_url("feed/rss") ?>">
+	<div class="container-fluid">
 
-			<img src="<?= base_url("assets/red_resiliencia/img/rss.png") ?>" class="img-responsive pull-right">
+		<div class="row">
 
-		</a>
+			<div class="col-sm-4">
 
-	</div>
 
-	<div class="container text-center">
 
-		<hr class="small">
+			</div>
 
-		<p>Copyright &copy; Fundación ATICA 2017</p>
+			<div class="col-sm-4">
+
+				<div class="text-center">
+
+					<p>Copyright &copy; Fundación ATICA 2017</p>
+
+				</div>
+
+			</div>
+
+			<div class="col-sm-4">
+
+				<?php if (!$this->session->userdata("rol")): ?>
+
+					<div class="text-right">
+
+						<a href="<?= base_url("login") ?>" class="text-muted small">administrar página</a>
+
+					</div>
+
+				<?php endif; ?>
+
+			</div>
+
+		</div>
 
 	</div>
 

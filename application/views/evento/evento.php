@@ -2,79 +2,93 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
-<div class="pagina">
+<div class="evento">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu"); ?>
 
-		<div class="row evento">
+	<div class="contenido">
 
-			<div class="col-md-4">
+		<div class="container text-center">
 
-				<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive img-center">
+			<h2 class="titulo-evento"><?= $titulo ?></h2>
 
-			</div>
+			<hr>
 
-			<div class="col-md-8">
+			<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive img-center img-evento">
 
-				<h4>Nombre</h4>
+			<hr>
 
-				<p class="text-justify"><?= $evento->nombre ?></p>
+			<div class="row">
 
-				<?php if ($evento->descripcion): ?>
+				<div class="col-md-4 text-right">
 
-					<h4>Descripción</h4>
+					<h3 class="subtitulo">Nombre</h3>
 
-					<p class="text-justify"><?= $evento->descripcion ?></p>
+					<p><?= $evento->nombre ?></p>
 
-				<?php endif; ?>
+					<?php if ($evento->direccion): ?>
 
-				<?php if ($evento->direccion): ?>
+						<h3 class="subtitulo">Lugar</h3>
 
-					<h4>Lugar</h4>
+						<?= $evento->direccion ?><?php if ($evento->ciudad): ?>, <?= $evento->ciudad->nombre ?><?php endif; ?><?php if ($evento->pais): ?>, <?= $evento->pais->nombre ?><?php endif; ?>
 
-					<?= $evento->direccion ?><?php if ($evento->ciudad): ?>, <?= $evento->ciudad->nombre ?><?php endif; ?><?php if ($evento->pais): ?>, <?= $evento->pais->nombre ?><?php endif; ?>
+					<?php endif; ?>
 
-				<?php endif; ?>
+					<?php if ($evento->fecha_inicio && $evento->fecha_fin): ?>
 
-				<?php if ($evento->fecha_inicio && $evento->fecha_fin): ?>
+						<h3 class="subtitulo">Fecha</h3>
 
-					<h4>Fecha</h4>
+						<p>De <span class="fecha"><?= $evento->fecha_inicio ?></span> a <?= $evento->fecha_fin ?></p>
 
-					<p>De <span class="fecha"><?= $evento->fecha_inicio ?></span> a <?= $evento->fecha_fin ?></p>
+					<?php endif; ?>
 
-				<?php endif; ?>
+					<?php if ($evento->url): ?>
 
-				<?php if ($evento->url): ?>
+						<h3 class="subtitulo">Sitio web</h3>
 
-					<h4>Sitio web</h4>
+						<a href="<?= $evento->url ?>">Ir al sitio web</a>
 
-					<a href="<?= $evento->url ?>">Ir al sitio web</a>
+					<?php endif; ?>
 
-				<?php endif; ?>
+					<?php if ($evento->instituciones): ?>
 
-				<?php if ($evento->instituciones): ?>
+						<h3 class="subtitulo">Instituciones encargadas</h3>
 
-					<h4>Instituciones encargadas</h4>
+						<p><?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
 
-					<p><?= listar_array_de_stdclass($evento->instituciones, "nombre", ", ") ?></p>
+					<?php endif; ?>
 
-				<?php endif; ?>
+					<?php if ($evento->categorias): ?>
 
-				<?php if ($evento->categorias): ?>
+						<h3 class="subtitulo">Categorias</h3>
 
-					<h4>Categorias</h4>
+						<p><?= listar_array_de_stdclass($evento->categorias, "nombre", ", ") ?></p>
 
-					<p><?= listar_array_de_stdclass($evento->categorias, "nombre", ", ") ?></p>
+					<?php endif; ?>
 
-				<?php endif; ?>
+				</div>
+
+				<div class="col-md-8">
+
+					<?php if ($evento->descripcion): ?>
+
+						<h3 class="subtitulo">Descripción</h3>
+
+						<p class="text-justify"><?= $evento->descripcion ?></p>
+
+					<?php endif; ?>
+
+				</div>
 
 			</div>
 

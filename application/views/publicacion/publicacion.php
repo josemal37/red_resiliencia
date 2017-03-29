@@ -2,105 +2,137 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
-<div class="pagina">
+<div class="publicacion">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu") ?>
 
-		<div class="row">
+	<div id="publicacion" class="contenido">
 
-			<div class="col-md-4">
+		<div class="container">
 
-				<img src="<?= base_url($path_publicacion . $publicacion->imagen) ?>" class="img-responsive img-center">
+			<div class="text-center">
+
+				<h2 class="titulo-publicacion"><?= $publicacion->nombre ?></h2>
 
 			</div>
 
-			<div class="col-md-8">
+			<hr>
 
-				<h4>Título</h4>
+			<div class="row">
 
-				<p class="text-justify"><?= $publicacion->nombre ?></p>
+				<div class="col-md-6">
 
-				<?php if ($publicacion->autores): ?>
+					<img src="<?= base_url($path_publicacion . $publicacion->imagen) ?>" class="img-responsive img-center imagen">
 
-					<h4>Autor(es)</h4>
+				</div>
 
-					<p><?= listar_array_de_stdclass($publicacion->autores, "nombre_completo", ", ") ?></p>
+				<div class="col-md-6">
 
-				<?php endif; ?>
+					<h3 class="subtitulo">Autor(es)</h3>
 
-				<?php if ($publicacion->instituciones): ?>
+					<?php if ($publicacion->autores): ?>
 
-					<h4>Institución(es)</h4>
+						<p class="text-justify lead"><?= listar_array_de_stdclass($publicacion->autores, "nombre_completo", ", ") ?></p>
 
-					<p><?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
+					<?php else: ?>
 
-				<?php endif; ?>
+						<p class="text-justify lead">No se registraron autores para esta publicación.</p>
 
-				<?php if ($publicacion->descripcion): ?>
+					<?php endif; ?>
 
-					<h4>Resumen</h4>
+					<h3 class="subtitulo">Institución(es)</h3>
 
-					<p class="text-justify"><?= $publicacion->descripcion ?></p>
+					<?php if ($publicacion->instituciones): ?>
 
-				<?php endif; ?>
+						<p class="text-justify lead"><?= listar_array_de_stdclass($publicacion->instituciones, "nombre", ", ") ?></p>
 
-				<?php if ($publicacion->modulos): ?>
+					<?php else: ?>
 
-					<h4>Modulo(s)</h4>
+						<p class="text-justify lead">No se registraron instituciones para esta publicación.</p>
 
-					<ol>
+					<?php endif; ?>
 
-						<?php foreach ($publicacion->modulos as $modulo): ?>
+					<h3 class="subtitulo">Resumen</h3>
 
-							<li>
+					<?php if ($publicacion->descripcion): ?>
 
-								<div>
+						<p class="text-justify lead"><?= $publicacion->descripcion ?></p>
 
-									<p><?= $modulo->nombre ?></p>
+					<?php else: ?>
 
-								</div>
+						<p class="text-justify lead">Esta publicación no tiene registrado un resumen.</p>
 
-								<?php if ($modulo->descripcion): ?>
+					<?php endif; ?>
 
-									<div>
+					<?php if ($publicacion->modulos): ?>
 
-										<p><?= $modulo->descripcion ?></p>
+						<h3 class="subtitulo">Contenido</h3>
+
+						<div class="panel-group" id="contenido_publicacion">
+
+							<?php $i = 1; ?>
+
+							<?php foreach ($publicacion->modulos as $modulo): ?>
+
+								<div class="panel panel-default">
+
+									<div class="panel-heading">
+
+										<h3 class="panel-title">
+
+											<a data-toggle="collapse" data-parent="#contenido_publicacion" href="#collapse<?= $i ?>"><?= $i . ". " . $modulo->nombre ?></a>
+
+										</h3>
 
 									</div>
 
-								<?php endif; ?>
+									<div id="collapse<?= $i ?>" class="panel-collapse collapse">
 
-							</li>
+										<div class="panel-body">
 
-						<?php endforeach; ?>
+											<?php if ($modulo->descripcion): ?>
 
-					</ol>
+												<p class="text-justify"><?= $modulo->descripcion ?></p>
 
-				<?php endif; ?>
+											<?php else: ?>
 
-				<?php if ($publicacion->categorias): ?>
+												<p class="text-justify">Este módulo no tiene descripción.</p>
 
-					<h4>Categoria(s)</h4>
+											<?php endif; ?>
 
-					<p><?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ") ?></p>
+										</div>
 
-				<?php endif; ?>
+									</div>
 
-				<?php if ($publicacion->url): ?>
+								</div>
 
-					<h4>Documento</h4>
+								<?php $i += 1; ?>
 
-					<a href="<?= base_url($path_publicacion . $publicacion->url) ?>">Descargar documento</a>
+							<?php endforeach; ?>
 
-				<?php endif; ?>
+						</div>
+
+					<?php endif; ?>
+
+					<?php if ($publicacion->url): ?>
+
+						<h3 class="subtitulo">Documento</h3>
+
+						<a href="<?= base_url($path_publicacion . $publicacion->url) ?>">Descargar</a>
+
+					<?php endif; ?>
+
+				</div>
 
 			</div>
 

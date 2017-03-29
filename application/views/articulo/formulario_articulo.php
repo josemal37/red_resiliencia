@@ -431,7 +431,7 @@ switch ($accion) {
 			"contextmenu directionality emoticons paste textcolor filemanager"
 		],
 		toolbar: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect forecolor backcolor | link unlink anchor | image | print preview",
-		content_css: '<?= base_url("assets/red_resiliencia/css/red_resiliencia.css") ?>,https://fonts.googleapis.com/css?family=Sansita,https://fonts.googleapis.com/css?family=Lato',
+		content_css: '<?= base_url("assets/red_resiliencia/css/red_resiliencia.css") ?>,https://fonts.googleapis.com/css?family=Josefin+Sans',
 		body_class: "contenido-mce"
 	});
 

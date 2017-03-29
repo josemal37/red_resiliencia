@@ -1,27 +1,19 @@
-$padding-top-login: 15px;
-$padding-bottom-login: 15px;
-$padding-left-login: 15px;
-$padding-right-login: 15px;
-
-$margin-top-login: 10px;
-$margin-bottom-login: 10px;
-
-$margin-left-login: 30%;
-$margin-right-login: 30%;
-
 .login {
-    padding-top: $padding-top-login;
-    padding-bottom: $padding-bottom-login;
-    padding-left: $padding-left-login;
-    padding-right: $padding-right-login;
-    
-    margin-top: $margin-top-login;
-    margin-bottom: $margin-bottom-login;
-}
-
-@media (min-width: 768px) {
-    .login {
-        margin-left: $margin-left-login;
-        margin-right: $margin-right-login;
+    min-height: 100%;
+    font-family: $fuente-josefin;
+    .titulo {
+        padding-top: 50px;
+        padding-bottom: 20px;
+        h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+    }
+    .contenido {
+        .titulo-login {
+            h1 {
+                margin: 0;
+            }
+        }
     }
 }

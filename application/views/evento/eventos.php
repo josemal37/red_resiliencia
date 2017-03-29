@@ -2,157 +2,61 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
-<div id="eventos" class="pagina">
+<div class="eventos">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="busqueda">
+	<?php $this->load->view("base/menu"); ?>
 
-		<?php $this->load->view("base/busqueda", array("fuente" => "evento", "criterio" => $criterio)); ?>
+	<div id="eventos" class="pagina">
 
-	</div>
+		<div class="titulo-eventos">
 
-	<div class="container contenido">
+			<div class="container-fluid">
 
-		<?php if ($eventos): ?>
+				<h1><?= $titulo ?></h1>
 
-			<?php foreach ($eventos as $evento): ?>
+			</div>
 
-				<div class="row contenido-pagina">
+		</div>
 
-					<div class="col-md-3">
+		<div class="busqueda">
 
-						<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive img-center">
+			<?php $this->load->view("base/busqueda", array("fuente" => "evento", "criterio" => $criterio)); ?>
 
-					</div>
+		</div>
 
-					<div class="col-md-9">
+		<?php $this->load->view("evento/contenido_eventos"); ?>
 
-						<h4><?= $evento->nombre ?></h4>
+		<?php if (isset($criterio) && !$criterio): ?>
 
-						<p class="text-justify"><?= $evento->descripcion ?></p>
+			<div class="text-center">
 
-						<p><label>Fecha de inicio:</label> <?= $evento->fecha_inicio ?></p>
+				<ul class="pagination">
 
-						<p><label>Fecha de fin:</label> <?= $evento->fecha_fin ?></p>
+					<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-						<p><label>Lugar:</label> <?= $evento->direccion . ", " . $evento->ciudad->nombre . ", " . $evento->pais->nombre ?></p>
+						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos/" . $i) ?>"><?= $i ?></a></li>
 
-						<?php if ($evento->url): ?>
+					<?php endfor; ?>
 
-							<p><label>Sitio web:</label> <a href="<?= $evento->url ?>">Ir al sitio web</a></p>
-
-						<?php endif; ?>
-
-						<div class="row">
-
-							<?php if ($evento->instituciones): ?>
-
-								<div class="col-md-6">
-
-									<h4>Instituciones</h4>
-
-									<ul>
-
-										<?php foreach ($evento->instituciones as $institucion): ?>
-
-											<li><?= $institucion->nombre ?></li>
-
-										<?php endforeach; ?>
-
-									</ul>
-
-								</div>
-
-							<?php endif; ?>
-
-							<?php if ($evento->categorias): ?>
-
-								<div class="col-md-6">
-
-									<h4>Categorias</h4>
-
-									<ul>
-
-										<?php foreach ($evento->categorias as $categoria): ?>
-
-											<li><?= $categoria->nombre ?></li>
-
-										<?php endforeach; ?>
-
-									</ul>
-
-								</div>
-
-							<?php endif; ?>
-
-						</div>
-
-						<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
-
-						<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-							<a href="<?= base_url("evento/modificar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-						<?php endif; ?>
-
-						<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-							<a href="<?= base_url("evento/eliminar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-
-						<?php endif; ?>
-
-					</div>
-
-				</div>
-
-				<hr>
-
-			<?php endforeach; ?>
-
-			<?php if (!$criterio): ?>
-
-				<div class="text-center">
-
-					<ul class="pagination">
-
-						<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
-
-							<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos/" . $i) ?>"><?= $i ?></a></li>
-
-						<?php endfor; ?>
-
-					</ul>
-
-				</div>
-
-			<?php endif; ?>
-
-		<?php else: ?>
-
-			<div>
-
-				<p>No se registraron eventos.</p>
+				</ul>
 
 			</div>
 
 		<?php endif; ?>
 
-		<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-			<a href="<?= base_url("evento/registrar_evento") ?>" class="btn btn-default btn-resiliencia">Registrar evento</a>
-
-		<?php endif; ?>
+		<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
 	</div>
-
-	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
 </div>
 

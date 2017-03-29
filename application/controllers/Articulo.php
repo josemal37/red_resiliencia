@@ -55,7 +55,7 @@ class Articulo extends CI_Controller {
 
 		$datos = array();
 
-		$datos["titulo"] = "Articulos";
+		$datos["titulo"] = "Artículos";
 		$datos["criterio"] = $criterio;
 		$datos["nro_pagina"] = $nro_pagina;
 		$datos["nro_paginas"] = $this->Modelo_articulo->select_count_nro_paginas($cantidad_articulos, $id_institucion);

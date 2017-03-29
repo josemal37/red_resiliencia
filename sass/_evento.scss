@@ -1,0 +1,75 @@
+.evento {
+    font-family: $fuente-josefin;
+    .titulo {
+        padding-top: 50px;
+        padding-bottom: 20px;
+        h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+    }
+    .contenido {
+        .titulo-evento {
+            color: $verde;
+        }
+        .img-evento {
+            max-height: 400px;
+        }
+        .subtitulo {
+            color: $verde;
+        }
+    }
+}
+
+.eventos {
+    font-family: $fuente-josefin;
+    .titulo {
+        padding-top: 50px;
+        padding-bottom: 20px;
+        h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+    }
+    .titulo-eventos {
+        h1 {
+            margin: 0;
+        }
+    }
+    .contenido {
+        .items {
+            background-color: $gris-claro;
+            .item {
+                padding: 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                background-color: $blanco;
+                @include box-shadow(1px, 1px, 2px, 0, $gris);
+                .img-item {
+                    height: 250px;
+                    background-position: center center !important;
+                    background-repeat: no-repeat;
+                    background-size: cover !important;
+                }
+                .titulo-item {
+                    color: $cian;
+                }
+                &:hover {
+                    -webkit-transform:scale(1.02);   /* Efecto de zoom */
+                    -moz-transform:scale(1.02);
+                    -o-transform:scale(1.02);
+                    -ms-transform:scale(1.02);
+                    -webkit-transition:0.2s;   /* Trancisiones */
+                    -moz-transition:0.2s;
+                    -o-transition:0.2s;
+                    -ms-transition:0.2s;
+                }
+            }
+        }
+        .acciones {
+            padding: 20px;
+        }
+    }
+}

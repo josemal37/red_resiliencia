@@ -19,19 +19,21 @@ switch ($fuente) {
 }
 ?>
 
-<div class="container">
+<div class="container-fluid">
 
-	<form action="<?= $url ?>" id="form-busqueda" method="get">
+	<div class="row">
 
-		<div class="row">
+		<div class="col-md-6"></div>
 
-			<div class="col-md-6 col-md-offset-6">
+		<div class="col-md-6">
+
+			<form action="<?= $url ?>" id="form-busqueda" method="get">
 
 				<div class="form-group">
 
 					<div class="input-group">
 
-						<input type="text" id="criterio" name="criterio" class="form-control tokenfield" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
+						<input type="text" id="criterio" name="criterio" class="tokenfield" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
 
 						<span class="input-group-btn">
 
@@ -43,19 +45,19 @@ switch ($fuente) {
 
 				</div>
 
-				<a href="<?= $avanzada ?>">Busqueda avanzada</a>
+			</form>
 
-			</div>
+			<a href="<?= $avanzada ?>">Busqueda avanzada</a>
 
 		</div>
 
-	</form>
+	</div>
 
 </div>
 
 <?php if ($criterio): ?>
 
-	<div class="mensaje-busqueda">
+	<div class="container-fluid">
 
 		<?php
 		switch ($fuente) {

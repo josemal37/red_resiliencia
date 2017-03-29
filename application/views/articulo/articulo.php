@@ -2,19 +2,31 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
-<div class="pagina">
+<div class="articulo">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("base/menu"); ?>
 
-		<?php $this->load->ext_view("articulos", $articulo->url) ?>
+	<div class="contenido">
+
+		<div class="container text-center">
+
+			<h2 class="titulo-articulo"><?= $articulo->nombre ?></h2>
+
+		</div>
+
+	</div>
+
+	<div class="container">
 
 		<?php if ($articulo->autores): ?>
 
@@ -28,11 +40,25 @@
 
 		<?php endif; ?>
 
-		<?php if ($articulo->categorias): ?>
+		<hr>
 
-			<p><label>Categoria(s):</label> <?= listar_array_de_stdclass($articulo->categorias, "nombre", ", ") ?></p>
+		<div class="contenido-mce">
 
-		<?php endif; ?>
+			<?php $this->load->ext_view("articulos", $articulo->url) ?>
+
+		</div>
+
+		<hr>
+
+		<div class="text-right">
+
+			<?php if ($articulo->categorias): ?>
+
+				<p><label>Categoria(s):</label> <?= listar_array_de_stdclass($articulo->categorias, "nombre", ", ") ?></p>
+
+			<?php endif; ?>
+
+		</div>
 
 	</div>
 

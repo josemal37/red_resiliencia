@@ -2,7 +2,7 @@
 
 <nav>
 
-	<nav id="menu" class="navbar navbar-default navbar-fixed-top">
+	<nav id="menu" class="navbar navbar-default">
 
 		<div class="container-fluid">
 
@@ -18,8 +18,6 @@
 
 				</button>
 
-				<a class="navbar-brand page-scroll" href="#header">Inicio</a>
-
 			</div>
 
 			<div class="collapse navbar-collapse" id="menu-items">
@@ -28,42 +26,13 @@
 
 					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
 
-						<?php if (current_url() == base_url("index.php/portada") || current_url() == base_url("index.php") || current_url() == base_url()): ?>
+						<li><a href="<?= base_url() ?>">Inicio</a></li>
 
-							<?php if (isset($articulos) && $articulos): ?>
+						<li <?php if ($this->uri->segment(1) == "articulo"): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos") ?>" class="page-scroll">Articulos</a></li>
 
-								<li><a href="#articulos" class="page-scroll">Articulos</a></li>
+						<li <?php if ($this->uri->segment(1) == "publicacion"): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones") ?>" class="page-scroll">Publicaciones</a></li>
 
-							<?php endif; ?>
-
-							<?php if (isset($publicaciones) && $publicaciones): ?>
-
-								<li><a href="#publicaciones" class="page-scroll">Publicaciones</a></li>
-
-							<?php endif; ?>
-
-							<?php if (isset($eventos) && $eventos): ?>
-
-								<li><a href="#eventos" class="page-scroll">Eventos</a></li>
-
-							<?php endif; ?>
-
-
-						<?php elseif ($this->uri->segment(1) == "articulo" || $this->uri->segment(1) == "publicacion" || $this->uri->segment(1) == "evento"): ?>
-
-							<li><a href="<?= base_url() ?>" class="page-scroll">Portada</a></li>
-
-							<li <?php if ($this->uri->segment(1) == "articulo"): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos") ?>" class="page-scroll">Articulos</a></li>
-
-							<li <?php if ($this->uri->segment(1) == "publicacion"): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones") ?>" class="page-scroll">Publicaciones</a></li>
-
-							<li <?php if ($this->uri->segment(1) == "evento"): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos") ?>" class="page-scroll">Eventos</a></li>
-
-						<?php elseif ($this->uri->segment(1) == "login"): ?>
-
-							<li><a href="<?= base_url() ?>" class="page-scroll">Portada</a></li>
-
-						<?php endif; ?>
+						<li <?php if ($this->uri->segment(1) == "evento"): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos") ?>" class="page-scroll">Eventos</a></li>
 
 					<?php elseif ($this->session->userdata("rol") == "administrador"): ?>
 
@@ -99,11 +68,7 @@
 
 				<ul class="nav navbar-nav navbar-right">
 
-					<?php if (!$this->session->userdata("rol") || $this->session->userdata("rol") == ""): ?>
-
-						<li><a href="<?= base_url("login") ?>">Ingresar</a></li>
-
-					<?php elseif ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+					<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
 
 						<li class="dropdown">
 
@@ -114,7 +79,7 @@
 								<li class="navbar-text"><p><?= $this->session->userdata("nombre_institucion") ?></p></li>
 
 								<li><a href="<?= base_url("usuario/modificar_password/" . $this->session->userdata("id_usuario")) ?>">Cambiar password</a></li>
-								
+
 								<li><a href="<?= base_url("login/cerrar_sesion") ?>">Cerrar sesión</a></li>
 
 							</ul>

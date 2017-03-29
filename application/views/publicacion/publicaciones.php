@@ -2,13 +2,27 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
-<div id="publicaciones" class="pagina">
+<div class="publicaciones">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
+
+	</div>
+
+	<?php $this->load->view("base/menu"); ?>
+
+	<div class="titulo-publicaciones">
+
+		<div class="container-fluid">
+
+			<h1><?= $titulo ?></h1>
+
+		</div>
 
 	</div>
 
@@ -18,179 +32,25 @@
 
 	</div>
 
-	<div class="container contenido">
+	<?php $this->load->view("publicacion/contenido_publicaciones"); ?>
 
-		<?php if ($publicaciones): ?>
+	<?php if (isset($criterio) && !$criterio): ?>
 
-			<?php foreach ($publicaciones as $publicacion): ?>
+		<div class="text-center">
 
-				<div class="row item">
+			<ul class="pagination">
 
-					<div class="col-md-3 text-center">
+				<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-						<?php if ($publicacion->imagen != ""): ?>
+					<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?>"><?= $i ?></a></li>
 
-							<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive img-center">
+				<?php endfor; ?>
 
-						<?php endif; ?>
+			</ul>
 
-					</div>
+		</div>
 
-					<div class="col-md-9">
-
-						<h4><?= $publicacion->nombre ?></h4>
-
-						<p class="text-justify"><?= $publicacion->descripcion ?></p>
-
-						<?php if ($publicacion->modulos): ?>
-
-							<h4>Modulos</h4>
-
-							<ol>
-
-								<?php foreach ($publicacion->modulos as $modulo): ?>
-
-									<li><?= $modulo->nombre ?></li>
-
-								<?php endforeach; ?>
-
-							</ol>
-
-						<?php endif; ?>
-
-						<?php if ($publicacion->url != ""): ?>
-
-							<h4>Documento</h4>
-
-							<a href="<?= base_url($path_publicaciones . $publicacion->url) ?>">Descargar documento</a>
-
-						<?php endif; ?>
-
-						<div class="row">
-
-							<?php if ($publicacion->autores): ?>
-
-								<div class="col-md-4">
-
-									<h4>Autores</h4>
-
-									<ul>
-
-										<?php foreach ($publicacion->autores as $autor): ?>
-
-											<li><?= $autor->nombre_completo ?></li>
-
-										<?php endforeach; ?>
-
-									</ul>
-
-								</div>
-
-							<?php endif; ?>
-
-							<?php if ($publicacion->categorias): ?>
-
-								<div class="col-md-4">
-
-									<h4>Categorias</h4>
-
-									<ul>
-
-										<?php foreach ($publicacion->categorias as $categoria): ?>
-
-											<li><?= $categoria->nombre ?></li>
-
-										<?php endforeach; ?>
-
-									</ul>
-
-								</div>
-
-							<?php endif; ?>
-
-							<?php if ($publicacion->instituciones): ?>
-
-								<div class="col-md-4">
-
-									<h4>Instituciones</h4>
-
-									<ul>
-
-										<?php foreach ($publicacion->instituciones as $institucion): ?>
-
-											<li><?= $institucion->nombre ?></li>
-
-										<?php endforeach; ?>
-
-									</ul>
-
-								</div>
-
-							<?php endif; ?>
-
-							<div class="clearfix visible-md-block visible-lg-block"></div>
-
-						</div>
-
-						<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
-
-						<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-							<a href="<?= base_url("publicacion/modificar_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-						<?php endif; ?>
-
-						<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-							<a href="<?= base_url("publicacion/eliminar_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-
-						<?php endif; ?>
-
-					</div>
-
-					<div class="clearfix visible-md-block visible-lg-block"></div>
-
-				</div>
-
-				<hr>
-
-			<?php endforeach; ?>
-
-			<?php if (!$criterio): ?>
-
-				<div class="text-center">
-
-					<ul class="pagination">
-
-						<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
-
-							<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?>"><?= $i ?></a></li>
-
-						<?php endfor; ?>
-
-					</ul>
-
-				</div>
-
-			<?php endif; ?>
-
-		<?php else: ?>
-
-			<div>
-
-				<p>No se registraron publicaciones.</p>
-
-			</div>
-
-		<?php endif; ?>
-
-		<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-			<a href="<?= base_url("publicacion/registrar_publicacion") ?>" class="btn btn-default btn-resiliencia">Registrar publicación</a>
-
-		<?php endif; ?>
-
-	</div>
+	<?php endif; ?>
 
 	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
