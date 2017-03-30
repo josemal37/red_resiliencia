@@ -69,9 +69,14 @@ $dropDown       : true;
         border-color: $cian;
         &:hover, &:focus {
             background-color: $cian; 
+            color: $blanco;
+            .icon-bar {
+                background-color: $cian;
+                color: $blanco;
+            }
         }
         .icon-bar {
-            background-color: $cian; 
+            background-color: $cian;
         }
     }
     .navbar-collapse,
@@ -87,6 +92,7 @@ $dropDown       : true;
 }
 @media (max-width: 767px) {
     .navbar-default .navbar-nav .open .dropdown-menu {
+        font-family: $fuente-josefin;
         > li > a {
             color: $cian;
             &:hover, &:focus {

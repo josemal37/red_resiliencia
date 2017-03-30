@@ -10,6 +10,9 @@ html, body {
 .img-center {
   margin: 0 auto; }
 
+.height-100 {
+  min-height: 100%; }
+
 .header {
   min-height: 100%;
   font-family: "Josefin Sans", sans-serif; }
@@ -138,7 +141,11 @@ section {
   .navbar-default .navbar-toggle {
     border-color: #39B2DD; }
     .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-      background-color: #39B2DD; }
+      background-color: #39B2DD;
+      color: #FFF; }
+      .navbar-default .navbar-toggle:hover .icon-bar, .navbar-default .navbar-toggle:focus .icon-bar {
+        background-color: #39B2DD;
+        color: #FFF; }
     .navbar-default .navbar-toggle .icon-bar {
       background-color: #39B2DD; }
   .navbar-default .navbar-collapse,
@@ -150,13 +157,15 @@ section {
       color: #111; }
 
 @media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #39B2DD; }
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-      color: #111; }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #111;
-    background-color: #39B2DD; } }
+  .navbar-default .navbar-nav .open .dropdown-menu {
+    font-family: "Josefin Sans", sans-serif; }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+      color: #39B2DD; }
+      .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #111; }
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+      color: #111;
+      background-color: #39B2DD; } }
 .publicacion {
   font-family: "Josefin Sans", sans-serif; }
   .publicacion .titulo {
