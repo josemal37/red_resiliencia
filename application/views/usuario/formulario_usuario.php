@@ -44,7 +44,7 @@ switch ($accion) {
 
 	<div class="contenido">
 
-		<div class="container-fluid">
+		<div class="container">
 
 			<form action="<?= $url ?>" id="form_usuario" method="post" autocomplete="off">
 

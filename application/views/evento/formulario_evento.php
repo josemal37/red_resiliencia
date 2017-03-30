@@ -13,13 +13,27 @@ switch ($accion) {
 }
 ?>
 
-<?php $this->load->view("base/menu"); ?>
-
 <div class="pagina">
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
+
+	</div>
+
+	<?php $this->load->view("base/menu"); ?>
+
+	<div class="titulo-pagina">
+
+		<div class="container-fluid">
+
+			<h1><?= $titulo ?></h1>
+
+		</div>
 
 	</div>
 
@@ -83,7 +97,7 @@ switch ($accion) {
 
 				<label>Fecha de inicio</label>
 
-				<input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_inicio ?>"<?php endif; ?>>
+				<input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_inicio ?>"<?php endif; ?>>
 
 				<?= form_error("fecha_inicio") ?>
 
@@ -93,7 +107,7 @@ switch ($accion) {
 
 				<label>Fecha de fin</label>
 
-				<input type="date" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_fin ?>"<?php endif; ?>>
+				<input type="text" id="fecha_fin" name="fecha_fin" class="form-control" <?php if ($accion == "modificar"): ?>value="<?= $evento->fecha_fin ?>"<?php endif; ?>>
 
 				<?= form_error("fecha_fin") ?>
 
@@ -440,6 +454,8 @@ switch ($accion) {
 		}
 	});
 
+	$("#fecha_inicio").datepicker({dateFormat: 'yy-mm-dd'});
+	$("#fecha_fin").datepicker({dateFormat: 'yy-mm-dd'});
 </script>
 
 <script type="text/javascript">

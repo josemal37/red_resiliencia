@@ -2,8 +2,6 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<?php $this->load->view("base/menu"); ?>
-
 <?php
 switch ($accion) {
 	case "registrar":
@@ -19,7 +17,23 @@ switch ($accion) {
 
 	<div class="titulo">
 
-		<h1><?= $titulo ?></h1>
+		<div class="container-fluid">
+
+			<h1><?= NOMBRE_PAGINA ?></h1>
+
+		</div>
+
+	</div>
+
+	<?php $this->load->view("base/menu"); ?>
+
+	<div class="titulo-pagina">
+
+		<div class="container-fluid">
+
+			<h1><?= $titulo ?></h1>
+
+		</div>
 
 	</div>
 
@@ -548,7 +562,7 @@ switch ($accion) {
 		/* agregar un modulo */
 		$("#agregar_modulo").click(function(event) {
 			event.preventDefault();
-			
+
 			var nombreLabel = $("<label/>");
 			nombreLabel.html("Nombre");
 
@@ -576,7 +590,7 @@ switch ($accion) {
 
 			var descripcionLabel = $("<label/>");
 			descripcionLabel.html("Descripción");
-			
+
 			var descripcion = $("<textarea>", {
 				name: "descripcion_modulos[]"
 			});
