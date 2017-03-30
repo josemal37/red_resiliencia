@@ -209,6 +209,32 @@ class Modelo_usuario extends My_model {
 		}
 	}
 
+	public function select_usuarios_por_institucion($id_institucion = FALSE) {
+		if ($id_institucion) {
+			$this->db->select(self::COLUMNAS_SELECT . ", " . self::COLUMNAS_SELECT_ROL . ", " . self::COLUMNAS_SELECT_INSTITUCION);
+			$this->db->from(self::NOMBRE_TABLA);
+			$this->db->join(self::NOMBRE_TABLA_ROL, self::NOMBRE_TABLA . "." . self::ID_ROL_COL . " = " . self::NOMBRE_TABLA_ROL . "." . self::ID_ROL_COL, "left");
+			$this->db->join(self::NOMBRE_TABLA_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL . " = " . self::NOMBRE_TABLA_INSTITUCION . "." . self::ID_INSTITUCION_COL, "left");
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_INSTITUCION_COL, $id_institucion);
+
+			$query = $this->db->get();
+
+			$usuarios = $this->return_result($query);
+
+			if ($usuarios) {
+				$i = 0;
+				foreach ($usuarios as $usuario) {
+					$usuarios[$i]->nombre_completo = $this->get_nombre_completo($usuario);
+					$i += 1;
+				}
+			}
+
+			return $usuarios;
+		} else {
+			return FALSE;
+		}
+	}
+
 	public function insert_usuario($nombre = "", $apellido_paterno = "", $apellido_materno = "", $institucion = FALSE, $rol = FALSE, $login = "", $password = "") {
 		if ($nombre != "" && $institucion && $rol && $login != "" && $password != "") {
 			$insertado = FALSE;
@@ -298,6 +324,23 @@ class Modelo_usuario extends My_model {
 			$this->db->trans_start();
 
 			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
+
+			$this->db->trans_complete();
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function delete_usuarios_de_institucion($id_institucion = FALSE) {
+		if ($id_institucion) {
+			$eliminado = FALSE;
+
+			$this->db->trans_start();
+
+			$this->db->where(self::ID_INSTITUCION_COL, $id_institucion);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
 
 			$this->db->trans_complete();

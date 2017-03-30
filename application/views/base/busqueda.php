@@ -33,7 +33,7 @@ switch ($fuente) {
 
 					<div class="input-group">
 
-						<input type="text" id="criterio" name="criterio" class="tokenfield" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
+						<input type="text" id="criterio" name="criterio" class="tokenfield form-control" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
 
 						<span class="input-group-btn">
 

@@ -69,7 +69,7 @@
 
 	<?php else: ?>
 
-		<div>
+		<div class="container-fluid">
 
 			<p>No se registraron eventos.</p>
 

@@ -18,7 +18,7 @@ class Institucion extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->model(array("Modelo_institucion"));
+		$this->load->model(array("Modelo_institucion", "Modelo_usuario"));
 
 		$this->load->library(array("Session", "Form_validation"));
 		$this->load->library(array("Institucion_validacion"));
@@ -58,7 +58,7 @@ class Institucion extends CI_Controller {
 				$datos["accion"] = "registrar";
 
 				$datos["reglas_validacion"] = $this->institucion_validacion->get_reglas_cliente(array("nombre", "sigla"));
-				
+
 				$this->load->view("institucion/formulario_institucion", $datos);
 			}
 		} else {
@@ -97,7 +97,7 @@ class Institucion extends CI_Controller {
 
 					if ($datos["institucion"]) {
 						$datos["reglas_validacion"] = $this->institucion_validacion->get_reglas_cliente(array("nombre", "sigla"));
-						
+
 						$this->load->view("institucion/formulario_institucion", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "La institucion seleccionada no existe.");
@@ -134,13 +134,49 @@ class Institucion extends CI_Controller {
 
 		if ($rol == "administrador") {
 			if ($id) {
-				if ($this->Modelo_institucion->delete_institucion($id)) {
-					redirect(base_url("institucion/instituciones"));
+				$usuarios = $this->Modelo_usuario->select_usuarios_por_institucion($id);
+				if ($usuarios) {
+					if (isset($_POST["submit"])) {
+						if ($this->Modelo_institucion->delete_institucion_con_usuarios($id)) {
+							redirect(base_url("institucion/instituciones"));
+						} else {
+							redirect(base_url("institucion/instituciones"));
+						}
+					} else {
+						$this->eliminar_institucion_confirmacion($id);
+					}
 				} else {
-					redirect(base_url("institucion/instituciones"));
+					if ($this->Modelo_institucion->delete_institucion($id)) {
+						redirect(base_url("institucion/instituciones"));
+					} else {
+						redirect(base_url("institucion/instituciones"));
+					}
 				}
 			} else {
 				redirect(base_url("institucion/instituciones"));
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
+	private function eliminar_institucion_confirmacion($id = FALSE) {
+		$rol = $this->session->userdata("rol");
+
+		if ($rol == "administrador") {
+			if (isset($_POST["submit"])) {
+				if ($this->Modelo_institucion->delete_institucion($id)) {
+					redirect(base_url("institucion/instituciones"));
+				} else {
+					unset($_POST["submit"]);
+					$this->eliminar_institucion($id);
+				}
+			} else {
+				$datos = array();
+				$datos["titulo"] = "Confirmar eliminación";
+				$datos["id"] = $id;
+				$datos["usuarios"] = $this->Modelo_usuario->select_usuarios_por_institucion($id);
+				$this->load->view("institucion/formulario_eliminar_institucion_confirmacion", $datos);
 			}
 		} else {
 			redirect(base_url());

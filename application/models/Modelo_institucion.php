@@ -33,6 +33,8 @@ class Modelo_institucion extends My_model {
 
 	public function __construct() {
 		parent::__construct();
+
+		$this->load->model(array("Modelo_usuario"));
 	}
 
 	public function select_instituciones() {
@@ -201,6 +203,20 @@ class Modelo_institucion extends My_model {
 
 			$this->db->trans_complete();
 
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function delete_institucion_con_usuarios($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			if ($this->Modelo_usuario->delete_usuarios_de_institucion($id)) {
+				$eliminado = $this->delete_institucion($id);
+			}
+			
 			return $eliminado;
 		} else {
 			return FALSE;
