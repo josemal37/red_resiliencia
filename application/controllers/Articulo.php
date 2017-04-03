@@ -200,8 +200,7 @@ class Articulo extends CI_Controller {
 				$nombre_y_extension = explode(".", $nombre);
 				$nuevo_nombre = $nombre_y_extension[0] . ".html";
 				rename($nombre, $nuevo_nombre);
-				$nombres = explode("\\", $nuevo_nombre);
-				$url = $nombres[sizeof($nombres) - 1];
+				$url = basename($nuevo_nombre);
 				return $url;
 			} else {
 				redirect(base_url("articulo/registrar_articulo"));
