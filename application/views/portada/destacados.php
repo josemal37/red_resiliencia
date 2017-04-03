@@ -60,7 +60,7 @@
 
 							<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>">
 
-								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_eventos . $evento->imagen) ?>');"></div>
+								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_evento . $evento->imagen) ?>');"></div>
 
 							</a>
 

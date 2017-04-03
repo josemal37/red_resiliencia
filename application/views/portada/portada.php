@@ -70,7 +70,7 @@ if (isset($eventos)) {
 
 		<?php if ($articulos): ?>
 
-			<?php $this->load->view("articulo/contenido_articulos", array("articulos" => $articulos)); ?>
+			<?php $this->load->view("articulo/contenido_articulos", array("articulos" => $articulos, "path_articulos" => $path_articulos)); ?>
 
 			<div class="acciones">
 
@@ -109,7 +109,7 @@ if (isset($eventos)) {
 
 		<?php if ($publicaciones): ?>
 
-			<?php $this->load->view("publicacion/contenido_publicaciones", array("publicaciones" => $publicaciones)); ?>
+			<?php $this->load->view("publicacion/contenido_publicaciones", array("publicaciones" => $publicaciones, "path_publicaciones" => $path_publicaciones)); ?>
 
 			<div class="acciones">
 
@@ -146,12 +146,12 @@ if (isset($eventos)) {
 
 		</div>
 
-		<?php $this->load->view("evento/contenido_eventos", array("eventos" => $eventos)); ?>
-		
+		<?php $this->load->view("evento/contenido_eventos", array("eventos" => $eventos, "path_evento" => $path_evento)); ?>
+
 		<div class="acciones">
-			
-			<a href="<?= base_url("evento/eventos")?>" class="btn btn-primary">Ver todos los eventos</a>
-			
+
+			<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary">Ver todos los eventos</a>
+
 		</div>
 
 	</section>
