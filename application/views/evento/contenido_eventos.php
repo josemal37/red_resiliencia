@@ -33,7 +33,7 @@
 
 								<div class="text-center">
 
-									<h4 class="titulo-item"><?= $evento->nombre ?></h4>
+									<label class="titulo-item"><?= $evento->nombre ?></label>
 
 									<p><?= $evento->fecha_inicio ?> - <?= $evento->fecha_fin ?></p>
 

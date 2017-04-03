@@ -74,16 +74,6 @@
 
 									<?php endif; ?>
 
-									<?php if ($evento->descripcion): ?>
-
-										<div class="descripcion text-ellipsis">
-
-											<p class="text-justify"><?= $evento->descripcion ?></p>
-
-										</div>
-
-									<?php endif; ?>
-
 									<?php if ($evento->ciudad || $evento->pais): ?>
 
 										<p class="text-left"><label>Lugar:</label> <?php if ($evento->ciudad): ?><?= $evento->ciudad->nombre ?>, <?php endif; ?><?php if ($evento->pais): ?><?= $evento->pais->nombre ?><?php endif; ?></p>
@@ -142,16 +132,6 @@
 
 									<?php endif; ?>
 
-									<?php if ($articulo->descripcion): ?>
-
-										<div class="descripcion text-ellipsis">
-
-											<p class="text-justify"><?= $articulo->descripcion ?></p>
-
-										</div>
-
-									<?php endif; ?>
-
 									<?php if ($articulo->autores): ?>
 
 										<p class="text-left"><label>Autores:</label> <?= listar_array_de_stdclass($articulo->autores, "nombre_completo", ", ") ?></p>
@@ -195,16 +175,6 @@
 									<?php if ($publicacion->nombre): ?>
 
 										<h2><?= $publicacion->nombre ?></h2>
-
-									<?php endif; ?>
-
-									<?php if ($publicacion->descripcion): ?>
-
-										<div class="descripcion text-ellipsis">
-
-											<p class="text-justify"><?= $publicacion->descripcion ?></p>
-
-										</div>
 
 									<?php endif; ?>
 
