@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0 modificado                         */
-/* Created on:     24/03/2017 10:44:37                          */
+/* Created on:     03/04/2017 11:38:19                          */
 /*==============================================================*/
 
 /*==============================================================*/
@@ -14,7 +14,7 @@ create table `articulo`
    `url_articulo` varchar(1024) not null,
    `imagen_articulo` varchar(1024),
    `destacado_articulo` bool,
-   `fecha_articulo` date,
+   `fecha_articulo` datetime,
    primary key (`id_articulo`)
 )
 
@@ -50,6 +50,21 @@ create table `autor_articulo`
    `id_articulo` int not null,
    `id_autor` int not null,
    primary key (`id_articulo`, `id_autor`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
+/* Table: autor_herramienta                                     */
+/*==============================================================*/
+create table `autor_herramienta`
+(
+   `id_herramienta` int not null,
+   `id_autor` int not null,
+   primary key (`id_herramienta`, `id_autor`)
 )
 
 
@@ -118,6 +133,21 @@ default character set = utf8
 collate = utf8_general_ci;
 
 /*==============================================================*/
+/* Table: categoria_herramienta                                 */
+/*==============================================================*/
+create table `categoria_herramienta`
+(
+   `id_categoria` int not null,
+   `id_herramienta` int not null,
+   primary key (`id_categoria`, `id_herramienta`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
 /* Table: categoria_publicacion                                 */
 /*==============================================================*/
 create table `categoria_publicacion`
@@ -163,7 +193,25 @@ create table `evento`
    `imagen_evento` varchar(1024),
    `destacado_evento` bool,
    `url_evento` varchar(1024),
+   `fecha_evento` datetime,
    primary key (`id_evento`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
+/* Table: herramienta                                           */
+/*==============================================================*/
+create table `herramienta`
+(
+   `id_herramienta` int not null auto_increment,
+   `nombre_herramienta` varchar(1024),
+   `descripcion_herramienta` text,
+   `video_herramienta` varchar(1024),
+   primary key (`id_herramienta`)
 )
 
 
@@ -234,6 +282,21 @@ default character set = utf8
 collate = utf8_general_ci;
 
 /*==============================================================*/
+/* Table: institucion_herramienta                               */
+/*==============================================================*/
+create table `institucion_herramienta`
+(
+   `id_herramienta` int not null,
+   `id_institucion` int not null,
+   primary key (`id_herramienta`, `id_institucion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
 /* Table: institucion_publicacion                               */
 /*==============================================================*/
 create table `institucion_publicacion`
@@ -291,7 +354,7 @@ create table `publicacion`
    `url_publicacion` varchar(1024),
    `imagen_publicacion` varchar(1024),
    `destacada_publicacion` bool,
-   `fecha_publicacion` date,
+   `fecha_publicacion` datetime,
    primary key (`id_publicacion`)
 )
 
@@ -338,10 +401,67 @@ engine = innodb
 default character set = utf8
 collate = utf8_general_ci;
 
+/*==============================================================*/
+/* Table: visita_articulo                                       */
+/*==============================================================*/
+create table `visita_articulo`
+(
+   `id_visita_articulo` int not null auto_increment,
+   `id_articulo` int not null,
+   `ip_visita_articulo` varchar(1024),
+   `fecha_visita_articulo` date,
+   primary key (`id_visita_articulo`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
+/* Table: visita_evento                                         */
+/*==============================================================*/
+create table `visita_evento`
+(
+   `id_visita_evento` int not null auto_increment,
+   `id_evento` int not null,
+   `ip_visita_evento` varchar(1024),
+   `fecha_visita_evento` date,
+   primary key (`id_visita_evento`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
+/* Table: visita_publicacion                                    */
+/*==============================================================*/
+create table `visita_publicacion`
+(
+   `id_visita_publicacion` int not null auto_increment,
+   `id_publicacion` int not null,
+   `ip_visita_publicacion` varchar(1024),
+   `fecha_visita_publicacion` date,
+   primary key (`id_visita_publicacion`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
 alter table `autor_articulo` add constraint `fk_autor_articulo` foreign key (`id_articulo`)
       references `articulo` (`id_articulo`) on delete restrict on update restrict;
 
 alter table `autor_articulo` add constraint `fk_autor_articulo2` foreign key (`id_autor`)
+      references `autor` (`id_autor`) on delete restrict on update restrict;
+
+alter table `autor_herramienta` add constraint `fk_autor_herramienta` foreign key (`id_herramienta`)
+      references `herramienta` (`id_herramienta`) on delete restrict on update restrict;
+
+alter table `autor_herramienta` add constraint `fk_autor_herramienta2` foreign key (`id_autor`)
       references `autor` (`id_autor`) on delete restrict on update restrict;
 
 alter table `autor_publicacion` add constraint `fk_autor_publicacion` foreign key (`id_publicacion`)
@@ -361,6 +481,12 @@ alter table `categoria_evento` add constraint `fk_categoria_evento` foreign key 
 
 alter table `categoria_evento` add constraint `fk_categoria_evento2` foreign key (`id_categoria`)
       references `categoria` (`id_categoria`) on delete restrict on update restrict;
+
+alter table `categoria_herramienta` add constraint `fk_categoria_herramienta` foreign key (`id_categoria`)
+      references `categoria` (`id_categoria`) on delete restrict on update restrict;
+
+alter table `categoria_herramienta` add constraint `fk_categoria_herramienta2` foreign key (`id_herramienta`)
+      references `herramienta` (`id_herramienta`) on delete restrict on update restrict;
 
 alter table `categoria_publicacion` add constraint `fk_categoria_publicacion` foreign key (`id_publicacion`)
       references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
@@ -392,6 +518,12 @@ alter table `institucion_evento` add constraint `fk_institucion_evento` foreign 
 alter table `institucion_evento` add constraint `fk_institucion_evento2` foreign key (`id_institucion`)
       references `institucion` (`id_institucion`) on delete restrict on update restrict;
 
+alter table `institucion_herramienta` add constraint `fk_institucion_herramienta` foreign key (`id_herramienta`)
+      references `herramienta` (`id_herramienta`) on delete restrict on update restrict;
+
+alter table `institucion_herramienta` add constraint `fk_institucion_herramienta2` foreign key (`id_institucion`)
+      references `institucion` (`id_institucion`) on delete restrict on update restrict;
+
 alter table `institucion_publicacion` add constraint `fk_institucion_publicacion` foreign key (`id_publicacion`)
       references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
 
@@ -406,6 +538,16 @@ alter table `usuario` add constraint `fk_rol_usuario` foreign key (`id_rol`)
 
 alter table `usuario` add constraint `fk_usuario_institucion` foreign key (`id_institucion`)
       references `institucion` (`id_institucion`) on delete restrict on update restrict;
+
+alter table `visita_articulo` add constraint `fk_a_tiene_v` foreign key (`id_articulo`)
+      references `articulo` (`id_articulo`) on delete restrict on update restrict;
+
+alter table `visita_evento` add constraint `fk_e_tiene_v` foreign key (`id_evento`)
+      references `evento` (`id_evento`) on delete restrict on update restrict;
+
+alter table `visita_publicacion` add constraint `fk_p_tiene_v` foreign key (`id_publicacion`)
+      references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
+
 
 /*==============================================================*/
 /* Datos                                                        */
