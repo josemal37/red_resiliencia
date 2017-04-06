@@ -2,171 +2,150 @@
 
 <?php $this->load->view("base/header"); ?>
 
-<div class="text-center titulo">
+<div class="pagina">
 
-	<h1><?= $titulo ?></h1>
+	<div class="titulo">
 
-</div>
+		<div class="container-fluid">
 
-<?php $this->load->view("base/menu"); ?>
+			<h1><?= NOMBRE_PAGINA ?></h1>
 
-<?php
-switch ($fuente) {
-	case "publicacion":
-		$url = base_url("publicacion/busqueda_avanzada");
-		break;
-	case "articulo":
-		$url = base_url("articulo/busqueda_avanzada");
-		break;
-	case "evento":
-		$url = base_url("evento/busqueda_avanzada");
-		break;
-}
-?>
+		</div>
 
-<div class="container">
+	</div>
 
-	<button id="activar_busqueda" class="btn btn-default btn-lg btn-redondo"><span class="glyphicon glyphicon-search"></span></button>
+	<?php $this->load->view("base/menu"); ?>
 
-	<div id="div_busqueda" <?php if ($submit): ?>style="display: none;"<?php endif; ?>>
+	<div class="titulo-pagina">
 
-		<form id="form-busqueda" action="<?= $url ?>" method="post">
+		<div class="container-fluid">
 
-			<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "evento"): ?>
+			<h1><?= $titulo ?></h1>
 
-				<?php if (isset($categorias)): ?>
+		</div>
 
-					<div class="checkbox">
+	</div>
 
-						<label><input type="checkbox" id="con_categorias" name="con_categorias" <?php if ($submit && (isset($categorias_seleccionadas) && $categorias_seleccionadas)): ?>checked<?php endif; ?>>Filtrar por categorías</label>
+	<?php
+	switch ($fuente) {
+		case "publicacion":
+			$url = base_url("publicacion/busqueda_avanzada");
+			break;
+		case "articulo":
+			$url = base_url("articulo/busqueda_avanzada");
+			break;
+		case "evento":
+			$url = base_url("evento/busqueda_avanzada");
+			break;
+		case "herramienta":
+			$url = base_url("herramienta/busqueda_avanzada");
+			break;
+	}
+	?>
 
-					</div>
+	<div class="container-fluid">
 
-					<div id="div_categorias" class="form-group" <?php if (!$submit || (isset($categorias_seleccionadas) && !$categorias_seleccionadas)): ?>style="display: none;"<?php endif; ?>>
+		<button id="activar_busqueda" class="btn btn-default btn-lg btn-redondo"><span class="glyphicon glyphicon-search"></span></button>
 
-						<div class="row">
+		<div id="div_busqueda" <?php if ($submit): ?>style="display: none;"<?php endif; ?>>
 
-							<div class="col-md-5">
+			<form id="form-busqueda" action="<?= $url ?>" method="post">
 
-								<label>Categorias disponibles</label>
+				<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "evento" || $fuente == "herramienta"): ?>
 
-								<select id="categorias" class="form-control" multiple>
-
-									<?php if (isset($categorias) && $categorias): ?>
-
-										<?php foreach ($categorias as $categoria): ?>
-
-											<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-										<?php endforeach; ?>
-
-									<?php endif; ?>
-
-								</select>
-
-							</div>
-
-							<div class="col-md-2 btn-group">
-
-								<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
-
-								<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
-
-							</div>
-
-							<div class="col-md-5">
-
-								<label>Categorias seleccionadas</label>
-
-								<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
-
-									<?php if (isset($categorias_seleccionadas) && $categorias_seleccionadas): ?>
-
-										<?php foreach ($categorias_seleccionadas as $categoria): ?>
-
-											<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
-
-										<?php endforeach; ?>
-
-									<?php endif; ?>
-
-								</select>
-
-							</div>
-
-						</div>
-
-					</div>
-
-				<?php else: ?>
-
-					<label>Categoria(s)</label>
-
-					<p>No se registraron categorías.</p>
-
-				<?php endif; ?>
-
-			<?php endif; ?>
-
-			<?php if ($fuente == "publicacion" || $fuente == "articulo"): ?>
-
-				<?php if (isset($autores) && $autores): ?>
-
-					<div class="checkbox">
-
-						<label><input type="checkbox" id="con_autor" name="con_autor" <?php if ($submit && (isset($id_autor) && $id_autor)): ?>checked<?php endif; ?>>Filtrar por autor</label>
-
-					</div>
-
-					<div id="div_autor" class="form-group" <?php if (!$submit || (isset($id_autor) && !$id_autor)): ?>style="display: none;"<?php endif; ?>>
-
-						<select id="id_autor" name="id_autor" class="form-control">
-
-							<?php if ($autores): ?>
-
-								<?php foreach ($autores as $autor): ?>
-
-									<option value="<?= $autor->id ?>" <?php if ($submit && isset($id_autor) && $autor->id = $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-					</div>
-
-				<?php else: ?>
-
-					<label>Autor</label>
-
-					<p>No se registraron autores.</p>
-
-				<?php endif; ?>
-
-			<?php endif; ?>
-
-			<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "evento"): ?>
-
-				<?php if (isset($instituciones) && $instituciones): ?>
-
-					<?php if ($this->session->userdata("rol") != "usuario"): ?>
+					<?php if (isset($categorias)): ?>
 
 						<div class="checkbox">
 
-							<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if ($submit && (isset($id_institucion) && $id_institucion)): ?>checked<?php endif; ?>>Filtrar por institución</label>
+							<label><input type="checkbox" id="con_categorias" name="con_categorias" <?php if ($submit && (isset($categorias_seleccionadas) && $categorias_seleccionadas)): ?>checked<?php endif; ?>>Filtrar por categorías</label>
 
 						</div>
 
-						<div id="div_institucion" class="form-group" <?php if (!$submit || (isset($id_institucion) && !$id_institucion)): ?>style="display: none;"<?php endif; ?>>
+						<div id="div_categorias" class="form-group" <?php if (!$submit || (isset($categorias_seleccionadas) && !$categorias_seleccionadas)): ?>style="display: none;"<?php endif; ?>>
 
-							<select id="id_institucion" name="id_institucion" class="form-control">
+							<div class="row">
 
-								<?php if ($instituciones): ?>
+								<div class="col-md-5">
 
-									<?php foreach ($instituciones as $institucion): ?>
+									<label>Categorias disponibles</label>
 
-										<option value="<?= $institucion->id ?>" <?php if ($submit && isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+									<select id="categorias" class="form-control" multiple>
+
+										<?php if (isset($categorias) && $categorias): ?>
+
+											<?php foreach ($categorias as $categoria): ?>
+
+												<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+											<?php endforeach; ?>
+
+										<?php endif; ?>
+
+									</select>
+
+								</div>
+
+								<div class="col-md-2 btn-group">
+
+									<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
+
+									<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
+
+								</div>
+
+								<div class="col-md-5">
+
+									<label>Categorias seleccionadas</label>
+
+									<select id="id_categoria" name="id_categoria[]" class="form-control" multiple>
+
+										<?php if (isset($categorias_seleccionadas) && $categorias_seleccionadas): ?>
+
+											<?php foreach ($categorias_seleccionadas as $categoria): ?>
+
+												<option value="<?= $categoria->id ?>"><?= $categoria->nombre ?></option>
+
+											<?php endforeach; ?>
+
+										<?php endif; ?>
+
+									</select>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					<?php else: ?>
+
+						<label>Categoria(s)</label>
+
+						<p>No se registraron categorías.</p>
+
+					<?php endif; ?>
+
+				<?php endif; ?>
+
+				<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "herramienta"): ?>
+
+					<?php if (isset($autores) && $autores): ?>
+
+						<div class="checkbox">
+
+							<label><input type="checkbox" id="con_autor" name="con_autor" <?php if ($submit && (isset($id_autor) && $id_autor)): ?>checked<?php endif; ?>>Filtrar por autor</label>
+
+						</div>
+
+						<div id="div_autor" class="form-group" <?php if (!$submit || (isset($id_autor) && !$id_autor)): ?>style="display: none;"<?php endif; ?>>
+
+							<select id="id_autor" name="id_autor" class="form-control">
+
+								<?php if ($autores): ?>
+
+									<?php foreach ($autores as $autor): ?>
+
+										<option value="<?= $autor->id ?>" <?php if ($submit && isset($id_autor) && $autor->id = $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
 
 									<?php endforeach; ?>
 
@@ -178,485 +157,225 @@ switch ($fuente) {
 
 					<?php else: ?>
 
-						<input type="hidden" id="con_institucion" name="con_institucion" value="on">
+						<label>Autor</label>
 
-						<input type="hidden" id="id_institucion" name="id_institucion" value="<?= $this->session->userdata("id_institucion") ?>">
+						<p>No se registraron autores.</p>
 
 					<?php endif; ?>
 
-				<?php else: ?>
-
-					<label>Institución</label>
-
-					<p>No se registraron instituciones.</p>
-
 				<?php endif; ?>
 
-			<?php endif; ?>
+				<?php if ($fuente == "publicacion" || $fuente == "articulo" || $fuente == "evento" || $fuente == "herramienta"): ?>
 
-			<?php if ($fuente == "evento"): ?>
+					<?php if (isset($instituciones) && $instituciones): ?>
 
-				<div class="checkbox">
+						<?php if ($this->session->userdata("rol") != "usuario"): ?>
 
-					<label><input type="checkbox" id="con_fecha" name="con_fecha" <?php if ($submit && isset($id_fecha) && $id_fecha): ?>checked<?php endif; ?>>Filtrar por fecha</label>
+							<div class="checkbox">
 
-				</div>
-
-				<div id="div_fecha" <?php if (!$submit || (isset($id_fecha) && !$id_fecha)): ?>style="display: none;"<?php endif; ?>>
-
-					<div class="radio">
-
-						<label><input type="radio" name="fecha" value="proximos" <?php if (!$submit || (isset($id_fecha) && ($id_fecha == "proximos" || !$id_fecha))): ?>checked<?php endif; ?>>Sólo eventos próximos</label>
-
-					</div>
-
-					<div class="radio">
-
-						<label><input type="radio" name="fecha" value="todos" <?php if ($submit && isset($id_fecha) && $id_fecha == "todos"): ?>checked<?php endif; ?>>Todos los eventos</label>
-
-					</div>
-
-				</div>
-
-			<?php endif; ?>
-
-			<?php if ($fuente == "evento"): ?>
-
-				<div class="checkbox">
-
-					<label><input type="checkbox" id="con_pais" name="con_pais" <?php if ($submit && isset($id_pais) && $id_pais): ?>checked<?php endif; ?>>Filtrar por país</label>
-
-				</div>
-
-				<div id="div_pais" <?php if (!$submit || (isset($id_pais) && !$id_pais)): ?>style="display: none;"<?php endif; ?>>
-
-					<div class="form-group">
-
-						<select id="pais" name="pais" class="form-control">
-
-							<?php if ($paises): ?>
-
-								<?php foreach ($paises as $pais): ?>
-
-									<option value="<?= $pais->id ?>" <?php if ($submit && isset($id_pais) && $pais->id == $id_pais): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-						<?= form_error("pais") ?>
-
-					</div>
-
-					<div class="checkbox">
-
-						<label><input type="checkbox" id="con_ciudad" name="con_ciudad" <?php if ($submit && isset($id_ciudad) && $id_ciudad): ?>checked<?php endif; ?>>Filtrar por ciudad</label>
-
-					</div>
-
-					<div id="div_ciudad" class="form-group" <?php if (!$submit || (isset($id_ciudad) && !$id_ciudad)): ?>style="display: none;"<?php endif; ?>>
-
-						<select id="ciudad" name="ciudad" class="form-control">
-
-							<?php if ($ciudades): ?>
-
-								<?php foreach ($ciudades as $ciudad): ?>
-
-									<option value="<?= $ciudad->id ?>" <?php if ($submit && isset($id_ciudad) && $ciudad->id == $id_ciudad): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
-
-								<?php endforeach; ?>
-
-							<?php endif; ?>
-
-						</select>
-
-						<?= form_error("pais") ?>
-
-					</div>
-
-				</div>
-
-			<?php endif; ?>
-
-			<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Buscar">
-
-		</form>
-
-	</div>
-
-</div>
-
-<?php if ($submit): ?>
-
-	<div class="container">
-
-		<?php if ($fuente == "publicacion"): ?>
-
-			<h4>Publicaciones relacionadas</h4>
-
-			<?php if ($publicaciones): ?>
-
-				<?php foreach ($publicaciones as $publicacion): ?>
-
-					<div class="row contenido-pagina">
-
-						<div class="col-md-3 text-center">
-
-							<?php if ($publicacion->imagen != ""): ?>
-
-								<img src="<?= base_url($path_publicaciones . $publicacion->imagen) ?>" alt="<?= $publicacion->nombre ?>" class="img-responsive img-center">
-
-							<?php endif; ?>
-
-						</div>
-
-						<div class="col-md-9">
-
-							<h4><?= $publicacion->nombre ?></h4>
-
-							<p class="text-justify"><?= $publicacion->descripcion ?></p>
-
-							<?php if ($publicacion->modulos): ?>
-
-								<h4>Modulos</h4>
-
-								<ol>
-
-									<?php foreach ($publicacion->modulos as $modulo): ?>
-
-										<li><?= $modulo->nombre ?></li>
-
-									<?php endforeach; ?>
-
-								</ol>
-
-							<?php endif; ?>
-
-							<?php if ($publicacion->url != ""): ?>
-
-								<h4>Documento</h4>
-
-								<a href="<?= base_url($path_publicaciones . $publicacion->url) ?>">Descargar documento</a>
-
-							<?php endif; ?>
-
-							<div class="row">
-
-								<?php if ($publicacion->autores): ?>
-
-									<div class="col-md-4">
-
-										<h4>Autores</h4>
-
-										<ul>
-
-											<?php foreach ($publicacion->autores as $autor): ?>
-
-												<li><?= $autor->nombre_completo ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-								<?php if ($publicacion->categorias): ?>
-
-									<div class="col-md-4">
-
-										<h4>Categorias</h4>
-
-										<ul>
-
-											<?php foreach ($publicacion->categorias as $categoria): ?>
-
-												<li><?= $categoria->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-								<?php if ($publicacion->instituciones): ?>
-
-									<div class="col-md-4">
-
-										<h4>Instituciones</h4>
-
-										<ul>
-
-											<?php foreach ($publicacion->instituciones as $institucion): ?>
-
-												<li><?= $institucion->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-								<div class="clearfix visible-md-block visible-lg-block"></div>
+								<label><input type="checkbox" id="con_institucion" name="con_institucion" <?php if ($submit && (isset($id_institucion) && $id_institucion)): ?>checked<?php endif; ?>>Filtrar por institución</label>
 
 							</div>
 
-							<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
+							<div id="div_institucion" class="form-group" <?php if (!$submit || (isset($id_institucion) && !$id_institucion)): ?>style="display: none;"<?php endif; ?>>
 
-							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+								<select id="id_institucion" name="id_institucion" class="form-control">
 
-								<a href="<?= base_url("publicacion/modificar_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
+									<?php if ($instituciones): ?>
 
-							<?php endif; ?>
+										<?php foreach ($instituciones as $institucion): ?>
 
-							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+											<option value="<?= $institucion->id ?>" <?php if ($submit && isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
 
-								<a href="<?= base_url("publicacion/eliminar_publicacion/" . $publicacion->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
+										<?php endforeach; ?>
 
-							<?php endif; ?>
+									<?php endif; ?>
 
-						</div>
+								</select>
 
-						<div class="clearfix visible-md-block visible-lg-block"></div>
+							</div>
+
+						<?php else: ?>
+
+							<input type="hidden" id="con_institucion" name="con_institucion" value="on">
+
+							<input type="hidden" id="id_institucion" name="id_institucion" value="<?= $this->session->userdata("id_institucion") ?>">
+
+						<?php endif; ?>
+
+					<?php else: ?>
+
+						<label>Institución</label>
+
+						<p>No se registraron instituciones.</p>
+
+					<?php endif; ?>
+
+				<?php endif; ?>
+
+				<?php if ($fuente == "evento"): ?>
+
+					<div class="checkbox">
+
+						<label><input type="checkbox" id="con_fecha" name="con_fecha" <?php if ($submit && isset($id_fecha) && $id_fecha): ?>checked<?php endif; ?>>Filtrar por fecha</label>
 
 					</div>
 
-				<?php endforeach; ?>
+					<div id="div_fecha" <?php if (!$submit || (isset($id_fecha) && !$id_fecha)): ?>style="display: none;"<?php endif; ?>>
 
-			<?php else: ?>
+						<div class="radio">
 
-				<p>No se encontraron publicaciones relacionadas.</p>
+							<label><input type="radio" name="fecha" value="proximos" <?php if (!$submit || (isset($id_fecha) && ($id_fecha == "proximos" || !$id_fecha))): ?>checked<?php endif; ?>>Sólo eventos próximos</label>
 
-			<?php endif; ?>
+						</div>
+
+						<div class="radio">
+
+							<label><input type="radio" name="fecha" value="todos" <?php if ($submit && isset($id_fecha) && $id_fecha == "todos"): ?>checked<?php endif; ?>>Todos los eventos</label>
+
+						</div>
+
+					</div>
+
+				<?php endif; ?>
+
+				<?php if ($fuente == "evento"): ?>
+
+					<div class="checkbox">
+
+						<label><input type="checkbox" id="con_pais" name="con_pais" <?php if ($submit && isset($id_pais) && $id_pais): ?>checked<?php endif; ?>>Filtrar por país</label>
+
+					</div>
+
+					<div id="div_pais" <?php if (!$submit || (isset($id_pais) && !$id_pais)): ?>style="display: none;"<?php endif; ?>>
+
+						<div class="form-group">
+
+							<select id="pais" name="pais" class="form-control">
+
+								<?php if ($paises): ?>
+
+									<?php foreach ($paises as $pais): ?>
+
+										<option value="<?= $pais->id ?>" <?php if ($submit && isset($id_pais) && $pais->id == $id_pais): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+							<?= form_error("pais") ?>
+
+						</div>
+
+						<div class="checkbox">
+
+							<label><input type="checkbox" id="con_ciudad" name="con_ciudad" <?php if ($submit && isset($id_ciudad) && $id_ciudad): ?>checked<?php endif; ?>>Filtrar por ciudad</label>
+
+						</div>
+
+						<div id="div_ciudad" class="form-group" <?php if (!$submit || (isset($id_ciudad) && !$id_ciudad)): ?>style="display: none;"<?php endif; ?>>
+
+							<select id="ciudad" name="ciudad" class="form-control">
+
+								<?php if ($ciudades): ?>
+
+									<?php foreach ($ciudades as $ciudad): ?>
+
+										<option value="<?= $ciudad->id ?>" <?php if ($submit && isset($id_ciudad) && $ciudad->id == $id_ciudad): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+							<?= form_error("pais") ?>
+
+						</div>
+
+					</div>
+
+				<?php endif; ?>
+
+				<input type="submit" id="submit" name="submit" class="btn btn-primary" value="Buscar">
+
+			</form>
+
+		</div>
+
+	</div>
+
+	<?php if ($submit): ?>
+
+		<?php if ($fuente == "publicacion"): ?>
+
+			<div class="publicaciones">
+
+				<div class="container-fluid">
+
+					<h4>Publicaciones relacionadas</h4>
+
+				</div>
+
+				<?php $this->load->view("publicacion/contenido_publicaciones", array("publicaciones" => $publicaciones)); ?>
+
+			</div>
 
 		<?php endif; ?>
 
 		<?php if ($fuente == "articulo"): ?>
 
-			<h4>Artículos relacionados</h4>
+			<div class="articulos">
 
-			<?php if ($articulos): ?>
+				<div class="container-fluid">
 
-				<?php foreach ($articulos as $articulo): ?>
-
-					<div class="row contenido-pagina">
-
-						<div class="col-md-3">
-
-							<img src="<?= base_url($path_articulos . $articulo->imagen) ?>" class="img-responsive">
-
-						</div>
-
-						<div class="col-md-9">
-
-							<h4><?= $articulo->nombre ?></h4>
-
-							<p class="text-justify"><?= $articulo->descripcion ?></p>
-
-							<div class="row">
-
-								<?php if ($articulo->autores): ?>
-
-									<div class="col-md-4">
-
-										<h4>Autores</h4>
-
-										<ul>
-
-											<?php foreach ($articulo->autores as $autor): ?>
-
-												<li><?= $autor->nombre_completo ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-								<?php if ($articulo->categorias): ?>
-
-									<div class="col-md-4">
-
-										<h4>Categorias</h4>
-
-										<ul>
-
-											<?php foreach ($articulo->categorias as $categoria): ?>
-
-												<li><?= $categoria->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-								<?php if ($articulo->instituciones): ?>
-
-									<div class="col-md-4">
-
-										<h4>Instituciones</h4>
-
-										<ul>
-
-											<?php foreach ($articulo->instituciones as $institucion): ?>
-
-												<li><?= $institucion->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-							</div>
-
-							<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
-
-							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-								<a href="<?= base_url("articulo/modificar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-								<a href="<?= base_url("articulo/eliminar_articulo/" . $articulo->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-
-							<?php endif; ?>
-
-						</div>
-
-					</div>
-
-				<?php endforeach; ?>
-
-			<?php else: ?>
-
-				<div class="contenido">
-
-					<p>No se registraron articulos.</p>
+					<h4>Artículos relacionados</h4>
 
 				</div>
 
-			<?php endif; ?>
+				<?php $this->load->view("articulo/contenido_articulos", array("articulos" => $articulos)); ?>
+
+			</div>
 
 		<?php endif; ?>
 
 		<?php if ($fuente == "evento"): ?>
 
-			<?php if ($eventos): ?>
+			<div class="eventos">
 
-				<?php foreach ($eventos as $evento): ?>
+				<div class="container-fluid">
 
-					<div class="row contenido-pagina">
-
-						<div class="col-md-3">
-
-							<img src="<?= base_url($path_evento . $evento->imagen) ?>" class="img-responsive img-center">
-
-						</div>
-
-						<div class="col-md-9">
-
-							<h4><?= $evento->nombre ?></h4>
-
-							<p class="text-justify"><?= $evento->descripcion ?></p>
-
-							<p><label>Fecha de inicio:</label> <?= $evento->fecha_inicio ?></p>
-
-							<p><label>Fecha de fin:</label> <?= $evento->fecha_fin ?></p>
-
-							<p><label>Lugar:</label> <?= $evento->direccion . ", " . $evento->ciudad->nombre . ", " . $evento->pais->nombre ?></p>
-
-							<div class="row">
-
-								<?php if ($evento->instituciones): ?>
-
-									<div class="col-md-6">
-
-										<h4>Instituciones</h4>
-
-										<ul>
-
-											<?php foreach ($evento->instituciones as $institucion): ?>
-
-												<li><?= $institucion->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-								<?php if ($evento->categorias): ?>
-
-									<div class="col-md-6">
-
-										<h4>Categorias</h4>
-
-										<ul>
-
-											<?php foreach ($evento->categorias as $categoria): ?>
-
-												<li><?= $categoria->nombre ?></li>
-
-											<?php endforeach; ?>
-
-										</ul>
-
-									</div>
-
-								<?php endif; ?>
-
-							</div>
-
-							<a href="<?= base_url("evento/ver_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Ver</a>
-
-							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-								<a href="<?= base_url("evento/modificar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
-
-							<?php endif; ?>
-
-							<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-								<a href="<?= base_url("evento/eliminar_evento/" . $evento->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Eliminar</a>
-
-							<?php endif; ?>
-
-						</div>
-
-					</div>
-
-				<?php endforeach; ?>
-
-			<?php else: ?>
-
-				<div class="contenido">
-
-					<p>No se registraron eventos.</p>
+					<h4>Eventos relacionados</h4>
 
 				</div>
 
-			<?php endif; ?>
+				<?php $this->load->view("evento/contenido_eventos", array("eventos" => $eventos)); ?>
+
+			</div>
+
+		<?php endif; ?>
+	
+		<?php if ($fuente == "herramienta"): ?>
+
+			<div class="herramientas">
+
+				<div class="container-fluid">
+
+					<h4>Herramientas relacionadas</h4>
+
+				</div>
+
+				<?php $this->load->view("herramienta/contenido_herramientas", array("herramientas" => $herramientas)); ?>
+
+			</div>
 
 		<?php endif; ?>
 
-	</div>
+	<?php endif; ?>
 
-<?php endif; ?>
+</div>
 
 <script>
 	/** scripts de los selects multiples **/

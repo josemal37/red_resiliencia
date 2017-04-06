@@ -270,4 +270,50 @@ class Herramienta extends CI_Controller {
 		}
 	}
 
+	public function busqueda_avanzada() {
+		$datos = array();
+
+		$datos["titulo"] = "Busqueda avanzada";
+		$datos["fuente"] = "herramienta";
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["autores"] = $this->Modelo_autor->select_autores();
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+
+		if (isset($_POST["submit"])) {
+			$con_categorias = $this->input->post("con_categorias") == "on" ? TRUE : FALSE;
+			$categorias = $con_categorias ? $this->input->post("id_categoria") : FALSE;
+			$con_autor = $this->input->post("con_autor") == "on" ? TRUE : FALSE;
+			$id_autor = $con_autor ? $this->input->post("id_autor") : FALSE;
+			$con_institucion = $this->input->post("con_institucion") == "on" ? TRUE : FALSE;
+			$id_institucion = $con_institucion ? $this->input->post("id_institucion") : FALSE;
+
+			$datos["id_autor"] = $id_autor;
+			$datos["id_institucion"] = $id_institucion;
+
+			if ($categorias) {
+				$datos["categorias_seleccionadas"] = $datos["categorias"];
+				$ids_categorias = array();
+				foreach ($categorias as $categoria) {
+					$obj_categoria = new stdClass();
+					$obj_categoria->id = $categoria;
+					$ids_categorias[] = $obj_categoria;
+				}
+				eliminar_elementos_array($datos["categorias"], $ids_categorias, "id");
+				eliminar_elementos_array($datos["categorias_seleccionadas"], $datos["categorias"], "id");
+			} else {
+				$datos["categorias_seleccionadas"] = FALSE;
+			}
+
+			$datos["herramientas"] = $this->Modelo_herramienta->select_herramientas_con_filtro($categorias, $id_autor, $id_institucion);
+			$datos["submit"] = TRUE;
+
+			$datos["path_herramientas"] = $this->imagen->get_path_valido("herramienta");
+		} else {
+			$datos["herramientas"] = FALSE;
+			$datos["submit"] = FALSE;
+		}
+
+		$this->load->view("base/busqueda_avanzada", $datos);
+	}
+
 }

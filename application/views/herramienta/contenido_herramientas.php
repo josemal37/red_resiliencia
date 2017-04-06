@@ -77,10 +77,4 @@
 
 	<?php endif; ?>
 
-	<div class="acciones">
-
-		<a href="<?= base_url("herramienta/registrar_herramienta") ?>" class="btn btn-default">Registrar herramienta</a>
-
-	</div>
-
 </div>

@@ -36,6 +36,16 @@
 
 		<?php $this->load->view("evento/contenido_eventos"); ?>
 
+		<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+			<div class="acciones">
+
+				<a href="<?= base_url("evento/registrar_evento") ?>" class="btn btn-default btn-resiliencia">Registrar evento</a>
+
+			</div>
+
+		<?php endif; ?>
+
 		<?php if (isset($criterio) && !$criterio): ?>
 
 			<div class="text-center">

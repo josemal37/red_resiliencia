@@ -13,6 +13,9 @@ html, body {
 .height-100 {
   min-height: 100%; }
 
+.btn-redondo {
+  border-radius: 50% 50% 50% 50%; }
+
 .header {
   min-height: 100%;
   font-family: "Josefin Sans", sans-serif; }
@@ -221,7 +224,7 @@ section {
         -moz-transition: 0.2s;
         -o-transition: 0.2s;
         -ms-transition: 0.2s; }
-  .publicaciones .contenido .acciones {
+  .publicaciones .acciones {
     padding: 20px; }
 
 .articulo {
@@ -264,7 +267,7 @@ section {
             height: 250px; } }
       .articulos .contenido .items .item .titulo-item {
         color: #b2dd39; }
-  .articulos .contenido .acciones {
+  .articulos .acciones {
     padding: 20px; }
 
 .contenido-mce {
@@ -325,7 +328,7 @@ section {
         -moz-transition: 0.2s;
         -o-transition: 0.2s;
         -ms-transition: 0.2s; }
-  .eventos .contenido .acciones {
+  .eventos .acciones {
     padding: 20px; }
 
 .herramienta {
@@ -383,7 +386,7 @@ section {
         -moz-transition: 0.2s;
         -o-transition: 0.2s;
         -ms-transition: 0.2s; }
-  .herramientas .contenido .acciones {
+  .herramientas .acciones {
     padding: 20px; }
 
 .pagina {

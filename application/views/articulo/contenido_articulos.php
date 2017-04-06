@@ -60,14 +60,4 @@
 
 	<?php endif; ?>
 
-	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
-
-		<div class="acciones">
-
-			<a href="<?= base_url("articulo/registrar_articulo") ?>" class="btn btn-default btn-resiliencia">Registrar articulo</a>
-
-		</div>
-
-	<?php endif; ?>
-
 </div>
