@@ -19,6 +19,11 @@ if (isset($eventos)) {
 } else {
 	$datos["eventos"] = FALSE;
 }
+if (isset($eventos)) {
+	$datos["herramientas"] = TRUE;
+} else {
+	$datos["herramientas"] = FALSE;
+}
 ?>
 
 <header id="header" class="header">
@@ -153,6 +158,45 @@ if (isset($eventos)) {
 			<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary">Ver todos los eventos</a>
 
 		</div>
+
+	</section>
+
+<?php endif; ?>
+	
+<?php if (isset($herramientas)): ?>
+
+	<!-- Herramientas -->
+	<section id="herramientas" class="herramientas">
+
+		<div class="titulo-herramientas container-fluid">
+
+			<hr>
+
+			<h1>Herramientas</h1>
+
+			<hr>
+
+		</div>
+
+		<?php if ($herramientas): ?>
+
+			<?php $this->load->view("herramienta/contenido_herramientas", array("herramientas" => $herramientas, "path_herramientas" => $path_herramientas)); ?>
+
+			<div class="acciones">
+
+				<a href="<?= base_url("herramientas/herramientas") ?>" class="btn btn-primary">Ver todas las herramientas</a>
+
+			</div>
+
+		<?php else: ?>
+
+			<div class="container-fluid">
+
+				<p>Sin herramientas.</p>
+
+			</div>
+
+		<?php endif; ?>
 
 	</section>
 

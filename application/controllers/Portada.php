@@ -19,7 +19,7 @@ class Portada extends CI_Controller {
 
 		parent::__construct();
 
-		$this->load->model(array("Modelo_publicacion", "Modelo_autor", "Modelo_categoria", "Modelo_evento", "Modelo_articulo"));
+		$this->load->model(array("Modelo_publicacion", "Modelo_autor", "Modelo_categoria", "Modelo_evento", "Modelo_articulo", "Modelo_herramienta"));
 		
 		$this->load->library(array("Session", "Form_validation"));
 		$this->load->library(array("Imagen"));
@@ -42,10 +42,13 @@ class Portada extends CI_Controller {
 				$datos["eventos"] = $this->Modelo_evento->select_eventos(1, 4);
 				$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
 				$datos["articulos"] = $this->Modelo_articulo->select_articulos(1, 3);
+				$datos["path_herramientas"] = $this->imagen->get_path_valido("herramienta");
+				$datos["herramientas"] = $this->Modelo_herramienta->select_herramientas(1, 4);
 				
 				$datos["eventos_proximos"] = $this->Modelo_evento->select_eventos_proximos(2);
 				$datos["articulos_recientes"] = $this->Modelo_articulo->select_articulos(1, 2);
 				$datos["publicaciones_recientes"] = $this->Modelo_publicacion->select_publicaciones(1, 2);
+				$datos["herramientas_recientes"] = $this->Modelo_herramienta->select_herramientas(1, 2);
 				
 				$this->load->view("portada/portada", $datos);
 				break;

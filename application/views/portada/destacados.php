@@ -44,6 +44,18 @@
 
 			<?php endif; ?>
 
+			<?php if (isset($herramientas_recientes) && $herramientas_recientes): ?>
+
+				<?php for ($j = 0; $j < sizeof($herramientas_recientes); $j = $j + 1): ?>
+
+					<li data-target="#destacados" data-slide-to="<?= $i ?>" <?php if ($i == 0): ?>class="active"<?php endif; ?>></li>
+
+					<?php $i += 1; ?>
+
+				<?php endfor; ?>
+
+			<?php endif; ?>
+
 		</ol>
 
 		<div class="carousel-inner" role="listbox">
@@ -191,6 +203,58 @@
 									<?php endif; ?>
 
 									<a href="<?= base_url("publicacion/ver_publicacion/" . $publicacion->id) ?>" class="btn btn-primary btn-resiliencia pull-right">Ver publicación</a>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<?php $i += 1; ?>
+
+				<?php endforeach; ?>
+
+			<?php endif; ?>
+
+			<?php if (isset($herramientas_recientes) && $herramientas_recientes): ?>
+
+				<?php foreach ($herramientas_recientes as $herramienta): ?>
+
+					<div class="item <?php if ($i == 0): ?>active<?php endif; ?>">
+
+						<div class="row">
+
+							<a href="<?= base_url("herramienta/ver_herramienta/" . $herramienta->id) ?>">
+
+								<div class="col-sm-4 col-md-push-1 imagen-item" style="background-image: url('<?= base_url($path_herramientas . $herramienta->imagen) ?>');"></div>
+
+							</a>
+
+							<div class="col-md-5 col-sm-7 col-md-offset-1 hidden-xs contenido-item">
+
+								<div>
+
+									<?php if ($herramienta->nombre): ?>
+
+										<h2><?= $herramienta->nombre ?></h2>
+
+									<?php endif; ?>
+
+									<?php if ($herramienta->autores): ?>
+
+										<p class="text-left"><label>Autores:</label> <?= listar_array_de_stdclass($herramienta->autores, "nombre", ", ") ?></p>
+
+									<?php endif; ?>
+
+									<?php if ($herramienta->instituciones): ?>
+
+										<p class="text-left"><label>Instituciones:</label> <?= listar_array_de_stdclass($herramienta->instituciones, "nombre", ", ") ?></p>
+
+									<?php endif; ?>
+
+									<a href="<?= base_url("herramienta/ver_herramienta/" . $herramienta->id) ?>" class="btn btn-primary btn-resiliencia pull-right">Ver herramienta</a>
 
 								</div>
 
