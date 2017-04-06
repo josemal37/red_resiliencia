@@ -210,7 +210,9 @@ create table `herramienta`
    `id_herramienta` int not null auto_increment,
    `nombre_herramienta` varchar(1024),
    `descripcion_herramienta` text,
+   `imagen_herramienta` varchar(1024),
    `video_herramienta` varchar(1024),
+   `url_herramienta` varchar(1024)
    primary key (`id_herramienta`)
 )
 

@@ -16,6 +16,10 @@ switch ($fuente) {
 		$url = base_url("articulo/articulos");
 		$avanzada = base_url("articulo/busqueda_avanzada");
 		break;
+	case "herramienta":
+		$url = base_url("herramienta/herramientas");
+		$avanzada = base_url("herramienta/busqueda_avanzada");
+		break;
 }
 ?>
 
@@ -83,6 +87,13 @@ switch ($fuente) {
 
 				<?php
 				break;
+			
+			case "herramienta":
+				?>
+				
+				<h4>Herramientas relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+				
+				<?php
 		}
 		?>
 

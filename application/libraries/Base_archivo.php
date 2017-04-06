@@ -20,6 +20,7 @@ abstract class Base_archivo {
 	const PATH_PUBLICACIONES = "publicaciones/";
 	const PATH_EVENTOS = "eventos/";
 	const PATH_ARTICULO = "articulos/";
+	const PATH_HERRAMIENTA = "herramientas/";
 
 	protected $ci;
 	protected $config = array();
@@ -84,6 +85,9 @@ abstract class Base_archivo {
 				break;
 			case "articulo":
 				$path = self::PATH_ARTICULO;
+				break;
+			case "herramienta":
+				$path = self::PATH_HERRAMIENTA;
 				break;
 		}
 

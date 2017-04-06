@@ -27,6 +27,8 @@ class Modelo_autor extends My_model {
 	const ID_PUBLICACION_COL = "id_publicacion";
 	const NOMBRE_TABLA_JOIN_ARTICULO = "autor_articulo";
 	const ID_ARTICULO_COL = "id_articulo";
+	const NOMBRE_TABLA_JOIN_HERRAMIENTA = "autor_herramienta";
+	const ID_HERRAMIENTA_COL = "id_herramienta";
 	const NOMBRE_TABLA_ASOC_INSTITUCION = "institucion_autor";
 	const ID_TABLA_ASOC_INSTITUCION = "id_institucion";
 
@@ -108,6 +110,28 @@ class Modelo_autor extends My_model {
 					$this->db->from(self::NOMBRE_TABLA);
 					$this->db->join(self::NOMBRE_TABLA_JOIN_ARTICULO, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_ARTICULO . "." . self::ID_COL, "left");
 					$this->db->where(self::NOMBRE_TABLA_JOIN_ARTICULO . "." . self::ID_ARTICULO_COL, $id);
+
+					$query = $this->db->get();
+
+					$autores = $this->return_result($query);
+
+					if ($autores) {
+						$i = 0;
+
+						foreach ($autores as $autor) {
+							$autores[$i]->nombre_completo = $this->get_nombre_completo($autor);
+
+							$i += 1;
+						}
+					}
+
+					$datos = $autores;
+					break;
+				case "herramienta":
+					$this->db->select(self::COLUMNAS_SELECT);
+					$this->db->from(self::NOMBRE_TABLA);
+					$this->db->join(self::NOMBRE_TABLA_JOIN_HERRAMIENTA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_JOIN_HERRAMIENTA . "." . self::ID_COL, "left");
+					$this->db->where(self::NOMBRE_TABLA_JOIN_HERRAMIENTA . "." . self::ID_HERRAMIENTA_COL, $id);
 
 					$query = $this->db->get();
 

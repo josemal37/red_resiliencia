@@ -328,6 +328,64 @@ section {
   .eventos .contenido .acciones {
     padding: 20px; }
 
+.herramienta {
+  font-family: "Josefin Sans", sans-serif; }
+  .herramienta .titulo {
+    padding-top: 50px;
+    padding-bottom: 20px; }
+    .herramienta .titulo h1 {
+      font-size: 50px;
+      margin: 0; }
+  .herramienta .contenido .titulo-herramienta {
+    color: #b2dd39; }
+  .herramienta .contenido .imagen {
+    max-height: 500px; }
+  .herramienta .contenido .subtitulo {
+    color: #b2dd39; }
+
+.herramientas {
+  font-family: "Josefin Sans", sans-serif; }
+  .herramientas .titulo {
+    padding-top: 50px;
+    padding-bottom: 20px; }
+    .herramientas .titulo h1 {
+      font-size: 50px;
+      margin: 0; }
+  .herramientas .titulo-herramientas h1 {
+    margin: 0; }
+  .herramientas .contenido .items {
+    background-color: #f9f9f9; }
+    .herramientas .contenido .items .item {
+      padding: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      background-color: #FFF;
+      -webkit-box-shadow: 1px 1px 2px 0 #939393;
+      -moz-box-shadow: 1px 1px 2px 0 #939393;
+      box-shadow: 1px 1px 2px 0 #939393; }
+      .herramientas .contenido .items .item .img-item {
+        height: 250px;
+        background-position: center center !important;
+        background-repeat: no-repeat;
+        background-size: cover !important; }
+      .herramientas .contenido .items .item .nombre {
+        color: #39B2DD; }
+      .herramientas .contenido .items .item:hover {
+        -webkit-transform: scale(1.02);
+        /* Efecto de zoom */
+        -moz-transform: scale(1.02);
+        -o-transform: scale(1.02);
+        -ms-transform: scale(1.02);
+        -webkit-transition: 0.2s;
+        /* Trancisiones */
+        -moz-transition: 0.2s;
+        -o-transition: 0.2s;
+        -ms-transition: 0.2s; }
+  .herramientas .contenido .acciones {
+    padding: 20px; }
+
 .pagina {
   font-family: "Josefin Sans", sans-serif;
   min-height: 100%; }
