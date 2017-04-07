@@ -37,7 +37,7 @@ class Evento extends CI_Controller {
 
 		$datos = array();
 
-		$cantidad_eventos = 3;
+		$cantidad_eventos = 4;
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
 		}

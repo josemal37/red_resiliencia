@@ -184,7 +184,7 @@ if (isset($eventos)) {
 
 			<div class="acciones">
 
-				<a href="<?= base_url("herramientas/herramientas") ?>" class="btn btn-primary">Ver todas las herramientas</a>
+				<a href="<?= base_url("herramienta/herramientas") ?>" class="btn btn-primary">Ver todas las herramientas</a>
 
 			</div>
 

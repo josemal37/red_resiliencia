@@ -30,6 +30,24 @@
 
 	<?php endif; ?>
 
+	<?php if (isset($criterio) && !$criterio): ?>
+
+		<div class="text-center">
+
+			<ul class="pagination">
+
+				<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
+
+					<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("herramienta/herramientas/" . $i) ?>"><?= $i ?></a></li>
+
+				<?php endfor; ?>
+
+			</ul>
+
+		</div>
+
+	<?php endif; ?>
+
 	<?php if ($this->session->flashdata("error")): ?>
 
 		<div class="container-fluid">

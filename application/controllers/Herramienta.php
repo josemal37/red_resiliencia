@@ -34,13 +34,20 @@ class Herramienta extends CI_Controller {
 		$this->herramientas();
 	}
 
-	public function herramientas() {
+	public function herramientas($nro_pagina = FALSE) {
 		$rol = $this->session->userdata("rol");
+		
+		$cantidad_items = 4;
 
 		$datos = array();
 		$datos["titulo"] = "Herramientas";
 		$datos["path_herramientas"] = $this->imagen->get_path_valido("herramienta");
 
+		if (!$nro_pagina) {
+			$nro_pagina = 1;
+		}
+		$datos["nro_pagina"] = $nro_pagina;
+		
 		if (isset($_GET["criterio"])) {
 			$criterio = $this->input->get("criterio");
 		} else {
@@ -53,8 +60,9 @@ class Herramienta extends CI_Controller {
 		} else {
 			$id_institucion = FALSE;
 		}
+		$datos["nro_paginas"] = $this->Modelo_herramienta->select_count_nro_paginas($cantidad_items, $id_institucion);
 
-		$datos["herramientas"] = $this->Modelo_herramienta->select_herramientas(1, self::NRO_REGISTROS, $id_institucion, $criterio);
+		$datos["herramientas"] = $this->Modelo_herramienta->select_herramientas($nro_pagina, self::NRO_REGISTROS, $id_institucion, $criterio);
 
 		$this->load->view("herramienta/herramientas", $datos);
 	}

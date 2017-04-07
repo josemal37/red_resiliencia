@@ -358,5 +358,23 @@ class Modelo_herramienta extends My_model {
 			return FALSE;
 		}
 	}
+	
+	public function select_count_nro_paginas($cantidad_items = FALSE, $id_institucion = FALSE) {
+		if ($cantidad_items) {
+			$nro_paginas = 0;
+
+			$nro_herramientas = $this->select_count_herramientas($id_institucion);
+
+			if ($nro_herramientas % $cantidad_items == 0) {
+				$nro_paginas = (integer) ($nro_herramientas / $cantidad_items);
+			} else {
+				$nro_paginas = (integer) ($nro_herramientas / $cantidad_items) + 1;
+			}
+
+			return $nro_paginas;
+		} else {
+			return 0;
+		}
+	}
 
 }
