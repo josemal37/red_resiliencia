@@ -24,7 +24,7 @@ class Articulo extends CI_Controller {
 		$this->load->library(array("imagen"));
 
 		$this->load->helper(array("Url", "Form", "FIle"));
-		$this->load->helper(array("Array_helper"));
+		$this->load->helper(array("Array_helper", "Social_helper"));
 
 		$this->load->database("default");
 	}

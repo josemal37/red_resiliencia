@@ -95,6 +95,8 @@
 				</div>
 
 			<?php endif; ?>
+				
+			<?php $this->load->view("base/social", array("item" => $herramienta)); ?>
 
 		</div>
 

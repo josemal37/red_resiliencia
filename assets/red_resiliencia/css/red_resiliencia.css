@@ -417,4 +417,9 @@ section {
   .login .contenido .titulo-login h1 {
     margin: 0; }
 
+.social {
+  height: 80px; }
+  .social a {
+    margin-left: 5px; }
+
 /*# sourceMappingURL=red_resiliencia.css.map */

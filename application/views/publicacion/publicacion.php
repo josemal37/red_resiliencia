@@ -136,6 +136,8 @@
 
 			</div>
 
+			<?php $this->load->view("base/social", array("item" => $publicacion)); ?>
+
 		</div>
 
 	</div>

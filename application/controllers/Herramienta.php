@@ -25,7 +25,7 @@ class Herramienta extends CI_Controller {
 		$this->load->library(array("Imagen"));
 
 		$this->load->helper(array("Url", "Form"));
-		$this->load->helper(array("array_helper", "youtube_helper"));
+		$this->load->helper(array("array_helper", "youtube_helper", "social_helper"));
 
 		$this->load->database("default");
 	}

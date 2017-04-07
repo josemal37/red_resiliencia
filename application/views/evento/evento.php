@@ -91,6 +91,8 @@
 				</div>
 
 			</div>
+			
+			<?php $this->load->view("base/social", array("item" => $evento)); ?>
 
 		</div>
 
