@@ -2,6 +2,11 @@
     font-family: $fuente-josefin;
     min-height: 100%;
     .titulo {
+        background-image: url(../img/naturaleza.jpg);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: $blanco;
         padding-top: 50px;
         padding-bottom: 20px;
         h1 {

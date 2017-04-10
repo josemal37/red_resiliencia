@@ -23,80 +23,84 @@ switch ($fuente) {
 }
 ?>
 
-<div class="container-fluid">
+<div class="busqueda">
 
-	<div class="row">
+	<div class="container-fluid">
 
-		<div class="col-md-6"></div>
+		<div class="row">
 
-		<div class="col-md-6">
+			<div class="col-md-6"></div>
 
-			<form action="<?= $url ?>" id="form-busqueda" method="get">
+			<div class="col-md-6">
 
-				<div class="form-group">
+				<form action="<?= $url ?>" id="form-busqueda" method="get">
 
-					<div class="input-group">
+					<div class="form-group">
 
-						<input type="text" id="criterio" name="criterio" class="tokenfield form-control" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
+						<div class="input-group">
 
-						<span class="input-group-btn">
+							<input type="text" id="criterio" name="criterio" class="tokenfield form-control" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
 
-							<input type="submit" id="submit" name="submit" value="Buscar" class="btn btn-primary">
+							<span class="input-group-btn">
 
-						</span>
+								<input type="submit" id="submit" name="submit" value="Buscar" class="btn btn-primary">
+
+							</span>
+
+						</div>
 
 					</div>
 
-				</div>
+				</form>
 
-			</form>
+				<a href="<?= $avanzada ?>">Busqueda avanzada</a>
 
-			<a href="<?= $avanzada ?>">Busqueda avanzada</a>
+			</div>
 
 		</div>
 
 	</div>
 
+	<?php if ($criterio): ?>
+
+		<div class="container-fluid">
+
+			<?php
+			switch ($fuente) {
+				case "publicacion":
+					?>
+
+					<h4>Publicaciones relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+					<?php
+					break;
+				case "evento":
+					?>
+
+					<h4>Eventos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+					<?php
+					break;
+
+				case "articulo":
+					?>
+
+					<h4>Artículos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+					<?php
+					break;
+
+				case "herramienta":
+					?>
+
+					<h4>Herramientas relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+
+				<?php
+			}
+			?>
+
+		</div>
+
+	<?php endif; ?>
+
 </div>
-
-<?php if ($criterio): ?>
-
-	<div class="container-fluid">
-
-		<?php
-		switch ($fuente) {
-			case "publicacion":
-				?>
-
-				<h4>Publicaciones relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
-
-				<?php
-				break;
-			case "evento":
-				?>
-
-				<h4>Eventos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
-
-				<?php
-				break;
-
-			case "articulo":
-				?>
-
-				<h4>Artículos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
-
-				<?php
-				break;
-			
-			case "herramienta":
-				?>
-				
-				<h4>Herramientas relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
-				
-				<?php
-		}
-		?>
-
-	</div>
-
-<?php endif; ?>

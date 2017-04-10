@@ -16,6 +16,16 @@
 
 	<?php $this->load->view("base/menu"); ?>
 
+	<div class="titulo-herramientas">
+
+		<div class="container-fluid">
+
+			<h1><?= $titulo ?></h1>
+
+		</div>
+
+	</div>
+
 	<?php $this->load->view("base/busqueda", array("fuente" => "herramienta", "criterio" => $criterio)); ?>
 
 	<?php $this->load->view("herramienta/contenido_herramientas"); ?>

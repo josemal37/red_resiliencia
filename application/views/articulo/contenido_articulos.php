@@ -16,7 +16,7 @@
 
 							<div class="col-md-3">
 
-								<div style="background-image: url(<?= base_url($path_articulos . $articulo->imagen) ?>);" class="img-item"></div>
+								<a href="<?= base_url("articulo/ver_articulo/" . $articulo->id) ?>"><div style="background-image: url(<?= base_url($path_articulos . $articulo->imagen) ?>);" class="img-item"></div></a>
 
 							</div>
 

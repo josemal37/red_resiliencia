@@ -28,11 +28,7 @@
 
 		</div>
 
-		<div class="busqueda">
-
-			<?php $this->load->view("base/busqueda", array("fuente" => "evento", "criterio" => $criterio)); ?>
-
-		</div>
+		<?php $this->load->view("base/busqueda", array("fuente" => "evento", "criterio" => $criterio)); ?>
 
 		<?php $this->load->view("evento/contenido_eventos"); ?>
 

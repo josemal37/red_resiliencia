@@ -151,18 +151,30 @@ if (isset($eventos)) {
 
 		</div>
 
-		<?php $this->load->view("evento/contenido_eventos", array("eventos" => $eventos, "path_evento" => $path_evento)); ?>
+		<?php if ($eventos): ?>
 
-		<div class="acciones">
+			<?php $this->load->view("evento/contenido_eventos", array("eventos" => $eventos, "path_evento" => $path_evento)); ?>
 
-			<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary">Ver todos los eventos</a>
+			<div class="acciones">
 
-		</div>
+				<a href="<?= base_url("evento/eventos") ?>" class="btn btn-primary">Ver todos los eventos</a>
+
+			</div>
+
+		<?php else: ?>
+
+			<div class="container-fluid">
+
+				<p>Sin eventos.</p>
+
+			</div>
+
+		<?php endif; ?>
 
 	</section>
 
 <?php endif; ?>
-	
+
 <?php if (isset($herramientas)): ?>
 
 	<!-- Herramientas -->
