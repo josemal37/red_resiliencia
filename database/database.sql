@@ -212,7 +212,8 @@ create table `herramienta`
    `descripcion_herramienta` text,
    `imagen_herramienta` varchar(1024),
    `video_herramienta` varchar(1024),
-   `url_herramienta` varchar(1024)
+   `url_herramienta` varchar(1024),
+   `fecha_herramienta` datetime,
    primary key (`id_herramienta`)
 )
 

@@ -153,7 +153,7 @@ class Modelo_publicacion extends My_model {
 							" . Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL . "
 						)
 					)"
-			, NULL, FALSE);
+					, NULL, FALSE);
 		}
 
 		$query = $this->db->get();
@@ -233,7 +233,11 @@ class Modelo_publicacion extends My_model {
 			$datos[self::URL_COL] = $url;
 			$datos[self::IMAGEN_COL] = $imagen;
 			$datos[self::DESTACADA_COL] = $destacada;
-			$this->db->set(self::FECHA_COL, $fecha);
+			if ($fecha) {
+				$this->db->set(self::FECHA_COL, $fecha);
+			} else {
+				$this->db->set(self::FECHA_COL, "NOW()", FALSE);
+			}
 
 			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
 

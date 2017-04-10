@@ -27,7 +27,8 @@ class Modelo_evento extends My_model {
 	const IMAGEN_COL = "imagen_evento";
 	const DESTACADO_COL = "destacado_evento";
 	const URL_COL = "url_evento";
-	const COLUMNAS_SELECT = "evento.id_evento as id, evento.id_ciudad as id_ciudad, evento.nombre_evento as nombre, evento.descripcion_evento as descripcion, evento.fecha_inicio_evento as fecha_inicio, evento.fecha_fin_evento as fecha_fin, evento.direccion_evento as direccion, evento.imagen_evento as imagen, evento.destacado_evento as destacado, evento.url_evento as url";
+	const FECHA_COL = "fecha_evento";
+	const COLUMNAS_SELECT = "evento.id_evento as id, evento.id_ciudad as id_ciudad, evento.nombre_evento as nombre, evento.descripcion_evento as descripcion, evento.fecha_inicio_evento as fecha_inicio, evento.fecha_fin_evento as fecha_fin, evento.direccion_evento as direccion, evento.imagen_evento as imagen, evento.destacado_evento as destacado, evento.url_evento as url, evento.fecha_evento as fecha";
 	const NOMBRE_TABLA = "evento";
 	const NOMBRE_TABLA_ASOC_CATEGORIA = "categoria_evento";
 	const ID_TABLA_ASOC_CATEGORIA = "id_categoria";
@@ -266,6 +267,8 @@ class Modelo_evento extends My_model {
 				self::DESTACADO_COL => $destacado,
 				self::URL_COL => $url
 			);
+			
+			$this->db->set(self::FECHA_COL, "NOW()", FALSE);
 
 			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
 
