@@ -25,6 +25,29 @@ function search_object_in_array_by_key($object = FALSE, $array = FALSE, $key = F
 	}
 }
 
+function is_value_in_array($value, $array = FALSE, $key = FALSE) {
+	if ($array && is_array($array)) {
+		$exist = FALSE;
+		
+		if ($key) {
+			$object = new stdClass();
+			$object->$key = $value;
+			$exist = search_object_in_array_by_key($object, $array, $key);
+		} else {
+			foreach ($array as $a) {
+				if ($a == $value) {
+					$exist = TRUE;
+					break;
+				}
+			}
+		}
+		
+		return $exist;
+	} else {
+		return FALSE;
+	}
+}
+
 function eliminar_elementos_array(&$array, $elementos, $key) {
 	if ($array && $elementos) {
 		foreach ($elementos as $elemento) {

@@ -108,7 +108,7 @@ switch ($accion) {
 
 								<select id="id_institucion" name="id_institucion[]" multiple class="form-control">
 
-									<?php if ($autor->instituciones): ?>
+									<?php if ($accion == "modificar" && $autor->instituciones): ?>
 
 										<?php foreach ($autor->instituciones as $institucion): ?>
 
@@ -118,11 +118,23 @@ switch ($accion) {
 
 									<?php endif; ?>
 
+									<?php if ($accion == "registrar" && $institucion_usuario): ?>
+
+										<option value="<?= $institucion_usuario->id ?>"><?= $institucion_usuario->nombre ?></option>
+
+									<?php endif; ?>
+
 								</select>
 
 							</div>
 
 						</div>
+
+						<?php if ($this->session->userdata("rol") == "usuario"): ?>
+
+							<input type="hidden" id="id_institucion_usuario" name="id_institucion_usuario" value="<?= $this->session->userdata("id_institucion") ?>">
+
+						<?php endif; ?>
 
 					<?php else: ?>
 
@@ -166,6 +178,17 @@ switch ($accion) {
 			var id = $(this).attr("id");
 			var id_origen = get_select_origen(id);
 			var id_destino = get_select_destino(id);
+			if (id == "quitar_institucion") {
+				var id_institucion = $("#id_institucion_usuario").attr("value");
+				if (typeof id_institucion != "undefined") {
+					$("#" + id_origen + " option:selected").each(function() {
+						console.log($(this));
+						if ($(this).attr("value") == id_institucion) {
+							$(this).prop("selected", false);
+						}
+					});
+				}
+			}
 			$("#" + id_origen + " option:selected").remove().appendTo("#" + id_destino);
 		});
 

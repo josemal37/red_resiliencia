@@ -37,9 +37,14 @@ class Modelo_autor extends My_model {
 		parent::__construct();
 	}
 
-	public function select_autores() {
+	public function select_autores($id_institucion = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL . " = " . self::NOMBRE_TABLA . "." . self::ID_COL, "left");
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
 
 		$query = $this->db->get();
 
@@ -60,7 +65,7 @@ class Modelo_autor extends My_model {
 		return $autores;
 	}
 
-	public function select_autor_por_id($id = FALSE, $nombre_tabla = "") {
+	public function select_autor_por_id($id = FALSE, $nombre_tabla = "", $id_otra_tabla = FALSE) {
 		if ($id) {
 			$datos = FALSE;
 
@@ -148,6 +153,31 @@ class Modelo_autor extends My_model {
 					}
 
 					$datos = $autores;
+					break;
+				case "institucion":
+					if ($id_otra_tabla) {
+						$this->db->select(self::COLUMNAS_SELECT);
+						$this->db->from(self::NOMBRE_TABLA);
+						$this->db->where(self::NOMBRE_TABLA . "." . self::ID_COL, $id);
+						$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL . " = " . self::NOMBRE_TABLA . "." . self::ID_COL, "left");
+						$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_TABLA_ASOC_INSTITUCION, $id_otra_tabla);
+
+						$query = $this->db->get();
+
+						$autor = $this->return_row($query);
+
+						if ($autor) {
+
+							$instituciones = $this->Modelo_institucion->select_institucion_por_id($autor->id, "autor");
+							$autor->instituciones = $instituciones;
+							$autor->nombre_completo = $this->get_nombre_completo($autor);
+						}
+
+						$datos = $autor;
+					} else {
+						$datos = FALSE;
+					}
+
 					break;
 			}
 
@@ -273,6 +303,8 @@ class Modelo_autor extends My_model {
 			$eliminado = FALSE;
 
 			$this->db->trans_start();
+			
+			$this->delete_instituciones_de_autor($id);
 
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);

@@ -39,7 +39,14 @@ class Autor extends CI_Controller {
 		if ($rol == "administrador" || $rol == "usuario") {
 			$datos = array();
 			$datos["titulo"] = "Autores";
-			$datos["autores"] = $this->Modelo_autor->select_autores();
+
+			if ($rol == "usuario") {
+				$id_institucion = $this->session->userdata("id_institucion");
+			} else {
+				$id_institucion = FALSE;
+			}
+
+			$datos["autores"] = $this->Modelo_autor->select_autores($id_institucion);
 
 			$this->load->view("autor/autores", $datos);
 		} else {
@@ -59,8 +66,17 @@ class Autor extends CI_Controller {
 				$datos["accion"] = "registrar";
 				$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 
+				if ($rol == "usuario") {
+					$datos["institucion_usuario"] = new stdClass();
+					$datos["institucion_usuario"]->id = $this->session->userdata("id_institucion");
+					$datos["institucion_usuario"]->nombre = $this->session->userdata("nombre_institucion");
+					eliminar_elementos_array($datos["instituciones"], array($datos["institucion_usuario"]), "id");
+				} else {
+					$datos["institucion_usuario"] = FALSE;
+				}
+
 				$datos["reglas_validacion"] = $this->autor_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno"));
-				
+
 				$this->load->view("autor/formulario_autor", $datos);
 			}
 		} else {
@@ -97,12 +113,20 @@ class Autor extends CI_Controller {
 					$datos = array();
 					$datos["titulo"] = "Modificar autor";
 					$datos["accion"] = "modificar";
-					$datos["autor"] = $this->Modelo_autor->select_autor_por_id($id);
+					switch ($rol) {
+						case "administrador":
+							$datos["autor"] = $this->Modelo_autor->select_autor_por_id($id);
+							break;
+						case "usuario":
+							$datos["autor"] = $this->Modelo_autor->select_autor_por_id($id, "institucion", $this->session->userdata("id_institucion"));
+							break;
+					}
+
 					$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
 					eliminar_elementos_array($datos["instituciones"], $datos["autor"]->instituciones, "id");
 					if ($datos["autor"]) {
 						$datos["reglas_validacion"] = $this->autor_validacion->get_reglas_cliente(array("nombre", "apellido_paterno", "apellido_materno"));
-						
+
 						$this->load->view("autor/formulario_autor", $datos);
 					} else {
 						$this->session->set_flashdata("no_existe", "El autor seleccionado no existe.");
@@ -141,10 +165,22 @@ class Autor extends CI_Controller {
 
 		if ($rol == "administrador" || $rol == "usuario") {
 			if ($id) {
-				if ($this->Modelo_autor->delete_autor($id)) {
-					redirect(base_url("autor/autores"));
+				switch ($rol) {
+					case "administrador":
+						$autor = $this->Modelo_autor->select_autor_por_id($id);
+						break;
+					case "usuario":
+						$autor = $this->Modelo_autor->select_autor_por_id($id, "institucion", $this->session->userdata("id_institucion"));
+						break;
+				}
+				if ($autor) {
+					if ($this->Modelo_autor->delete_autor($id)) {
+						redirect(base_url("autor/autores"));
+					} else {
+						redirect(base_url("autor/autores"));
+					}
 				} else {
-					redirect(base_url("autor/autores"));
+					redirect(base_url("autor/autores"), "refresh");
 				}
 			} else {
 				redirect(base_url("autor/autores"));

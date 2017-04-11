@@ -17,6 +17,9 @@ html, body {
 .btn-redondo {
   border-radius: 50% 50% 50% 50%; }
 
+ul {
+  list-style: none; }
+
 .header {
   background-image: url(../img/naturaleza.jpg);
   background-position: center center;

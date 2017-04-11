@@ -184,6 +184,11 @@ class Modelo_categoria extends My_model {
 			$eliminado = FALSE;
 
 			$this->db->trans_start();
+			
+			$this->delete_categorias_de_articulo($id);
+			$this->delete_categorias_de_evento($id);
+			$this->delete_categorias_de_herramienta($id);
+			$this->delete_categorias_de_publicacion($id);
 
 			$this->db->where(self::ID_COL, $id);
 			$this->db->delete(self::NOMBRE_TABLA);
@@ -191,6 +196,42 @@ class Modelo_categoria extends My_model {
 			$this->db->trans_complete();
 
 			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+	
+	private function delete_categorias_de_articulo($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_ARTICULO);
+		} else {
+			return FALSE;
+		}
+	}
+	
+	private function delete_categorias_de_evento($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_EVENTO);
+		} else {
+			return FALSE;
+		}
+	}
+	
+	private function delete_categorias_de_herramienta($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_HERRAMIENTA);
+		} else {
+			return FALSE;
+		}
+	}
+	
+	private function delete_categorias_de_publicacion($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_PUBLICACION);
 		} else {
 			return FALSE;
 		}

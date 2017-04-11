@@ -210,6 +210,12 @@ class Modelo_institucion extends My_model {
 
 			$this->db->trans_start();
 
+			$this->delete_articulos_de_institucion($id);
+			$this->delete_autores_de_institucion($id);
+			$this->delete_eventos_de_institucion($id);
+			$this->delete_herramientas_de_institucion($id);
+			$this->delete_publicaciones_de_institucion($id);
+
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
 
@@ -226,10 +232,63 @@ class Modelo_institucion extends My_model {
 			$eliminado = FALSE;
 
 			if ($this->Modelo_usuario->delete_usuarios_de_institucion($id)) {
+
+				$this->delete_articulos_de_institucion($id);
+				$this->delete_autores_de_institucion($id);
+				$this->delete_eventos_de_institucion($id);
+				$this->delete_herramientas_de_institucion($id);
+				$this->delete_publicaciones_de_institucion($id);
+
+
 				$eliminado = $this->delete_institucion($id);
 			}
-			
+
 			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_articulos_de_institucion($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_ARTICULO);
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_autores_de_institucion($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_AUTOR);
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_eventos_de_institucion($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_EVENTO);
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_herramientas_de_institucion($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			return $this->db->delete(self::NOMBRE_TABLA_JOIN_HERRAMIENTA);
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_publicaciones_de_institucion($id = FALSE) {
+		if ($id) {
+			$this->db->where(self::ID_COL, $id);
+			$this->db->delete(self::NOMBRE_TABLA_JOIN_PUBLICACION);
 		} else {
 			return FALSE;
 		}
