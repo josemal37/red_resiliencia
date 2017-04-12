@@ -224,7 +224,15 @@ switch ($accion) {
 
 			</div>
 
-			<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+			<?php if ($this->session->flashdata("error")): ?>
+
+				<div class="container">
+
+					<p><?= $this->session->flashdata("error") ?></p>
+
+				</div>
+
+			<?php endif; ?>
 
 			<!-- Autores -->
 			<?php if (isset($autores) || isset($publicacion->autores)): ?>

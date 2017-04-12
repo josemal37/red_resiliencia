@@ -58,7 +58,15 @@
 
 	<?php endif; ?>
 
-	<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
+	<?php if ($this->session->flashdata("error")): ?>
+
+		<div class="container-fluid">
+
+			<p><?= $this->session->flashdata("error") ?></p>
+
+		</div>
+
+	<?php endif; ?>
 
 </div>
 
