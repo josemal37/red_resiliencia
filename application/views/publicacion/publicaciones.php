@@ -30,6 +30,16 @@
 
 	<?php $this->load->view("publicacion/contenido_publicaciones"); ?>
 
+	<?php if ($this->session->userdata("rol") == "administrador" || $this->session->userdata("rol") == "usuario"): ?>
+
+		<div class="acciones">
+
+			<a href="<?= base_url("publicacion/registrar_publicacion") ?>" class="btn btn-default btn-resiliencia">Registrar publicación</a>
+
+		</div>
+
+	<?php endif; ?>
+
 	<?php if (isset($criterio) && !$criterio): ?>
 
 		<div class="text-center">
