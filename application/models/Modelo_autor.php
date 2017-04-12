@@ -250,19 +250,6 @@ class Modelo_autor extends My_model {
 		}
 	}
 
-	private function delete_instituciones_de_autor($id = FALSE) {
-		if ($id) {
-			$eliminado = FALSE;
-
-			$this->db->where(self::ID_COL, $id);
-			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_INSTITUCION);
-
-			return $eliminado;
-		} else {
-			return FALSE;
-		}
-	}
-
 	public function update_autor($id = FALSE, $nombre = "", $apellido_paterno = "", $apellido_materno = "", $id_institucion = FALSE) {
 		if ($id && $nombre != "") {
 			$actualizado = FALSE;
@@ -283,7 +270,7 @@ class Modelo_autor extends My_model {
 				$actualizado = $this->db->update(self::NOMBRE_TABLA);
 
 				if ($actualizado) {
-					$this->delete_instituciones_de_autor($id);
+					$this->delete_autor_de_instituciones($id);
 					$this->insert_autor_a_institucion($id, $id_institucion);
 				}
 			} else {
@@ -303,13 +290,68 @@ class Modelo_autor extends My_model {
 			$eliminado = FALSE;
 
 			$this->db->trans_start();
-			
-			$this->delete_instituciones_de_autor($id);
+
+			$this->delete_autor_de_instituciones($id);
+			$this->delete_autor_de_articulos($id);
+			$this->delete_autor_de_herramientas($id);
+			$this->delete_autor_de_publicaciones($id);
 
 			$this->db->where(self::ID_COL, $id);
 			$eliminado = $this->db->delete(self::NOMBRE_TABLA);
 
 			$this->db->trans_complete();
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_autor_de_instituciones($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_ASOC_INSTITUCION);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_autor_de_articulos($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_JOIN_ARTICULO);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_autor_de_herramientas($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_JOIN_HERRAMIENTA);
+
+			return $eliminado;
+		} else {
+			return FALSE;
+		}
+	}
+
+	private function delete_autor_de_publicaciones($id = FALSE) {
+		if ($id) {
+			$eliminado = FALSE;
+
+			$this->db->where(self::ID_COL, $id);
+			$eliminado = $this->db->delete(self::NOMBRE_TABLA_JOIN_PUBLICACION);
 
 			return $eliminado;
 		} else {
