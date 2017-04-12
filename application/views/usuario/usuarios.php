@@ -40,9 +40,9 @@
 
 							<tr>
 
-								<th>Nombre</th>
-								<th>Apellido paterno</th>
-								<th>Apellido materno</th>
+								<th>Nombre completo</th>
+								<th>Institución</th>
+								<th>Login</th>
 								<th>Rol</th>
 								<th>Acciones</th>
 
@@ -56,9 +56,9 @@
 
 								<tr>
 
-									<td><?= $usuario->nombre ?></td>
-									<td><?= $usuario->apellido_paterno ?></td>
-									<td><?= $usuario->apellido_materno ?></td>
+									<td><?= $usuario->nombre_completo ?></td>
+									<td><?= $usuario->nombre_institucion ?></td>
+									<td><?= $usuario->login ?></td>
 									<td><?= $usuario->nombre_rol ?></td>
 									<td>
 										<a href="<?= base_url("usuario/modificar_usuario/" . $usuario->id) ?>" class="btn btn-default btn-resiliencia btn-xs">Modificar</a>
