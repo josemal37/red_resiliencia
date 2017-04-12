@@ -35,7 +35,7 @@ class Categoria extends CI_Controller {
 	public function categorias() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "administrador") {
+		if ($rol == "administrador" || $rol == "usuario") {
 			$datos = array();
 			$datos["titulo"] = "Categorías";
 			$datos["categorias"] = $this->Modelo_categoria->select_categorias();
@@ -49,7 +49,7 @@ class Categoria extends CI_Controller {
 	public function registrar_categoria() {
 		$rol = $this->session->userdata("rol");
 
-		if ($rol == "administrador") {
+		if ($rol == "administrador" || $rol == "usuario") {
 			if (isset($_POST["submit"])) {
 				$this->registrar_categoria_bd();
 			} else {

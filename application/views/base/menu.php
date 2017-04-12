@@ -68,6 +68,8 @@
 
 						<li <?php if ($this->uri->segment(1) == "herramienta"): ?>class="active"<?php endif; ?>><a href="<?= base_url("herramienta/herramientas") ?>" class="page-scroll">Herramientas</a></li>
 
+						<li <?php if ($this->uri->segment(1) == "categoria"): ?>class="active"<?php endif; ?>><a href="<?= base_url("categoria") ?>">Categoria</a></li>
+
 						<li <?php if ($this->uri->segment(1) == "autor"): ?>class="active"<?php endif; ?>><a href="<?= base_url("autor") ?>">Autor</a></li>
 
 					<?php endif; ?>
