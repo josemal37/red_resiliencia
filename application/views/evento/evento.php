@@ -68,14 +68,6 @@
 
 					<?php endif; ?>
 
-					<?php if ($evento->categorias): ?>
-
-						<h3 class="subtitulo">Categorias</h3>
-
-						<p><?= listar_array_de_stdclass($evento->categorias, "nombre", ", ") ?></p>
-
-					<?php endif; ?>
-
 				</div>
 
 				<div class="col-md-8">
@@ -91,7 +83,17 @@
 				</div>
 
 			</div>
-			
+
+			<?php if (isset($evento->categorias) && $evento->categorias): ?>
+
+				<div class="text-right">
+
+					<p><label class="subtitulo">Categorías:</label> <?= listar_array_de_stdclass($evento->categorias, "nombre", ", ") ?></p>
+
+				</div>
+
+			<?php endif; ?>
+
 			<?php $this->load->view("base/social", array("item" => $evento)); ?>
 
 		</div>

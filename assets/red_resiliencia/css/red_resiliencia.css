@@ -325,6 +325,8 @@ section {
       margin: 0; }
   .articulo .contenido .titulo-articulo {
     color: #b2dd39; }
+  .articulo .contenido .subtitulo {
+    color: #b2dd39; }
 
 .articulos {
   font-family: "Josefin Sans", sans-serif; }

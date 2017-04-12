@@ -38,7 +38,7 @@
 
 				<div class="col-md-6">
 
-					<h3 class="subtitulo">Autor(es)</h3>
+					<h3 class="subtitulo">Autores</h3>
 
 					<?php if ($publicacion->autores): ?>
 
@@ -50,7 +50,7 @@
 
 					<?php endif; ?>
 
-					<h3 class="subtitulo">Institución(es)</h3>
+					<h3 class="subtitulo">Instituciones</h3>
 
 					<?php if ($publicacion->instituciones): ?>
 
@@ -135,6 +135,16 @@
 				</div>
 
 			</div>
+
+			<?php if (isset($publicacion->categorias) && $publicacion->categorias): ?>
+
+				<div class="text-right">
+
+					<p><label class="subtitulo">Categorías:</label> <?= listar_array_de_stdclass($publicacion->categorias, "nombre", ", ") ?></p>
+
+				</div>
+
+			<?php endif; ?>
 
 			<?php $this->load->view("base/social", array("item" => $publicacion)); ?>
 
