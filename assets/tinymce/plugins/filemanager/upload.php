@@ -15,6 +15,13 @@ $storeFolderThumb = $_POST['path_thumb'];
 if (!empty($_FILES) && $upload_files) {
      
     $tempFile = $_FILES['file']['tmp_name'];   
+	
+	if (isset($sanitize) && $sanitize) {
+		$file_name = $_FILES["file"]["name"];
+		$file_name = sanitize_string($file_name);
+		unset($_FILES["file"]["name"]);
+		$_FILES["file"]["name"] = $file_name;
+	}
       
     $targetPath = dirname( __FILE__ ) . $ds. $storeFolder . $ds; 
     $targetPathThumb = dirname( __FILE__ ) . $ds. $storeFolderThumb . $ds; 

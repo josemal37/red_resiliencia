@@ -58,6 +58,9 @@ $ext_music = array('mp3', 'm4a', 'ac3', 'aiff', 'mid'); //Music
 $ext_misc = array('zip', 'rar','gzip'); //Archives
 
 
-$ext=array_merge($ext_img, $ext_file, $ext_misc, $ext_video,$ext_music); //allowed extensions
+//$ext=array_merge($ext_img, $ext_file, $ext_misc, $ext_video,$ext_music); //allowed extensions
+$ext=$ext_img;
+
+$sanitize = TRUE;
 
 ?>

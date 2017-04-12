@@ -1,44 +1,70 @@
-<?php 
+<?php
 
-if($_SESSION["verify"] != "FileManager4TinyMCE") die('forbiden');
+if ($_SESSION["verify"] != "FileManager4TinyMCE")
+	die('forbiden');
 
 function deleteDir($dir) {
-    if (!file_exists($dir)) return true;
-    if (!is_dir($dir)) return unlink($dir);
-    foreach (scandir($dir) as $item) {
-        if ($item == '.' || $item == '..') continue;
-        if (!deleteDir($dir.DIRECTORY_SEPARATOR.$item)) return false;
-    }
-    return rmdir($dir);
+	if (!file_exists($dir))
+		return true;
+	if (!is_dir($dir))
+		return unlink($dir);
+	foreach (scandir($dir) as $item) {
+		if ($item == '.' || $item == '..')
+			continue;
+		if (!deleteDir($dir . DIRECTORY_SEPARATOR . $item))
+			return false;
+	}
+	return rmdir($dir);
 }
 
-function create_img_gd($imgfile, $imgthumb, $newwidth, $newheight="") {
-    require_once('php_image_magician.php');  
-    $magicianObj = new imageLib($imgfile);
-    // *** Resize to best fit then crop
-    $magicianObj -> resizeImage($newwidth, $newheight, 'crop');  
+function create_img_gd($imgfile, $imgthumb, $newwidth, $newheight = "") {
+	require_once('php_image_magician.php');
+	$magicianObj = new imageLib($imgfile);
+	// *** Resize to best fit then crop
+	$magicianObj->resizeImage($newwidth, $newheight, 'crop');
 
-    // *** Save resized image as a PNG
-    $magicianObj -> saveImage($imgthumb);
+	// *** Save resized image as a PNG
+	$magicianObj->saveImage($imgthumb);
 }
 
 function makeSize($size) {
-   $units = array('B','KB','MB','GB','TB');
-   $u = 0;
-   while ( (round($size / 1024) > 0) && ($u < 4) ) {
-     $size = $size / 1024;
-     $u++;
-   }
-   return (number_format($size, 1, ',', '') . " " . $units[$u]);
+	$units = array('B', 'KB', 'MB', 'GB', 'TB');
+	$u = 0;
+	while ((round($size / 1024) > 0) && ($u < 4)) {
+		$size = $size / 1024;
+		$u++;
+	}
+	return (number_format($size, 1, ',', '') . " " . $units[$u]);
 }
 
-function create_folder($path=false,$path_thumbs=false){
-	$oldumask = umask(0); 
+function create_folder($path = false, $path_thumbs = false) {
+	$oldumask = umask(0);
 	if ($path && !file_exists($path))
 		mkdir($path, 0777); // or even 01777 so you get the sticky bit set 
-	if($path_thumbs && !file_exists($path_thumbs)) 
+	if ($path_thumbs && !file_exists($path_thumbs))
 		mkdir($path_thumbs, 0777); // or even 01777 so you get the sticky bit set 
 	umask($oldumask);
+}
+
+function sanitize_string($string) {
+	$string = str_replace(array('á', 'à', 'â', 'ã', 'ª', 'ä'), "a", $string);
+	$string = str_replace(array('Á', 'À', 'Â', 'Ã', 'Ä'), "A", $string);
+	$string = str_replace(array('Í', 'Ì', 'Î', 'Ï'), "I", $string);
+	$string = str_replace(array('í', 'ì', 'î', 'ï'), "i", $string);
+	$string = str_replace(array('é', 'è', 'ê', 'ë'), "e", $string);
+	$string = str_replace(array('É', 'È', 'Ê', 'Ë'), "E", $string);
+	$string = str_replace(array('ó', 'ò', 'ô', 'õ', 'ö', 'º'), "o", $string);
+	$string = str_replace(array('Ó', 'Ò', 'Ô', 'Õ', 'Ö'), "O", $string);
+	$string = str_replace(array('ú', 'ù', 'û', 'ü'), "u", $string);
+	$string = str_replace(array('Ú', 'Ù', 'Û', 'Ü'), "U", $string);
+	$string = str_replace(array('[', '^', '´', '`', '¨', '~', ']', ',', '+', '=', '&'), "", $string);
+	$string = str_replace("ç", "c", $string);
+	$string = str_replace("Ç", "C", $string);
+	$string = str_replace("ñ", "n", $string);
+	$string = str_replace("Ñ", "N", $string);
+	$string = str_replace("Ý", "Y", $string);
+	$string = str_replace("ý", "y", $string);
+	return $string;
 }
 
 ?>
