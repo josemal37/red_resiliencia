@@ -30,7 +30,11 @@
 
 					<div class="col-sm-2">
 
-						<img src="<?= base_url("assets/red_resiliencia/img/logos/umsa.jpg") ?>" class="logo img-center img-responsive">
+						<a href="http://www.umsa.bo">
+
+							<img src="<?= base_url("assets/red_resiliencia/img/logos/umsa.jpg") ?>" class="logo img-center img-responsive">
+
+						</a>
 
 					</div>
 
@@ -56,7 +60,11 @@
 
 					<div class="col-sm-2">
 
-						<img src="<?= base_url("assets/red_resiliencia/img/logos/egpp.jpg") ?>" class="logo img-center img-responsive">
+						<a href="http://www.egpp.gob.bo/">
+
+							<img src="<?= base_url("assets/red_resiliencia/img/logos/egpp.jpg") ?>" class="logo img-center img-responsive">
+
+						</a>
 
 					</div>
 
