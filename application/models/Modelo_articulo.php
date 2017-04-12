@@ -290,8 +290,6 @@ class Modelo_articulo extends My_model {
 			);
 			if ($fecha != "") {
 				$datos[self::FECHA_COL] = $fecha;
-			} else {
-				$this->db->set(self::FECHA_COL, "NOW()", FALSE);
 			}
 
 			$this->db->set($datos);
