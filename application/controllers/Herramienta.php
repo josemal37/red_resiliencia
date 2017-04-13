@@ -60,10 +60,17 @@ class Herramienta extends CI_Controller {
 		} else {
 			$id_institucion = FALSE;
 		}
+		
+		/*
 		$datos["nro_paginas"] = $this->Modelo_herramienta->select_count_nro_paginas($cantidad_items, $id_institucion);
 
 		$datos["herramientas"] = $this->Modelo_herramienta->select_herramientas($nro_pagina, self::NRO_REGISTROS, $id_institucion, $criterio);
-
+		*/
+		
+		$datos["total_herramientas"] = $this->Modelo_herramienta->select_herramientas_2($nro_pagina, self::NRO_REGISTROS, $id_institucion, $criterio, TRUE);
+		$datos["nro_paginas"] = $this->Modelo_herramienta->nro_paginas($datos["total_herramientas"], self::NRO_REGISTROS);
+		$datos["herramientas"] = $this->Modelo_herramienta->select_herramientas_2($nro_pagina, self::NRO_REGISTROS, $id_institucion, $criterio);
+		
 		$this->load->view("herramienta/herramientas", $datos);
 	}
 
