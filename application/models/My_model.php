@@ -99,5 +99,21 @@ class My_model extends CI_Model {
 			return FALSE;
 		}
 	}
+	
+	public function nro_paginas($total_items = 0, $items_por_pagina = 1) {
+		if ($items_por_pagina > 0) {
+			$nro_paginas = 1;
+			
+			if ($total_items % $items_por_pagina == 0) {
+				$nro_paginas = (integer) ($total_items / $items_por_pagina);
+			} else {
+				$nro_paginas = (integer) ($total_items / $items_por_pagina) + 1;
+			}
+
+			return $nro_paginas;
+		} else {
+			return 1;
+		}
+	}
 
 }

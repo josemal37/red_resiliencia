@@ -43,7 +43,7 @@ switch ($fuente) {
 
 							<span class="input-group-btn">
 
-								<input type="submit" id="submit" name="submit" value="Buscar" class="btn btn-primary">
+								<input type="submit" id="submit" value="Buscar" class="btn btn-primary">
 
 							</span>
 
