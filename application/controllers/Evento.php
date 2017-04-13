@@ -52,22 +52,34 @@ class Evento extends CI_Controller {
 		}
 		$datos["criterio"] = $criterio;
 
-		switch ($rol) {
-			case "administrador":
-				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, NULL, $criterio);
-				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
-				break;
-			case "usuario":
-				$id_institucion = $this->session->userdata("id_institucion");
-				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, $id_institucion, $criterio);
-				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos, $id_institucion);
-				break;
-			default:
-				$datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, NULL, $criterio);
-				$datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
-				break;
+		if ($rol == "usuario") {
+			$id_institucion = $this->session->userdata("id_institucion");
+		} else {
+			$id_institucion = FALSE;
 		}
 
+		/*
+		  switch ($rol) {
+		  case "administrador":
+		  $datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, NULL, $criterio);
+		  $datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
+		  break;
+		  case "usuario":
+		  $id_institucion = $this->session->userdata("id_institucion");
+		  $datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, $id_institucion, $criterio);
+		  $datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos, $id_institucion);
+		  break;
+		  default:
+		  $datos["eventos"] = $this->Modelo_evento->select_eventos($nro_pagina, $cantidad_eventos, NULL, $criterio);
+		  $datos["nro_paginas"] = $this->Modelo_evento->select_count_nro_paginas($cantidad_eventos);
+		  break;
+		  }
+		 */
+
+		$datos["eventos"] = $this->Modelo_evento->select_eventos_2($nro_pagina, $cantidad_eventos, $id_institucion, $criterio);
+		$datos["total_eventos"] = $this->Modelo_evento->select_eventos_2($nro_pagina, $cantidad_eventos, $id_institucion, $criterio, TRUE);
+		$datos["nro_paginas"] = $this->Modelo_evento->nro_paginas($datos["total_eventos"], $cantidad_eventos);
+		
 		$this->load->view("evento/eventos", $datos);
 	}
 

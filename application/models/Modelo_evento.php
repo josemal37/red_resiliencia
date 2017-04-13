@@ -114,6 +114,81 @@ class Modelo_evento extends My_model {
 		return $eventos;
 	}
 
+	public function select_eventos_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE, $contar = FALSE) {
+		$this->db->select(self::COLUMNAS_SELECT);
+		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->order_by(self::FECHA_INICIO_COL, "desc");
+
+		if ($id_institucion) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
+			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+		}
+
+		if ($criterio) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
+			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
+			if (!$id_institucion) {
+				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
+				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");
+			}
+			$this->db->join(Modelo_ciudad::NOMBRE_TABLA, self::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL, "left");
+			$this->db->join(Modelo_pais::NOMBRE_TABLA, Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, "left");
+
+			$this->db->group_start();
+
+			$criterios = explode(", ", $criterio);
+
+			foreach ($criterios as $criterio) {
+				$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);
+				if (!$id_institucion) {
+					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
+					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
+				}
+				$this->db->or_like(self::NOMBRE_COL, $criterio);
+				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
+				$this->db->or_like(self::FECHA_INICIO_COL, $criterio);
+				$this->db->or_like(self::FECHA_FIN_COL, $criterio);
+				$this->db->or_like(self::DIRECCION_COL, $criterio);
+				$this->db->or_like(Modelo_ciudad::NOMBRE_COL, $criterio);
+				$this->db->or_like(Modelo_pais::NOMBRE_COL, $criterio);
+			}
+
+			$this->db->group_end();
+		}
+
+		$this->db->distinct();
+
+		if ($contar) {
+			return $this->db->count_all_results();
+		} else {
+			if ($nro_pagina && $cantidad_publicaciones && is_numeric($nro_pagina) && is_numeric($cantidad_publicaciones)) {
+				$this->db->limit($cantidad_publicaciones, ($nro_pagina - 1) * $cantidad_publicaciones);
+			}
+
+			$query = $this->db->get();
+
+			$eventos = $this->return_result($query);
+
+			if ($eventos) {
+				$i = 0;
+				foreach ($eventos as $evento) {
+					$ciudad = $this->Modelo_ciudad->select_ciudad($evento->id_ciudad);
+					if ($ciudad) {
+						$pais = $this->Modelo_pais->select_pais($ciudad->id_pais);
+					}
+					$eventos[$i]->ciudad = $ciudad;
+					$eventos[$i]->pais = $pais;
+					$eventos[$i]->instituciones = $this->Modelo_institucion->select_institucion_por_id($evento->id, "evento");
+					$eventos[$i]->categorias = $this->Modelo_categoria->select_categoria_por_id($evento->id, "evento");
+
+					$i += 1;
+				}
+			}
+
+			return $eventos;
+		}
+	}
+
 	public function select_eventos_proximos($cantidad = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
@@ -166,7 +241,7 @@ class Modelo_evento extends My_model {
 				$this->db->where(Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, $id_pais);
 			}
 		}
-		
+
 		if ($fecha == "proximos") {
 			$this->db->where(self::FECHA_INICIO_COL . " > NOW()");
 		}
@@ -192,7 +267,7 @@ class Modelo_evento extends My_model {
 					)"
 					, NULL, FALSE);
 		}
-		
+
 		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_INICIO_COL, "ASC");
 
 		$query = $this->db->get();
@@ -267,7 +342,7 @@ class Modelo_evento extends My_model {
 				self::DESTACADO_COL => $destacado,
 				self::URL_COL => $url
 			);
-			
+
 			$this->db->set(self::FECHA_COL, "NOW()", FALSE);
 
 			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);

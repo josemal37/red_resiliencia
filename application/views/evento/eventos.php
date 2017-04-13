@@ -42,7 +42,7 @@
 
 		<?php endif; ?>
 
-		<?php if (isset($criterio) && !$criterio): ?>
+		<?php //if (isset($criterio) && !$criterio): ?>
 
 			<div class="text-center">
 
@@ -50,7 +50,7 @@
 
 					<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos/" . $i) ?>"><?= $i ?></a></li>
+						<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("evento/eventos/" . $i) ?><?php if ($criterio): ?>?criterio=<?= $criterio ?><?php endif; ?>"><?= $i ?></a></li>
 
 					<?php endfor; ?>
 
@@ -58,7 +58,7 @@
 
 			</div>
 
-		<?php endif; ?>
+		<?php //endif; ?>
 
 		<?php if ($this->session->flashdata("error")): ?><p><?= $this->session->flashdata("error") ?></p><?php endif; ?>
 
