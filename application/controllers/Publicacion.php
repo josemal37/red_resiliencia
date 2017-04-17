@@ -18,7 +18,7 @@ class Publicacion extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->model(array("Modelo_categoria", "Modelo_autor", "Modelo_institucion", "Modelo_publicacion"));
+		$this->load->model(array("Modelo_categoria", "Modelo_autor", "Modelo_institucion", "Modelo_publicacion", "Modelo_anio"));
 
 		$this->load->library(array("Session", "Form_validation", "Upload"));
 		$this->load->library(array("Publicacion_validacion"));
@@ -80,6 +80,12 @@ class Publicacion extends CI_Controller {
 		$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones_2($nro_pagina, $cantidad_publicaciones, $id_institucion, $criterio);
 		$datos["total_publicaciones"] = $this->Modelo_publicacion->select_publicaciones_2($nro_pagina, $cantidad_publicaciones, $id_institucion, $criterio, TRUE);
 		$datos["nro_paginas"] = $this->Modelo_publicacion->nro_paginas($datos["total_publicaciones"], $cantidad_publicaciones);
+		
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["autores"] = $this->Modelo_autor->select_autores();
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+		$datos["anios"] = $this->Modelo_anio->select_anios();
+		
 		$this->load->view("publicacion/publicaciones", $datos);
 	}
 
@@ -138,7 +144,7 @@ class Publicacion extends CI_Controller {
 					$datos["institucion_usuario"] = FALSE;
 				}
 
-				$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "modulos[]", "imagen"));
+				$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "anio", "modulos[]", "imagen"));
 
 				$this->load->view("publicacion/formulario_publicacion", $datos);
 			}
@@ -156,8 +162,9 @@ class Publicacion extends CI_Controller {
 		$id_autor = $this->input->post("id_autor");
 		$id_categoria = $this->input->post("id_categoria");
 		$id_institucion = $this->input->post("id_institucion");
+		$anio = $this->input->post("anio");
 
-		$array_validacion = array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion");
+		$array_validacion = array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion", "anio");
 
 		if ($con_modulos) {
 			$array_validacion[] = "modulos";
@@ -189,7 +196,7 @@ class Publicacion extends CI_Controller {
 						$direccion_documento = $documento["datos"]["file_name"];
 					}
 
-					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $modulos, $descripcion_modulos, $direccion_documento, $direccion_imagen, NULL, NULL, $id_autor, $id_categoria, $id_institucion)) {
+					if ($this->Modelo_publicacion->insert_publicacion($nombre, $descripcion, $modulos, $descripcion_modulos, $direccion_documento, $direccion_imagen, NULL, NULL, $id_autor, $id_categoria, $id_institucion, $anio)) {
 						redirect(base_url("publicacion/publicaciones"));
 					} else {
 						$this->session->set_flashdata("error", "Ocurrió un error al registrar la publicación.");
@@ -256,7 +263,7 @@ class Publicacion extends CI_Controller {
 							$datos["institucion_usuario"] = FALSE;
 						}
 
-						$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "modulos[]"));
+						$datos["reglas_validacion"] = $this->publicacion_validacion->get_reglas_cliente(array("nombre", "descripcion", "anio", "modulos[]"));
 
 						$this->load->view("publicacion/formulario_publicacion", $datos);
 					} else {
@@ -285,6 +292,7 @@ class Publicacion extends CI_Controller {
 		$imagen_antiguo = $this->input->post("imagen_antiguo");
 		$documento_antiguo = $this->input->post("url_antiguo");
 		$borrar_documento = $this->input->post("borrar_url") == "on" ? TRUE : FALSE;
+		$anio = $this->input->post("anio");
 
 		$array_validacion = array("nombre", "descripcion", "id_autor", "id_categoria", "id_institucion");
 
@@ -330,7 +338,7 @@ class Publicacion extends CI_Controller {
 						}
 					}
 
-					if ($this->Modelo_publicacion->update_publicacion($id, $nombre, $descripcion, $modulos, $descripcion_modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion)) {
+					if ($this->Modelo_publicacion->update_publicacion($id, $nombre, $descripcion, $modulos, $descripcion_modulos, $direccion_documento, $direccion_imagen, NULL, $id_autor, $id_categoria, $id_institucion, $anio)) {
 						redirect(base_url("publicacion/publicaciones"));
 					} else {
 						$this->session->set_flashdata("error", "Ocurrió un error al modificar la publicación.");

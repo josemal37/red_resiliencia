@@ -4,6 +4,21 @@
 /*==============================================================*/
 
 /*==============================================================*/
+/* Table: anio                                                  */
+/*==============================================================*/
+create table `anio`
+(
+   `id_anio` int not null auto_increment,
+   `valor_anio` varchar(1024) not null,
+   primary key (`id_anio`)
+)
+
+
+engine = innodb
+default character set = utf8
+collate = utf8_general_ci;
+
+/*==============================================================*/
 /* Table: articulo                                              */
 /*==============================================================*/
 create table `articulo`
@@ -352,6 +367,7 @@ collate = utf8_general_ci;
 create table `publicacion`
 (
    `id_publicacion` int not null auto_increment,
+   `id_anio` int,
    `nombre_publicacion` varchar(1024) not null,
    `descripcion_publicacion` text,
    `url_publicacion` varchar(1024),
@@ -535,6 +551,9 @@ alter table `institucion_publicacion` add constraint `fk_institucion_publicacion
 
 alter table `modulo` add constraint `fk_modulo_publicacion` foreign key (`id_publicacion`)
       references `publicacion` (`id_publicacion`) on delete restrict on update restrict;
+
+alter table `publicacion` add constraint `fk_publicacion_tiene_anio` foreign key (`id_anio`)
+      references `anio` (`id_anio`) on delete restrict on update restrict;
 
 alter table `usuario` add constraint `fk_rol_usuario` foreign key (`id_rol`)
       references `rol` (`id_rol`) on delete restrict on update restrict;

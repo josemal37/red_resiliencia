@@ -24,7 +24,7 @@ class Modelo_publicacion extends My_model {
 	const IMAGEN_COL = "imagen_publicacion";
 	const DESTACADA_COL = "destacada_publicacion";
 	const FECHA_COL = "fecha_publicacion";
-	const COLUMNAS_SELECT = "publicacion.id_publicacion as id, publicacion.nombre_publicacion as nombre, publicacion.descripcion_publicacion as descripcion, publicacion.url_publicacion as url, publicacion.imagen_publicacion as imagen, publicacion.destacada_publicacion as destacada, publicacion.fecha_publicacion as publicacion";
+	const COLUMNAS_SELECT = "publicacion.id_publicacion as id, publicacion.id_anio as id_anio, publicacion.nombre_publicacion as nombre, publicacion.descripcion_publicacion as descripcion, publicacion.url_publicacion as url, publicacion.imagen_publicacion as imagen, publicacion.destacada_publicacion as destacada, publicacion.fecha_publicacion as publicacion";
 	const NOMBRE_TABLA = "publicacion";
 	const NOMBRE_TABLA_ASOC_AUTOR = "autor_publicacion";
 	const ID_TABLA_ASOC_AUTOR = "id_autor";
@@ -34,7 +34,7 @@ class Modelo_publicacion extends My_model {
 	const ID_TABLA_ASOC_INSTITUCION = "id_institucion";
 
 	public function __construct() {
-		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_autor", "Modelo_modulo"));
+		$this->load->model(array("Modelo_categoria", "Modelo_institucion", "Modelo_autor", "Modelo_modulo", "Modelo_anio"));
 		parent::__construct();
 	}
 
@@ -112,6 +112,12 @@ class Modelo_publicacion extends My_model {
 				//cargamos los modulos
 				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
 				$publicaciones[$i]->modulos = $modulos;
+
+				//cargamos el anio
+				if (isset($publicacion->id_anio)) {
+					$anio = $this->Modelo_anio->select_anio_por_id($publicacion->id_anio);
+					$publicaciones[$i]->anio = $anio->anio;
+				}
 
 				$i += 1;
 			}
@@ -196,6 +202,12 @@ class Modelo_publicacion extends My_model {
 					$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
 					$publicaciones[$i]->modulos = $modulos;
 
+					//cargamos el anio
+					if (isset($publicacion->id_anio)) {
+						$anio = $this->Modelo_anio->select_anio_por_id($publicacion->id_anio);
+						$publicaciones[$i]->anio = $anio->anio;
+					}
+
 					$i += 1;
 				}
 			}
@@ -260,6 +272,11 @@ class Modelo_publicacion extends My_model {
 				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
 				$publicaciones[$i]->modulos = $modulos;
 
+				if (isset($publicacion->id_anio)) {
+					$anio = $this->Modelo_anio->select_anio_por_id($publicacion->id_anio);
+					$publicaciones[$i]->anio = $anio->anio;
+				}
+
 				$i += 1;
 			}
 		}
@@ -297,6 +314,12 @@ class Modelo_publicacion extends My_model {
 				//cargamos los modulos
 				$modulos = $this->Modelo_modulo->select_modulos($publicacion->id);
 				$publicacion->modulos = $modulos;
+
+				//cargamos el anio
+				if (isset($publicacion->id_anio)) {
+					$anio = $this->Modelo_anio->select_anio_por_id($publicacion->id_anio);
+					$publicacion->anio = $anio->anio;
+				}
 			}
 
 			return $publicacion;
@@ -305,13 +328,20 @@ class Modelo_publicacion extends My_model {
 		}
 	}
 
-	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $descripcion_modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $fecha = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function insert_publicacion($nombre = "", $descripcion = "", $modulos = FALSE, $descripcion_modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $fecha = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $anio = FALSE) {
 		if ($nombre != "") {
 			$insertado = FALSE;
 
 			$this->db->trans_start();
 
 			$datos = array();
+
+			$id_anio = FALSE;
+
+			if ($anio) {
+				$id_anio = $this->Modelo_anio->insert_anio($anio);
+			}
+
 			$datos[self::NOMBRE_COL] = $nombre;
 			$datos[self::DESCRIPCION_COL] = $descripcion;
 			$datos[self::URL_COL] = $url;
@@ -321,6 +351,10 @@ class Modelo_publicacion extends My_model {
 				$this->db->set(self::FECHA_COL, $fecha);
 			} else {
 				$this->db->set(self::FECHA_COL, "NOW()", FALSE);
+			}
+
+			if ($id_anio) {
+				$this->db->set(Modelo_anio::ID_COL, $id_anio);
 			}
 
 			$insertado = $this->db->insert(self::NOMBRE_TABLA, $datos);
@@ -378,17 +412,24 @@ class Modelo_publicacion extends My_model {
 		}
 	}
 
-	public function update_publicacion($id = FALSE, $nombre = "", $descripcion = "", $modulos = FALSE, $descripcion_modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE) {
+	public function update_publicacion($id = FALSE, $nombre = "", $descripcion = "", $modulos = FALSE, $descripcion_modulos = FALSE, $url = "", $imagen = "", $destacada = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $anio = FALSE) {
 		if ($id && $nombre != "") {
 			$actualizado = FALSE;
 
 			$this->db->trans_start();
+
+			if ($anio == FALSE) {
+				$id_anio = NULL;
+			} else {
+				$id_anio = $this->Modelo_anio->insert_anio($anio);
+			}
 
 			$this->db->set(self::NOMBRE_COL, $nombre);
 			$this->db->set(self::DESCRIPCION_COL, $descripcion);
 			$this->db->set(self::URL_COL, $url);
 			$this->db->set(self::IMAGEN_COL, $imagen);
 			$this->db->set(self::DESTACADA_COL, $destacada);
+			$this->db->set(Modelo_anio::ID_COL, $id_anio);
 
 			$this->db->where(self::ID_COL, $id);
 

@@ -46,6 +46,14 @@ class Publicacion_validacion extends Base {
 				"min_length[1]"
 			)
 		),
+		"anio" => array(
+			"field" => "anio",
+			"label" => "año",
+			"rules" => array(
+				"numeric",
+				"is_natural"
+			)
+		),
 		"id_categoria" => array(
 			"field" => "id_categoria",
 			"label" => "categorias",
@@ -90,6 +98,10 @@ class Publicacion_validacion extends Base {
 		"descripcion" => array(
 			"minlength" => 1
 		),
+		"anio" => array(
+			"number" => true,
+			"min" => 0
+		),
 		"imagen" => array(
 			"required" => true
 		),
@@ -117,6 +129,10 @@ class Publicacion_validacion extends Base {
 		),
 		"descripcion" => array(
 			"minlength" => "La descripción de la publicación debe tener al menos 1 caracter."
+		),
+		"anio" => array(
+			"number" => "Debe ser un número.",
+			"min" => "Debe ser un número positivo."
 		),
 		"imagen" => array(
 			"required" => "Seleccione una imagen para la publicación."

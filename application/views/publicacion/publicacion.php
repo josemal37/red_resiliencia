@@ -62,6 +62,14 @@
 
 					<?php endif; ?>
 
+					<?php if (isset($publicacion->anio)): ?>
+
+						<h3 class="subtitulo">Año de publicación</h3>
+
+						<p><?= $publicacion->anio ?></p>
+
+					<?php endif; ?>
+
 					<h3 class="subtitulo">Resumen</h3>
 
 					<?php if ($publicacion->descripcion): ?>

@@ -62,6 +62,17 @@ switch ($accion) {
 				<?= form_error("descripcion") ?>
 
 			</div>
+			
+			<!-- Anio de publicacion -->
+			<div class="form-group">
+
+				<label>Año de publicación</label>
+
+				<input type="text" id="anio" name="anio" class="form-control" <?php if ($accion == "modificar" && isset($publicacion->anio)): ?>value="<?= $publicacion->anio ?>"<?php endif; ?>>
+
+				<?= form_error("anio") ?>
+
+			</div>
 
 			<!-- Modulos -->
 			<div class="form-group">
