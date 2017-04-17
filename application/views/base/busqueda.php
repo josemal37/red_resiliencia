@@ -41,109 +41,193 @@ switch ($fuente) {
 
 				<?php if ($fuente == "publicacion"): ?>
 
-					<div class="col-md-3">
+					<?php if ($this->session->userdata("rol")): ?>
 
-						<div class="form-group">
+						<div class="col-md-4">
 
-							<label>Categoría</label>
+							<div class="form-group">
 
-							<select id="categoria" name="categoria" class="form-control">
+								<label>Categoría</label>
 
-								<option value="">-- Seleccione una categoría --</option>
+								<select id="categoria" name="categoria" class="form-control">
 
-								<?php if (isset($categorias) && $categorias): ?>
+									<option value="">-- Seleccione una categoría --</option>
 
-									<?php foreach ($categorias as $categoria): ?>
+									<?php if (isset($categorias) && $categorias): ?>
 
-										<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+										<?php foreach ($categorias as $categoria): ?>
 
-									<?php endforeach; ?>
+											<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
 
-								<?php endif; ?>
+										<?php endforeach; ?>
 
-							</select>
+									<?php endif; ?>
 
-						</div>
+								</select>
 
-					</div>
-
-					<div class="col-md-3">
-
-						<div class="form-group">
-
-							<label>Año</label>
-
-							<select id="anio" name="anio" class="form-control">
-
-								<option value="">-- Seleccione un año --</option>
-
-								<?php if (isset($anios) && $anios): ?>
-
-									<?php foreach ($anios as $anio): ?>
-
-										<option value="<?= $anio->id ?>" <?php if (isset($id_anio) && $anio->id == $id_anio): ?>selected<?php endif; ?>><?= $anio->anio ?></option>
-
-									<?php endforeach; ?>
-
-								<?php endif; ?>
-
-							</select>
+							</div>
 
 						</div>
 
-					</div>
+						<div class="col-md-4">
 
-					<div class="col-md-3">
+							<div class="form-group">
 
-						<div class="form-group">
+								<label>Año</label>
 
-							<label>Autor</label>
+								<select id="anio" name="anio" class="form-control">
 
-							<select id="autor" name="autor" class="form-control">
+									<option value="">-- Seleccione un año --</option>
 
-								<option value="">-- Seleccione un autor --</option>
+									<?php if (isset($anios) && $anios): ?>
 
-								<?php if (isset($autores) && $autores): ?>
+										<?php foreach ($anios as $anio): ?>
 
-									<?php foreach ($autores as $autor): ?>
+											<option value="<?= $anio->id ?>" <?php if (isset($id_anio) && $anio->id == $id_anio): ?>selected<?php endif; ?>><?= $anio->anio ?></option>
 
-										<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+										<?php endforeach; ?>
 
-									<?php endforeach; ?>
+									<?php endif; ?>
 
-								<?php endif; ?>
+								</select>
 
-							</select>
-
-						</div>
-
-					</div>
-
-					<div class="col-md-3">
-
-						<div class="form-group">
-
-							<label>Institución</label>
-
-							<select id="institucion" name="institucion" class="form-control">
-
-								<option value="">-- Seleccione una institución --</option>
-
-								<?php if (isset($instituciones) && $instituciones): ?>
-
-									<?php foreach ($instituciones as $institucion): ?>
-
-										<option value="<?= $institucion->id ?>" <?php if (isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
-
-									<?php endforeach; ?>
-
-								<?php endif; ?>
-
-							</select>
+							</div>
 
 						</div>
 
-					</div>
+						<div class="col-md-4">
+
+							<div class="form-group">
+
+								<label>Autor</label>
+
+								<select id="autor" name="autor" class="form-control">
+
+									<option value="">-- Seleccione un autor --</option>
+
+									<?php if (isset($autores) && $autores): ?>
+
+										<?php foreach ($autores as $autor): ?>
+
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+				
+					<?php else: ?>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>Categoría</label>
+
+								<select id="categoria" name="categoria" class="form-control">
+
+									<option value="">-- Seleccione una categoría --</option>
+
+									<?php if (isset($categorias) && $categorias): ?>
+
+										<?php foreach ($categorias as $categoria): ?>
+
+											<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>Año</label>
+
+								<select id="anio" name="anio" class="form-control">
+
+									<option value="">-- Seleccione un año --</option>
+
+									<?php if (isset($anios) && $anios): ?>
+
+										<?php foreach ($anios as $anio): ?>
+
+											<option value="<?= $anio->id ?>" <?php if (isset($id_anio) && $anio->id == $id_anio): ?>selected<?php endif; ?>><?= $anio->anio ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>Autor</label>
+
+								<select id="autor" name="autor" class="form-control">
+
+									<option value="">-- Seleccione un autor --</option>
+
+									<?php if (isset($autores) && $autores): ?>
+
+										<?php foreach ($autores as $autor): ?>
+
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>Institución</label>
+
+								<select id="institucion" name="institucion" class="form-control">
+
+									<option value="">-- Seleccione una institución --</option>
+
+									<?php if (isset($instituciones) && $instituciones): ?>
+
+										<?php foreach ($instituciones as $institucion): ?>
+
+											<option value="<?= $institucion->id ?>" <?php if (isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+					<?php endif; ?>
 
 				<?php endif; ?>
 

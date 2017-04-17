@@ -66,7 +66,7 @@
 
 						<h3 class="subtitulo">Año de publicación</h3>
 
-						<p><?= $publicacion->anio ?></p>
+						<p class="text-justify lead"><?= $publicacion->anio ?></p>
 
 					<?php endif; ?>
 

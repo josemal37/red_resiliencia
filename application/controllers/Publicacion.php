@@ -46,10 +46,10 @@ class Publicacion extends CI_Controller {
 		}
 		
 		$criterio = $this->input->get("criterio");
-		$id_categoria = $this->input->get("categoria") == -1 ? FALSE : $this->input->post("categoria");
-		$id_autor = $this->input->get("autor") == -1 ? FALSE : $this->input->post("autor");
-		$id_institucion = $this->input->get("institucion") == -1 ? FALSE : $this->input->post("institucion");
-		$id_anio = $this->input->get("anio") == -1 ? FALSE : $this->input->post("anio");
+		$id_categoria = $this->input->get("categoria");
+		$id_autor = $this->input->get("autor");
+		$id_institucion = $this->input->get("institucion");
+		$id_anio = $this->input->get("anio");
 		$submit = $this->input->get("submit");
 		
 		$datos["criterio"] = $criterio;

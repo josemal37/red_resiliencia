@@ -48,7 +48,7 @@
 
 			<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-				<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?><?php if (isset($submit)): ?>?criterio=<?= $criterio ?>&categoria=<?= $id_categoria ?>&anio=<?= $id_anio ?>&autor=<?= $id_autor ?>&institucion=<?= $id_institucion ?>&submit=<?= $submit ?><?php endif; ?>"><?= $i ?></a></li>
+				<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?><?php if (isset($submit)): ?>?criterio=<?= $criterio ?>&categoria=<?= $id_categoria ?>&anio=<?= $id_anio ?>&autor=<?= $id_autor ?><?php if ($this->session->userdata("rol") != "usuario"): ?>&institucion=<?= $id_institucion ?><?php endif; ?>&submit=<?= $submit ?><?php endif; ?>"><?= $i ?></a></li>
 
 			<?php endfor; ?>
 
