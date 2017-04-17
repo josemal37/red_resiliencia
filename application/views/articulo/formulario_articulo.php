@@ -25,7 +25,7 @@ switch ($accion) {
 
 	</div>
 
-<?php $this->load->view("base/menu"); ?>
+	<?php $this->load->view("base/menu"); ?>
 
 	<div class="titulo-pagina">
 
@@ -136,14 +136,15 @@ switch ($accion) {
 
 							</select>
 
+							<div class="text-right">
+
+								<button id="agregar_autor" class="agregar btn btn-default">Agregar</button>
+
+							</div>
+
 						</div>
 
-						<div class="col-md-2 btn-group">
-
-							<button id="agregar_autor" class="agregar btn btn-default">Agregar ></button>
-							<button id="quitar_autor" class="quitar btn btn-default">< Quitar</button>
-
-						</div>
+						<div class="col-md-2"></div>
 
 						<div class="col-md-5">
 
@@ -162,6 +163,12 @@ switch ($accion) {
 								<?php endif; ?>
 
 							</select>
+
+							<div class="text-right">
+
+								<button id="quitar_autor" class="quitar btn btn-default">Quitar</button>
+
+							</div>
 
 						</div>
 
@@ -202,15 +209,15 @@ switch ($accion) {
 
 							</select>
 
-						</div>
+							<div class="text-right">
 
-						<div class="col-md-2 btn-group">
+								<button id="agregar_categoria" class="agregar btn btn-default">Agregar</button>
 
-							<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
-
-							<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
+							</div>
 
 						</div>
+
+						<div class="col-md-2 btn-group"></div>
 
 						<div class="col-md-5">
 
@@ -229,6 +236,12 @@ switch ($accion) {
 								<?php endif; ?>
 
 							</select>
+
+							<div class="text-right">
+
+								<button id="quitar_categoria" class="quitar btn btn-default">Quitar</button>
+
+							</div>
 
 						</div>
 
@@ -269,15 +282,15 @@ switch ($accion) {
 
 							</select>
 
-						</div>
+							<div class="text-right">
 
-						<div class="col-md-2 btn-group">
+								<button id="agregar_institucion" class="agregar btn btn-default">Agregar</button>
 
-							<button id="agregar_institucion" class="agregar btn btn-default">Agregar ></button>
-
-							<button id="quitar_institucion" class="quitar btn btn-default">< Quitar</button>
+							</div>
 
 						</div>
+
+						<div class="col-md-2 btn-group"></div>
 
 						<div class="col-md-5">
 
@@ -302,6 +315,12 @@ switch ($accion) {
 								<?php endif; ?>
 
 							</select>
+
+							<div class="text-right">
+
+								<button id="quitar_institucion" class="quitar btn btn-default">Quitar</button>
+
+							</div>
 
 						</div>
 

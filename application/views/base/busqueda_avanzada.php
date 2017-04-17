@@ -83,15 +83,15 @@
 
 									</select>
 
-								</div>
+									<div class="text-right">
 
-								<div class="col-md-2 btn-group">
+										<button id="agregar_categoria" class="agregar btn btn-default">Agregar</button>
 
-									<button id="agregar_categoria" class="agregar btn btn-default">Agregar ></button>
-
-									<button id="quitar_categoria" class="quitar btn btn-default">< Quitar</button>
+									</div>
 
 								</div>
+
+								<div class="col-md-2"></div>
 
 								<div class="col-md-5">
 
@@ -110,6 +110,12 @@
 										<?php endif; ?>
 
 									</select>
+
+									<div class="text-right">
+
+										<button id="quitar_categoria" class="quitar btn btn-default">Quitar</button>
+
+									</div>
 
 								</div>
 
@@ -356,7 +362,7 @@
 			</div>
 
 		<?php endif; ?>
-	
+
 		<?php if ($fuente == "herramienta"): ?>
 
 			<div class="herramientas">
