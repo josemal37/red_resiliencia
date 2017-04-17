@@ -37,6 +37,7 @@ class Modelo_categoria extends My_model {
 	public function select_categorias() {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->order_by(self::NOMBRE_COL);
 
 		$query = $this->db->get();
 

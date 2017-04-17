@@ -25,43 +25,141 @@ switch ($fuente) {
 
 <div class="busqueda">
 
-	<div class="container-fluid">
+	<div class="container">
 
-		<div class="row">
+		<form action="<?= $url ?>" id="form-busqueda" method="get">
 
-			<div class="col-md-6"></div>
+			<div class="form-group">
 
-			<div class="col-md-6">
+				<label>Busqueda</label>
 
-				<form action="<?= $url ?>" id="form-busqueda" method="get">
+				<input type="text" id="criterio" name="criterio" class="tokenfield form-control" placeholder="Introduzca criterios de busqueda" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
 
-					<div class="form-group">
+			</div>
 
-						<div class="input-group">
+			<div class="row">
 
-							<input type="text" id="criterio" name="criterio" class="tokenfield form-control" <?php if ($criterio): ?>value="<?= $criterio ?>"<?php endif; ?>>
+				<?php if ($fuente == "publicacion"): ?>
 
-							<span class="input-group-btn">
+					<div class="col-md-3">
 
-								<input type="submit" id="submit" value="Buscar" class="btn btn-primary">
+						<div class="form-group">
 
-							</span>
+							<label>Categoría</label>
+
+							<select id="categoria" name="categoria" class="form-control">
+
+								<option value="">-- Seleccione una categoría --</option>
+
+								<?php if (isset($categorias) && $categorias): ?>
+
+									<?php foreach ($categorias as $categoria): ?>
+
+										<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
 
 						</div>
 
 					</div>
 
-				</form>
+					<div class="col-md-3">
 
-				<a href="<?= $avanzada ?>">Busqueda avanzada</a>
+						<div class="form-group">
+
+							<label>Año</label>
+
+							<select id="anio" name="anio" class="form-control">
+
+								<option value="">-- Seleccione un año --</option>
+
+								<?php if (isset($anios) && $anios): ?>
+
+									<?php foreach ($anios as $anio): ?>
+
+										<option value="<?= $anio->id ?>" <?php if (isset($id_anio) && $anio->id == $id_anio): ?>selected<?php endif; ?>><?= $anio->anio ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+					</div>
+
+					<div class="col-md-3">
+
+						<div class="form-group">
+
+							<label>Autor</label>
+
+							<select id="autor" name="autor" class="form-control">
+
+								<option value="">-- Seleccione un autor --</option>
+
+								<?php if (isset($autores) && $autores): ?>
+
+									<?php foreach ($autores as $autor): ?>
+
+										<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+					</div>
+
+					<div class="col-md-3">
+
+						<div class="form-group">
+
+							<label>Institución</label>
+
+							<select id="institucion" name="institucion" class="form-control">
+
+								<option value="">-- Seleccione una institución --</option>
+
+								<?php if (isset($instituciones) && $instituciones): ?>
+
+									<?php foreach ($instituciones as $institucion): ?>
+
+										<option value="<?= $institucion->id ?>" <?php if (isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
+							</select>
+
+						</div>
+
+					</div>
+
+				<?php endif; ?>
 
 			</div>
 
-		</div>
+			<div class="form-group text-right">
+
+				<input type="submit" id="submit" name="submit" value="Buscar" class="btn btn-primary">
+
+			</div>
+
+		</form>
 
 	</div>
 
-	<?php if ($criterio): ?>
+	<?php if (isset($submit)): ?>
 
 		<div class="container-fluid">
 
@@ -70,14 +168,14 @@ switch ($fuente) {
 				case "publicacion":
 					?>
 
-					<h4>Publicaciones relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+					<h4>Publicaciones relacionadas:</h4>
 
 					<?php
 					break;
 				case "evento":
 					?>
 
-					<h4>Eventos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+					<h4>Eventos relacionados:</h4>
 
 					<?php
 					break;
@@ -85,7 +183,7 @@ switch ($fuente) {
 				case "articulo":
 					?>
 
-					<h4>Artículos relacionados con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+					<h4>Artículos relacionados:</h4>
 
 					<?php
 					break;
@@ -93,7 +191,7 @@ switch ($fuente) {
 				case "herramienta":
 					?>
 
-					<h4>Herramientas relacionadas con la(s) palabra(s) <strong>"<?= $criterio ?>"</strong></h4>
+					<h4>Herramientas relacionadas:</h4>
 
 				<?php
 			}

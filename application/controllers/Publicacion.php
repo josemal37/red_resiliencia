@@ -44,17 +44,23 @@ class Publicacion extends CI_Controller {
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
 		}
-		if (isset($_GET["criterio"])) {
-			$criterio = $this->input->get("criterio");
-		} else {
-			$criterio = FALSE;
-		}
+		
+		$criterio = $this->input->get("criterio");
+		$id_categoria = $this->input->get("categoria") == -1 ? FALSE : $this->input->post("categoria");
+		$id_autor = $this->input->get("autor") == -1 ? FALSE : $this->input->post("autor");
+		$id_institucion = $this->input->get("institucion") == -1 ? FALSE : $this->input->post("institucion");
+		$id_anio = $this->input->get("anio") == -1 ? FALSE : $this->input->post("anio");
+		$submit = $this->input->get("submit");
+		
 		$datos["criterio"] = $criterio;
-
+		$datos["id_categoria"] = $id_categoria;
+		$datos["id_autor"] = $id_autor;
+		$datos["id_institucion"] = $id_institucion;
+		$datos["id_anio"] = $id_anio;
+		$datos["submit"] = $submit;
+		
 		if ($rol == "usuario") {
 			$id_institucion = $this->session->userdata("id_institucion");
-		} else {
-			$id_institucion = FALSE;
 		}
 
 		$datos["nro_pagina"] = $nro_pagina;
@@ -77,8 +83,8 @@ class Publicacion extends CI_Controller {
 		  }
 		 */
 
-		$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones_2($nro_pagina, $cantidad_publicaciones, $id_institucion, $criterio);
-		$datos["total_publicaciones"] = $this->Modelo_publicacion->select_publicaciones_2($nro_pagina, $cantidad_publicaciones, $id_institucion, $criterio, TRUE);
+		$datos["publicaciones"] = $this->Modelo_publicacion->select_publicaciones_2($nro_pagina, $cantidad_publicaciones, $id_anio, $id_autor, $id_categoria, $id_institucion, $criterio);
+		$datos["total_publicaciones"] = $this->Modelo_publicacion->select_publicaciones_2($nro_pagina, $cantidad_publicaciones, $id_anio, $id_autor, $id_categoria, $id_institucion, $criterio, TRUE);
 		$datos["nro_paginas"] = $this->Modelo_publicacion->nro_paginas($datos["total_publicaciones"], $cantidad_publicaciones);
 		
 		$datos["categorias"] = $this->Modelo_categoria->select_categorias();

@@ -42,19 +42,19 @@
 
 	<?php //if (isset($criterio) && !$criterio): ?>
 
-		<div class="text-center">
+	<div class="text-center">
 
-			<ul class="pagination">
+		<ul class="pagination">
 
-				<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
+			<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-					<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?><?php if ($criterio): ?>?criterio=<?= $criterio ?><?php endif; ?>"><?= $i ?></a></li>
+				<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("publicacion/publicaciones/" . $i) ?><?php if (isset($submit)): ?>?criterio=<?= $criterio ?>&categoria=<?= $id_categoria ?>&anio=<?= $id_anio ?>&autor=<?= $id_autor ?>&institucion=<?= $id_institucion ?>&submit=<?= $submit ?><?php endif; ?>"><?= $i ?></a></li>
 
-				<?php endfor; ?>
+			<?php endfor; ?>
 
-			</ul>
+		</ul>
 
-		</div>
+	</div>
 
 	<?php //endif; ?>
 

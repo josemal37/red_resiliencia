@@ -126,40 +126,39 @@ class Modelo_publicacion extends My_model {
 		return $publicaciones;
 	}
 
-	public function select_publicaciones_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE, $contar = FALSE) {
+	public function select_publicaciones_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_anio = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $criterio = FALSE, $contar = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+		
+		if ($id_anio) {
+			$this->db->where(Modelo_anio::ID_COL, $id_anio);
+		}
+		
+		if ($id_autor) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL, "left");
+			$this->db->where(self::NOMBRE_TABLA_ASOC_AUTOR . "." . Modelo_autor::ID_COL, $id_autor);
+		}
+		
+		if ($id_categoria) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
+			$this->db->where(self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, $id_categoria);
+		}
 
 		if ($id_institucion) {
 			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
-			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
+			$this->db->where(self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, $id_institucion);
 		}
 
 		if ($criterio) {
-			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
-			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
-			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL, "left");
-			$this->db->join(Modelo_autor::NOMBRE_TABLA, Modelo_autor::NOMBRE_TABLA . "." . Modelo_autor::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . Modelo_autor::ID_COL, "left");
 			$this->db->join(Modelo_modulo::NOMBRE_TABLA, Modelo_modulo::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA . "." . self::ID_COL, "left");
-			if (!$id_institucion) {
-				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
-				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");
-			}
 
 			$this->db->group_start();
 
 			$criterios = explode(", ", $criterio);
 
 			foreach ($criterios as $criterio) {
-				$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);
-				$this->db->or_like(Modelo_autor::NOMBRE_COL, $criterio);
-				$this->db->or_like(Modelo_autor::APELLIDO_PATERNO_COL, $criterio);
-				$this->db->or_like(Modelo_autor::APELLIDO_MATERNO_COL, $criterio);
-				if (!$id_institucion) {
-					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
-					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
-				}
 				$this->db->or_like(Modelo_modulo::NOMBRE_COL, $criterio);
+				$this->db->or_like(Modelo_modulo::DESCRIPCION_COL, $criterio);
 				$this->db->or_like(self::NOMBRE_COL, $criterio);
 				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
 			}

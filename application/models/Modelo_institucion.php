@@ -42,6 +42,7 @@ class Modelo_institucion extends My_model {
 	public function select_instituciones() {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->order_by(self::NOMBRE_COL);
 
 		$query = $this->db->get();
 

@@ -40,6 +40,7 @@ class Modelo_autor extends My_model {
 	public function select_autores($id_institucion = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
+		$this->db->order_by(self::NOMBRE_COL . ", " . self::APELLIDO_PATERNO_COL. ", " . self::APELLIDO_MATERNO_COL);
 
 		if ($id_institucion) {
 			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL . " = " . self::NOMBRE_TABLA . "." . self::ID_COL, "left");
