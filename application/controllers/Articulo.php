@@ -40,33 +40,39 @@ class Articulo extends CI_Controller {
 		if (!$nro_pagina) {
 			$nro_pagina = 1;
 		}
-
-		if (isset($_GET["criterio"])) {
-			$criterio = $this->input->get("criterio");
-		} else {
-			$criterio = FALSE;
-		}
+		
+		$criterio = $this->input->get("criterio");
+		$id_autor = $this->input->get("autor");
+		$id_categoria = $this->input->get("categoria");
+		$id_institucion = $this->input->get("institucion");
 
 		if ($rol == "usuario") {
 			$id_institucion = $this->session->userdata("id_institucion");
-		} else {
-			$id_institucion = FALSE;
 		}
 
 		$datos = array();
+		
+		$datos["criterio"] = $criterio;
+		$datos["id_autor"] = $id_autor;
+		$datos["id_categoria"] = $id_categoria;
+		$datos["id_institucion"] = $id_institucion;
+		$datos["submit"] = $this->input->get("submit");
 
 		$datos["titulo"] = "Artículos";
-		$datos["criterio"] = $criterio;
 		$datos["nro_pagina"] = $nro_pagina;
 		/*
 		$datos["nro_paginas"] = $this->Modelo_articulo->select_count_nro_paginas($cantidad_articulos, $id_institucion);
 		$datos["articulos"] = $this->Modelo_articulo->select_articulos($nro_pagina, $cantidad_articulos, $id_institucion, $criterio);
 		*/
-		$datos["total_articulos"] = $this->Modelo_articulo->select_articulos_2($nro_pagina, $cantidad_articulos, $id_institucion, $criterio, TRUE);
+		$datos["total_articulos"] = $this->Modelo_articulo->select_articulos_2($nro_pagina, $cantidad_articulos, $id_autor, $id_categoria, $id_institucion, $criterio, TRUE);
 		$datos["nro_paginas"] = $this->Modelo_articulo->nro_paginas($datos["total_articulos"], $cantidad_articulos);
-		$datos["articulos"] = $this->Modelo_articulo->select_articulos_2($nro_pagina, $cantidad_articulos, $id_institucion, $criterio);
+		$datos["articulos"] = $this->Modelo_articulo->select_articulos_2($nro_pagina, $cantidad_articulos, $id_autor, $id_categoria, $id_institucion, $criterio);
 		$datos["path_articulos"] = $this->imagen->get_path_valido("articulo");
 
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["autores"] = $this->Modelo_autor->select_autores();
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+		
 		$this->load->view("articulo/articulos", $datos);
 	}
 

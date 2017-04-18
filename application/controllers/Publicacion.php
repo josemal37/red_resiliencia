@@ -52,16 +52,16 @@ class Publicacion extends CI_Controller {
 		$id_anio = $this->input->get("anio");
 		$submit = $this->input->get("submit");
 		
+		if ($rol == "usuario") {
+			$id_institucion = $this->session->userdata("id_institucion");
+		}
+		
 		$datos["criterio"] = $criterio;
 		$datos["id_categoria"] = $id_categoria;
 		$datos["id_autor"] = $id_autor;
 		$datos["id_institucion"] = $id_institucion;
 		$datos["id_anio"] = $id_anio;
 		$datos["submit"] = $submit;
-		
-		if ($rol == "usuario") {
-			$id_institucion = $this->session->userdata("id_institucion");
-		}
 
 		$datos["nro_pagina"] = $nro_pagina;
 

@@ -39,7 +39,148 @@ switch ($fuente) {
 
 			<div class="row">
 
-				<?php if ($fuente == "publicacion"): ?>
+				<?php if ($fuente == "articulo"): ?>
+
+					<?php if ($this->session->userdata("rol") == "usuario"): ?>
+
+						<div class="col-md-6">
+
+							<div class="form-group">
+
+								<label>Categoría</label>
+
+								<select id="categoria" name="categoria" class="form-control">
+
+									<option value="">-- Seleccione una categoría --</option>
+
+									<?php if (isset($categorias) && $categorias): ?>
+
+										<?php foreach ($categorias as $categoria): ?>
+
+											<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-6">
+
+							<div class="form-group">
+
+								<label>Autor</label>
+
+								<select id="autor" name="autor" class="form-control">
+
+									<option value="">-- Seleccione un autor --</option>
+
+									<?php if (isset($autores) && $autores): ?>
+
+										<?php foreach ($autores as $autor): ?>
+
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+					<?php else: ?>
+
+						<div class="col-md-4">
+
+							<div class="form-group">
+
+								<label>Categoría</label>
+
+								<select id="categoria" name="categoria" class="form-control">
+
+									<option value="">-- Seleccione una categoría --</option>
+
+									<?php if (isset($categorias) && $categorias): ?>
+
+										<?php foreach ($categorias as $categoria): ?>
+
+											<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-4">
+
+							<div class="form-group">
+
+								<label>Autor</label>
+
+								<select id="autor" name="autor" class="form-control">
+
+									<option value="">-- Seleccione un autor --</option>
+
+									<?php if (isset($autores) && $autores): ?>
+
+										<?php foreach ($autores as $autor): ?>
+
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-4">
+
+							<div class="form-group">
+
+								<label>Institución</label>
+
+								<select id="institucion" name="institucion" class="form-control">
+
+									<option value="">-- Seleccione una institución --</option>
+
+									<?php if (isset($instituciones) && $instituciones): ?>
+
+										<?php foreach ($instituciones as $institucion): ?>
+
+											<option value="<?= $institucion->id ?>" <?php if (isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+					<?php endif; ?>
+				<?php elseif ($fuente == "evento"): ?>
+
+				<?php elseif ($fuente == "herramienta"): ?>
+
+				<?php elseif ($fuente == "publicacion"): ?>
 
 					<?php if ($this->session->userdata("rol")): ?>
 
@@ -120,7 +261,7 @@ switch ($fuente) {
 							</div>
 
 						</div>
-				
+
 					<?php else: ?>
 
 						<div class="col-md-3">

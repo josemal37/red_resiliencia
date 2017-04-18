@@ -112,9 +112,19 @@ class Modelo_articulo extends My_model {
 		return $articulos;
 	}
 
-	public function select_articulos_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE, $contar = FALSE) {
+	public function select_articulos_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_autor = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $criterio = FALSE, $contar = FALSE) {
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->order_by(self::NOMBRE_TABLA . "." . self::FECHA_COL, "DESC");
+		
+		if ($id_autor) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL, "left");
+			$this->db->where(Modelo_autor::ID_COL, $id_autor);
+		}
+		
+		if ($id_categoria) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
+			$this->db->where(Modelo_categoria::ID_COL, $id_categoria);
+		}
 
 		if ($id_institucion) {
 			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
@@ -122,28 +132,12 @@ class Modelo_articulo extends My_model {
 		}
 
 		if ($criterio) {
-			$this->db->join(self::NOMBRE_TABLA_ASOC_AUTOR, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . self::ID_COL, "left");
-			$this->db->join(Modelo_autor::NOMBRE_TABLA, Modelo_autor::NOMBRE_TABLA . "." . Modelo_autor::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_AUTOR . "." . Modelo_autor::ID_COL, "left");
-			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
-			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
-			if (!$id_institucion) {
-				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
-				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");
-			}
 
 			$this->db->group_start();
 
 			$criterios = explode(", ", $criterio);
 
 			foreach ($criterios as $criterio) {
-				$this->db->or_like(Modelo_autor::NOMBRE_COL, $criterio);
-				$this->db->or_like(Modelo_autor::APELLIDO_PATERNO_COL, $criterio);
-				$this->db->or_like(Modelo_autor::APELLIDO_MATERNO_COL, $criterio);
-				$this->db->or_like(Modelo_categoria::NOMBRE_COL, $criterio);
-				if (!$id_institucion) {
-					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
-					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
-				}
 				$this->db->or_like(self::NOMBRE_COL, $criterio);
 				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
 				$this->db->or_like(self::FECHA_COL, $criterio);
