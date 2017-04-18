@@ -176,9 +176,256 @@ switch ($fuente) {
 						</div>
 
 					<?php endif; ?>
+
 				<?php elseif ($fuente == "evento"): ?>
 
-				<?php elseif ($fuente == "herramienta"): ?>
+					<?php if ($this->session->userdata("rol") == "usuario"): ?>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>Categoría</label>
+
+								<select id="categoria" name="categoria" class="form-control">
+
+									<option value="">-- Seleccione una categoría --</option>
+
+									<?php if (isset($categorias) && $categorias): ?>
+
+										<?php foreach ($categorias as $categoria): ?>
+
+											<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>País</label>
+
+								<select id="pais" name="pais" class="form-control">
+
+									<option value="">-- Seleccione un país --</option>
+
+									<?php if (isset($paises) && $paises): ?>
+
+										<?php foreach ($paises as $pais): ?>
+
+											<option value="<?= $pais->id ?>" <?php if (isset($id_pais) && $pais->id == $id_pais): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-3">
+
+							<div class="form-group">
+
+								<label>Ciudad</label>
+
+								<select id="ciudad" name="ciudad" class="form-control">
+
+									<option value="">-- Seleccione una ciudad --</option>
+
+									<?php if (isset($ciudades) && $ciudades): ?>
+
+										<?php foreach ($ciudades as $ciudad): ?>
+
+											<option value="<?= $ciudad->id ?>" <?php if (isset($id_ciudad) && $ciudad->id == $id_ciudad): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-3">
+
+							<label>Fecha</label>
+
+							<div class="row">
+
+								<div class="col-md-6">
+
+									<div class="radio">
+
+										<label><input type="radio" name="fecha" value="proximos" <?php if (isset($fecha) && $fecha == "proximos"): ?>checked<?php endif; ?>>Sólo eventos próximos</label>
+
+									</div>
+
+								</div>
+
+								<div class="col-md-6">
+
+									<div class="radio">
+
+										<label><input type="radio" name="fecha" value="todos" <?php if (isset($fecha) && $fecha == "todos" || !isset($fecha)): ?>checked<?php endif; ?>>Todos los eventos</label>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					<?php else: ?>
+
+						<div class="col-md-2">
+
+							<div class="form-group">
+
+								<label>Categoría</label>
+
+								<select id="categoria" name="categoria" class="form-control">
+
+									<option value="">-- Seleccione una categoría --</option>
+
+									<?php if (isset($categorias) && $categorias): ?>
+
+										<?php foreach ($categorias as $categoria): ?>
+
+											<option value="<?= $categoria->id ?>" <?php if (isset($id_categoria) && $categoria->id == $id_categoria): ?>selected<?php endif; ?>><?= $categoria->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-2">
+
+							<div class="form-group">
+
+								<label>Institución</label>
+
+								<select id="institucion" name="institucion" class="form-control">
+
+									<option value="">-- Seleccione una institución --</option>
+
+									<?php if (isset($instituciones) && $instituciones): ?>
+
+										<?php foreach ($instituciones as $institucion): ?>
+
+											<option value="<?= $institucion->id ?>" <?php if (isset($id_institucion) && $institucion->id == $id_institucion): ?>selected<?php endif; ?>><?= $institucion->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-2">
+
+							<div class="form-group">
+
+								<label>País</label>
+
+								<select id="pais" name="pais" class="form-control">
+
+									<option value="">-- Seleccione un país --</option>
+
+									<?php if (isset($paises) && $paises): ?>
+
+										<?php foreach ($paises as $pais): ?>
+
+											<option value="<?= $pais->id ?>" <?php if (isset($id_pais) && $pais->id == $id_pais): ?>selected<?php endif; ?>><?= $pais->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-2">
+
+							<div class="form-group">
+
+								<label>Ciudad</label>
+
+								<select id="ciudad" name="ciudad" class="form-control">
+
+									<option value="">-- Seleccione una ciudad --</option>
+
+									<?php if (isset($ciudades) && $ciudades): ?>
+
+										<?php foreach ($ciudades as $ciudad): ?>
+
+											<option value="<?= $ciudad->id ?>" <?php if (isset($id_ciudad) && $ciudad->id == $id_ciudad): ?>selected<?php endif; ?>><?= $ciudad->nombre ?></option>
+
+										<?php endforeach; ?>
+
+									<?php endif; ?>
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<div class="col-md-4">
+
+							<label>Fecha</label>
+
+							<div class="row">
+
+								<div class="col-md-6">
+
+									<div class="radio">
+
+										<label><input type="radio" name="fecha" value="proximos" <?php if (isset($fecha) && $fecha == "proximos"): ?>checked<?php endif; ?>>Sólo eventos próximos</label>
+
+									</div>
+
+								</div>
+
+								<div class="col-md-6">
+
+									<div class="radio">
+
+										<label><input type="radio" name="fecha" value="todos" <?php if (isset($fecha) && $fecha == "todos" || !isset($fecha)): ?>checked<?php endif; ?>>Todos los eventos</label>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					<?php endif; ?>
 
 				<?php elseif ($fuente == "publicacion"): ?>
 

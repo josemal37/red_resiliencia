@@ -45,18 +45,25 @@ class Evento extends CI_Controller {
 		$datos["titulo"] = "Eventos";
 		$datos["path_evento"] = $this->imagen->get_path_valido("evento");
 		$datos["nro_pagina"] = $nro_pagina;
-		if (isset($_GET["criterio"])) {
-			$criterio = $this->input->get("criterio");
-		} else {
-			$criterio = FALSE;
-		}
-		$datos["criterio"] = $criterio;
+
+		$criterio = $this->input->get("criterio");
+		$id_categoria = $this->input->get("categoria");
+		$id_institucion = $this->input->get("institucion");
+		$id_pais = $this->input->get("pais");
+		$id_ciudad = $this->input->get("ciudad");
+		$fecha = $this->input->get("fecha");
 
 		if ($rol == "usuario") {
 			$id_institucion = $this->session->userdata("id_institucion");
-		} else {
-			$id_institucion = FALSE;
 		}
+
+		$datos["criterio"] = $criterio;
+		$datos["id_categoria"] = $id_categoria;
+		$datos["id_institucion"] = $id_institucion;
+		$datos["id_pais"] = $id_pais;
+		$datos["id_ciudad"] = $id_ciudad;
+		$datos["fecha"] = $fecha;
+		$datos["submit"] = $this->input->get("submit");
 
 		/*
 		  switch ($rol) {
@@ -76,9 +83,17 @@ class Evento extends CI_Controller {
 		  }
 		 */
 
-		$datos["eventos"] = $this->Modelo_evento->select_eventos_2($nro_pagina, $cantidad_eventos, $id_institucion, $criterio);
-		$datos["total_eventos"] = $this->Modelo_evento->select_eventos_2($nro_pagina, $cantidad_eventos, $id_institucion, $criterio, TRUE);
+		$datos["eventos"] = $this->Modelo_evento->select_eventos_2($nro_pagina, $cantidad_eventos, $id_categoria, $id_institucion, $id_pais, $id_ciudad, $fecha, $criterio);
+		$datos["total_eventos"] = $this->Modelo_evento->select_eventos_2($nro_pagina, $cantidad_eventos, $id_categoria, $id_institucion, $id_pais, $id_ciudad, $fecha, $criterio, TRUE);
 		$datos["nro_paginas"] = $this->Modelo_evento->nro_paginas($datos["total_eventos"], $cantidad_eventos);
+
+		$datos["categorias"] = $this->Modelo_categoria->select_categorias();
+		$datos["instituciones"] = $this->Modelo_institucion->select_instituciones();
+		$datos["paises"] = $this->Modelo_pais->select_paises();
+		
+		if ($id_pais) {
+			$datos["ciudades"] = $this->Modelo_ciudad->select_ciudades($id_pais);
+		}
 		
 		$this->load->view("evento/eventos", $datos);
 	}

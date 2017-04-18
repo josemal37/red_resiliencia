@@ -114,43 +114,44 @@ class Modelo_evento extends My_model {
 		return $eventos;
 	}
 
-	public function select_eventos_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_institucion = FALSE, $criterio = FALSE, $contar = FALSE) {
+	public function select_eventos_2($nro_pagina = FALSE, $cantidad_publicaciones = FALSE, $id_categoria = FALSE, $id_institucion = FALSE, $id_pais = FALSE, $id_ciudad = FALSE, $fecha = "", $criterio = FALSE, $contar = FALSE) {
 		$this->db->select(self::COLUMNAS_SELECT);
 		$this->db->from(self::NOMBRE_TABLA);
 		$this->db->order_by(self::FECHA_INICIO_COL, "desc");
+
+		if ($id_categoria) {
+			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
+			$this->db->where(Modelo_categoria::ID_COL, $id_categoria);
+		}
 
 		if ($id_institucion) {
 			$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL);
 			$this->db->where(self::ID_TABLA_ASOC_INSTITUCION, $id_institucion);
 		}
 
-		if ($criterio) {
-			$this->db->join(self::NOMBRE_TABLA_ASOC_CATEGORIA, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . self::ID_COL, "left");
-			$this->db->join(Modelo_categoria::NOMBRE_TABLA, Modelo_categoria::NOMBRE_TABLA . "." . Modelo_categoria::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_CATEGORIA . "." . Modelo_categoria::ID_COL, "left");
-			if (!$id_institucion) {
-				$this->db->join(self::NOMBRE_TABLA_ASOC_INSTITUCION, self::NOMBRE_TABLA . "." . self::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . self::ID_COL, "left");
-				$this->db->join(Modelo_institucion::NOMBRE_TABLA, Modelo_institucion::NOMBRE_TABLA . "." . Modelo_institucion::ID_COL . " = " . self::NOMBRE_TABLA_ASOC_INSTITUCION . "." . Modelo_institucion::ID_COL, "left");
+		if ($id_ciudad) {
+			$this->db->where(self::NOMBRE_TABLA . "." . self::ID_CIUDAD_COL, $id_ciudad);
+		} else {
+			if ($id_pais) {
+				$this->db->join(Modelo_ciudad::NOMBRE_TABLA, self::NOMBRE_TABLA . "." . self::ID_CIUDAD_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . self::ID_CIUDAD_COL);
+				$this->db->join(Modelo_pais::NOMBRE_TABLA, Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_PAIS_COL);
+				$this->db->where(Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, $id_pais);
 			}
-			$this->db->join(Modelo_ciudad::NOMBRE_TABLA, self::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_ciudad::ID_COL, "left");
-			$this->db->join(Modelo_pais::NOMBRE_TABLA, Modelo_pais::NOMBRE_TABLA . "." . Modelo_pais::ID_COL . " = " . Modelo_ciudad::NOMBRE_TABLA . "." . Modelo_pais::ID_COL, "left");
+		}
 
+		if ($fecha == "proximos") {
+			$this->db->where(self::NOMBRE_TABLA . "." . self::FECHA_INICIO_COL . " >= NOW()");
+		}
+
+		if ($criterio) {
 			$this->db->group_start();
 
 			$criterios = explode(", ", $criterio);
 
 			foreach ($criterios as $criterio) {
-				$this->db->like(Modelo_categoria::NOMBRE_COL, $criterio);
-				if (!$id_institucion) {
-					$this->db->or_like(Modelo_institucion::NOMBRE_COL, $criterio);
-					$this->db->or_like(Modelo_institucion::SIGLA_COL, $criterio);
-				}
 				$this->db->or_like(self::NOMBRE_COL, $criterio);
 				$this->db->or_like(self::DESCRIPCION_COL, $criterio);
-				$this->db->or_like(self::FECHA_INICIO_COL, $criterio);
-				$this->db->or_like(self::FECHA_FIN_COL, $criterio);
 				$this->db->or_like(self::DIRECCION_COL, $criterio);
-				$this->db->or_like(Modelo_ciudad::NOMBRE_COL, $criterio);
-				$this->db->or_like(Modelo_pais::NOMBRE_COL, $criterio);
 			}
 
 			$this->db->group_end();
