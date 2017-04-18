@@ -83,7 +83,7 @@ switch ($fuente) {
 
 										<?php foreach ($autores as $autor): ?>
 
-											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
 
 										<?php endforeach; ?>
 
@@ -137,7 +137,7 @@ switch ($fuente) {
 
 										<?php foreach ($autores as $autor): ?>
 
-											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
 
 										<?php endforeach; ?>
 
@@ -497,7 +497,7 @@ switch ($fuente) {
 
 										<?php foreach ($autores as $autor): ?>
 
-											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
 
 										<?php endforeach; ?>
 
@@ -577,7 +577,7 @@ switch ($fuente) {
 
 										<?php foreach ($autores as $autor): ?>
 
-											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre ?></option>
+											<option value="<?= $autor->id ?>" <?php if (isset($id_autor) && $autor->id == $id_autor): ?>selected<?php endif; ?>><?= $autor->nombre_completo ?></option>
 
 										<?php endforeach; ?>
 
