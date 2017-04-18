@@ -48,7 +48,7 @@
 
 			<?php for ($i = 1; $i <= $nro_paginas; $i ++): ?>
 
-				<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos/" . $i) ?><?php if ($criterio): ?>?criterio=<?= $criterio ?><?php endif; ?>"><?= $i ?></a></li>
+				<li <?php if ($nro_pagina == $i): ?>class="active"<?php endif; ?>><a href="<?= base_url("articulo/articulos/" . $i) ?><?php if (isset($submit)): ?>?criterio=<?= $criterio ?>&categoria=<?= $id_categoria ?>&autor=<?= $id_autor ?><?php if ($this->session->userdata("rol") != "usuario"): ?>&institucion=<?= $id_institucion ?><?php endif; ?>&submit=<?= $submit ?><?php endif; ?>"><?= $i ?></a></li>
 
 			<?php endfor; ?>
 
