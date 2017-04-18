@@ -39,7 +39,7 @@ switch ($fuente) {
 
 			<div class="row">
 
-				<?php if ($fuente == "articulo"): ?>
+				<?php if ($fuente == "articulo" || $fuente == "herramienta"): ?>
 
 					<?php if ($this->session->userdata("rol") == "usuario"): ?>
 
